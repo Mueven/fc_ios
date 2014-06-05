@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
 		B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F60F194004CC001F01F3 /* Foundation.framework */; };
 		B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F611194004CC001F01F3 /* CoreGraphics.framework */; };
 		B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F613194004CC001F01F3 /* UIKit.framework */; };
@@ -19,6 +20,12 @@
 		B085F62B194004CC001F01F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F613194004CC001F01F3 /* UIKit.framework */; };
 		B085F633194004CC001F01F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B085F631194004CC001F01F3 /* InfoPlist.strings */; };
 		B085F635194004CC001F01F3 /* MaterialTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F634194004CC001F01F3 /* MaterialTests.m */; };
+		B085F6421940071A001F01F3 /* Login.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6401940071A001F01F3 /* Login.m */; };
+		B085F64919401091001F01F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F64819401091001F01F3 /* Security.framework */; };
+		B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F64B1940119E001F01F3 /* TuoTableViewController.m */; };
+		B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */; };
+		B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6521940183D001F01F3 /* YunTableViewController.m */; };
+		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B085F60C194004CC001F01F3 /* Material.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Material.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B085F611194004CC001F01F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -48,6 +56,17 @@
 		B085F630194004CC001F01F3 /* MaterialTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaterialTests-Info.plist"; sourceTree = "<group>"; };
 		B085F632194004CC001F01F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B085F634194004CC001F01F3 /* MaterialTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaterialTests.m; sourceTree = "<group>"; };
+		B085F63F1940071A001F01F3 /* Login.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Login.h; sourceTree = "<group>"; };
+		B085F6401940071A001F01F3 /* Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Login.m; sourceTree = "<group>"; };
+		B085F64819401091001F01F3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B085F64A1940119E001F01F3 /* TuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoTableViewController.h; sourceTree = "<group>"; };
+		B085F64B1940119E001F01F3 /* TuoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoTableViewController.m; sourceTree = "<group>"; };
+		B085F64D194014A8001F01F3 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
+		B085F6511940183D001F01F3 /* YunTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewController.h; sourceTree = "<group>"; };
+		B085F6521940183D001F01F3 /* YunTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunTableViewController.m; sourceTree = "<group>"; };
+		B085F6541940184E001F01F3 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		B085F6551940184E001F01F3 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
 				B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */,
 				B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */,
 				B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */,
@@ -96,6 +116,7 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B085F64819401091001F01F3 /* Security.framework */,
 				B085F60F194004CC001F01F3 /* Foundation.framework */,
 				B085F611194004CC001F01F3 /* CoreGraphics.framework */,
 				B085F613194004CC001F01F3 /* UIKit.framework */,
@@ -107,10 +128,13 @@
 		B085F615194004CC001F01F3 /* Material */ = {
 			isa = PBXGroup;
 			children = (
+				B085F64419400FA3001F01F3 /* vendor */,
+				B085F63E194006EE001F01F3 /* Controller */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
 				B085F621194004CC001F01F3 /* Images.xcassets */,
 				B085F616194004CC001F01F3 /* Supporting Files */,
+				B06E027419403D3D001B7899 /* Storyboard.storyboard */,
 			);
 			path = Material;
 			sourceTree = "<group>";
@@ -142,6 +166,30 @@
 				B085F631194004CC001F01F3 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B085F63E194006EE001F01F3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B085F63F1940071A001F01F3 /* Login.h */,
+				B085F6401940071A001F01F3 /* Login.m */,
+				B085F64A1940119E001F01F3 /* TuoTableViewController.h */,
+				B085F64B1940119E001F01F3 /* TuoTableViewController.m */,
+				B085F6511940183D001F01F3 /* YunTableViewController.h */,
+				B085F6521940183D001F01F3 /* YunTableViewController.m */,
+				B085F6541940184E001F01F3 /* SettingViewController.h */,
+				B085F6551940184E001F01F3 /* SettingViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B085F64419400FA3001F01F3 /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				B085F64D194014A8001F01F3 /* KeychainItemWrapper.h */,
+				B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */,
+			);
+			name = vendor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,6 +240,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = brilliantech;
 				TargetAttributes = {
+					B085F60B194004CC001F01F3 = {
+						DevelopmentTeam = 58FSFGRL4P;
+					};
 					B085F626194004CC001F01F3 = {
 						TestTargetID = B085F60B194004CC001F01F3;
 					};
@@ -222,6 +273,7 @@
 			files = (
 				B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */,
 				B085F622194004CC001F01F3 /* Images.xcassets in Resources */,
+				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,7 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
+				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
+				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
+				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
+				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -358,9 +415,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -371,9 +430,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -438,6 +499,7 @@
 				B085F63A194004CC001F01F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B085F63B194004CC001F01F3 /* Build configuration list for PBXNativeTarget "MaterialTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +508,7 @@
 				B085F63D194004CC001F01F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
