@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>845B03E2-B616-4CE1-9FC7-3B22268202D1</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Material</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>980E538E-0E7B-4766-AAD0-CFA8FE0A9D17</key>
+		<string>https://github.com/pptalent/fc_ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Material/Material.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>980E538E-0E7B-4766-AAD0-CFA8FE0A9D17</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/pptalent/fc_ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>980E538E-0E7B-4766-AAD0-CFA8FE0A9D17</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>980E538E-0E7B-4766-AAD0-CFA8FE0A9D17</string>
+			<key>IDESourceControlWCCName</key>
+			<string>fc_ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>
