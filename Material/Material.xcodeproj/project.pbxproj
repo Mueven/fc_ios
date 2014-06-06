@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
+		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
+		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
+		B0613987194173B600A0CF62 /* XiangStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0613986194173B600A0CF62 /* XiangStore.m */; };
+		B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */; };
+		B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398F1941BD1300A0CF62 /* TuoScanViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
 		B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F60F194004CC001F01F3 /* Foundation.framework */; };
 		B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F611194004CC001F01F3 /* CoreGraphics.framework */; };
@@ -39,6 +45,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
+		B061397A194163DF00A0CF62 /* TuoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoStore.m; sourceTree = "<group>"; };
+		B061397C1941643E00A0CF62 /* Tuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuo.h; sourceTree = "<group>"; };
+		B061397D1941643E00A0CF62 /* Tuo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tuo.m; sourceTree = "<group>"; };
+		B061397F1941680C00A0CF62 /* Xiang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Xiang.h; sourceTree = "<group>"; };
+		B06139801941680C00A0CF62 /* Xiang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Xiang.m; sourceTree = "<group>"; };
+		B0613985194173B600A0CF62 /* XiangStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangStore.h; sourceTree = "<group>"; };
+		B0613986194173B600A0CF62 /* XiangStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangStore.m; sourceTree = "<group>"; };
+		B061398B1941BCF900A0CF62 /* TuoBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoBaseViewController.h; sourceTree = "<group>"; };
+		B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoBaseViewController.m; sourceTree = "<group>"; };
+		B061398E1941BD1300A0CF62 /* TuoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoScanViewController.h; sourceTree = "<group>"; };
+		B061398F1941BD1300A0CF62 /* TuoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoScanViewController.m; sourceTree = "<group>"; };
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B085F60C194004CC001F01F3 /* Material.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Material.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -94,6 +112,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B06139751941573B00A0CF62 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B0613979194163DF00A0CF62 /* TuoStore.h */,
+				B061397A194163DF00A0CF62 /* TuoStore.m */,
+				B061397C1941643E00A0CF62 /* Tuo.h */,
+				B061397D1941643E00A0CF62 /* Tuo.m */,
+				B0613985194173B600A0CF62 /* XiangStore.h */,
+				B0613986194173B600A0CF62 /* XiangStore.m */,
+				B061397F1941680C00A0CF62 /* Xiang.h */,
+				B06139801941680C00A0CF62 /* Xiang.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B06139911941BEE400A0CF62 /* Tuo */ = {
+			isa = PBXGroup;
+			children = (
+				B085F64A1940119E001F01F3 /* TuoTableViewController.h */,
+				B085F64B1940119E001F01F3 /* TuoTableViewController.m */,
+				B061398B1941BCF900A0CF62 /* TuoBaseViewController.h */,
+				B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */,
+				B061398E1941BD1300A0CF62 /* TuoScanViewController.h */,
+				B061398F1941BD1300A0CF62 /* TuoScanViewController.m */,
+			);
+			name = Tuo;
+			sourceTree = "<group>";
+		};
+		B06139921941BEF700A0CF62 /* Yun */ = {
+			isa = PBXGroup;
+			children = (
+				B085F6511940183D001F01F3 /* YunTableViewController.h */,
+				B085F6521940183D001F01F3 /* YunTableViewController.m */,
+			);
+			name = Yun;
+			sourceTree = "<group>";
+		};
 		B085F603194004CC001F01F3 = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				B085F64419400FA3001F01F3 /* vendor */,
+				B06139751941573B00A0CF62 /* Model */,
 				B085F63E194006EE001F01F3 /* Controller */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
@@ -173,10 +229,8 @@
 			children = (
 				B085F63F1940071A001F01F3 /* Login.h */,
 				B085F6401940071A001F01F3 /* Login.m */,
-				B085F64A1940119E001F01F3 /* TuoTableViewController.h */,
-				B085F64B1940119E001F01F3 /* TuoTableViewController.m */,
-				B085F6511940183D001F01F3 /* YunTableViewController.h */,
-				B085F6521940183D001F01F3 /* YunTableViewController.m */,
+				B06139911941BEE400A0CF62 /* Tuo */,
+				B06139921941BEF700A0CF62 /* Yun */,
 				B085F6541940184E001F01F3 /* SettingViewController.h */,
 				B085F6551940184E001F01F3 /* SettingViewController.m */,
 			);
@@ -292,9 +346,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
+				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
+				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
+				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
+				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
+				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,

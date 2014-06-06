@@ -7,9 +7,11 @@
 //
 
 #import "TuoTableViewController.h"
+#import "TuoStore.h"
+#import "Tuo.h"
 
 @interface TuoTableViewController ()
-
+@property(nonatomic,strong)TuoStore *tuoStore;
 @end
 
 @implementation TuoTableViewController
@@ -26,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.tuoStore=[TuoStore sharedTuoStore];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -44,28 +46,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [self.tuoStore tuoCount];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
+    cell.textLabel.text=[tuo department];
+    cell.detailTextLabel.text=[tuo agent];
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.

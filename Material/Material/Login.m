@@ -8,9 +8,6 @@
 
 #import "Login.h"
 #import "KeychainItemWrapper.h"
-#import "TuoTableViewController.h"
-#import "YunTableViewController.h"
-#import "SettingViewController.h"
 
 @interface Login ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *email;
