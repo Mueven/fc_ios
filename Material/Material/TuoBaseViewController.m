@@ -7,6 +7,8 @@
 //
 
 #import "TuoBaseViewController.h"
+#import "TuoScanViewController.h"
+#import "Tuo.h"
 
 @interface TuoBaseViewController ()
 - (IBAction)nextStep:(id)sender;
@@ -36,6 +38,27 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//- (IBAction)selectGroupCondition:(id)sender {
+//    NSArray *entity=[self.entityArray copy];
+//    void (^dismiss)()=^(){
+//        
+//    };
+//    [self performSegueWithIdentifier:@"selectGroupCondition" sender:@{
+//                                                                      @"entity":entity,
+//                                                                      @"dismiss":dismiss
+//                                                                      }];
+//}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"tuoBaseToScan"]){
+        TuoScanViewController *scanViewController=segue.destinationViewController;
+        Tuo *tuo=[[Tuo alloc] init];
+        tuo.department=self.department.text;
+        tuo.agent=self.agent.text;
+        scanViewController.tuo=tuo;
+    }
+    
 }
 
 - (IBAction)nextStep:(id)sender {

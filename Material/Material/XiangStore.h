@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Xiang;
 
 @interface XiangStore : NSObject
 +(instancetype)sharedXiangStore;
+-(Xiang *)addXiang:(NSString *)key partNumber:(NSString *)partNumber quatity:(NSString *)quatity;
+
 @end

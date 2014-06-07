@@ -10,6 +10,13 @@
 #import "Xiang.h"
 
 @implementation Tuo
+-(instancetype)init{
+    self=[super init];
+    if(self){
+        self.xiang=[[NSMutableArray alloc] init];
+    }
+    return self;
+}
 -(instancetype)initExample
 {
     self=[super init];
@@ -23,5 +30,9 @@
         }
     }
     return self;
+}
+-(void)addXiang:(Xiang *)xiang
+{
+    [self.xiang addObject:xiang];
 }
 @end

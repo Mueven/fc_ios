@@ -32,6 +32,7 @@
 		B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */; };
 		B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6521940183D001F01F3 /* YunTableViewController.m */; };
 		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
+		B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B096C63F1942923C00271AE4 /* HuoTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		B085F6521940183D001F01F3 /* YunTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunTableViewController.m; sourceTree = "<group>"; };
 		B085F6541940184E001F01F3 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		B085F6551940184E001F01F3 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		B096C63E1942923C00271AE4 /* HuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoTableViewCell.h; sourceTree = "<group>"; };
+		B096C63F1942923C00271AE4 /* HuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B085F64419400FA3001F01F3 /* vendor */,
+				B096C63D194291FB00271AE4 /* View */,
 				B06139751941573B00A0CF62 /* Model */,
 				B085F63E194006EE001F01F3 /* Controller */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
@@ -244,6 +248,15 @@
 				B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */,
 			);
 			name = vendor;
+			sourceTree = "<group>";
+		};
+		B096C63D194291FB00271AE4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B096C63E1942923C00271AE4 /* HuoTableViewCell.h */,
+				B096C63F1942923C00271AE4 /* HuoTableViewCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,6 +369,7 @@
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
+				B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,

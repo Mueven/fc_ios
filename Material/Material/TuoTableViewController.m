@@ -63,6 +63,12 @@
     return cell;
 }
 
+//unwind
+- (IBAction)unwindToTuoTable:(UIStoryboardSegue *)unwindSegue{
+    NSLog(@"asd");
+   
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

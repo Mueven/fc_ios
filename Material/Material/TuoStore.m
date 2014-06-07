@@ -41,4 +41,8 @@
 {
     return [self.listArray copy];
 }
+-(void)addTuo:(Tuo *)tuo
+{
+    [self.listArray addObject:tuo];
+}
 @end

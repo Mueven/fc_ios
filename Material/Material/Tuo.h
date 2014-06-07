@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Xiang;
 
 @interface Tuo : NSObject
 @property(nonatomic,strong) NSString *department;
 @property(nonatomic,strong) NSString *agent;
 @property(nonatomic,strong) NSMutableArray *xiang;
+
 -(instancetype)initExample;
+-(void)addXiang:(Xiang *)xiang;
 @end

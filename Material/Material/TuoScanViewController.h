@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tuo.h"
 
 @interface TuoScanViewController : UIViewController
-
+@property(nonatomic,strong)Tuo *tuo;
 @end
