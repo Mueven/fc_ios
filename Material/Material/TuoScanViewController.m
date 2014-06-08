@@ -70,8 +70,8 @@
     textField.inputView = dummyView;
 }
 
-//-(BOOL)textFieldShouldReturn:(UITextField *)textField
--(void)textFieldDidEndEditing:(UITextField *)textField
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+//-(void)textFieldDidEndEditing:(UITextField *)textField
 {
     int tag=textField.tag;
     if(tag==23){
@@ -91,7 +91,7 @@
     }
     UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
     [nextText becomeFirstResponder];
-//    return YES;
+    return YES;
 }
 //table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

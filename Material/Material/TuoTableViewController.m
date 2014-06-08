@@ -62,7 +62,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
     cell.textLabel.text=[tuo department];
     cell.detailTextLabel.text=[tuo agent];
     return cell;
