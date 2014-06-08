@@ -12,5 +12,7 @@
 @interface XiangStore : NSObject
 +(instancetype)sharedXiangStore;
 -(Xiang *)addXiang:(NSString *)key partNumber:(NSString *)partNumber quatity:(NSString *)quatity;
-
+-(NSInteger)xiangCount;
+-(NSArray *)xiangList;
+-(void)removeXiang:(NSInteger)index;
 @end

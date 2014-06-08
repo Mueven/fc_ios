@@ -16,4 +16,5 @@
 
 -(instancetype)initExample;
 -(void)addXiang:(Xiang *)xiang;
+-(NSInteger)xiangAmount;
 @end

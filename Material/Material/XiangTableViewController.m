@@ -1,21 +1,23 @@
 //
-//  TuoTableViewController.m
+//  XiangTableViewController.m
 //  Material
 //
-//  Created by wayne on 14-6-5.
+//  Created by wayne on 14-6-8.
 //  Copyright (c) 2014年 brilliantech. All rights reserved.
 //
 
-#import "TuoTableViewController.h"
-#import "TuoStore.h"
-#import "Tuo.h"
-#import "TuoEditViewController.h"
+#import "XiangTableViewController.h"
+#import "TuoScanViewController.h"
+#import "XiangStore.h"
+#import "Xiang.h"
+#import "HuoTableViewCell.h"
+#import "XiangEditViewController.h"
 
-@interface TuoTableViewController ()
-@property(nonatomic,strong)TuoStore *tuoStore;
+@interface XiangTableViewController ()
+@property (nonatomic , strong) XiangStore *xiangStore;
 @end
 
-@implementation TuoTableViewController
+@implementation XiangTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tuoStore=[TuoStore sharedTuoStore];
+    self.xiangStore=[XiangStore sharedXiangStore];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -51,26 +53,41 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.tuoStore tuoCount];
+    // Return the number of rows in the section.
+    return [self.xiangStore xiangCount];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.textLabel.text=[tuo department];
-    cell.detailTextLabel.text=[tuo agent];
+    HuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell"];
+    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
+    cell.leoniNumber.text=xiang.number;
+    cell.kwyNumber.text=xiang.key;
+    cell.extraInfo.text=[NSString stringWithFormat:@"Q%@ / %@",xiang.count,xiang.position];
+    cell.leoniNumber.adjustsFontSizeToFitWidth=YES;
+    cell.kwyNumber.adjustsFontSizeToFitWidth=YES;
+    cell.extraInfo.adjustsFontSizeToFitWidth=YES;
     return cell;
 }
 
-//unwind
-- (IBAction)unwindToTuoTable:(UIStoryboardSegue *)unwindSegue{
-    [self.tableView reloadData];
+#pragma mark - Navigation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"bundleXiang"]){
+        TuoScanViewController *scan=segue.destinationViewController;
+        scan.type=@"xiang";
+    }
+    else if([segue.identifier isEqualToString:@"fromXiang"]){
+        int row=[[self.tableView indexPathForCell:sender] row];
+        XiangEditViewController *xiangEdit=segue.destinationViewController;
+        xiangEdit.xiang=[[self.xiangStore xiangList] objectAtIndex:row];
+    }
 }
 
 
@@ -88,7 +105,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.tuoStore removeTuo:indexPath.row];
+        [self.xiangStore removeXiang:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -112,23 +129,6 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"tuoEdit"]){
-        TuoEditViewController *tuoEdit=segue.destinationViewController;
-        Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:[[self.tableView indexPathForCell:sender] row]];
-        tuoEdit.tuo=tuo;
-    }
-}
 
 @end

@@ -45,4 +45,8 @@
 {
     [self.listArray addObject:tuo];
 }
+-(void)removeTuo:(NSInteger)index
+{
+    [self.listArray removeObjectAtIndex:index];
+}
 @end

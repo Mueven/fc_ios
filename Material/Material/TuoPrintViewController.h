@@ -1,15 +1,14 @@
 //
-//  TuoScanViewController.h
+//  TuoPrintViewController.h
 //  Material
 //
-//  Created by wayne on 14-6-6.
+//  Created by wayne on 14-6-8.
 //  Copyright (c) 2014年 brilliantech. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "Tuo.h"
 
-@interface TuoScanViewController : UIViewController
+@interface TuoPrintViewController : UIViewController
 @property(nonatomic,strong)Tuo *tuo;
-@property(nonatomic,strong)NSString *type;
 @end

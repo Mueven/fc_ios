@@ -42,5 +42,16 @@
     [self.xiangArray addObject:xiang];
     return xiang;
 }
-
+-(NSInteger)xiangCount
+{
+    return [self.xiangArray count];
+}
+-(NSArray *)xiangList
+{
+    return [self.xiangArray copy];
+}
+-(void)removeXiang:(NSInteger)index
+{
+    [self.xiangArray removeObjectAtIndex:index];
+}
 @end

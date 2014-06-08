@@ -14,4 +14,5 @@
 -(NSArray *)tuoList;
 -(int)tuoCount;
 -(void)addTuo:(Tuo *)tuo;
+-(void)removeTuo:(NSInteger)index;
 @end

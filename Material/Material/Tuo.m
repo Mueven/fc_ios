@@ -21,8 +21,8 @@
 {
     self=[super init];
     if(self){
-        self.department=@"MB_example";
-        self.agent=@"Wayne";
+        self.department=[NSString stringWithFormat:@"MB_example%d",arc4random()%99];
+        self.agent=[NSString stringWithFormat:@"Wayne%d",arc4random()%99];
         self.xiang=[[NSMutableArray alloc] init];
         for(int i=0;i<3;i++){
             Xiang *xiang=[[Xiang alloc] initExample];
@@ -34,5 +34,9 @@
 -(void)addXiang:(Xiang *)xiang
 {
     [self.xiang addObject:xiang];
+}
+-(NSInteger)xiangAmount
+{
+    return [self.xiang count];
 }
 @end

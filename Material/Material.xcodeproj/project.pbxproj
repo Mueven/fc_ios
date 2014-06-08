@@ -33,6 +33,11 @@
 		B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6521940183D001F01F3 /* YunTableViewController.m */; };
 		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
 		B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B096C63F1942923C00271AE4 /* HuoTableViewCell.m */; };
+		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
+		B0DF643919440033002D044B /* XiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643819440033002D044B /* XiangTableViewController.m */; };
+		B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643B19440FCA002D044B /* XiangEditViewController.m */; };
+		B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643E1944588B002D044B /* TuoEditViewController.m */; };
+		B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644119446E5B002D044B /* TuoPrintViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +93,16 @@
 		B085F6551940184E001F01F3 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		B096C63E1942923C00271AE4 /* HuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoTableViewCell.h; sourceTree = "<group>"; };
 		B096C63F1942923C00271AE4 /* HuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoTableViewCell.m; sourceTree = "<group>"; };
+		B0DF64331943E1D1002D044B /* PrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintViewController.h; sourceTree = "<group>"; };
+		B0DF64341943E1D1002D044B /* PrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintViewController.m; sourceTree = "<group>"; };
+		B0DF643719440033002D044B /* XiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewController.h; sourceTree = "<group>"; };
+		B0DF643819440033002D044B /* XiangTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewController.m; sourceTree = "<group>"; };
+		B0DF643A19440FCA002D044B /* XiangEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangEditViewController.h; sourceTree = "<group>"; };
+		B0DF643B19440FCA002D044B /* XiangEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangEditViewController.m; sourceTree = "<group>"; };
+		B0DF643D1944588B002D044B /* TuoEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoEditViewController.h; sourceTree = "<group>"; };
+		B0DF643E1944588B002D044B /* TuoEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoEditViewController.m; sourceTree = "<group>"; };
+		B0DF644019446E5B002D044B /* TuoPrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoPrintViewController.h; sourceTree = "<group>"; };
+		B0DF644119446E5B002D044B /* TuoPrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoPrintViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,10 +150,14 @@
 			children = (
 				B085F64A1940119E001F01F3 /* TuoTableViewController.h */,
 				B085F64B1940119E001F01F3 /* TuoTableViewController.m */,
+				B0DF643D1944588B002D044B /* TuoEditViewController.h */,
+				B0DF643E1944588B002D044B /* TuoEditViewController.m */,
 				B061398B1941BCF900A0CF62 /* TuoBaseViewController.h */,
 				B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */,
 				B061398E1941BD1300A0CF62 /* TuoScanViewController.h */,
 				B061398F1941BD1300A0CF62 /* TuoScanViewController.m */,
+				B0DF644019446E5B002D044B /* TuoPrintViewController.h */,
+				B0DF644119446E5B002D044B /* TuoPrintViewController.m */,
 			);
 			name = Tuo;
 			sourceTree = "<group>";
@@ -233,10 +252,13 @@
 			children = (
 				B085F63F1940071A001F01F3 /* Login.h */,
 				B085F6401940071A001F01F3 /* Login.m */,
+				B0DF643619440018002D044B /* Xiang */,
 				B06139911941BEE400A0CF62 /* Tuo */,
 				B06139921941BEF700A0CF62 /* Yun */,
 				B085F6541940184E001F01F3 /* SettingViewController.h */,
 				B085F6551940184E001F01F3 /* SettingViewController.m */,
+				B0DF64331943E1D1002D044B /* PrintViewController.h */,
+				B0DF64341943E1D1002D044B /* PrintViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -257,6 +279,17 @@
 				B096C63F1942923C00271AE4 /* HuoTableViewCell.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		B0DF643619440018002D044B /* Xiang */ = {
+			isa = PBXGroup;
+			children = (
+				B0DF643719440033002D044B /* XiangTableViewController.h */,
+				B0DF643819440033002D044B /* XiangTableViewController.m */,
+				B0DF643A19440FCA002D044B /* XiangEditViewController.h */,
+				B0DF643B19440FCA002D044B /* XiangEditViewController.m */,
+			);
+			name = Xiang;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,18 +392,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
+				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
 				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
+				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
+				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
+				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,
 			);

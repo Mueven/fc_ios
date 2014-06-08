@@ -57,6 +57,7 @@
         tuo.department=self.department.text;
         tuo.agent=self.agent.text;
         scanViewController.tuo=tuo;
+        scanViewController.type=@"tuo";
     }
     
 }

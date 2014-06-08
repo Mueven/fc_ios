@@ -11,15 +11,18 @@
 #import "TuoStore.h"
 #import "HuoTableViewCell.h"
 #import "Xiang.h"
+#import "PrintViewController.h"
+#import "Tuo.h"
+#import "XiangEditViewController.h"
 
 @interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *key;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
 @property (weak, nonatomic) IBOutlet UITextField *quatity;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
-
 @property (strong, nonatomic) XiangStore *xiangStore;
-- (IBAction)finishTuo:(id)sender;
+- (IBAction)finish:(id)sender;
+
 @end
 
 @implementation TuoScanViewController
@@ -40,10 +43,15 @@
     self.partNumber.delegate=self;
     self.quatity.delegate=self;
     self.xiangStore=[XiangStore sharedXiangStore];
-//    [self.xiangTable registerClass:[UITableViewCell class] forCellReuseIdentifier:@"huoCell"];
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
-    // Do any additional setup after loading the view.
+    if([self.type isEqualToString:@"xiang"]){
+        self.navigationItem.rightBarButtonItem=NULL;
+        self.tuo=[[Tuo alloc] init];
+    }
+    else if([self.type isEqualToString:@"addXiang"]){
+        self.navigationItem.rightBarButtonItem=NULL;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -74,6 +82,7 @@
         Xiang *newXiang=[self.xiangStore addXiang:key partNumber:partNumber quatity:quatity];
         //本地的拖加一个箱
         [self.tuo addXiang:newXiang];
+        
         [self.xiangTable reloadData];
     }
     tag++;
@@ -105,12 +114,36 @@
     cell.extraInfo.adjustsFontSizeToFitWidth=YES;
     return cell;
 }
-
-
-- (IBAction)finishTuo:(id)sender {
-    TuoStore *tuoStore=[TuoStore sharedTuoStore];
-    [tuoStore addTuo:self.tuo];
-    
-    [self performSegueWithIdentifier:@"finishTuo" sender:self];
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([self.type isEqualToString:@"xiang"]){
+      return NO;
+    }
+    else{
+        return YES;
+    }
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"scanToPrint"]){
+        PrintViewController *printViewController = segue.destinationViewController;
+        printViewController.container=[sender objectForKey:@"container"];
+    }
+    else if([segue.identifier isEqualToString:@"fromTuo"]){
+        int row=[[self.xiangTable indexPathForCell:sender] row];
+        XiangEditViewController *xiangEdit=segue.destinationViewController;
+        xiangEdit.xiang=[self.tuo.xiang objectAtIndex:row];
+    }
+}
+- (IBAction)finish:(id)sender {
+    [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
 }
 @end
