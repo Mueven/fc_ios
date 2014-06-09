@@ -14,5 +14,6 @@
 @property(nonatomic,strong)NSString *count;
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *remark;
+@property(nonatomic)BOOL checked;
 -(instancetype)initExample;
 @end

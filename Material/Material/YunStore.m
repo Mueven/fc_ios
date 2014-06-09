@@ -7,9 +7,10 @@
 //
 
 #import "YunStore.h"
+#import "Yun.h"
 
 @interface YunStore()
-@property (nonatomic,strong) NSMutableArray *yunArray;
+
 @end
 
 @implementation YunStore
@@ -27,6 +28,10 @@
     self=[super init];
     if(self){
         self.yunArray=[[NSMutableArray alloc] init];
+        for(int i=0;i<3;i++){
+            Yun *yun=[[Yun alloc] initExample];
+            [self.yunArray addObject:yun];
+        }
     }
     return self;
 }

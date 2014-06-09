@@ -39,7 +39,7 @@
 {
     [super viewWillAppear:animated];
     self.departmentLabel.text=self.tuo.department;
-    self.agentLabel.text=self.tuo.agent;
+    self.agentLabel.text=[NSString stringWithFormat:@"%@   %@",self.tuo.date,self.tuo.agent];
     self.departmentLabel.adjustsFontSizeToFitWidth=YES;
     self.agentLabel.adjustsFontSizeToFitWidth=YES;
 }

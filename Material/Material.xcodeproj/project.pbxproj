@@ -40,6 +40,10 @@
 		B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644119446E5B002D044B /* TuoPrintViewController.m */; };
 		B0DF644519448B67002D044B /* Yun.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644419448B67002D044B /* Yun.m */; };
 		B0DF644819448B75002D044B /* YunStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644719448B75002D044B /* YunStore.m */; };
+		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
+		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
+		B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */; };
+		B0FDC97219458B6F008E4B72 /* YunEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC97119458B6F008E4B72 /* YunEditViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +113,14 @@
 		B0DF644419448B67002D044B /* Yun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Yun.m; sourceTree = "<group>"; };
 		B0DF644619448B75002D044B /* YunStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunStore.h; sourceTree = "<group>"; };
 		B0DF644719448B75002D044B /* YunStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunStore.m; sourceTree = "<group>"; };
+		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
+		B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChooseTuoViewController.m; sourceTree = "<group>"; };
+		B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunHaveTuoTableViewController.h; sourceTree = "<group>"; };
+		B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunHaveTuoTableViewController.m; sourceTree = "<group>"; };
+		B0FDC96D194555FE008E4B72 /* YunInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunInfoViewController.h; sourceTree = "<group>"; };
+		B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunInfoViewController.m; sourceTree = "<group>"; };
+		B0FDC97019458B6F008E4B72 /* YunEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunEditViewController.h; sourceTree = "<group>"; };
+		B0FDC97119458B6F008E4B72 /* YunEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunEditViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +189,14 @@
 			children = (
 				B085F6511940183D001F01F3 /* YunTableViewController.h */,
 				B085F6521940183D001F01F3 /* YunTableViewController.m */,
+				B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */,
+				B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */,
+				B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */,
+				B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */,
+				B0FDC96D194555FE008E4B72 /* YunInfoViewController.h */,
+				B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */,
+				B0FDC97019458B6F008E4B72 /* YunEditViewController.h */,
+				B0FDC97119458B6F008E4B72 /* YunEditViewController.m */,
 			);
 			name = Yun;
 			sourceTree = "<group>";
@@ -262,13 +282,8 @@
 			children = (
 				B085F63F1940071A001F01F3 /* Login.h */,
 				B085F6401940071A001F01F3 /* Login.m */,
-				B0DF643619440018002D044B /* Xiang */,
-				B06139911941BEE400A0CF62 /* Tuo */,
-				B06139921941BEF700A0CF62 /* Yun */,
-				B085F6541940184E001F01F3 /* SettingViewController.h */,
-				B085F6551940184E001F01F3 /* SettingViewController.m */,
-				B0DF64331943E1D1002D044B /* PrintViewController.h */,
-				B0DF64341943E1D1002D044B /* PrintViewController.m */,
+				B0FDC9761945AFA3008E4B72 /* STOCK */,
+				B0FDC9771945AFC9008E4B72 /* SHOP */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -300,6 +315,27 @@
 				B0DF643B19440FCA002D044B /* XiangEditViewController.m */,
 			);
 			name = Xiang;
+			sourceTree = "<group>";
+		};
+		B0FDC9761945AFA3008E4B72 /* STOCK */ = {
+			isa = PBXGroup;
+			children = (
+				B0DF643619440018002D044B /* Xiang */,
+				B06139911941BEE400A0CF62 /* Tuo */,
+				B06139921941BEF700A0CF62 /* Yun */,
+				B0DF64331943E1D1002D044B /* PrintViewController.h */,
+				B0DF64341943E1D1002D044B /* PrintViewController.m */,
+				B085F6541940184E001F01F3 /* SettingViewController.h */,
+				B085F6551940184E001F01F3 /* SettingViewController.m */,
+			);
+			name = STOCK;
+			sourceTree = "<group>";
+		};
+		B0FDC9771945AFC9008E4B72 /* SHOP */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SHOP;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,10 +439,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
+				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
 				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
 				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
+				B0FDC97219458B6F008E4B72 /* YunEditViewController.m in Sources */,
+				B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
@@ -418,6 +457,7 @@
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
+				B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */,
 				B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
@@ -545,6 +585,7 @@
 				INFOPLIST_FILE = "Material/Material-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -560,6 +601,7 @@
 				INFOPLIST_FILE = "Material/Material-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

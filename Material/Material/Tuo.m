@@ -23,6 +23,9 @@
     if(self){
         self.department=[NSString stringWithFormat:@"MB_example%d",arc4random()%99];
         self.agent=[NSString stringWithFormat:@"Wayne%d",arc4random()%99];
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        self.date=[formatter stringFromDate:[NSDate date]];
         self.xiang=[[NSMutableArray alloc] init];
         for(int i=0;i<3;i++){
             Xiang *xiang=[[Xiang alloc] initExample];

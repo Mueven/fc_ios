@@ -10,5 +10,6 @@
 @class Yun;
 
 @interface YunStore : NSObject
+@property (nonatomic,strong) NSMutableArray *yunArray;
 +(instancetype)sharedYunStore;
 @end

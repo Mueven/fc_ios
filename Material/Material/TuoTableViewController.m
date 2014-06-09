@@ -63,8 +63,8 @@
 {
     Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
-    cell.textLabel.text=[tuo department];
-    cell.detailTextLabel.text=[tuo agent];
+    cell.textLabel.text=tuo.department ;
+    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@   %@",tuo.date,tuo.agent];
     return cell;
 }
 

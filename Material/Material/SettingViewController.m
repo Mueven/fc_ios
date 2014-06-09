@@ -10,7 +10,7 @@
 #import "Login.h"
 
 @interface SettingViewController ()
-- (IBAction)logout:(id)sender;
+- (IBAction)logOut:(id)sender;
 
 @end
 
@@ -39,10 +39,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)logout:(id)sender {
-    Login *login=[[Login alloc] init];
-    [self presentViewController:login
-                       animated:YES
-                     completion:nil];
+
+- (IBAction)logOut:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end

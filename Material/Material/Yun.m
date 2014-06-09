@@ -7,7 +7,27 @@
 //
 
 #import "Yun.h"
+#import "Tuo.h"
 
 @implementation Yun
-
+-(instancetype)init
+{
+    self=[super init];
+    if(self){
+       self.tuoArray=[[NSMutableArray alloc] init]; 
+    }
+    return self;
+}
+-(instancetype)initExample
+{
+    self=[super init];
+    if(self){
+        self.name=[NSString stringWithFormat:@"Yun%d",arc4random()%100];
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        self.date=[formatter stringFromDate:[NSDate date]];
+        self.tuoArray=[[NSMutableArray alloc] init];
+    }
+    return self;
+}
 @end

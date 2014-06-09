@@ -56,6 +56,9 @@
         Tuo *tuo=[[Tuo alloc] init];
         tuo.department=self.department.text;
         tuo.agent=self.agent.text;
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        tuo.date=[formatter stringFromDate:[NSDate date]];
         scanViewController.tuo=tuo;
         scanViewController.type=@"tuo";
     }

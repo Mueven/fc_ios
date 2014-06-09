@@ -12,6 +12,7 @@
 @interface Tuo : NSObject
 @property(nonatomic,strong) NSString *department;
 @property(nonatomic,strong) NSString *agent;
+@property(nonatomic,strong) NSString *date;
 @property(nonatomic,strong) NSMutableArray *xiang;
 
 -(instancetype)initExample;
