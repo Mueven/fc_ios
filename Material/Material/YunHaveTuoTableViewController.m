@@ -64,6 +64,7 @@
     for(int i=0;i<count;i++){
         if(tuo==[self.privateTuo objectAtIndex:i]){
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
+            break ;
         }
     }
     cell.textLabel.text=tuo.department;

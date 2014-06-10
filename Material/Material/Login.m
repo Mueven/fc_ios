@@ -78,7 +78,7 @@
 //    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
 //    if([email isEqualToString:@"superxiao21@163.com"]&&[password isEqualToString:@"w"]){
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-    UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"stock"];
+    UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"shop"];
     [self presentViewController:tabbarStock
                            animated:YES
                          completion:nil];

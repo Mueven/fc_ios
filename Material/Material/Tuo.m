@@ -27,7 +27,7 @@
         [formatter setDateFormat:@"yyyy.MM.dd"];
         self.date=[formatter stringFromDate:[NSDate date]];
         self.xiang=[[NSMutableArray alloc] init];
-        for(int i=0;i<3;i++){
+        for(int i=0;i<10;i++){
             Xiang *xiang=[[Xiang alloc] initExample];
             [self.xiang addObject:xiang];
         }
