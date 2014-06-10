@@ -71,17 +71,26 @@
 }
 
 - (IBAction)login:(id)sender {
-//    NSString *email=self.email.text;
+    NSString *email=self.email.text;
 //    NSString *password=self.password.text;
 //    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
 //                                                                      accessGroup:nil];
 //    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
 //    if([email isEqualToString:@"superxiao21@163.com"]&&[password isEqualToString:@"w"]){
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-    UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"shop"];
-    [self presentViewController:tabbarStock
+    if([email isEqualToString:@"w"]){
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+        UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"shop"];
+        [self presentViewController:tabbarStock
                            animated:YES
                          completion:nil];
+    }
+    else{
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+        UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"stock"];
+        [self presentViewController:tabbarStock
+                           animated:YES
+                         completion:nil];
+    }
 //    }
 }
 

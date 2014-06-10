@@ -12,10 +12,12 @@
 #import "Xiang.h"
 #import "ReceiveXiangViewController.h"
 
-@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (strong,nonatomic) UIAlertView *printAlert;
+- (IBAction)confirmReceive:(id)sender;
 
 @end
 
@@ -39,7 +41,6 @@
     self.tuoTable.dataSource=self;
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tuoTable registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
-    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",[self.yun.tuoArray count]];
     
     self.yun=[[Yun alloc] initExample];
     for(int i=0;i<10;i++){
@@ -51,7 +52,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.scanTextField becomeFirstResponder];
+    if(![self.scanTextField isFirstResponder]){
+        [self.scanTextField becomeFirstResponder];
+    }
+    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",[self.yun.tuoArray count]];
     [self.tuoTable reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -119,5 +123,53 @@
     }
 }
 
+#pragma alert button
+- (IBAction)confirmReceive:(id)sender {
+    int count=0;
+    int checked=0;
+    for(int i=0;i<[self.yun.tuoArray count];i++){
+        Tuo *tuo=[self.yun.tuoArray objectAtIndex:i];
+        int aTuoXiangCount=[tuo.xiang count];
+        count+=aTuoXiangCount;
+        for(int j=0;j<aTuoXiangCount;j++){
+            Xiang *xiang=[tuo.xiang objectAtIndex:j];
+            if(xiang.checked){
+                checked++;
+            }
+        }
+    }
+    NSString *condition=[NSString stringWithFormat:@"验收状况：%d / %d",checked,count];
 
+        UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"确认收货吗？"
+                                                      message:condition
+                                                     delegate:self
+                                            cancelButtonTitle:@"取消"
+                                            otherButtonTitles:@"确定",nil];
+        [alert show];
+
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(!self.printAlert){
+        //点击收货“是”以后
+        if(buttonIndex==1){
+            self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
+                                                        message:@"要打印运单吗？"
+                                                       delegate:self
+                                              cancelButtonTitle:@"不打印"
+                                              otherButtonTitles:@"打印",nil];
+            [self.printAlert show];
+        }
+    }
+    else{
+        //在是否打印这个alert中点击按钮
+        if(buttonIndex==1){
+          //收货+打印
+        }
+        else{
+          //收货+不打印
+        }
+        self.printAlert=nil;
+    }
+}
 @end
