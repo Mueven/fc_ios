@@ -10,7 +10,7 @@
 @class Xiang;
 
 @interface XiangStore : NSObject
-+(instancetype)sharedXiangStore;
++(instancetype)sharedXiangStore:(UIView *)view;
 -(Xiang *)addXiang:(NSString *)key partNumber:(NSString *)partNumber quatity:(NSString *)quatity;
 -(NSInteger)xiangCount;
 -(NSArray *)xiangList;

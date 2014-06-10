@@ -42,7 +42,7 @@
     self.key.delegate=self;
     self.partNumber.delegate=self;
     self.quatity.delegate=self;
-    self.xiangStore=[XiangStore sharedXiangStore];
+    self.xiangStore=[XiangStore sharedXiangStore:self.view];
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     if([self.type isEqualToString:@"xiang"]){

@@ -8,25 +8,27 @@
 
 #import "XiangStore.h"
 #import "Xiang.h"
+#import "AFNetOperate.h"
 
 @interface XiangStore()
 @property(nonatomic,strong)NSMutableArray *xiangArray;
 @end
 @implementation XiangStore
-+(instancetype)sharedXiangStore
++(instancetype)sharedXiangStore:(UIView *)view
 {
     static XiangStore *xiangList=nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        xiangList=[[XiangStore alloc] initPrivate];
+        xiangList=[[XiangStore alloc] initPrivate:view];
     });
     return xiangList;
 }
--(instancetype)initPrivate
+-(instancetype)initPrivate:(UIView *)view
 {
     self=[super init];
     if(self){
         self.xiangArray=[[NSMutableArray alloc] init];
+        [[[AFNetOperate alloc] init] getXiangs:self.xiangArray view:view];
     }
     return self;
 }
