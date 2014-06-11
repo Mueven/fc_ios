@@ -11,7 +11,7 @@
 #import "AFNetOperate.h"
 
 @interface XiangStore()
-@property(nonatomic,strong)NSMutableArray *xiangArray;
+
 @end
 @implementation XiangStore
 +(instancetype)sharedXiangStore:(UIView *)view

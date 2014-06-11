@@ -30,6 +30,8 @@
 		B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2091946E60D00A95D7A /* AFURLSessionManager.m */; };
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
+		B05EEDD91947FAEA009DDAE9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
+		B05EEDDD1948438D009DDAE9 /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
 		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
@@ -124,6 +126,9 @@
 		B04EF2131946E87800A95D7A /* AFNetOperate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetOperate.h; sourceTree = "<group>"; };
 		B04EF2141946E87800A95D7A /* AFNetOperate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetOperate.m; sourceTree = "<group>"; };
 		B04EF2161946E89400A95D7A /* URL.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = URL.plist; sourceTree = "<group>"; };
+		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
+		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
 		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
 		B061397A194163DF00A0CF62 /* TuoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoStore.m; sourceTree = "<group>"; };
 		B061397C1941643E00A0CF62 /* Tuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuo.h; sourceTree = "<group>"; };
@@ -195,8 +200,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B05EEDD91947FAEA009DDAE9 /* ExternalAccessory.framework in Frameworks */,
 				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
 				B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */,
+				B05EEDDD1948438D009DDAE9 /* libCaptuvoSDK.a in Frameworks */,
 				B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */,
 				B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */,
 			);
@@ -342,6 +349,7 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */,
 				B085F64819401091001F01F3 /* Security.framework */,
 				B085F60F194004CC001F01F3 /* Foundation.framework */,
 				B085F611194004CC001F01F3 /* CoreGraphics.framework */,
@@ -413,6 +421,8 @@
 		B085F64419400FA3001F01F3 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */,
+				B05EEDD51947FA2A009DDAE9 /* Captuvo.h */,
 				B04EF1F61946E60D00A95D7A /* AFNetworking */,
 				B085F64D194014A8001F01F3 /* KeychainItemWrapper.h */,
 				B085F64E194014A8001F01F3 /* KeychainItemWrapper.m */,
@@ -742,6 +752,11 @@
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/wayne/Desktop/CaptuvoSDK/SDK/Lib,
+					"$(PROJECT_DIR)/Material",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -758,6 +773,11 @@
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/wayne/Desktop/CaptuvoSDK/SDK/Lib,
+					"$(PROJECT_DIR)/Material",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

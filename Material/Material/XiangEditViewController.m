@@ -7,6 +7,7 @@
 //
 
 #import "XiangEditViewController.h"
+#import "AFNetOperate.h"
 
 @interface XiangEditViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *key;
@@ -54,6 +55,21 @@
     self.xiang.key=self.key.text;
     self.xiang.number=self.partNumber.text;
     self.xiang.count=self.quantity.text;
+    
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [manager PUT:[]
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             
+//         }
+//     ];
+
+    
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end

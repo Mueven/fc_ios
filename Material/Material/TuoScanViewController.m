@@ -14,6 +14,7 @@
 #import "PrintViewController.h"
 #import "Tuo.h"
 #import "XiangEditViewController.h"
+#import "AFNetOperate.h"
 
 @interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITextField *key;
@@ -22,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong, nonatomic) XiangStore *xiangStore;
 - (IBAction)finish:(id)sender;
+- (IBAction)startDecoder:(id)sender;
 
 @end
 
@@ -56,8 +58,52 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.key becomeFirstResponder];
+//    [self.key becomeFirstResponder];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+   
+    ProtocolConnectionStatus connectionStatus = [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    switch (connectionStatus) {
+        case ProtocolConnectionStatusConnected:
+        case ProtocolConnectionStatusAlreadyConnected:
+            NSLog(@"Connected!");
+            break;
+        case ProtocolConnectionStatusBatteryDepleted:
+            NSLog(@"Battery depleted!");
+            break;
+        case ProtocolConnectionStatusUnableToConnect:
+            NSLog(@"Error connecting!");
+            break;
+        case ProtocolConnectionStatusUnableToConnectIncompatiableSledFirmware:
+            NSLog(@"Incompatible firmware!");
+            break;
+        default:
+            break;
+    }
+   
 }
+- (void)decoderReady
+{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
+                                                   message:@"111111 decoder ready"
+                                                  delegate:nil
+                                         cancelButtonTitle:@"OK"
+                                         otherButtonTitles:nil];
+    [alert show];
+    
+    
+}
+
+-(void)decoderDataReceived:(NSString *)data{
+    NSLog(@"Decoder Data Received: %@",data);
+
+}
+- (void)decoderRawDataReceived:(NSData *)data{
+    NSLog(@"- (void)decoderRawDataReceived:(NSData *)data") ;
+
+}
+
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -77,13 +123,26 @@
     if(tag==23){
         NSString *key=self.key.text;
         NSString *partNumber=self.partNumber.text;
-        NSString *quatity=self.quatity.text;
-        //箱的绑定集中加一箱
-        Xiang *newXiang=[self.xiangStore addXiang:key partNumber:partNumber quatity:quatity];
-        //本地的拖加一个箱
-        [self.tuo addXiang:newXiang];
+        NSString *quantity=self.quatity.text;
         
-        [self.xiangTable reloadData];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet xiang_root]
+           parameters:@{
+                        @"key":key,
+                        @"partNumber":partNumber,
+                        @"quantity":quantity
+                        }
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                    Xiang *newXiang=[self.xiangStore addXiang:key partNumber:partNumber quatity:quantity];
+                  [self.tuo addXiang:newXiang];
+                  [self.xiangTable reloadData];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+              }
+         ];
     }
     tag++;
     if(tag>23){
@@ -145,5 +204,10 @@
 }
 - (IBAction)finish:(id)sender {
     [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+}
+
+- (IBAction)startDecoder:(id)sender {
+    [[Captuvo sharedCaptuvoDevice] startDecoderScanning];
+    [[Captuvo sharedCaptuvoDevice] startMSRHardware];
 }
 @end

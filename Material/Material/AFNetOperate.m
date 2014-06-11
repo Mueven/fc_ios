@@ -10,7 +10,7 @@
 #import "Xiang.h"
 
 @interface AFNetOperate()
-@property(strong,nonatomic)UIActivityIndicatorView *activeView;
+
 @end
 
 @implementation AFNetOperate
@@ -32,32 +32,16 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     return manager;
 }
-
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view
+-(void)alert:(NSString *)string
 {
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-//    [manager GET:@"http://example.com/resources.json"
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             NSLog(@"JSON: %@", responseObject);
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             NSLog(@"Error: %@", error);
-//         }
-//     ];
-   
-    NSLog(@"%@",[self xiang_root]);
-    Xiang *xiang=[[Xiang alloc] init];
-    xiang.key=@"123";
-    xiang.number=@"123";
-    xiang.count=@"123";
-    //example
-    xiang.position=@"12 13 21";
-    xiang.remark=@"1";
-    [xiangArray addObject:xiang];
+    UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"出现错误"
+                                                  message:string
+                                                 delegate:self
+                                        cancelButtonTitle:@"确定"
+                                        otherButtonTitles:nil];
+    [alert show];
+    
 }
-
-
 #pragma url method
 -(NSMutableDictionary *)URLDictionary
 {
@@ -78,4 +62,38 @@
     NSString *xiang=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"root"];
     return [base stringByAppendingString:xiang];
 }
+//-(NSString *)xiang_edit:(NSString *)id{
+//    
+//}
+-(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view
+{
+    [self.activeView stopAnimating];
+//    AFHTTPRequestOperationManager *manager=[self generateManager:view];
+//    [manager GET:[self xiang_root]
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             [self.activeView stopAnimating];
+//             Xiang *xiang=[[Xiang alloc] init];
+//             xiang.key=@"123";
+//             xiang.number=@"123";
+//             xiang.count=@"123";
+//             xiang.position=@"12 13 21";
+//             xiang.remark=@"1";
+//             [xiangArray addObject:xiang];
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             [self.activeView stopAnimating];
+//         }
+//    ];
+    
+        Xiang *xiang=[[Xiang alloc] init];
+           xiang.key=@"123";
+           xiang.number=@"123";
+               xiang.count=@"123";
+              xiang.position=@"12 13 21";
+              xiang.remark=@"1";
+               [xiangArray addObject:xiang];
+}
+
+
 @end

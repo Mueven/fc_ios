@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Tuo.h"
 
-@interface TuoScanViewController : UIViewController
+@interface TuoScanViewController : UIViewController<CaptuvoEventsProtocol>
 @property(nonatomic,strong)Tuo *tuo;
 @property(nonatomic,strong)NSString *type;
 @end
