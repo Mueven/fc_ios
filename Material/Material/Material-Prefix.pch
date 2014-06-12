@@ -15,5 +15,4 @@
     #import <Foundation/Foundation.h>
     #import "AFNetworking.h"
     #import "Captuvo.h"
-    #import "KeychainItemWrapper.h"
 #endif

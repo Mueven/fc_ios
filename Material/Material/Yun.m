@@ -30,4 +30,18 @@
     }
     return self;
 }
+-(instancetype)initWith:(NSString *)ID name:(NSString *)name remark:(NSString *)remark
+{
+    self=[super init];
+    if(self){
+        self.ID=ID?ID:@"";
+        self.name=name?name:@"";
+        self.remark=remark?remark:@"";
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        self.date=[formatter stringFromDate:[NSDate date]];
+        self.tuoArray=[[NSMutableArray alloc] init];
+    }
+    return self;
+}
 @end

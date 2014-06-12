@@ -21,4 +21,17 @@
     }
     return self;
 }
+-(instancetype)initWith:(NSString *)ID partNumber:(NSString *)partNumber key:(NSString *)key count:(NSString *)count position:(NSString *)position remark:(NSString *)remark date:(NSString *)date
+{
+    self=[super init];
+    if(self){
+        self.number=partNumber?partNumber:@"";
+        self.count=count?count:@"";
+        self.key=key?key:@"";
+        self.position=position?position:@"";
+        self.remark=remark?remark:@"";
+        self.date=date?date:@"";
+    }
+    return self;
+}
 @end

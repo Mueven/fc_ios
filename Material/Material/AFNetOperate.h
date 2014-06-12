@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XiangStore.h"
 
 @interface AFNetOperate : NSObject
 @property(strong,nonatomic)UIActivityIndicatorView *activeView;
@@ -15,7 +14,13 @@
 -(AFHTTPRequestOperationManager *)generateManager:(UIView *)view;
 -(void)alert:(NSString *)string;
 -(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view;
+-(void)getTuos:(NSMutableArray *)tuoArray view:(UIView *)view;
+-(void)getYuns:(NSMutableArray *)yunArray view:(UIView *)view;
 //get URL
 -(NSString *)xiang_root;
-//-(NSString *)xiang_edit:(NSString *)id;
+-(NSString *)xiang_edit:(NSString *)id;
+-(NSString *)tuo_root;
+-(NSString *)tuo_edit:(NSString *)id;
+-(NSString *)yun_root;
+-(NSString *)yun_edit:(NSString *)id;
 @end

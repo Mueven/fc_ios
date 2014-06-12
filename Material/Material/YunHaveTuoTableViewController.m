@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     self.privateTuo=[self.yun.tuoArray mutableCopy];
-    self.tuoStore=[TuoStore sharedTuoStore];
+    self.tuoStore=[TuoStore sharedTuoStore:self.view];
 }
 
 - (void)didReceiveMemoryWarning

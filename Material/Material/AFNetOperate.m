@@ -8,9 +8,11 @@
 
 #import "AFNetOperate.h"
 #import "Xiang.h"
+#import "Tuo.h"
+#import "Yun.h"
 
 @interface AFNetOperate()
-
+@property(nonatomic,strong)UIAlertView *alert;
 @end
 
 @implementation AFNetOperate
@@ -34,13 +36,21 @@
 }
 -(void)alert:(NSString *)string
 {
-    UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"出现错误"
+    self.alert = [[UIAlertView alloc]initWithTitle:@"出现错误"
                                                   message:string
                                                  delegate:self
                                         cancelButtonTitle:@"确定"
                                         otherButtonTitles:nil];
-    [alert show];
-    
+    [NSTimer scheduledTimerWithTimeInterval:2.1f
+                                     target:self
+                                   selector:@selector(dissmissAlert:)
+                                   userInfo:nil
+                                    repeats:NO];
+    [self.alert show];
+}
+-(void)dissmissAlert:(NSTimer *)timer
+{
+    [self.alert dismissWithClickedButtonIndex:0 animated:YES];
 }
 #pragma url method
 -(NSMutableDictionary *)URLDictionary
@@ -62,9 +72,10 @@
     NSString *xiang=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"root"];
     return [base stringByAppendingString:xiang];
 }
-//-(NSString *)xiang_edit:(NSString *)id{
-//    
-//}
+-(NSString *)xiang_edit:(NSString *)id{
+    NSString *xiangRoot=[ self xiang_root];
+    return [NSString stringWithFormat:@"%@/edit/%@",xiangRoot,id];
+}
 -(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view
 {
     [self.activeView stopAnimating];
@@ -87,13 +98,53 @@
 //    ];
     
         Xiang *xiang=[[Xiang alloc] init];
-           xiang.key=@"123";
-           xiang.number=@"123";
-               xiang.count=@"123";
-              xiang.position=@"12 13 21";
-              xiang.remark=@"1";
-               [xiangArray addObject:xiang];
+        xiang.key=@"123";
+        xiang.number=@"123";
+        xiang.count=@"123";
+        xiang.position=@"12 13 21";
+        xiang.remark=@"1";
+        [xiangArray addObject:xiang];
 }
-
-
+//resource Tuo
+-(NSString *)tuo_root
+{
+    NSString *base=[self baseURL];
+    NSString *tuo=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"root"];
+    return [base stringByAppendingString:tuo];
+}
+-(void)getTuos:(NSMutableArray *)tuoArray view:(UIView *)view{
+    [self.activeView stopAnimating];
+    AFHTTPRequestOperationManager *manager=[self generateManager:view];
+    [manager GET:[self tuo_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [self.activeView stopAnimating];
+            
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self.activeView stopAnimating];
+         }
+     ];
+}
+//resource Yun
+-(NSString *)yun_root
+{
+    NSString *base=[self baseURL];
+    NSString *yun=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"root"];
+    return [base stringByAppendingString:yun];
+}
+-(void)getYuns:(NSMutableArray *)yunArray view:(UIView *)view{
+    [self.activeView stopAnimating];
+    AFHTTPRequestOperationManager *manager=[self generateManager:view];
+    [manager GET:[self yun_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [self.activeView stopAnimating];
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self.activeView stopAnimating];
+         }
+     ];
+}
 @end

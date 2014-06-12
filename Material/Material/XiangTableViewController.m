@@ -12,6 +12,7 @@
 #import "Xiang.h"
 #import "HuoTableViewCell.h"
 #import "XiangEditViewController.h"
+#import "XiangTableViewCell.h"
 
 @interface XiangTableViewController ()
 @property (nonatomic , strong) XiangStore *xiangStore;
@@ -38,14 +39,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-//    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
-//                                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    spinner.center = self.;
-//    spinner.hidesWhenStopped = YES;
-//    [self.view addSubview:spinner];
-//    [spinner startAnimating];
-    
-    
+    UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -76,15 +71,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell"];
+    XiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
     Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
-    cell.leoniNumber.text=xiang.number;
-    cell.kwyNumber.text=xiang.key;
-    cell.extraInfo.text=[NSString stringWithFormat:@"Q%@ / %@",xiang.count,xiang.position];
-    cell.leoniNumber.adjustsFontSizeToFitWidth=YES;
-    cell.kwyNumber.adjustsFontSizeToFitWidth=YES;
-    cell.extraInfo.adjustsFontSizeToFitWidth=YES;
+    cell.partNumber.text=xiang.number;
+    cell.key.text=xiang.key;
+    cell.quantity.text=xiang.count;
+    cell.position.text=xiang.position;
+    cell.date.text=xiang.date;
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"fromXiang" sender:@{@"xiang":xiang}];
 }
 
 #pragma mark - Navigation
@@ -95,9 +94,8 @@
         scan.type=@"xiang";
     }
     else if([segue.identifier isEqualToString:@"fromXiang"]){
-        int row=[[self.tableView indexPathForCell:sender] row];
         XiangEditViewController *xiangEdit=segue.destinationViewController;
-        xiangEdit.xiang=[[self.xiangStore xiangList] objectAtIndex:row];
+        xiangEdit.xiang=[sender objectForKey:@"xiang"];
     }
 }
 

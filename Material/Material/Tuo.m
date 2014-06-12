@@ -34,6 +34,20 @@
     }
     return self;
 }
+-(instancetype)initWith:(NSString *)ID department:(NSString *)department agent:(NSString *)agent
+{
+    self=[super init];
+    if(self){
+        self.ID=ID?ID:@"";
+        self.department=department?department:@"";
+        self.agent=agent?agent:@"";
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        self.date=[formatter stringFromDate:[NSDate date]];
+        self.xiang=[[NSMutableArray alloc] init];
+    }
+    return self;
+}
 -(void)addXiang:(Xiang *)xiang
 {
     [self.xiang addObject:xiang];

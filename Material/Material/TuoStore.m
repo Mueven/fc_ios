@@ -8,20 +8,22 @@
 
 #import "TuoStore.h"
 #import "Tuo.h"
+#import "AFNetOperate.h"
+
 @interface TuoStore()
 @property (nonatomic,strong) NSMutableArray *listArray;
 @end
 @implementation TuoStore
-+(instancetype)sharedTuoStore
++(instancetype)sharedTuoStore:(UIView *)view
 {
     static TuoStore *list=nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        list=[[TuoStore alloc] initPrivate];
+        list=[[TuoStore alloc] initPrivate:view];
     });
     return list;
 }
--(instancetype)initPrivate
+-(instancetype)initPrivate:(UIView *)view
 {
     self=[super init];
     if(self){
@@ -30,6 +32,7 @@
             Tuo *tuo=[[Tuo alloc] initExample];
             [self.listArray addObject:tuo];
         }
+//        [[[AFNetOperate alloc] init] getTuos:s       elf.listArray view:view];
     }
     return self;
 }

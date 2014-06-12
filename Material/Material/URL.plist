@@ -2,6 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>yun</key>
+	<dict>
+		<key>root</key>
+		<string>/yuns</string>
+	</dict>
+	<key>tuo</key>
+	<dict>
+		<key>root</key>
+		<string>/tuos</string>
+	</dict>
 	<key>xiang</key>
 	<dict>
 		<key>root</key>

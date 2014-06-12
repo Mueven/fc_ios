@@ -41,6 +41,7 @@
     //example
     xiang.position=@"12 13 21";
     xiang.remark=@"1";
+    xiang.date=@"05.13";
     [self.xiangArray addObject:xiang];
     return xiang;
 }

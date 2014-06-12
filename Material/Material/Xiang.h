@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @interface Xiang : NSObject
-@property(nonatomic,strong)NSString *id;
+@property(nonatomic,strong)NSString *ID;
 @property(nonatomic,strong)NSString *number;
 @property(nonatomic,strong)NSString *key;
 @property(nonatomic,strong)NSString *count;
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *remark;
+@property(nonatomic,strong)NSString *date;
 @property(nonatomic)BOOL checked;
 -(instancetype)initExample;
+-(instancetype)initWith:(NSString *)ID partNumber:(NSString *)partNumber key:(NSString *)key count:(NSString *)count position:(NSString *)position remark:(NSString *)remark date:(NSString *)date;
 @end

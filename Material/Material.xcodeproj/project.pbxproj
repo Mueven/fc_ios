@@ -30,8 +30,6 @@
 		B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2091946E60D00A95D7A /* AFURLSessionManager.m */; };
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
-		B05EEDD91947FAEA009DDAE9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
-		B05EEDDD1948438D009DDAE9 /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
 		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
@@ -58,6 +56,10 @@
 		B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6521940183D001F01F3 /* YunTableViewController.m */; };
 		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
 		B096C6401942923C00271AE4 /* HuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B096C63F1942923C00271AE4 /* HuoTableViewCell.m */; };
+		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
+		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
+		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
+		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
 		B0DF643919440033002D044B /* XiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643819440033002D044B /* XiangTableViewController.m */; };
 		B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643B19440FCA002D044B /* XiangEditViewController.m */; };
@@ -128,7 +130,6 @@
 		B04EF2161946E89400A95D7A /* URL.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = URL.plist; sourceTree = "<group>"; };
 		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
 		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
 		B061397A194163DF00A0CF62 /* TuoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoStore.m; sourceTree = "<group>"; };
 		B061397C1941643E00A0CF62 /* Tuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuo.h; sourceTree = "<group>"; };
@@ -171,6 +172,10 @@
 		B085F6551940184E001F01F3 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		B096C63E1942923C00271AE4 /* HuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuoTableViewCell.h; sourceTree = "<group>"; };
 		B096C63F1942923C00271AE4 /* HuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuoTableViewCell.m; sourceTree = "<group>"; };
+		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
+		B0BE292E1949921900061E67 /* XiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewCell.m; sourceTree = "<group>"; };
+		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
 		B0DF64331943E1D1002D044B /* PrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintViewController.h; sourceTree = "<group>"; };
 		B0DF64341943E1D1002D044B /* PrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintViewController.m; sourceTree = "<group>"; };
 		B0DF643719440033002D044B /* XiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewController.h; sourceTree = "<group>"; };
@@ -200,10 +205,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B05EEDD91947FAEA009DDAE9 /* ExternalAccessory.framework in Frameworks */,
+				B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */,
 				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
 				B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */,
-				B05EEDDD1948438D009DDAE9 /* libCaptuvoSDK.a in Frameworks */,
+				B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */,
 				B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */,
 				B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */,
 			);
@@ -349,6 +354,7 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */,
 				B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */,
 				B085F64819401091001F01F3 /* Security.framework */,
 				B085F60F194004CC001F01F3 /* Foundation.framework */,
@@ -421,7 +427,6 @@
 		B085F64419400FA3001F01F3 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				B05EEDDC1948438D009DDAE9 /* libCaptuvoSDK.a */,
 				B05EEDD51947FA2A009DDAE9 /* Captuvo.h */,
 				B04EF1F61946E60D00A95D7A /* AFNetworking */,
 				B085F64D194014A8001F01F3 /* KeychainItemWrapper.h */,
@@ -433,6 +438,9 @@
 		B096C63D194291FB00271AE4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B0BE292D1949921900061E67 /* XiangTableViewCell.h */,
+				B0BE292E1949921900061E67 /* XiangTableViewCell.m */,
+				B0BE292F1949921900061E67 /* XiangTableViewCell.xib */,
 				B096C63E1942923C00271AE4 /* HuoTableViewCell.h */,
 				B096C63F1942923C00271AE4 /* HuoTableViewCell.m */,
 				B04EF1D11946888900A95D7A /* ShopTuoTableViewCell.h */,
@@ -562,6 +570,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */,
 				B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */,
 				B085F622194004CC001F01F3 /* Images.xcassets in Resources */,
 				B04EF2171946E89400A95D7A /* URL.plist in Resources */,
@@ -615,6 +624,7 @@
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
+				B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */,
 				B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */,
@@ -756,6 +766,8 @@
 					"$(inherited)",
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Lib,
 					"$(PROJECT_DIR)/Material",
+					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -777,6 +789,8 @@
 					"$(inherited)",
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Lib,
 					"$(PROJECT_DIR)/Material",
+					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
+					"$(PROJECT_DIR)",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;

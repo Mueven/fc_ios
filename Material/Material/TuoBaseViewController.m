@@ -10,11 +10,11 @@
 #import "TuoScanViewController.h"
 #import "Tuo.h"
 
-@interface TuoBaseViewController ()
+@interface TuoBaseViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 - (IBAction)nextStep:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *department;
 @property (weak, nonatomic) IBOutlet UITextField *agent;
-
+@property (strong, nonatomic) UITextField *firstResponder;
 @end
 
 @implementation TuoBaseViewController
@@ -33,23 +33,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-//- (IBAction)selectGroupCondition:(id)sender {
-//    NSArray *entity=[self.entityArray copy];
-//    void (^dismiss)()=^(){
-//        
-//    };
-//    [self performSegueWithIdentifier:@"selectGroupCondition" sender:@{
-//                                                                      @"entity":entity,
-//                                                                      @"dismiss":dismiss
-//                                                                      }];
-//}
+#pragma decoder delegate
+-(void)decoderDataReceived:(NSString *)data{
+    self.firstResponder.text=data;
+    [self textFieldShouldReturn:self.firstResponder];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"tuoBaseToScan"]){
         TuoScanViewController *scanViewController=segue.destinationViewController;
@@ -66,11 +68,19 @@
 }
 
 - (IBAction)nextStep:(id)sender {
-//    NSString *department=self.department.text;
-//    NSString *agent=self.agent.text;
-//    if(department.length!=0 && agent.length!=0){
+    NSString *department=self.department.text;
+    NSString *agent=self.agent.text;
+    if(department.length>0 && agent.length>0){
         [self baseToScan];
-//    }
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"错误"
+                                                      message:@"信息填写不完整"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
 }
 -(void)baseToScan
 {

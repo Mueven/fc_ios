@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tuoStore=[TuoStore sharedTuoStore];
+    self.tuoStore=[TuoStore sharedTuoStore:self.view];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

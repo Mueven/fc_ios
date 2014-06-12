@@ -16,15 +16,16 @@
 #import "XiangEditViewController.h"
 #import "AFNetOperate.h"
 
-@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+
+@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *key;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
 @property (weak, nonatomic) IBOutlet UITextField *quatity;
+@property (strong, nonatomic) UITextField *firstResponder;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong, nonatomic) XiangStore *xiangStore;
+//@property (strong,nonatomic) NSArray *validateAddress;
 - (IBAction)finish:(id)sender;
-- (IBAction)startDecoder:(id)sender;
-
 @end
 
 @implementation TuoScanViewController
@@ -54,103 +55,95 @@
     else if([self.type isEqualToString:@"addXiang"]){
         self.navigationItem.rightBarButtonItem=NULL;
     }
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self.key becomeFirstResponder];
+    [self.key becomeFirstResponder];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-   
-    ProtocolConnectionStatus connectionStatus = [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-    switch (connectionStatus) {
-        case ProtocolConnectionStatusConnected:
-        case ProtocolConnectionStatusAlreadyConnected:
-            NSLog(@"Connected!");
-            break;
-        case ProtocolConnectionStatusBatteryDepleted:
-            NSLog(@"Battery depleted!");
-            break;
-        case ProtocolConnectionStatusUnableToConnect:
-            NSLog(@"Error connecting!");
-            break;
-        case ProtocolConnectionStatusUnableToConnectIncompatiableSledFirmware:
-            NSLog(@"Incompatible firmware!");
-            break;
-        default:
-            break;
-    }
-   
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
-- (void)decoderReady
-{
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil
-                                                   message:@"111111 decoder ready"
-                                                  delegate:nil
-                                         cancelButtonTitle:@"OK"
-                                         otherButtonTitles:nil];
-    [alert show];
-    
-    
-}
-
--(void)decoderDataReceived:(NSString *)data{
-    NSLog(@"Decoder Data Received: %@",data);
-
-}
-- (void)decoderRawDataReceived:(NSData *)data{
-    NSLog(@"- (void)decoderRawDataReceived:(NSData *)data") ;
-
-}
-
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma decoder delegate
+-(void)decoderReady
+{
+    
+}
+-(void)decoderDataReceived:(NSString *)data{
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager POST:@""
+       parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               [AFNet.activeView stopAnimating];
+               self.firstResponder.text=data;
+               [self textFieldShouldReturn:self.firstResponder];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               [AFNet.activeView stopAnimating];
+          }
+     ];
+}
+- (void)decoderRawDataReceived:(NSData *)data{
+    
 
+}
+#pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView = dummyView;
+    self.firstResponder=textField;
 }
-
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 //-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    int tag=textField.tag;
-    if(tag==23){
-        NSString *key=self.key.text;
-        NSString *partNumber=self.partNumber.text;
-        NSString *quantity=self.quatity.text;
+    long tag=textField.tag;
+    if(tag==3){
+//        NSString *key=self.key.text;
+//        NSString *partNumber=self.partNumber.text;
+//        NSString *quantity=self.quatity.text;
         
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet xiang_root]
-           parameters:@{
-                        @"key":key,
-                        @"partNumber":partNumber,
-                        @"quantity":quantity
-                        }
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                    Xiang *newXiang=[self.xiangStore addXiang:key partNumber:partNumber quatity:quantity];
-                  [self.tuo addXiang:newXiang];
-                  [self.xiangTable reloadData];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-              }
-         ];
+//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//        [manager POST:[AFNet xiang_root]
+//           parameters:@{
+//                        @"key":key,
+//                        @"partNumber":partNumber,
+//                        @"quantity":quantity
+//                        }
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  [AFNet.activeView stopAnimating];
+//                    Xiang *newXiang=[self.xiangStore addXiang:key partNumber:partNumber quatity:quantity];
+//                  [self.tuo addXiang:newXiang];
+//                  [self.xiangTable reloadData];
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  [AFNet.activeView stopAnimating];
+//              }
+//         ];
     }
     tag++;
-    if(tag>23){
-        tag=21;
+    if(tag>3){
+        tag=1;
     }
     UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
     [nextText becomeFirstResponder];
     return YES;
+}
+//扫描唯一码如果已经绑定，则直接添加
+-(void)fillAllTextField:(NSDictionary *)xiang
+{
+    // [self.tuo addXiang:newXiang];
+    // [self.xiangTable reloadData];
 }
 //table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -206,8 +199,5 @@
     [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
 }
 
-- (IBAction)startDecoder:(id)sender {
-    [[Captuvo sharedCaptuvoDevice] startDecoderScanning];
-    [[Captuvo sharedCaptuvoDevice] startMSRHardware];
-}
+
 @end

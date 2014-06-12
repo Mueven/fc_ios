@@ -61,7 +61,7 @@
 {
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
     if([containerClass isEqualToString:@"Tuo"]){
-        TuoStore *tuoStore=[TuoStore sharedTuoStore];
+        TuoStore *tuoStore=[TuoStore sharedTuoStore:self.view];
         [tuoStore addTuo:self.container];
         [self performSegueWithIdentifier:@"finishTuo" sender:self];
     }
