@@ -10,9 +10,11 @@
 #import "AFNetOperate.h"
 
 @interface XiangEditViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
-@property (weak, nonatomic) IBOutlet UITextField *key;
+
+@property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
 @property (weak, nonatomic) IBOutlet UITextField *quantity;
+@property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (strong, nonatomic) UITextField *firstResponder;
 - (IBAction)finishEdit:(id)sender;
 @end
@@ -31,16 +33,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.key.delegate=self;
+    
     self.partNumber.delegate=self;
     self.quantity.delegate=self;
-    self.key.text=self.xiang.key;
+    self.dateTextField.delegate=self;
+    
+    self.keyLabel.text=self.xiang.key;
     self.partNumber.text=self.xiang.number;
     self.quantity.text=self.xiang.count;
+    self.dateTextField.text=self.xiang.date;
+    
+    self.keyLabel.adjustsFontSizeToFitWidth=YES;
     // Do any additional setup after loading the view.
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -55,28 +59,42 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma decoder delegate
--(void)decoderReady
-{
-    
-}
 -(void)decoderDataReceived:(NSString *)data{
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager POST:@""
-       parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [AFNet.activeView stopAnimating];
-              self.firstResponder.text=data;
-              [self textFieldShouldReturn:self.firstResponder];
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [AFNet.activeView stopAnimating];
-          }
-     ];
-}
-- (void)decoderRawDataReceived:(NSData *)data{
-    
-    
+    if(self.firstResponder.tag==4){
+        self.firstResponder.text=data;
+        [self textFieldShouldReturn:self.firstResponder];
+    }
+    else{
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        NSString *address=[[NSString alloc] init];
+        switch (self.firstResponder.tag){
+            case 2:
+                address=[AFNet part_validate];
+                break;
+            case 3:
+                address=@"still waiting";
+                break;
+        }
+        [manager POST:address
+           parameters:@{data:data}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if(responseObject[@"result"]){
+                      self.firstResponder.text=data;
+                      [self textFieldShouldReturn:self.firstResponder];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+              }
+         ];
+    }
+
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
@@ -84,26 +102,38 @@
     textField.inputView = dummyView;
     self.firstResponder=textField;
 }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    return YES;
+}
 
 - (IBAction)finishEdit:(id)sender {
-    self.xiang.key=self.key.text;
-    self.xiang.number=self.partNumber.text;
-    self.xiang.count=self.quantity.text;
+    
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     NSString *edit_address=[AFNet xiang_edit:self.xiang.ID];
-//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    [manager PUT:[]
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             
-//         }
-//     ];
-
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager PUT:edit_address
+      parameters:@{@"package":@{
+                           @"part_id":self.partNumber.text,
+                           @"quantity":self.quantity.text,
+                           @"date":self.dateTextField.text
+                           }}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if(responseObject[@"result"]){
+                 self.xiang.date=self.dateTextField.text;
+                 self.xiang.number=self.partNumber.text;
+                 self.xiang.count=self.quantity.text;
+                 [self.navigationController popViewControllerAnimated:YES];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"sth wrong"];
+         }
+     ];
 }
 @end

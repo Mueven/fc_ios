@@ -65,45 +65,59 @@
     NSString *port=[[self URLDictionary] objectForKey:@"port"];
     return [base stringByAppendingString:port];
 }
+//resource part
+-(NSString *)part_index
+{
+    NSString *base=[self baseURL];
+    NSString *part=[[[self URLDictionary] objectForKey:@"part"] objectForKey:@"root"];
+    return [base stringByAppendingString:part];
+}
+-(NSString *)part_validate{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"part"] objectForKey:@"validate"];
+    return [[self part_index] stringByAppendingString:bind];
+}
 //resource xiang
--(NSString *)xiang_root
+-(NSString *)xiang_index
 {
     NSString *base=[self baseURL];
     NSString *xiang=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"root"];
     return [base stringByAppendingString:xiang];
 }
+-(NSString *)xiang_root
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"index"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
+-(NSString *)xiang_validate
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"validate"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_edit:(NSString *)id{
-    NSString *xiangRoot=[ self xiang_root];
-    return [NSString stringWithFormat:@"%@/edit/%@",xiangRoot,id];
+    NSString *xiangRoot=[self xiang_root];
+    return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
 }
 -(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view
 {
     [self.activeView stopAnimating];
-//    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-//    [manager GET:[self xiang_root]
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             [self.activeView stopAnimating];
-//             Xiang *xiang=[[Xiang alloc] init];
-//             xiang.key=@"123";
-//             xiang.number=@"123";
-//             xiang.count=@"123";
-//             xiang.position=@"12 13 21";
-//             xiang.remark=@"1";
-//             [xiangArray addObject:xiang];
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             [self.activeView stopAnimating];
-//         }
-//    ];
-    
-        Xiang *xiang=[[Xiang alloc] init];
-        xiang.key=@"123";
-        xiang.number=@"123";
-        xiang.count=@"123";
-        xiang.position=@"12 13 21";
-        xiang.remark=@"1";
-        [xiangArray addObject:xiang];
+    AFHTTPRequestOperationManager *manager=[self generateManager:view];
+    [manager GET:[self xiang_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [self.activeView stopAnimating];
+             Xiang *xiang=[[Xiang alloc] init];
+             xiang.key=[responseObject objectForKey:@"id"];
+             xiang.number=[responseObject objectForKey:@"part_id"];
+             xiang.ID=[responseObject objectForKey:@"id"];
+             xiang.count=[responseObject objectForKey:@"quantity"];
+             xiang.position=[responseObject objectForKey:@"position_nr"];
+             [xiangArray addObject:xiang];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self.activeView stopAnimating];
+             [self alert:@"something wrong"];
+         }
+    ];
 }
 //resource Tuo
 -(NSString *)tuo_root

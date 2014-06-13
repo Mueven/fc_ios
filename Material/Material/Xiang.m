@@ -18,6 +18,7 @@
         self.key=[NSString stringWithFormat:@"CZ%d",arc4random() %50];
         self.position=@"03 21 09";
         self.remark=@"1";
+        self.date=@"05.13";
     }
     return self;
 }

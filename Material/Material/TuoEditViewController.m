@@ -11,6 +11,7 @@
 #import "XiangEditViewController.h"
 #import "Xiang.h"
 #import "TuoScanViewController.h"
+#import "XiangTableViewCell.h"
 #import "TuoPrintViewController.h"
 
 @interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
@@ -38,6 +39,8 @@
     self.xiangTable.dataSource=self;
     self.department.delegate=self;
     self.agent.delegate=self;
+    UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
+    [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,14 +79,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Xiang *xiang=[[self.tuo xiang] objectAtIndex:indexPath.row];
-    HuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell"];
-    cell.leoniNumber.text=xiang.number;
-    cell.kwyNumber.text=xiang.key;
-    cell.extraInfo.text=[NSString stringWithFormat:@"Q%@ / %@",xiang.count,xiang.position];
-    cell.leoniNumber.adjustsFontSizeToFitWidth=YES;
-    cell.kwyNumber.adjustsFontSizeToFitWidth=YES;
-    cell.extraInfo.adjustsFontSizeToFitWidth=YES;
+    XiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
+    cell.partNumber.text=xiang.number;
+    cell.key.text=xiang.key;
+    cell.quantity.text=xiang.count;
+    cell.position.text=xiang.position;
+    cell.date.text=xiang.date;
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Xiang *xiang=[[self.tuo xiang] objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"xiangEdit" sender:@{@"xiang":xiang}];
 }
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -101,8 +109,7 @@
 {
     if([segue.identifier isEqualToString:@"xiangEdit"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
-        Xiang *xiang=[[self.tuo xiang] objectAtIndex:[[self.xiangTable indexPathForCell:sender] row]];
-        xiangEdit.xiang=xiang;
+        xiangEdit.xiang=[sender objectForKey:@"xiang"];
     }
     else if([segue.identifier isEqualToString:@"addXiang"]){
         TuoScanViewController *scanView=segue.destinationViewController;

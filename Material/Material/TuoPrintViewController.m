@@ -9,6 +9,7 @@
 #import "TuoPrintViewController.h"
 #import "HuoTableViewCell.h"
 #import "Xiang.h"
+#import "XiangTableViewCell.h"
 
 @interface TuoPrintViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
@@ -34,6 +35,8 @@
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     // Do any additional setup after loading the view.
+    UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
+    [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -58,14 +61,13 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell"];
     Xiang *xiang=[[self.tuo xiang] objectAtIndex:indexPath.row];
-    cell.leoniNumber.text=xiang.number;
-    cell.kwyNumber.text=xiang.key;
-    cell.extraInfo.text=[NSString stringWithFormat:@"Q%@ / %@",xiang.count,xiang.position];
-    cell.leoniNumber.adjustsFontSizeToFitWidth=YES;
-    cell.kwyNumber.adjustsFontSizeToFitWidth=YES;
-    cell.extraInfo.adjustsFontSizeToFitWidth=YES;
+    XiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
+    cell.partNumber.text=xiang.number;
+    cell.key.text=xiang.key;
+    cell.quantity.text=xiang.count;
+    cell.position.text=xiang.position;
+    cell.date.text=xiang.date;
     return cell;
 }
 /*

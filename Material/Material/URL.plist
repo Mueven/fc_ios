@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>part</key>
+	<dict>
+		<key>validate</key>
+		<string>validates</string>
+		<key>root</key>
+		<string>/api/v1/parts/</string>
+	</dict>
 	<key>yun</key>
 	<dict>
 		<key>root</key>
@@ -9,13 +16,19 @@
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>index</key>
+		<string>binds/</string>
 		<key>root</key>
-		<string>/tuos</string>
+		<string>/api/v1/forklifts/</string>
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>validate</key>
+		<string>validates/</string>
+		<key>index</key>
+		<string>binds/</string>
 		<key>root</key>
-		<string>/xiangs</string>
+		<string>/api/v1/packages/</string>
 	</dict>
 	<key>base</key>
 	<string>http://192.168.1.1</string>

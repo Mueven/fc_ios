@@ -13,6 +13,7 @@
 #import "HuoTableViewCell.h"
 #import "XiangEditViewController.h"
 #import "XiangTableViewCell.h"
+#import "AFNetOperate.h"
 
 @interface XiangTableViewController ()
 @property (nonatomic , strong) XiangStore *xiangStore;
@@ -32,7 +33,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -41,13 +41,14 @@
     
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
+    
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.xiangStore=[XiangStore sharedXiangStore:self.view];
     [self.tableView reloadData];
- 
 }
 - (void)didReceiveMemoryWarning
 {
@@ -78,6 +79,7 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,8 +116,26 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.xiangStore removeXiang:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        NSString *ID=[[self.xiangStore.xiangArray objectAtIndex:indexPath.row] ID];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager DELETE:[AFNet xiang_edit:ID]
+             parameters:nil
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        [self.xiangStore removeXiang:indexPath.row];
+                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                    [AFNet alert:@"sth wrong"];
+                }
+         ];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

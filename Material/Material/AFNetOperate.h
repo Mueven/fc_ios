@@ -17,8 +17,12 @@
 -(void)getTuos:(NSMutableArray *)tuoArray view:(UIView *)view;
 -(void)getYuns:(NSMutableArray *)yunArray view:(UIView *)view;
 //get URL
+-(NSString *)part_validate;
+
 -(NSString *)xiang_root;
 -(NSString *)xiang_edit:(NSString *)id;
+-(NSString *)xiang_validate;
+
 -(NSString *)tuo_root;
 -(NSString *)tuo_edit:(NSString *)id;
 -(NSString *)yun_root;

@@ -32,6 +32,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.department.delegate=self;
+    self.agent.delegate=self;
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -39,6 +42,17 @@
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
+    NSString *number=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    self.agent.text=number;
+    [self.department becomeFirstResponder];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -49,9 +63,11 @@
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
     self.firstResponder.text=data;
-    [self textFieldShouldReturn:self.firstResponder];
 }
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.firstResponder=textField;
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"tuoBaseToScan"]){
         TuoScanViewController *scanViewController=segue.destinationViewController;

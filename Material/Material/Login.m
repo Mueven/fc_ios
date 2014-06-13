@@ -9,7 +9,7 @@
 #import "Login.h"
 #import "KeychainItemWrapper.h"
 
-@interface Login ()<UITextFieldDelegate>
+@interface Login ()<UITextFieldDelegate,NSCoding>
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -78,20 +78,27 @@
 //    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
 //    if([email isEqualToString:@"superxiao21@163.com"]&&[password isEqualToString:@"w"]){
     if([email isEqualToString:@"w"]){
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-        UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"shop"];
-        [self presentViewController:tabbarStock
-                           animated:YES
-                         completion:nil];
+        [self loginSameAction:@"shop"];
     }
     else{
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-        UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"stock"];
-        [self presentViewController:tabbarStock
-                           animated:YES
-                         completion:nil];
+       [self loginSameAction:@"stock"];
     }
 //    }
+}
+-(void)loginSameAction:(NSString *)identifier
+{
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
+    //写入用户信息
+    NSString *number=self.email.text.length>0?self.email.text:@"default-example";
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
+    [NSKeyedArchiver archiveRootObject:number toFile:path];
+    
+    [self presentViewController:tabbarStock
+                       animated:YES
+                     completion:nil];
 }
 
 - (IBAction)touchScreen:(id)sender {
