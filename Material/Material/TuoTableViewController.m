@@ -10,6 +10,7 @@
 #import "TuoStore.h"
 #import "Tuo.h"
 #import "TuoEditViewController.h"
+#import "AFNetOperate.h"
 
 @interface TuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
@@ -29,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tuoStore=[TuoStore sharedTuoStore:self.view];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -38,6 +39,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
     [super viewWillAppear:animated];
     [self.tableView reloadData];
 }
@@ -88,8 +90,26 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.tuoStore removeTuo:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        NSString *ID=[[self.tuoStore.tuoList objectAtIndex:indexPath.row] ID];
+        [manager DELETE:[AFNet tuo_edit:ID]
+             parameters:nil
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        [self.tuoStore removeTuo:indexPath.row];
+                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                }
+         ]; 
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

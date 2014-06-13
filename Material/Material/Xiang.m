@@ -35,4 +35,18 @@
     }
     return self;
 }
+-(instancetype)initWithObject:(NSDictionary *)object
+{
+    self=[super init];
+    if(self){
+        self.ID=object[@"id"]?object[@"id"]:@"";
+        self.number=object[@"part_id"]?object[@"part_id"]:@"";
+        self.count=object[@"quantity"]?object[@"quantity"]:@"";
+        self.key=object[@"id"]?object[@"id"]:@"";
+        self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
+        self.remark=object[@"remark"]?object[@"remark"]:@"";
+        self.date=object[@"date"]?object[@"date"]:@"";
+    }
+    return self;
+}
 @end

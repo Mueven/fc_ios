@@ -14,7 +14,7 @@
 
 @end
 @implementation XiangStore
-+(instancetype)sharedXiangStore:(UIView *)view
++(instancetype)sharedXiangStore:(UITableView *)view
 {
     static XiangStore *xiangList=nil;
     static dispatch_once_t onceToken;
@@ -23,7 +23,7 @@
     });
     return xiangList;
 }
--(instancetype)initPrivate:(UIView *)view
+-(instancetype)initPrivate:(UITableView *)view
 {
     self=[super init];
     if(self){

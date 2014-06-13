@@ -13,9 +13,9 @@
 //method
 -(AFHTTPRequestOperationManager *)generateManager:(UIView *)view;
 -(void)alert:(NSString *)string;
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view;
--(void)getTuos:(NSMutableArray *)tuoArray view:(UIView *)view;
--(void)getYuns:(NSMutableArray *)yunArray view:(UIView *)view;
+-(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view;
+-(void)getTuos:(NSMutableArray *)tuoArray view:(UITableView *)view;
+-(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view;
 //get URL
 -(NSString *)part_validate;
 
@@ -25,6 +25,11 @@
 
 -(NSString *)tuo_root;
 -(NSString *)tuo_edit:(NSString *)id;
+-(NSString *)tuo_single;
+-(NSString *)tuo_bundle_add;
+-(NSString *)tuo_key_for_bundle;
+-(NSString *)tuo_remove_xiang;
+
 -(NSString *)yun_root;
 -(NSString *)yun_edit:(NSString *)id;
 @end

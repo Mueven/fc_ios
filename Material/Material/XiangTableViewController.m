@@ -47,7 +47,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.xiangStore=[XiangStore sharedXiangStore:self.view];
+    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
     [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning

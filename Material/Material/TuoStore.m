@@ -14,7 +14,7 @@
 @property (nonatomic,strong) NSMutableArray *listArray;
 @end
 @implementation TuoStore
-+(instancetype)sharedTuoStore:(UIView *)view
++(instancetype)sharedTuoStore:(UITableView *)view
 {
     static TuoStore *list=nil;
     static dispatch_once_t onceToken;
@@ -23,16 +23,16 @@
     });
     return list;
 }
--(instancetype)initPrivate:(UIView *)view
+-(instancetype)initPrivate:(UITableView *)view
 {
     self=[super init];
     if(self){
         self.listArray=[[NSMutableArray alloc] init];
-        for(int i=0;i<3;i++){
-            Tuo *tuo=[[Tuo alloc] initExample];
-            [self.listArray addObject:tuo];
-        }
-//        [[[AFNetOperate alloc] init] getTuos:s       elf.listArray view:view];
+//        for(int i=0;i<3;i++){
+//            Tuo *tuo=[[Tuo alloc] initExample];
+//            [self.listArray addObject:tuo];
+//        }
+        [[[AFNetOperate alloc] init] getTuos:self.listArray view:view];
     }
     return self;
 }

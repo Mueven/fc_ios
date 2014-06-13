@@ -11,5 +11,5 @@
 
 @interface YunStore : NSObject
 @property (nonatomic,strong) NSMutableArray *yunArray;
-+(instancetype)sharedYunStore;
++(instancetype)sharedYunStore:(UITableView *)view;
 @end

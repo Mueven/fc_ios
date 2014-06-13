@@ -18,6 +18,7 @@
 
 -(instancetype)initExample;
 -(instancetype)initWith:(NSString *)ID department:(NSString *)department agent:(NSString *)agent;
+-(instancetype)initWithObject:(NSDictionary *)dictionary;
 -(void)addXiang:(Xiang *)xiang;
 -(NSInteger)xiangAmount;
 @end

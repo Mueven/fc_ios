@@ -97,7 +97,7 @@
     NSString *xiangRoot=[self xiang_root];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
 }
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UIView *)view
+-(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view
 {
     [self.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[self generateManager:view];
@@ -105,13 +105,12 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [self.activeView stopAnimating];
-             Xiang *xiang=[[Xiang alloc] init];
-             xiang.key=[responseObject objectForKey:@"id"];
-             xiang.number=[responseObject objectForKey:@"part_id"];
-             xiang.ID=[responseObject objectForKey:@"id"];
-             xiang.count=[responseObject objectForKey:@"quantity"];
-             xiang.position=[responseObject objectForKey:@"position_nr"];
-             [xiangArray addObject:xiang];
+             NSArray *xiangArrayResult=responseObject;
+             for(int i=0;i<xiangArrayResult.count;i++){
+                 Xiang *xiang=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
+                 [xiangArray addObject:xiang];
+             }
+             [view reloadData];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self.activeView stopAnimating];
@@ -120,20 +119,52 @@
     ];
 }
 //resource Tuo
--(NSString *)tuo_root
+-(NSString *)tuo_index
 {
     NSString *base=[self baseURL];
     NSString *tuo=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"root"];
     return [base stringByAppendingString:tuo];
 }
--(void)getTuos:(NSMutableArray *)tuoArray view:(UIView *)view{
+-(NSString *)tuo_root
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"index"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_single
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"single"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_bundle_add
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"bundle_add"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_key_for_bundle{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"key_for_bundle"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_remove_xiang{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"remove_xiang"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_edit:(NSString *)id{
+    NSString *tuoRoot=[self tuo_root];
+    return [NSString stringWithFormat:@"%@%@",tuoRoot,id];
+}
+-(void)getTuos:(NSMutableArray *)tuoArray view:(UITableView *)view{
     [self.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[self generateManager:view];
     [manager GET:[self tuo_root]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [self.activeView stopAnimating];
-            
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
+                 [tuoArray addObject:tuo];
+             }
+             [view reloadData];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self.activeView stopAnimating];
@@ -147,7 +178,7 @@
     NSString *yun=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"root"];
     return [base stringByAppendingString:yun];
 }
--(void)getYuns:(NSMutableArray *)yunArray view:(UIView *)view{
+-(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
     [self.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[self generateManager:view];
     [manager GET:[self yun_root]

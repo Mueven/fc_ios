@@ -58,18 +58,48 @@
     else if([self.type isEqualToString:@"addXiang"]){
         self.navigationItem.rightBarButtonItem=NULL;
     }
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     
     //example
-    for(int i=0;i<10;i++){
-        Xiang *xiang=[[Xiang alloc] initExample];
-        [self.tuo.xiang addObject:xiang];
+//    for(int i=0;i<10;i++){
+//        Xiang *xiang=[[Xiang alloc] initExample];
+//        [self.tuo.xiang addObject:xiang];
+//    }
+//    [self.xiangTable reloadData];
+    
+    if(self.tuo.ID.length>0){
+        //通过拖的id获得它下面有哪些箱
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet tuo_single]
+          parameters:@{self.tuo.ID:self.tuo.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if(responseObject[@"result"]){
+                     self.tuo.xiang=[[NSMutableArray alloc] init];
+                     NSArray *xiangs=responseObject[@"packages"];
+                     for(int i=0;i<xiangs.count;i++){
+                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangs[i]];
+                         [self.tuo.xiang addObject:xiang];
+                     }
+                     [self.xiangTable reloadData];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+             }
+         ];
     }
-    [self.xiangTable reloadData];
+    else{
+        
+    }
+    
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -78,15 +108,15 @@
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    
+   
+    
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
+    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -100,6 +130,7 @@
         [self textFieldShouldReturn:self.firstResponder];
     }
     else{
+        //验证数据的合法性
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         NSString *address=[[NSString alloc] init];
@@ -119,8 +150,39 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if(responseObject[@"result"]){
-                      self.firstResponder.text=data;
-                      [self textFieldShouldReturn:self.firstResponder];
+                      //如果数据是唯一码且在拖状态下，查看是否已经绑定
+                      if(self.tuo.ID.length>0 && self.firstResponder.tag==1){
+                          AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                          AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                          [manager POST:[AFNet tuo_key_for_bundle]
+                             parameters:@{
+                                          @"forklift_id":self.tuo.ID,
+                                          @"package_id":data
+                                          }
+                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    [AFNet.activeView stopAnimating];
+                                    if(responseObject[@"result"]){
+                                        //绑定了直接添加
+                                        Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                                        [self.tuo addXiang:xiang];
+                                        [self.xiangTable reloadData];
+                                    }
+                                    else{
+                                        //没有绑定跟以前一样跳到下一个textField
+                                        self.firstResponder.text=data;
+                                        [self textFieldShouldReturn:self.firstResponder];
+                                    }
+                                }
+                                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    [AFNet.activeView stopAnimating];
+                                    [AFNet alert:@"sth wrong"];
+                                }
+                           ];
+                      }
+                      else{
+                          self.firstResponder.text=data;
+                          [self textFieldShouldReturn:self.firstResponder];
+                      }
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];
@@ -129,6 +191,7 @@
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   [AFNet.activeView stopAnimating];
+                  [AFNet alert:@"sth wrong"];
               }
          ];
     }
@@ -152,41 +215,69 @@
         
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet xiang_root]
-           parameters:@{
-                        @"package":@{
-                            @"id":key,
+        
+        if(self.tuo.ID.length>0){
+            //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
+            [manager POST:[AFNet tuo_bundle_add]
+               parameters:@{
+                            @"forklift_id":self.tuo.ID,
+                            @"package_id":key,
                             @"part_id":partNumber,
-                            @"quantity":quantity,
-                            @"date":date
-                                }
-                        }
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if(responseObject[@"result"]){
-                      Xiang *newXiang=[[Xiang alloc] initWith:responseObject[@"id"]
-                                                   partNumber:responseObject[@"part_id"]
-                                                          key:responseObject[@"id"]
-                                                        count:responseObject[@"quantity"]
-                                                     position:responseObject[@"position_nr"]
-                                                       remark:@""
-                                                         date:responseObject[@"date"]];
-                      [self.tuo addXiang:newXiang];
-                      [self.xiangTable reloadData];
-                      tag=1;
-                      UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
-                      [nextText becomeFirstResponder];
+                            @"quantity":quantity
+                            }
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if(responseObject[@"result"]){
+                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                          [self.tuo addXiang:newXiang];
+                          [self.xiangTable reloadData];
+                          tag=1;
+                          UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
+                          [nextText becomeFirstResponder];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                      
                   }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:@"sth wrong"];
                   }
-                 
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:@"sth wrong"];
-              }
-         ];
+             ];
+        }
+        else{
+            //箱绑定下的绑定
+            [manager POST:[AFNet xiang_root]
+               parameters:@{
+                            @"package":@{
+                                    @"id":key,
+                                    @"part_id":partNumber,
+                                    @"quantity":quantity,
+                                    @"date":date
+                                    }
+                            }
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if(responseObject[@"result"]){
+                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                          [self.tuo addXiang:newXiang];
+                          [self.xiangTable reloadData];
+                          tag=1;
+                          UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
+                          [nextText becomeFirstResponder];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                      
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:@"sth wrong"];
+                  }
+             ];
+        }
     }
     else{
         tag++;
@@ -222,12 +313,35 @@
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
+
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager DELETE:[AFNet tuo_remove_xiang]
+             parameters:@{
+                          @"forklift_id":self.tuo.ID,
+                          @"package_id":[[self.tuo.xiang objectAtIndex:indexPath.row] ID]
+                          }
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
+                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                }
+         ];
+        
+        
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -238,6 +352,7 @@
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //单独绑定箱的时候，不让删除，会误导，在最外面删去
     if([self.type isEqualToString:@"xiang"]){
       return NO;
     }

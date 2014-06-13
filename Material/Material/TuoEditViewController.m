@@ -14,7 +14,7 @@
 #import "XiangTableViewCell.h"
 #import "TuoPrintViewController.h"
 
-@interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *department;
 @property (weak, nonatomic) IBOutlet UITextField *agent;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
@@ -54,6 +54,9 @@
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {

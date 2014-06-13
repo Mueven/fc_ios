@@ -10,7 +10,7 @@
 @class Tuo;
 
 @interface TuoStore : NSObject
-+(instancetype)sharedTuoStore:(UIView *)view;
++(instancetype)sharedTuoStore:(UITableView *)view;
 -(NSArray *)tuoList;
 -(int)tuoCount;
 -(void)addTuo:(Tuo *)tuo;

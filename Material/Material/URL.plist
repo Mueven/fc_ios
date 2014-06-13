@@ -16,6 +16,14 @@
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>remove_xiang</key>
+		<string>remove_package/</string>
+		<key>key_for_bundle</key>
+		<string>check_package/</string>
+		<key>bundle_add</key>
+		<string>add_package/</string>
+		<key>single</key>
+		<string>detail/</string>
 		<key>index</key>
 		<string>binds/</string>
 		<key>root</key>

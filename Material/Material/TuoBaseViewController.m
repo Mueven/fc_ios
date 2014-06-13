@@ -9,6 +9,7 @@
 #import "TuoBaseViewController.h"
 #import "TuoScanViewController.h"
 #import "Tuo.h"
+#import "AFNetOperate.h"
 
 @interface TuoBaseViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 - (IBAction)nextStep:(id)sender;
@@ -77,7 +78,10 @@
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy.MM.dd"];
         tuo.date=[formatter stringFromDate:[NSDate date]];
+        tuo.ID=[sender objectForKey:@"ID"];
         scanViewController.tuo=tuo;
+        //tuoStore中也要加入
+        
         scanViewController.type=@"tuo";
     }
     
@@ -87,7 +91,7 @@
     NSString *department=self.department.text;
     NSString *agent=self.agent.text;
     if(department.length>0 && agent.length>0){
-        [self baseToScan];
+        [self baseToScan:department agent:agent];
     }
     else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"错误"
@@ -98,8 +102,28 @@
         [alert show];
     }
 }
--(void)baseToScan
+-(void)baseToScan:(NSString *)department agent:(NSString *)agent
 {
-    [self performSegueWithIdentifier:@"tuoBaseToScan" sender:self];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager POST:[AFNet tuo_root]
+       parameters:@{@"forklift":@{
+                            @"whouse_id":department,
+                            @"user_id":agent
+                            }}
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [AFNet.activeView stopAnimating];
+              if(responseObject[@"result"]){
+                  [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":responseObject[@"id"]}];
+              }
+              else{
+                  [AFNet alert:responseObject[@"content"]];
+              }
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+          }
+     ];
 }
 @end
