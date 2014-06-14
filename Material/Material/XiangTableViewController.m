@@ -47,8 +47,31 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
-    [self.tableView reloadData];
+    
+    //得到数据
+    XiangStore *xiangStore=[[XiangStore alloc] init];
+    xiangStore.xiangArray=[[NSMutableArray alloc] init];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet xiang_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             NSArray *xiangArrayResult=responseObject;
+             for(int i=0;i<xiangArrayResult.count;i++){
+                 Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
+                 [xiangStore.xiangArray addObject:xiangItem];
+             }
+             self.xiangStore=xiangStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
+//    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
+//    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {

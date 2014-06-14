@@ -32,4 +32,9 @@
 
 -(NSString *)yun_root;
 -(NSString *)yun_edit:(NSString *)id;
+-(NSString *)yun_single;
+-(NSString *)yun_add_tuo_by_scan;
+-(NSString *)yun_remove_tuo;
+-(NSString *)yun_add_tuo;
+-(NSString *)yun_send;
 @end

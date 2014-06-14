@@ -7,8 +7,8 @@
 //
 
 #import "PrintViewController.h"
-#import "TuoStore.h"
-#import "YunStore.h"
+//#import "TuoStore.h"
+//#import "YunStore.h"
 
 @interface PrintViewController ()
 - (IBAction)unPrint:(id)sender;
@@ -61,13 +61,13 @@
 {
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
     if([containerClass isEqualToString:@"Tuo"]){
-        TuoStore *tuoStore=[TuoStore sharedTuoStore:self.view];
-        [tuoStore addTuo:self.container];
+//        TuoStore *tuoStore=[TuoStore sharedTuoStore:self.view];
+//        [tuoStore addTuo:self.container];
         [self performSegueWithIdentifier:@"finishTuo" sender:self];
     }
     else if([containerClass isEqualToString:@"Yun"]){
-        YunStore *yunStore=[YunStore sharedYunStore];
-        [yunStore.yunArray addObject:self.container];
+//        YunStore *yunStore=[YunStore sharedYunStore];
+//        [yunStore.yunArray addObject:self.container];
         [self performSegueWithIdentifier:@"finishYun" sender:self];
     }
 }

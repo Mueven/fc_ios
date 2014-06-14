@@ -172,20 +172,55 @@
      ];
 }
 //resource Yun
--(NSString *)yun_root
+-(NSString *)yun_index
 {
     NSString *base=[self baseURL];
     NSString *yun=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"root"];
     return [base stringByAppendingString:yun];
 }
+-(NSString *)yun_root
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"index"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_single
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"single"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_add_tuo_by_scan{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"add_tuo_by_scan"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_remove_tuo{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"remove_tuo"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_add_tuo{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"add_tuo"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_send{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"send"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+
 -(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
     [self.activeView stopAnimating];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    NSString *questDate=[formatter stringFromDate:[NSDate date]];
     AFHTTPRequestOperationManager *manager=[self generateManager:view];
     [manager GET:[self yun_root]
-      parameters:nil
+      parameters:@{@"delivery_date":questDate}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [self.activeView stopAnimating];
-             
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
+                 [yunArray addObject:yun];
+             }
+             [view reloadData];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [self.activeView stopAnimating];

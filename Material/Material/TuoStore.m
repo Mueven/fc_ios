@@ -11,16 +11,17 @@
 #import "AFNetOperate.h"
 
 @interface TuoStore()
-@property (nonatomic,strong) NSMutableArray *listArray;
+
 @end
 @implementation TuoStore
 +(instancetype)sharedTuoStore:(UITableView *)view
 {
-    static TuoStore *list=nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        list=[[TuoStore alloc] initPrivate:view];
-    });
+//    static TuoStore *list=nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        list=[[TuoStore alloc] initPrivate:view];
+//    });
+    TuoStore *list=[[TuoStore alloc] initPrivate:view];
     return list;
 }
 -(instancetype)initPrivate:(UITableView *)view

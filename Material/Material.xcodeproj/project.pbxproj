@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
+		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
 		B04EF1D41946888900A95D7A /* ShopTuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */; };
 		B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */; };
 		B04EF1D819468A9100A95D7A /* ReceiveTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1D719468A9100A95D7A /* ReceiveTuoViewController.m */; };
@@ -84,6 +86,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
+		B037ECF8194BDC50008C456E /* YunTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunTableViewCell.m; sourceTree = "<group>"; };
+		B037ECF9194BDC50008C456E /* YunTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YunTableViewCell.xib; sourceTree = "<group>"; };
 		B04EF1D11946888900A95D7A /* ShopTuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopTuoTableViewCell.h; sourceTree = "<group>"; };
 		B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopTuoTableViewCell.m; sourceTree = "<group>"; };
 		B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopTuoTableViewCell.xib; sourceTree = "<group>"; };
@@ -449,6 +454,9 @@
 				B04EF1DC1946A49500A95D7A /* ShopXiangTableViewCell.h */,
 				B04EF1DD1946A49500A95D7A /* ShopXiangTableViewCell.m */,
 				B04EF1DE1946A49500A95D7A /* ShopXiangTableViewCell.xib */,
+				B037ECF7194BDC50008C456E /* YunTableViewCell.h */,
+				B037ECF8194BDC50008C456E /* YunTableViewCell.m */,
+				B037ECF9194BDC50008C456E /* YunTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -574,6 +582,7 @@
 				B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */,
 				B085F622194004CC001F01F3 /* Images.xcassets in Resources */,
 				B04EF2171946E89400A95D7A /* URL.plist in Resources */,
+				B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */,
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
@@ -614,6 +623,7 @@
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
+				B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */,
 				B0DF644519448B67002D044B /* Yun.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,

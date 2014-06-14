@@ -11,8 +11,9 @@
 #import "Tuo.h"
 #import "YunHaveTuoTableViewController.h"
 #import "YunInfoViewController.h"
+#import "AFNetOperate.h"
 
-@interface YunChooseTuoViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface YunChooseTuoViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTuo;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 
@@ -43,13 +44,46 @@
         self.navigationItem.rightBarButtonItem=NULL;
     }
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.scanTuo becomeFirstResponder];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma can delegate
+-(void)decoderDataReceived:(NSString *)data
+{
+    //扫描托清单号看是否能加入，能加入就加入
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager POST:[AFNet yun_add_tuo_by_scan]
+      parameters:@{@"id":data}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if(responseObject[@"result"]){
+                 Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
+                 [self.yun.tuoArray addObject:tuo];
+                 [self.tuoTable reloadData];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"sth wrong"];
+         }
+     ];
+    
+}
 #pragma tableDelegate
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

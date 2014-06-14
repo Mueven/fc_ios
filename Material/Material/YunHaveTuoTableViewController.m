@@ -10,6 +10,7 @@
 #import "TuoStore.h"
 #import "Tuo.h"
 #import "YunChooseTuoViewController.h"
+#import "AFNetOperate.h"
 
 @interface YunHaveTuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
@@ -32,7 +33,29 @@
 {
     [super viewDidLoad];
     self.privateTuo=[self.yun.tuoArray mutableCopy];
-    self.tuoStore=[TuoStore sharedTuoStore:self.view];
+    
+    //得到数据
+    TuoStore *tuoStore=[[TuoStore alloc] init];
+    tuoStore.listArray=[[NSMutableArray alloc] init];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet tuo_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
+                 [tuoStore.listArray addObject:tuo];
+             }
+             self.tuoStore=tuoStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,7 +85,11 @@
     Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
     int count=[self.privateTuo count];
     for(int i=0;i<count;i++){
-        if(tuo==[self.privateTuo objectAtIndex:i]){
+//        if(tuo==[self.privateTuo objectAtIndex:i]){
+//            cell.accessoryType=UITableViewCellAccessoryCheckmark;
+//            break ;
+//        }
+        if([tuo.ID isEqualToString:[[self.privateTuo objectAtIndex:i] ID]]){
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
             break ;
         }
@@ -81,7 +108,14 @@
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
         cell.accessoryType=UITableViewCellAccessoryNone;
-        [self.privateTuo removeObjectIdenticalTo:tuo];
+        NSString *ID=tuo.ID;
+        for(int i=0;i<self.privateTuo.count;i++){
+            if([ID isEqualToString:[self.privateTuo[i] ID]]){
+                [self.privateTuo removeObjectAtIndex:i];
+                return;
+            }
+        }
+//        [self.privateTuo removeObjectIdenticalTo:tuo];
     }
 }
 

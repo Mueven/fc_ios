@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *quatity;
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (strong, nonatomic) UITextField *firstResponder;
+@property (weak, nonatomic) IBOutlet UILabel *xiangListLabel;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 //@property (strong, nonatomic) XiangStore *xiangStore;
 //@property (strong,nonatomic) NSArray *validateAddress;
@@ -57,6 +58,7 @@
     }
     else if([self.type isEqualToString:@"addXiang"]){
         self.navigationItem.rightBarButtonItem=NULL;
+        self.xiangListLabel.text=@"该拖已经绑定的箱";
     }
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
@@ -92,6 +94,7 @@
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [AFNet.activeView stopAnimating];
+                 [AFNet alert:@"sth wrong"];
              }
          ];
     }
@@ -166,11 +169,13 @@
                                         Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
                                         [self.tuo addXiang:xiang];
                                         [self.xiangTable reloadData];
+                                        return;
                                     }
                                     else{
                                         //没有绑定跟以前一样跳到下一个textField
                                         self.firstResponder.text=data;
                                         [self textFieldShouldReturn:self.firstResponder];
+                                        return;
                                     }
                                 }
                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {

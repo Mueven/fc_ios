@@ -10,6 +10,8 @@
 #import "YunStore.h"
 #import "Yun.h"
 #import "YunEditViewController.h"
+#import "YunTableViewCell.h"
+#import "AFNetOperate.h"
 
 @interface YunTableViewController ()
 @property (nonatomic,strong)YunStore *yunStore;
@@ -29,13 +31,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.yunStore=[YunStore sharedYunStore];
+    UINib *nib=[UINib nibWithNibName:@"YunTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"yunCell"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //得到数据
+    YunStore *yunStore=[[YunStore alloc] init];
+    yunStore.yunArray=[[NSMutableArray alloc] init];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    NSString *questDate=[formatter stringFromDate:[NSDate date]];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet yun_root]
+      parameters:@{@"delivery_date":questDate}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
+                 [yunStore.yunArray addObject:yun];
+             }
+             self.yunStore=yunStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,10 +93,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"yunCell"];
+    YunTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"yunCell" forIndexPath:indexPath];
     Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
-    cell.textLabel.text=yun.name;
-    cell.detailTextLabel.text=yun.date;
+    cell.nameLabel.text=yun.name;
+    cell.dateLabel.text=yun.date;
+    if(yun.sended){
+        cell.statusLabel.text=@"已发送";
+    }
+    else{
+        cell.statusLabel.text=@"未发送";
+        [cell.statusLabel setTextColor:[UIColor redColor]];
+    }
     return cell;
 }
 
@@ -83,8 +122,28 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        NSString *ID=[[self.yunStore.yunArray objectAtIndex:indexPath.row] ID];
+        [manager DELETE:[AFNet tuo_edit:ID]
+             parameters:nil
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
+                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                }
+         ];
+//        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

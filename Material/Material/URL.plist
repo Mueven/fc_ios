@@ -11,8 +11,20 @@
 	</dict>
 	<key>yun</key>
 	<dict>
+		<key>send</key>
+		<string>send</string>
+		<key>single</key>
+		<string>detail/</string>
+		<key>add_tuo</key>
+		<string>add_forklift/</string>
+		<key>remove_tuo</key>
+		<string>remove_forklift/</string>
+		<key>add_tuo_by_scan</key>
+		<string>check_forklift/</string>
+		<key>index</key>
+		<string>list</string>
 		<key>root</key>
-		<string>/yuns</string>
+		<string>/api/v1/deliveries/</string>
 	</dict>
 	<key>tuo</key>
 	<dict>
@@ -22,6 +34,8 @@
 		<string>check_package/</string>
 		<key>bundle_add</key>
 		<string>add_package/</string>
+		<key>New item</key>
+		<string></string>
 		<key>single</key>
 		<string>detail/</string>
 		<key>index</key>

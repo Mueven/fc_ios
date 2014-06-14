@@ -13,11 +13,13 @@
 #import "TuoScanViewController.h"
 #import "XiangTableViewCell.h"
 #import "TuoPrintViewController.h"
+#import "AFNetOperate.h"
 
 @interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *department;
 @property (weak, nonatomic) IBOutlet UITextField *agent;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
+@property (strong, nonatomic) UITextField *firstResponder;
 @end
 
 @implementation TuoEditViewController
@@ -41,8 +43,41 @@
     self.agent.delegate=self;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
+    
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager PUT:[AFNet tuo_single]
+      parameters:@{@"id":self.tuo.ID}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if(responseObject[@"result"]){
+                 NSDictionary *result=responseObject[@"content"];
+                 NSArray *xiangList=result[@"packages"];
+                 for(int i=0;i<xiangList.count;i++){
+                     Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                     [self.tuo.xiang addObject:xiang];
+                 }
+                 [self.xiangTable reloadData];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
+    
+    
 }
-
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -58,13 +93,58 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
+-(void)decoderDataReceived:(NSString *)data
+{
+    self.firstResponder.text=data;
+    [self textFieldShouldReturn:self.firstResponder];
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.firstResponder=textField;
+}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField.tag==21){
-        self.tuo.department=self.department.text;
+        NSString *department=self.department.text;
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet tuo_edit:self.tuo.ID]
+          parameters:@{@"forklift":@{department:department}}
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        self.tuo.department=department;
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                }
+         ];
     }
     else if(textField.tag==22){
-        self.tuo.agent=self.agent.text;
+        NSString *agent=self.agent.text;
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet tuo_edit:self.tuo.ID]
+          parameters:@{@"forklift":@{agent:agent}}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if(responseObject[@"result"]){
+                     self.tuo.agent=agent;
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+             }
+         ];
     }
     [textField resignFirstResponder];
     return YES;
@@ -101,8 +181,28 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager DELETE:[AFNet tuo_remove_xiang]
+             parameters:@{
+                          @"forklift_id":self.tuo.ID,
+                          @"package_id":[[self.tuo.xiang objectAtIndex:indexPath.row] ID]
+                          }
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
+                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                }
+         ];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }

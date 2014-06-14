@@ -39,9 +39,34 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
+
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    
+    //得到数据
+    TuoStore *tuoStore=[[TuoStore alloc] init];
+    tuoStore.listArray=[[NSMutableArray alloc] init];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet tuo_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
+                 [tuoStore.listArray addObject:tuo];
+             }
+             self.tuoStore=tuoStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
+    
+//    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
+//    [self.tableView reloadData];
 }
 - (void)didReceiveMemoryWarning
 {

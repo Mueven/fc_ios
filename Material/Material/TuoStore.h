@@ -10,6 +10,7 @@
 @class Tuo;
 
 @interface TuoStore : NSObject
+@property (nonatomic,strong) NSMutableArray *listArray;
 +(instancetype)sharedTuoStore:(UITableView *)view;
 -(NSArray *)tuoList;
 -(int)tuoCount;
