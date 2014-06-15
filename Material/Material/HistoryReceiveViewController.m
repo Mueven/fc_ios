@@ -8,8 +8,9 @@
 
 #import "HistoryReceiveViewController.h"
 
-@interface HistoryReceiveViewController ()
+@interface HistoryReceiveViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
+@property(nonatomic,strong)NSString *postDate;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)checkYun:(id)sender;
 
@@ -30,6 +31,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.dateTextField.delegate=self;
     UIDatePicker *datePicker=[[UIDatePicker alloc] init];
     [datePicker setDate:[NSDate date]];
     [datePicker addTarget:self
@@ -45,13 +47,25 @@
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     self.dateTextField.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    self.postDate=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(textField.text.length==0){
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        textField.text=[formatter stringFromDate:[NSDate date]];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+        self.postDate=[formatter stringFromDate:[NSDate date]];
+    }
+    
+}
 /*
 #pragma mark - Navigation
 

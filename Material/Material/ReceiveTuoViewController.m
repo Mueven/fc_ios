@@ -11,17 +11,30 @@
 #import "Tuo.h"
 #import "Xiang.h"
 #import "ReceiveXiangViewController.h"
+#import "ReceiveConfirmViewController.h"
 
-@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
-@property (strong,nonatomic) UIAlertView *printAlert;
-- (IBAction)confirmReceive:(id)sender;
-
+//@property (strong,nonatomic) UIAlertView *printAlert;
+@property (weak, nonatomic) IBOutlet UILabel *scanLabel;
+@property (nonatomic)BOOL currentModel;
+//1是运单状态，0是拖状态
+- (IBAction)fake:(id)sender;
 @end
 
 @implementation ReceiveTuoViewController
+
+- (IBAction)fake:(id)sender {
+    self.yun=[[Yun alloc] initExample];
+    for(int i=0;i<10;i++){
+        Tuo *tuo=[[Tuo alloc] initExample];
+        [self.yun.tuoArray addObject:tuo];
+    }
+    [self tuoModel];
+    [self.tuoTable reloadData];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,23 +52,20 @@
     self.scanTextField.delegate=self;
     self.tuoTable.delegate=self;
     self.tuoTable.dataSource=self;
+    self.currentModel=1;
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tuoTable registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
-    
-    self.yun=[[Yun alloc] initExample];
-    for(int i=0;i<10;i++){
-        Tuo *tuo=[[Tuo alloc] initExample];
-        [self.yun.tuoArray addObject:tuo];
-    }
-    [self.tuoTable reloadData];
+    [self yunModel];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if(![self.scanTextField isFirstResponder]){
-        [self.scanTextField becomeFirstResponder];
-    }
-    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",[self.yun.tuoArray count]];
+    [self.scanTextField becomeFirstResponder];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    
+
     [self.tuoTable reloadData];
 }
 - (void)didReceiveMemoryWarning
@@ -63,7 +73,47 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)decoderDataReceived:(NSString *)data{
+    //AFNET 取运单数据（需要下面的拖以及更下面的箱）
+    
+    
+    
+    [self tuoModel];
+}
+-(void)tuoModel
+{
+    self.currentModel=0;
+    self.navigationItem.title=self.yun.name;
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确认收货"
+                                                                            style:UIBarButtonItemStyleBordered target:self
+                                                                           action:@selector(receive)];
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"放弃收货"
+                                                                            style:UIBarButtonItemStyleBordered target:self
+                                                                           action:@selector(unReceive)];
+    self.scanLabel.text=@"扫描托清单号";
+    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",[self.yun.tuoArray count]];
+    self.tuoTable.hidden=NO;
+    [self.tuoTable reloadData];
+    [self.scanTextField becomeFirstResponder];
+}
+-(void)yunModel
+{
+    self.currentModel=1;
+    self.navigationItem.title=@"收货";
+    self.navigationItem.rightBarButtonItem=NULL;
+    self.navigationItem.leftBarButtonItem=NULL;
+    self.scanLabel.text=@"扫描运单号";
+    self.countLabel.text=@"";
+    self.tuoTable.hidden=YES;
+    [self.scanTextField becomeFirstResponder];
+}
+-(void)receive{
+    [self performSegueWithIdentifier:@"receiveConfirm" sender:@{@"yun":self.yun}];
+}
+-(void)unReceive
+{
+    [self yunModel];
+}
 #pragma table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -121,55 +171,15 @@
         ReceiveXiangViewController *receiveXiang=segue.destinationViewController;
         receiveXiang.tuo=[sender objectForKey:@"tuo"];
     }
+    else if([segue.identifier isEqualToString:@"receiveConfirm"]){
+        ReceiveConfirmViewController *receiveConfirm=segue.destinationViewController;
+        receiveConfirm.yun=[sender objectForKey:@"yun"];
+    }
 }
 
 #pragma alert button
-- (IBAction)confirmReceive:(id)sender {
-    int count=0;
-    int checked=0;
-    for(int i=0;i<[self.yun.tuoArray count];i++){
-        Tuo *tuo=[self.yun.tuoArray objectAtIndex:i];
-        int aTuoXiangCount=[tuo.xiang count];
-        count+=aTuoXiangCount;
-        for(int j=0;j<aTuoXiangCount;j++){
-            Xiang *xiang=[tuo.xiang objectAtIndex:j];
-            if(xiang.checked){
-                checked++;
-            }
-        }
-    }
-    NSString *condition=[NSString stringWithFormat:@"验收状况：%d / %d",checked,count];
 
-        UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"确认收货吗？"
-                                                      message:condition
-                                                     delegate:self
-                                            cancelButtonTitle:@"取消"
-                                            otherButtonTitles:@"确定",nil];
-        [alert show];
-
-}
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(!self.printAlert){
-        //点击收货“是”以后
-        if(buttonIndex==1){
-            self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
-                                                        message:@"要打印运单吗？"
-                                                       delegate:self
-                                              cancelButtonTitle:@"不打印"
-                                              otherButtonTitles:@"打印",nil];
-            [self.printAlert show];
-        }
-    }
-    else{
-        //在是否打印这个alert中点击按钮
-        if(buttonIndex==1){
-          //收货+打印
-        }
-        else{
-          //收货+不打印
-        }
-        self.printAlert=nil;
-    }
+-(IBAction)unwindToReceive:(UIStoryboardSegue *)unwind{
+    [self yunModel];
 }
 @end

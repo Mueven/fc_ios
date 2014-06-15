@@ -204,7 +204,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"send"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
-
+-(NSString *)yun_edit:(NSString *)id{
+    NSString *yunRoot=[self yun_root];
+    return [NSString stringWithFormat:@"%@%@",yunRoot,id];
+}
 -(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
     [self.activeView stopAnimating];
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
@@ -226,5 +229,17 @@
              [self.activeView stopAnimating];
          }
      ];
+}
+
+//login and logout
+-(NSString *)log_in
+{
+    NSString *base=[self baseURL];
+    return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"log_in"]];
+}
+-(NSString *)log_out
+{
+    NSString *base=[self baseURL];
+    return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"log_out"]];
 }
 @end

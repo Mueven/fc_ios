@@ -11,5 +11,7 @@
 
 @interface YunChooseTuoViewController : UIViewController
 @property(nonatomic,strong)Yun *yun;
+@property(nonatomic,strong)Yun *yunTarget;
 @property(nonatomic,strong)NSString *type;
+@property (strong,nonatomic) NSString *barTitle;
 @end

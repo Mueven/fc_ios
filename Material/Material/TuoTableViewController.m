@@ -133,6 +133,7 @@
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
+                    [AFNet alert:@"sth wrong"];
                 }
          ]; 
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {

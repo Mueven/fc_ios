@@ -198,9 +198,10 @@
         }
         //不打印
         else{
-            [self performSegueWithIdentifier:@"finishYun" sender:self];
+           
         }
         self.printAlert=nil;
+        [self performSegueWithIdentifier:@"finishYun" sender:self];
     }
 }
 @end

@@ -27,7 +27,12 @@
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
         self.date=[formatter stringFromDate:[NSDate date]];
         self.tuoArray=[[NSMutableArray alloc] init];
-        self.sended=1;
+        self.ID=[NSString stringWithFormat:@"%d",arc4random()%100];
+        for(int i=0;i<5;i++){
+            Tuo *tuo=[[Tuo alloc] initExample];
+            [self.tuoArray addObject:tuo];
+        }
+        self.sended=0;
     }
     return self;
 }

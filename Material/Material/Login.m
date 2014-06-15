@@ -8,6 +8,7 @@
 
 #import "Login.h"
 #import "KeychainItemWrapper.h"
+#import "AFNetOperate.h"
 
 @interface Login ()<UITextFieldDelegate,NSCoding>
 @property (weak, nonatomic) IBOutlet UITextField *email;
@@ -72,18 +73,36 @@
 
 - (IBAction)login:(id)sender {
     NSString *email=self.email.text;
-//    NSString *password=self.password.text;
+    NSString *password=self.password.text;
 //    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
 //                                                                      accessGroup:nil];
 //    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
-//    if([email isEqualToString:@"superxiao21@163.com"]&&[password isEqualToString:@"w"]){
     if([email isEqualToString:@"w"]){
         [self loginSameAction:@"shop"];
     }
     else{
        [self loginSameAction:@"stock"];
     }
-//    }
+    
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [manager POST:[AFNet log_in]
+//       parameters:@{@"user":@{@"id":email,@"password":password}}
+//            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                [AFNet.activeView stopAnimating];
+//                if(responseObject[@"result"]){
+//                    
+//                }
+//                else{
+//                    [AFNet alert:responseObject[@"content"]];
+//                }
+//            }
+//            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                [AFNet.activeView stopAnimating];
+//                [AFNet alert:@"sth wrong"];
+//            }
+//     ];
+
 }
 -(void)loginSameAction:(NSString *)identifier
 {

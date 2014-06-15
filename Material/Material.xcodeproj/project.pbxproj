@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
+		B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D524B194D412300696E4E /* YunSendedViewController.m */; };
+		B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D524E194D458D00696E4E /* YunCheckXiangTableViewController.m */; };
+		B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */; };
 		B04EF1D41946888900A95D7A /* ShopTuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */; };
 		B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */; };
 		B04EF1D819468A9100A95D7A /* ReceiveTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1D719468A9100A95D7A /* ReceiveTuoViewController.m */; };
@@ -89,6 +92,12 @@
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
 		B037ECF8194BDC50008C456E /* YunTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunTableViewCell.m; sourceTree = "<group>"; };
 		B037ECF9194BDC50008C456E /* YunTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YunTableViewCell.xib; sourceTree = "<group>"; };
+		B03D524A194D412300696E4E /* YunSendedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunSendedViewController.h; sourceTree = "<group>"; };
+		B03D524B194D412300696E4E /* YunSendedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunSendedViewController.m; sourceTree = "<group>"; };
+		B03D524D194D458D00696E4E /* YunCheckXiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunCheckXiangTableViewController.h; sourceTree = "<group>"; };
+		B03D524E194D458D00696E4E /* YunCheckXiangTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunCheckXiangTableViewController.m; sourceTree = "<group>"; };
+		B03D5250194DBEA400696E4E /* ReceiveConfirmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveConfirmViewController.h; sourceTree = "<group>"; };
+		B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveConfirmViewController.m; sourceTree = "<group>"; };
 		B04EF1D11946888900A95D7A /* ShopTuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopTuoTableViewCell.h; sourceTree = "<group>"; };
 		B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopTuoTableViewCell.m; sourceTree = "<group>"; };
 		B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopTuoTableViewCell.xib; sourceTree = "<group>"; };
@@ -237,6 +246,8 @@
 			children = (
 				B04EF1D619468A9100A95D7A /* ReceiveTuoViewController.h */,
 				B04EF1D719468A9100A95D7A /* ReceiveTuoViewController.m */,
+				B03D5250194DBEA400696E4E /* ReceiveConfirmViewController.h */,
+				B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */,
 				B04EF1D919469CBA00A95D7A /* ReceiveXiangViewController.h */,
 				B04EF1DA19469CBA00A95D7A /* ReceiveXiangViewController.m */,
 			);
@@ -333,6 +344,10 @@
 				B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */,
 				B0FDC97019458B6F008E4B72 /* YunEditViewController.h */,
 				B0FDC97119458B6F008E4B72 /* YunEditViewController.m */,
+				B03D524A194D412300696E4E /* YunSendedViewController.h */,
+				B03D524B194D412300696E4E /* YunSendedViewController.m */,
+				B03D524D194D458D00696E4E /* YunCheckXiangTableViewController.h */,
+				B03D524E194D458D00696E4E /* YunCheckXiangTableViewController.m */,
 			);
 			name = Yun;
 			sourceTree = "<group>";
@@ -622,12 +637,15 @@
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
+				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
+				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
 				B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */,
 				B0DF644519448B67002D044B /* Yun.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
+				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
 				B0DF644819448B75002D044B /* YunStore.m in Sources */,

@@ -12,6 +12,8 @@
 #import "YunEditViewController.h"
 #import "YunTableViewCell.h"
 #import "AFNetOperate.h"
+#import "YunSendedViewController.h"
+#import "Tuo.h"
 
 @interface YunTableViewController ()
 @property (nonatomic,strong)YunStore *yunStore;
@@ -33,6 +35,8 @@
     [super viewDidLoad];
     UINib *nib=[UINib nibWithNibName:@"YunTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"yunCell"];
+    
+    self.yunStore=[YunStore sharedYunStore:self.tableView];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -44,30 +48,30 @@
 {
     [super viewWillAppear:animated];
     //得到数据
-    YunStore *yunStore=[[YunStore alloc] init];
-    yunStore.yunArray=[[NSMutableArray alloc] init];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *questDate=[formatter stringFromDate:[NSDate date]];
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet yun_root]
-      parameters:@{@"delivery_date":questDate}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-             for(int i=0;i<[resultArray count];i++){
-                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
-                 [yunStore.yunArray addObject:yun];
-             }
-             self.yunStore=yunStore;
-             [self.tableView reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:@"something wrong"];
-         }
-     ];
+//    YunStore *yunStore=[[YunStore alloc] init];
+//    yunStore.yunArray=[[NSMutableArray alloc] init];
+//    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+//    NSString *questDate=[formatter stringFromDate:[NSDate date]];
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [manager GET:[AFNet yun_root]
+//      parameters:@{@"delivery_date":questDate}
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             [AFNet.activeView stopAnimating];
+//             NSArray *resultArray=responseObject;
+//             for(int i=0;i<[resultArray count];i++){
+//                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
+//                 [yunStore.yunArray addObject:yun];
+//             }
+//             self.yunStore=yunStore;
+//             [self.tableView reloadData];
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             [AFNet.activeView stopAnimating];
+//             [AFNet alert:@"something wrong"];
+//         }
+//     ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,9 +108,68 @@
         cell.statusLabel.text=@"未发送";
         [cell.statusLabel setTextColor:[UIColor redColor]];
     }
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    if(yun.sended){
+        [manager GET:[AFNet yun_single]
+          parameters:@{@"id":yun.ID}
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if(responseObject[@"result"]){
+                        NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                        [yun.tuoArray removeAllObjects];
+                        for(int i=0;i<tuoArray.count;i++){
+                            Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                            [yun.tuoArray addObject:tuoItem];
+                        }
+                        [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+                    }
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
+                    
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                    [AFNet alert:@"sth wrong"];
+                }
+         ];
+        
+//        [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+    }
+    else{
+        [manager GET:[AFNet yun_single]
+          parameters:@{@"id":yun.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if(responseObject[@"result"]){
+                     NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                     [yun.tuoArray removeAllObjects];
+                     for(int i=0;i<tuoArray.count;i++){
+                         Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                         [yun.tuoArray addObject:tuoItem];
+                     }
+                     [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:@"sth wrong"];
+             }
+         ];
+//        [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -174,9 +237,13 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if([segue.identifier isEqualToString:@"yunEdit"]){
+    if([segue.identifier isEqualToString:@"editYun"]){
         YunEditViewController *yunEdit=segue.destinationViewController;
-        yunEdit.yun=[self.yunStore.yunArray objectAtIndex:[[self.tableView indexPathForCell:sender] row]];
+        yunEdit.yun=[sender objectForKey:@"yun"];
+    }
+    else if([segue.identifier isEqualToString:@"checkYun"]){
+        YunSendedViewController *yunCheck=segue.destinationViewController;
+        yunCheck.yun=[sender objectForKey:@"yun"];
     }
 }
 

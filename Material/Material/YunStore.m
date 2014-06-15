@@ -17,12 +17,12 @@
 @implementation YunStore
 +(instancetype)sharedYunStore:(UITableView *)view
 {
-//    static YunStore *list=nil;
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        list=[[YunStore alloc] initPrivate:view];
-//    });
-    YunStore *list=[[YunStore alloc] initPrivate:view];
+    static YunStore *list=nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        list=[[YunStore alloc] initPrivate:view];
+    });
+//    YunStore *list=[[YunStore alloc] initPrivate:view];
     return list;
 }
 -(instancetype)initPrivate:(UITableView *)view

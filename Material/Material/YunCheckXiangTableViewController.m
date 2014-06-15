@@ -1,21 +1,19 @@
 //
-//  HistoryYunTableViewController.m
+//  YunCheckXiangTableViewController.m
 //  Material
 //
-//  Created by wayne on 14-6-10.
+//  Created by wayne on 14-6-15.
 //  Copyright (c) 2014年 brilliantech. All rights reserved.
 //
 
-#import "HistoryYunTableViewController.h"
-#import "Yun.h"
-#import "Tuo.h"
-#import "HistoryTuoTableViewController.h"
-
-@interface HistoryYunTableViewController ()
+#import "YunCheckXiangTableViewController.h"
+#import "XiangTableViewCell.h"
+#import "Xiang.h"
+@interface YunCheckXiangTableViewController ()
 
 @end
 
-@implementation HistoryYunTableViewController
+@implementation YunCheckXiangTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,19 +33,9 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.title=@"2014-06-10";
-    
-    self.yunArray=[[NSMutableArray alloc] init];
-    for(int i=0;i<3;i++){
-        Yun *yun=[[Yun alloc] initExample];
-        for(int i=0;i<10;i++){
-            Tuo *tuo=[[Tuo alloc] initExample];
-            [yun.tuoArray addObject:tuo];
-        }
-        [self.yunArray addObject:yun];
-    }
-    
-    [self.tableView reloadData];
+    self.navigationItem.title=self.tuo.department;
+    UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,24 +55,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.yunArray count];
+    return [self.tuo.xiang count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"yunCell" forIndexPath:indexPath];
-    Yun *yun=[self.yunArray objectAtIndex:indexPath.row];
-    cell.textLabel.text=yun.name;
-    // Configure the cell...
-    
+    XiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
+    Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
+    cell.partNumber.text=xiang.number;
+    cell.key.text=xiang.key;
+    cell.quantity.text=xiang.count;
+    cell.position.text=xiang.position;
+    cell.date.text=xiang.date;
+
     return cell;
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Yun *yun=[self.yunArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"checkTuo" sender:@{@"yun":yun}];
-}
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -124,7 +111,7 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -132,11 +119,7 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if([segue.identifier isEqualToString:@"checkTuo"]){
-        HistoryTuoTableViewController *historyTuo=segue.destinationViewController;
-        historyTuo.yun=[sender objectForKey:@"yun"];
-    }
 }
-
+*/
 
 @end

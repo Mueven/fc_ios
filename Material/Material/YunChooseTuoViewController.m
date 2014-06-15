@@ -16,7 +16,8 @@
 @interface YunChooseTuoViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTuo;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
-
+- (IBAction)pressNavigation:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *navigationButton;
 @end
 
 @implementation YunChooseTuoViewController
@@ -41,7 +42,7 @@
         self.yun=[[Yun alloc] init];
     }
     if([self.type isEqualToString:@"yunEdit"]){
-        self.navigationItem.rightBarButtonItem=NULL;
+        self.navigationItem.rightBarButtonItem.title=self.barTitle;
     }
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -142,5 +143,41 @@
         yunInfo.yun=self.yun;
     }
     
+}
+- (IBAction)pressNavigation:(id)sender {
+    if([self.navigationButton.title isEqualToString:@"下一步"]){
+        [self performSegueWithIdentifier:@"nextStep" sender:self];
+    }
+    else if([self.navigationButton.title isEqualToString:self.barTitle]){
+        //修改未发送的运单时点击完成更改，添加新的拖到箱里
+        NSMutableArray *tuoIDArray=[[NSMutableArray alloc] init];
+        for(int i=0;i<self.yun.tuoArray.count;i++){
+            NSString *ID=[self.yun.tuoArray[i] ID];
+            [tuoIDArray addObject:ID];
+        }
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_add_tuo]
+           parameters:@{@"id":self.yunTarget.ID,@"forklift":tuoIDArray}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if(responseObject[@"result"]){
+                      for(int i=0;i<self.yun.tuoArray.count;i++){
+                          [self.yunTarget.tuoArray addObject:self.yun.tuoArray[i]];
+                      }
+                      [self.navigationController popViewControllerAnimated:YES];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:@"sth wrong"];
+              }
+         ];
+//        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 @end

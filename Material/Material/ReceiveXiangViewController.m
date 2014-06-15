@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+- (IBAction)finish:(id)sender;
 
 @end
 
@@ -83,8 +84,8 @@
     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
     ShopXiangTableViewCell *cell=(ShopXiangTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.accessoryType==UITableViewCellAccessoryNone){
-        cell.accessoryType=UITableViewCellAccessoryCheckmark;
-        xiang.checked=YES;
+//        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+//        xiang.checked=YES;
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
         cell.accessoryType=UITableViewCellAccessoryNone;
@@ -104,4 +105,7 @@
 }
 */
 
+- (IBAction)finish:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

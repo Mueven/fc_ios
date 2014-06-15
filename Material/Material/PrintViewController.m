@@ -55,7 +55,7 @@
 }
 
 - (IBAction)print:(id)sender {
-    [self sameFinishAction];
+     [self performSegueWithIdentifier:@"finishTuo" sender:self];
 }
 -(void)sameFinishAction
 {
@@ -63,6 +63,8 @@
     if([containerClass isEqualToString:@"Tuo"]){
 //        TuoStore *tuoStore=[TuoStore sharedTuoStore:self.view];
 //        [tuoStore addTuo:self.container];
+        
+        //这里掉打印拖的接口
         [self performSegueWithIdentifier:@"finishTuo" sender:self];
     }
     else if([containerClass isEqualToString:@"Yun"]){

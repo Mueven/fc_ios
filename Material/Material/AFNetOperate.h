@@ -37,4 +37,7 @@
 -(NSString *)yun_remove_tuo;
 -(NSString *)yun_add_tuo;
 -(NSString *)yun_send;
+
+-(NSString *)log_in;
+-(NSString *)log_out;
 @end
