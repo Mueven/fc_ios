@@ -54,6 +54,7 @@
              NSArray *resultArray=responseObject;
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
+//                 NSLog(@"%@",resultArray[i]);
                  [tuoStore.listArray addObject:tuo];
              }
              self.tuoStore=tuoStore;
@@ -61,7 +62,7 @@
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [AFNet.activeView stopAnimating];
-             [AFNet alert:@"something wrong"];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
     
@@ -118,11 +119,11 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         NSString *ID=[[self.tuoStore.tuoList objectAtIndex:indexPath.row] ID];
-        [manager DELETE:[AFNet tuo_edit:ID]
-             parameters:nil
+        [manager DELETE:[AFNet tuo_index]
+             parameters:@{@"id":ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         [self.tuoStore removeTuo:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     }

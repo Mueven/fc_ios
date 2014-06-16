@@ -10,7 +10,7 @@
 #import "Xiang.h"
 #import "Tuo.h"
 #import "Yun.h"
-
+#import <AudioToolbox/AudioToolbox.h>
 @interface AFNetOperate()
 @property(nonatomic,strong)UIAlertView *alert;
 @end
@@ -46,12 +46,18 @@
                                    selector:@selector(dissmissAlert:)
                                    userInfo:nil
                                     repeats:NO];
+    AudioServicesPlaySystemSound(1051);
     [self.alert show];
+  
 }
 -(void)dissmissAlert:(NSTimer *)timer
 {
     [self.alert dismissWithClickedButtonIndex:0 animated:YES];
 }
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    self.alert=nil;
+//}
 #pragma url method
 -(NSMutableDictionary *)URLDictionary
 {
@@ -61,9 +67,21 @@
 }
 -(NSString *)baseURL
 {
-    NSString *base=[[self URLDictionary] objectForKey:@"base"];
-    NSString *port=[[self URLDictionary] objectForKey:@"port"];
-    return [base stringByAppendingString:port];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"ip.address.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        NSString *base=[dictionary objectForKey:@"ip"];
+        NSString *port=[dictionary objectForKey:@"port"];
+        return [base stringByAppendingString:port];
+    }
+    else{
+        NSString *base=[[self URLDictionary] objectForKey:@"base"];
+        NSString *port=[[self URLDictionary] objectForKey:@"port"];
+        return [base stringByAppendingString:port];
+    }
+    
 }
 //resource part
 -(NSString *)part_index
@@ -94,7 +112,7 @@
     return [[self xiang_index] stringByAppendingString:bind];
 }
 -(NSString *)xiang_edit:(NSString *)id{
-    NSString *xiangRoot=[self xiang_root];
+    NSString *xiangRoot=[self xiang_index];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
 }
 -(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view
@@ -181,32 +199,37 @@
 -(NSString *)yun_root
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"index"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_single
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"single"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_add_tuo_by_scan{
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"add_tuo_by_scan"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_remove_tuo{
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"remove_tuo"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_add_tuo{
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"add_tuo"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_send{
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"send"];
-    return [[self tuo_index] stringByAppendingString:bind];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(NSString *)yun_edit:(NSString *)id{
     NSString *yunRoot=[self yun_root];
     return [NSString stringWithFormat:@"%@%@",yunRoot,id];
+}
+-(NSString *)yun_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"receive"];
+    return [[self yun_index] stringByAppendingString:bind];
 }
 -(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
     [self.activeView stopAnimating];

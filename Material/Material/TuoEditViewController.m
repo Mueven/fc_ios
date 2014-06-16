@@ -44,13 +44,15 @@
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     
+   
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager PUT:[AFNet tuo_single]
+//    NSLog(@"id:%@",self.tuo.ID);
+    [manager GET:[AFNet tuo_single]
       parameters:@{@"id":self.tuo.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if(responseObject[@"result"]){
+             if([responseObject[@"result"] integerValue]==1){
                  NSDictionary *result=responseObject[@"content"];
                  NSArray *xiangList=result[@"packages"];
                  for(int i=0;i<xiangList.count;i++){
@@ -108,12 +110,15 @@
         NSString *department=self.department.text;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager PUT:[AFNet tuo_edit:self.tuo.ID]
-          parameters:@{@"forklift":@{department:department}}
+        [manager PUT:[AFNet tuo_index]
+          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"whouse_id":department}}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         self.tuo.department=department;
+                        [textField resignFirstResponder];
+                        self.firstResponder=nil;
+                        NSLog(@"ok");
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
@@ -129,12 +134,15 @@
         NSString *agent=self.agent.text;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager PUT:[AFNet tuo_edit:self.tuo.ID]
-          parameters:@{@"forklift":@{agent:agent}}
+        [manager PUT:[AFNet tuo_index]
+          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"stocker_id":agent}}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
-                 if(responseObject[@"result"]){
+                 if([responseObject[@"result"] integerValue]==1){
                      self.tuo.agent=agent;
+                     [textField resignFirstResponder];
+                      self.firstResponder=nil;
+                     NSLog(@"ok");
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
@@ -190,7 +198,7 @@
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         [self.tuo.xiang removeObjectAtIndex:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     }

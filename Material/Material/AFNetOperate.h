@@ -19,10 +19,12 @@
 //get URL
 -(NSString *)part_validate;
 
+-(NSString *)xiang_index;
 -(NSString *)xiang_root;
 -(NSString *)xiang_edit:(NSString *)id;
 -(NSString *)xiang_validate;
 
+-(NSString *)tuo_index;
 -(NSString *)tuo_root;
 -(NSString *)tuo_edit:(NSString *)id;
 -(NSString *)tuo_single;
@@ -30,6 +32,7 @@
 -(NSString *)tuo_key_for_bundle;
 -(NSString *)tuo_remove_xiang;
 
+-(NSString *)yun_index;
 -(NSString *)yun_root;
 -(NSString *)yun_edit:(NSString *)id;
 -(NSString *)yun_single;
@@ -37,6 +40,7 @@
 -(NSString *)yun_remove_tuo;
 -(NSString *)yun_add_tuo;
 -(NSString *)yun_send;
+-(NSString *)yun_receive;
 
 -(NSString *)log_in;
 -(NSString *)log_out;

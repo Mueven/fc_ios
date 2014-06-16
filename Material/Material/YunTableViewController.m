@@ -36,7 +36,7 @@
     UINib *nib=[UINib nibWithNibName:@"YunTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"yunCell"];
     
-    self.yunStore=[YunStore sharedYunStore:self.tableView];
+//    self.yunStore=[YunStore sharedYunStore:self.tableView];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,30 +48,37 @@
 {
     [super viewWillAppear:animated];
     //得到数据
-//    YunStore *yunStore=[[YunStore alloc] init];
-//    yunStore.yunArray=[[NSMutableArray alloc] init];
-//    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-//    NSString *questDate=[formatter stringFromDate:[NSDate date]];
-//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    [manager GET:[AFNet yun_root]
-//      parameters:@{@"delivery_date":questDate}
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             [AFNet.activeView stopAnimating];
-//             NSArray *resultArray=responseObject;
-//             for(int i=0;i<[resultArray count];i++){
-//                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
-//                 [yunStore.yunArray addObject:yun];
-//             }
-//             self.yunStore=yunStore;
-//             [self.tableView reloadData];
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             [AFNet.activeView stopAnimating];
-//             [AFNet alert:@"something wrong"];
-//         }
-//     ];
+    YunStore *yunStore=[[YunStore alloc] init];
+    yunStore.yunArray=[[NSMutableArray alloc] init];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    NSString *questDate=[formatter stringFromDate:[NSDate date]];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet yun_root]
+      parameters:@{@"delivery_date":questDate}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+//             NSLog(@"%@",responseObject);
+              if([responseObject[@"result"] integerValue]==1){
+                  NSArray *resultArray=responseObject[@"content"];
+                  for(int i=0;i<[resultArray count];i++){
+                      Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
+                      [yunStore.yunArray addObject:yun];
+                  }
+                  self.yunStore=yunStore;
+                  [self.tableView reloadData];
+
+              }
+              else{
+                 [AFNet alert:responseObject[@"content"]];
+              }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,8 +108,9 @@
     Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=yun.name;
     cell.dateLabel.text=yun.date;
-    if(yun.sended){
+    if(yun.sended>0){
         cell.statusLabel.text=@"已发送";
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }
     else{
         cell.statusLabel.text=@"未发送";
@@ -121,7 +129,8 @@
           parameters:@{@"id":yun.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
+                        yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
                         NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
                         [yun.tuoArray removeAllObjects];
                         for(int i=0;i<tuoArray.count;i++){
@@ -137,7 +146,7 @@
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
-                    [AFNet alert:@"sth wrong"];
+                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
          ];
         
@@ -148,7 +157,9 @@
           parameters:@{@"id":yun.ID}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
-                 if(responseObject[@"result"]){
+                 if([responseObject[@"result"] integerValue]==1){
+                     yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
+                  
                      NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
                      [yun.tuoArray removeAllObjects];
                      for(int i=0;i<tuoArray.count;i++){
@@ -164,7 +175,7 @@
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [AFNet.activeView stopAnimating];
-                 [AFNet alert:@"sth wrong"];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
 //        [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
@@ -188,11 +199,11 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         NSString *ID=[[self.yunStore.yunArray objectAtIndex:indexPath.row] ID];
-        [manager DELETE:[AFNet tuo_edit:ID]
-             parameters:nil
+        [manager DELETE:[AFNet yun_index]
+             parameters:@{@"id":ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     }
@@ -203,6 +214,7 @@
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
+                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
          ];
 //        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];

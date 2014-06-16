@@ -57,6 +57,7 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
+//             NSLog(@"%@",responseObject);
              NSArray *xiangArrayResult=responseObject;
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
@@ -67,7 +68,7 @@
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [AFNet.activeView stopAnimating];
-             [AFNet alert:@"something wrong"];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
 //    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
@@ -142,11 +143,12 @@
         NSString *ID=[[self.xiangStore.xiangArray objectAtIndex:indexPath.row] ID];
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager DELETE:[AFNet xiang_edit:ID]
-             parameters:nil
+//        NSLog(@"%@",[AFNet xiang_edit:ID]);
+        [manager DELETE:[AFNet xiang_index]
+             parameters:@{@"id":ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         [self.xiangStore removeXiang:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     }
@@ -156,7 +158,7 @@
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
-                    [AFNet alert:@"sth wrong"];
+                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
          ];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {

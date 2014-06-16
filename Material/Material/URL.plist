@@ -3,18 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>log_out</key>
-	<string>/api/sign_out/</string>
+	<string>/api/v1/users/logout/</string>
 	<key>log_in</key>
-	<string>/api/sign_in/</string>
+	<string>/api/v1/users/login/</string>
 	<key>part</key>
 	<dict>
 		<key>validate</key>
-		<string>validates</string>
+		<string>validate/</string>
 		<key>root</key>
 		<string>/api/v1/parts/</string>
 	</dict>
 	<key>yun</key>
 	<dict>
+		<key>received</key>
+		<string>received/</string>
+		<key>receive</key>
+		<string>receive/</string>
 		<key>send</key>
 		<string>send</string>
 		<key>single</key>
@@ -26,12 +30,16 @@
 		<key>add_tuo_by_scan</key>
 		<string>check_forklift/</string>
 		<key>index</key>
-		<string>list</string>
+		<string>list/</string>
 		<key>root</key>
 		<string>/api/v1/deliveries/</string>
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>reject</key>
+		<string>rejected/</string>
+		<key>receive</key>
+		<string>receive/</string>
 		<key>remove_xiang</key>
 		<string>remove_package/</string>
 		<key>key_for_bundle</key>
@@ -49,15 +57,17 @@
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>check</key>
+		<string>check/</string>
 		<key>validate</key>
-		<string>validates/</string>
+		<string>validate/</string>
 		<key>index</key>
 		<string>binds/</string>
 		<key>root</key>
 		<string>/api/v1/packages/</string>
 	</dict>
 	<key>base</key>
-	<string>http://192.168.1.1</string>
+	<string>http://192.168.1.107</string>
 	<key>port</key>
 	<string>:3000</string>
 </dict>

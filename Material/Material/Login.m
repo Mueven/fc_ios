@@ -10,7 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "AFNetOperate.h"
 
-@interface Login ()<UITextFieldDelegate,NSCoding>
+@interface Login ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -34,6 +34,7 @@
     [super viewDidLoad];
     self.email.delegate=self;
     self.password.delegate=self;
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -46,11 +47,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
-//                                                                      accessGroup:nil];
-//    if([keychain objectForKey:(__bridge id)kSecAttrAccount]){
-//        self.email.text=[keychain objectForKey:(__bridge id)kSecAttrAccount];
-//    }
+    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
+                                                                      accessGroup:nil];
+    if([keychain objectForKey:(__bridge id)kSecAttrAccount]){
+        self.email.text=[keychain objectForKey:(__bridge id)kSecAttrAccount];
+        
+    }
 }
 
 //textField delegate
@@ -74,34 +76,42 @@
 - (IBAction)login:(id)sender {
     NSString *email=self.email.text;
     NSString *password=self.password.text;
-//    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
-//                                                                      accessGroup:nil];
-//    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
-    if([email isEqualToString:@"w"]){
-        [self loginSameAction:@"shop"];
-    }
-    else{
-       [self loginSameAction:@"stock"];
-    }
+    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
+                                                                      accessGroup:nil];
+    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
+//    if([email isEqualToString:@"w"]){
+//        [self loginSameAction:@"shop"];
+//    }
+//    else{
+//       [self loginSameAction:@"stock"];
+//    }
     
-//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    [manager POST:[AFNet log_in]
-//       parameters:@{@"user":@{@"id":email,@"password":password}}
-//            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                [AFNet.activeView stopAnimating];
-//                if(responseObject[@"result"]){
-//                    
-//                }
-//                else{
-//                    [AFNet alert:responseObject[@"content"]];
-//                }
-//            }
-//            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                [AFNet.activeView stopAnimating];
-//                [AFNet alert:@"sth wrong"];
-//            }
-//     ];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    NSLog(@"%@",[AFNet log_in]);
+    [manager POST:[AFNet log_in]
+       parameters:@{@"user":@{@"id":email,@"password":password}}
+            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [AFNet.activeView stopAnimating];
+//                NSLog(@"%@",responseObject[@"content"]);
+                if(responseObject[@"result"]){
+                    NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
+                    if([requestCode isEqualToString:@"300"]){
+                        [self loginSameAction:@"stock"];
+                    }
+                    else if([requestCode isEqualToString:@"400"]){
+                         [self loginSameAction:@"shop"];
+                    }
+                }
+                else{
+                    [AFNet alert:responseObject[@"content"]];
+                }
+            }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [AFNet.activeView stopAnimating];
+                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+            }
+     ];
 
 }
 -(void)loginSameAction:(NSString *)identifier

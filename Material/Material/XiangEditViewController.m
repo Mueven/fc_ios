@@ -80,7 +80,7 @@
            parameters:@{data:data}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
-                  if(responseObject[@"result"]){
+                  if([responseObject[@"result"] integerValue]==1){
                       self.firstResponder.text=data;
                       [self textFieldShouldReturn:self.firstResponder];
                   }
@@ -98,8 +98,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -110,17 +110,18 @@
 - (IBAction)finishEdit:(id)sender {
     
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    NSString *edit_address=[AFNet xiang_edit:self.xiang.ID];
+//    NSString *edit_address=[AFNet xiang_edit:self.xiang.ID];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager PUT:edit_address
+    [manager PUT:[AFNet xiang_index]
       parameters:@{@"package":@{
+                           @"id":self.xiang.ID,
                            @"part_id":self.partNumber.text,
-                           @"quantity":self.quantity.text,
-                           @"date":self.dateTextField.text
+                           @"quantity_str":self.quantity.text,
+                           @"check_in_time":self.dateTextField.text
                            }}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if(responseObject[@"result"]){
+             if([responseObject[@"result"] integerValue]==1){
                  self.xiang.date=self.dateTextField.text;
                  self.xiang.number=self.partNumber.text;
                  self.xiang.count=self.quantity.text;
@@ -132,7 +133,7 @@
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [AFNet.activeView stopAnimating];
-             [AFNet alert:@"sth wrong"];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
 }

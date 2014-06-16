@@ -107,11 +107,19 @@
     for(int i=0;i<self.yun.tuoArray.count;i++){
         [tuoArrayID addObject:[self.yun.tuoArray[i] ID]];
     }
-    [manager POST:[AFNet yun_root]
-       parameters:@{@"location_id":self.remark.text,@"forklifts":tuoArrayID}
+    NSLog(@"address:%@ params:%@",[AFNet yun_index],tuoArrayID);
+    
+    [manager POST:[AFNet yun_index]
+       parameters:@{
+                    @"delivery":@{
+                            @"remark":self.remark.text
+                            },
+                    @"forklifts":tuoArrayID
+                    }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
-              if(responseObject[@"result"]){
+              if([responseObject[@"result"] integerValue]==1){
+//                  NSLog(@"%@",responseObject);
                   self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
                   [self generateBelongs];
               }
@@ -122,7 +130,7 @@
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [AFNet.activeView stopAnimating];
-              [AFNet alert:@"sth wrong"];
+              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
           }
      ];
 
@@ -159,7 +167,7 @@
                parameters:@{@"id":self.yun.ID}
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
-                      if(responseObject[@"result"]){
+                      if([responseObject[@"result"] integerValue]==1){
                           self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
                                                                       message:@"要打印运单吗？"
                                                                      delegate:self

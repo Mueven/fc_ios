@@ -12,6 +12,9 @@
 #import "Xiang.h"
 #import "ReceiveXiangViewController.h"
 #import "ReceiveConfirmViewController.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import "AFNetOperate.h"
+
 
 @interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
@@ -19,22 +22,24 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 //@property (strong,nonatomic) UIAlertView *printAlert;
 @property (weak, nonatomic) IBOutlet UILabel *scanLabel;
-@property (nonatomic)BOOL currentModel;
+@property (nonatomic)int currentModel;
 //1是运单状态，0是拖状态
-- (IBAction)fake:(id)sender;
+//- (IBAction)fake:(id)sender;
 @end
 
 @implementation ReceiveTuoViewController
 
-- (IBAction)fake:(id)sender {
-    self.yun=[[Yun alloc] initExample];
-    for(int i=0;i<10;i++){
-        Tuo *tuo=[[Tuo alloc] initExample];
-        [self.yun.tuoArray addObject:tuo];
-    }
-    [self tuoModel];
-    [self.tuoTable reloadData];
-}
+//- (IBAction)fake:(id)sender {
+//    self.yun=[[Yun alloc] initExample];
+//    for(int i=0;i<10;i++){
+//        Tuo *tuo=[[Tuo alloc] initExample];
+//        [self.yun.tuoArray addObject:tuo];
+//    }
+//    [self tuoModel];
+//    [self.tuoTable reloadData];
+//    AudioServicesPlaySystemSound(1005);
+    //1012是微信
+//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,7 +69,6 @@
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-    
 
     [self.tuoTable reloadData];
 }
@@ -76,9 +80,38 @@
 -(void)decoderDataReceived:(NSString *)data{
     //AFNET 取运单数据（需要下面的拖以及更下面的箱）
     
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager DELETE:[AFNet yun_receive]
+         parameters:@{@"id":data}
+            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [AFNet.activeView stopAnimating];
+                if([responseObject[@"result"] integerValue]==1){
+                    self.yun=[[Yun alloc] init];
+                    NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                    for(int i=0;i<tuoArray.count;i++){
+                        Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                        NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                        for(int j=0;j<xiangArray.count;j++){
+                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
+                            [tuoItem.xiang addObject:xiangItem];
+                        }
+                        [self.yun.tuoArray addObject:tuoItem];
+                    }
+                    [self tuoModel];
+                    [self.tuoTable reloadData];
+                }
+                else{
+                    [AFNet alert:responseObject[@"content"]];
+                }
+            }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [AFNet.activeView stopAnimating];
+                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+            }
+     ];
     
-    
-    [self tuoModel];
+//    [self tuoModel];
 }
 -(void)tuoModel
 {
@@ -139,7 +172,7 @@
     }
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",checked,count];
     if(checked==count){
-        [cell.conditionLabel setTextColor:[UIColor greenColor]];
+        [cell.conditionLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }
     else{
         [cell.conditionLabel setTextColor:[UIColor redColor]];
@@ -156,10 +189,44 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
 }
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager POST:[AFNet yun_receive]
+         parameters:@{@"id":@"D1402904717009"}
+            success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                [AFNet.activeView stopAnimating];
+                if([responseObject[@"result"] integerValue]==1){
+                    NSLog(@"%@",responseObject);
+                    self.yun=[[Yun alloc] init];
+                    NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                    for(int i=0;i<tuoArray.count;i++){
+                        Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                        NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                        for(int j=0;j<xiangArray.count;j++){
+                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
+                            [tuoItem.xiang addObject:xiangItem];
+                        }
+                        [self.yun.tuoArray addObject:tuoItem];
+                    }
+                    [self tuoModel];
+                    [self.tuoTable reloadData];
+                }
+                else{
+                    [AFNet alert:responseObject[@"content"]];
+                }
+            }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [AFNet.activeView stopAnimating];
+                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+            }
+     ];
+    return YES;
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

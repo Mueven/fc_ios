@@ -10,8 +10,9 @@
 #import "Login.h"
 #import "AFNetOperate.h"
 
-@interface SettingViewController ()
+@interface SettingViewController ()<UITextFieldDelegate>
 - (IBAction)logOut:(id)sender;
+
 
 @end
 
@@ -31,7 +32,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title=@"账户设置";
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,25 +42,29 @@
 }
 
 
+
+
 - (IBAction)logOut:(id)sender {
-//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    [manager DELETE:[AFNet log_out]
-//       parameters:nil
-//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//              [AFNet.activeView stopAnimating];
-//              if(responseObject[@"result"]){
-//                  [self dismissViewControllerAnimated:YES completion:nil];
-//              }
-//              else{
-//                  [AFNet alert:responseObject[@"content"]];
-//              }
-//          }
-//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              [AFNet.activeView stopAnimating];
-//              [AFNet alert:@"sth wrong"];
-//          }
-//     ];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager DELETE:[AFNet log_out]
+       parameters:nil
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [AFNet.activeView stopAnimating];
+              if(responseObject[@"result"]){
+                  [self dismissViewControllerAnimated:YES completion:nil];
+              }
+              else{
+                  [AFNet alert:responseObject[@"content"]];
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+              [AFNet alert:@"sth wrong"];
+          }
+     ];
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 @end

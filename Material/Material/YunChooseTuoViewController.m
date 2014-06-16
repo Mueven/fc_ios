@@ -65,10 +65,10 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager POST:[AFNet yun_add_tuo_by_scan]
-      parameters:@{@"id":data}
+      parameters:@{@"forklift_id":data}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if(responseObject[@"result"]){
+             if([responseObject[@"result"] integerValue]==1){
                  Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
                  [self.yun.tuoArray addObject:tuo];
                  [self.tuoTable reloadData];
@@ -80,7 +80,7 @@
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [AFNet.activeView stopAnimating];
-             [AFNet alert:@"sth wrong"];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
     
@@ -124,6 +124,31 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.tuoTable reloadData];
+    
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    NSLog(@"%@",[AFNet yun_add_tuo_by_scan]);
+//    [manager POST:[AFNet yun_add_tuo_by_scan]
+//       parameters:@{@"forklift_id":@"F1402893937814"}
+//          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//              [AFNet.activeView stopAnimating];
+//              if([responseObject[@"result"] integerValue]==1){
+//                  Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
+//                  [self.yun.tuoArray addObject:tuo];
+//                  [self.tuoTable reloadData];
+//              }
+//              else{
+//                  [AFNet alert:responseObject[@"content"]];
+//              }
+//              
+//          }
+//          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//              [AFNet.activeView stopAnimating];
+//              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//          }
+//     ];
+    
+    
     return YES;
 }
 
@@ -158,10 +183,10 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet yun_add_tuo]
-           parameters:@{@"id":self.yunTarget.ID,@"forklift":tuoIDArray}
+           parameters:@{@"id":self.yunTarget.ID,@"forklifts":tuoIDArray}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
-                  if(responseObject[@"result"]){
+                  if([responseObject[@"result"] integerValue]==1){
                       for(int i=0;i<self.yun.tuoArray.count;i++){
                           [self.yunTarget.tuoArray addObject:self.yun.tuoArray[i]];
                       }
@@ -174,7 +199,7 @@
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   [AFNet.activeView stopAnimating];
-                  [AFNet alert:@"sth wrong"];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
               }
          ];
 //        [self.navigationController popViewControllerAnimated:YES];

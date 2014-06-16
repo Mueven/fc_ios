@@ -54,9 +54,11 @@
 {
     self=[super init];
     if(self){
+
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
+        self.remark=dictionary[@"remark"]?dictionary[@"remark"]:@"";
         self.name=dictionary[@"id"]?dictionary[@"id"]:@"";
-        self.sended=(int)dictionary[@"state"]?(int)dictionary[@"state"]:0;
+        self.sended=[dictionary[@"state"] intValue]?[dictionary[@"state"] intValue]:0;
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy.MM.dd"];
         self.date=[formatter stringFromDate:[NSDate date]];

@@ -41,11 +41,11 @@
     if(self){
         self.ID=object[@"id"]?object[@"id"]:@"";
         self.number=object[@"part_id"]?object[@"part_id"]:@"";
-        self.count=object[@"quantity"]?object[@"quantity"]:@"";
+        self.count=object[@"quantity_str"]?object[@"quantity_str"]:@"";
         self.key=object[@"id"]?object[@"id"]:@"";
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";
-        self.date=object[@"date"]?object[@"date"]:@"";
+        self.date=object[@"check_in_time"]?object[@"check_in_time"]:@"";
     }
     return self;
 }

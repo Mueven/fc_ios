@@ -14,7 +14,7 @@
 @property(nonatomic,strong)NSString *date;
 @property(nonatomic,strong)NSString *remark;
 @property(nonatomic,strong)NSMutableArray *tuoArray;
-@property(nonatomic)BOOL sended;
+@property(nonatomic)int sended;
 -(instancetype)initExample;
 -(instancetype)initWithObject:(NSDictionary *)dictionary;
 -(instancetype)initWith:(NSString *)ID name:(NSString *)name remark:(NSString *)remark;

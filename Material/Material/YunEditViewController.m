@@ -77,11 +77,12 @@
     if(editingStyle==UITableViewCellEditingStyleDelete){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet yun_remove_tuo]
-           parameters:@{@"id":tuoChosen.ID}
+//        NSLog(@"address:%@  id:%@",[AFNet yun_remove_tuo],tuoChosen.ID);
+        [manager DELETE:[AFNet yun_remove_tuo]
+           parameters:@{@"forklift_id":tuoChosen.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
-                    if(responseObject[@"result"]){
+                    if([responseObject[@"result"] integerValue]==1){
                         [self.yun.tuoArray removeObjectAtIndex:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
                     }
@@ -92,7 +93,7 @@
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
-                    [AFNet alert:@"sth wrong"];
+                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
          ];
         
@@ -110,21 +111,21 @@
 //    }
 //    else if(textField.tag==22){
     
-        self.yun.remark=textField.text;
-//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    NSString *ID=self.yun.ID;
-//    [manager PUT:[AFNet yun_edit:ID]
-//      parameters:@{@"delivery_date":questDate}
-//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//             [AFNet.activeView stopAnimating];
-//             self.yun.remark=textField.text;
-//         }
-//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             [AFNet.activeView stopAnimating];
-//             [AFNet alert:@"something wrong"];
-//         }
-//     ];
+//        self.yun.remark=textField.text;
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    NSString *ID=self.yun.ID;
+    [manager PUT:[AFNet yun_index]
+      parameters:@{@"delivery":@{@"id":ID,@"remark":textField.text}}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             self.yun.remark=textField.text;
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
 
     
     
@@ -174,7 +175,7 @@
                parameters:@{@"id":self.yun.ID}
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
-                      if(responseObject[@"result"]){
+                      if([responseObject[@"result"] integerValue]==1){
                           self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
                                                                       message:@"要打印运单吗？"
                                                                      delegate:self
@@ -189,7 +190,7 @@
                   }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       [AFNet.activeView stopAnimating];
-                      [AFNet alert:@"sth wrong"];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                   }
              ];
             

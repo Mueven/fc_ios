@@ -106,15 +106,15 @@
 {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager POST:[AFNet tuo_root]
+    [manager POST:[AFNet tuo_index]
        parameters:@{@"forklift":@{
                             @"whouse_id":department,
-                            @"user_id":agent
+                            @"stocker_id":agent
                             }}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if(responseObject[@"result"]){
-                  [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":responseObject[@"id"]}];
+                  [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":[responseObject[@"content"] objectForKey:@"id"]}];
               }
               else{
                   [AFNet alert:responseObject[@"content"]];

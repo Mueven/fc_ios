@@ -41,6 +41,8 @@
 		B0613987194173B600A0CF62 /* XiangStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0613986194173B600A0CF62 /* XiangStore.m */; };
 		B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */; };
 		B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398F1941BD1300A0CF62 /* TuoScanViewController.m */; };
+		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
+		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
 		B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F60F194004CC001F01F3 /* Foundation.framework */; };
 		B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F611194004CC001F01F3 /* CoreGraphics.framework */; };
@@ -156,6 +158,9 @@
 		B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoBaseViewController.m; sourceTree = "<group>"; };
 		B061398E1941BD1300A0CF62 /* TuoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoScanViewController.h; sourceTree = "<group>"; };
 		B061398F1941BD1300A0CF62 /* TuoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoScanViewController.m; sourceTree = "<group>"; };
+		B066FE2F194E714F00C0019D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
+		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B085F60C194004CC001F01F3 /* Material.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Material.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -219,6 +224,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */,
 				B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */,
 				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
 				B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */,
@@ -374,6 +380,7 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B066FE2F194E714F00C0019D /* AudioToolbox.framework */,
 				B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */,
 				B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */,
 				B085F64819401091001F01F3 /* Security.framework */,
@@ -438,6 +445,8 @@
 			children = (
 				B085F63F1940071A001F01F3 /* Login.h */,
 				B085F6401940071A001F01F3 /* Login.m */,
+				B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */,
+				B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */,
 				B0FDC9761945AFA3008E4B72 /* STOCK */,
 				B0FDC9771945AFC9008E4B72 /* SHOP */,
 			);
@@ -622,6 +631,7 @@
 				B04EF20A1946E60D00A95D7A /* AFHTTPRequestOperation.m in Sources */,
 				B04EF20D1946E60D00A95D7A /* AFNetworkReachabilityManager.m in Sources */,
 				B04EF20C1946E60D00A95D7A /* AFHTTPSessionManager.m in Sources */,
+				B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */,
 				B04EF1DB19469CBA00A95D7A /* ReceiveXiangViewController.m in Sources */,
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,

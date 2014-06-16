@@ -54,7 +54,7 @@
     if(self){
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
         self.department=dictionary[@"whouse_id"]?dictionary[@"whouse_id"]:@"";
-        self.agent=dictionary[@"user_id"]?dictionary[@"user_id"]:@"";
+        self.agent=dictionary[@"stocker_id"]?dictionary[@"stocker_id"]:@"";
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy.MM.dd"];
         self.date=[formatter stringFromDate:[NSDate date]];
