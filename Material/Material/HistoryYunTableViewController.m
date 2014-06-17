@@ -10,6 +10,7 @@
 #import "Yun.h"
 #import "Tuo.h"
 #import "HistoryTuoTableViewController.h"
+#import "AFNetOperate.h"
 
 @interface HistoryYunTableViewController ()
 
@@ -35,19 +36,19 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.title=@"2014-06-10";
+    self.navigationItem.title=self.chooseDate;
     
-    self.yunArray=[[NSMutableArray alloc] init];
-    for(int i=0;i<3;i++){
-        Yun *yun=[[Yun alloc] initExample];
-        for(int i=0;i<10;i++){
-            Tuo *tuo=[[Tuo alloc] initExample];
-            [yun.tuoArray addObject:tuo];
-        }
-        [self.yunArray addObject:yun];
-    }
-    
-    [self.tableView reloadData];
+//    self.yunArray=[[NSMutableArray alloc] init];
+//    for(int i=0;i<3;i++){
+//        Yun *yun=[[Yun alloc] initExample];
+//        for(int i=0;i<10;i++){
+//            Tuo *tuo=[[Tuo alloc] initExample];
+//            [yun.tuoArray addObject:tuo];
+//        }
+//        [self.yunArray addObject:yun];
+//    }
+//    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,7 +84,34 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Yun *yun=[self.yunArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"checkTuo" sender:@{@"yun":yun}];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet yun_single]
+      parameters:@{@"id":yun.ID}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+//                 yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
+                 NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                 [yun.tuoArray removeAllObjects];
+                 
+                 for(int i=0;i<tuoArray.count;i++){
+                     Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                     [yun.tuoArray addObject:tuoItem];
+                 }
+                 [self performSegueWithIdentifier:@"checkTuo" sender:@{@"yun":yun}];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
+    
 }
 
 /*

@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>print</key>
+	<dict>
+		<key>shop_unreceive</key>
+		<string>P004/</string>
+		<key>shop_receive</key>
+		<string>P003/</string>
+		<key>stock_yun</key>
+		<string>P002/</string>
+		<key>stock_tuo</key>
+		<string>P001/</string>
+		<key>base</key>
+		<string>http://print_server_ip:9000/printer/print/</string>
+	</dict>
 	<key>log_out</key>
 	<string>/api/v1/users/logout/</string>
 	<key>log_in</key>
@@ -15,6 +28,8 @@
 	</dict>
 	<key>yun</key>
 	<dict>
+		<key>confirm_receive</key>
+		<string>confirm_receive</string>
 		<key>received</key>
 		<string>received/</string>
 		<key>receive</key>

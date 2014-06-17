@@ -94,7 +94,7 @@
             success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 [AFNet.activeView stopAnimating];
 //                NSLog(@"%@",responseObject[@"content"]);
-                if(responseObject[@"result"]){
+                if([responseObject[@"result"] integerValue]==1){
                     NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
                     if([requestCode isEqualToString:@"300"]){
                         [self loginSameAction:@"stock"];

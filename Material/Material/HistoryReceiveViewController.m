@@ -7,6 +7,9 @@
 //
 
 #import "HistoryReceiveViewController.h"
+#import "AFNetOperate.h"
+#import "Yun.h"
+#import "HistoryYunTableViewController.h"
 
 @interface HistoryReceiveViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
@@ -39,7 +42,7 @@
          forControlEvents:UIControlEventValueChanged];
     datePicker.datePickerMode=UIDatePickerModeDate;
     [self.dateTextField setInputView:datePicker];
-
+    self.postDate=[[NSString alloc] init];
 }
 -(void)updateTextField:(id)sender
 {
@@ -66,7 +69,7 @@
     }
     
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -74,8 +77,14 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"checkYun"]){
+        NSLog(@"%@ and %@",[sender objectForKey:@"yunArray"],[sender objectForKey:@"date"]);
+        HistoryYunTableViewController *historyYun=segue.destinationViewController;
+        historyYun.yunArray=[sender objectForKey:@"yunArray"];
+        historyYun.chooseDate=[sender objectForKey:@"date"];
+    }
 }
-*/
+
 
 - (IBAction)touchScreen:(id)sender {
     if([self.dateTextField isFirstResponder]){
@@ -85,6 +94,36 @@
 }
 
 - (IBAction)checkYun:(id)sender {
-    [self performSegueWithIdentifier:@"checkYun" sender:self];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet yun_received]
+       parameters:@{@"receive_date":self.postDate}
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [AFNet.activeView stopAnimating];
+              if([responseObject[@"result"] integerValue]==1){
+                  NSMutableArray *yunArray=[[NSMutableArray alloc] init];
+                  NSArray *result=responseObject[@"content"];
+                  for(int i=0;i<result.count;i++){
+                      Yun *yunItem=[[Yun alloc] initWithObject:result[i]];
+                      [yunArray addObject:yunItem];
+                  }
+                  NSLog(@"yunarray:%@,data:%@",yunArray,self.dateTextField.text);
+                  [self performSegueWithIdentifier:@"checkYun" sender:@{
+                                                                        @"yunArray":yunArray,
+                                                                        @"date":self.dateTextField.text
+                                                                    }
+                   ];
+              }
+              else{
+                  [AFNet alert:responseObject[@"content"]];
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+          }
+     ];
+    
+    
 }
 @end

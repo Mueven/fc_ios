@@ -32,7 +32,13 @@
     }
     return self;
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,12 +80,7 @@
     
     
 }
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.firstResponder resignFirstResponder];
-    self.firstResponder=nil;
-    
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

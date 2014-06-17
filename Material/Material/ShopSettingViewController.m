@@ -54,7 +54,7 @@
 //         parameters:nil
 //            success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //                [AFNet.activeView stopAnimating];
-//                if(responseObject[@"result"]){
+//                if([responseObject[@"result"] integerValue]==1){
 //                    [self dismissViewControllerAnimated:YES completion:nil];
 //                }
 //                else{

@@ -11,6 +11,7 @@
 #import "Tuo.h"
 #import "Xiang.h"
 #import "HistoryXiangTableViewController.h"
+#import "AFNetOperate.h"
 @interface HistoryTuoTableViewController ()
 
 @end
@@ -68,7 +69,7 @@
     cell.nameLabel.text=tuo.department;
     cell.dateLabel.text=tuo.date;
     NSMutableArray *array=tuo.xiang;
-    int count=[array count];
+    int count=(int)[array count];
     int checked=0;
     for(int i=0;i<count;i++){
         if([array[i] checked]){
@@ -89,7 +90,32 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet tuo_single]
+      parameters:@{@"id":tuo.ID}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                 NSDictionary *result=responseObject[@"content"];
+                 NSArray *xiangList=result[@"packages"];
+                 [tuo.xiang removeAllObjects];
+                 for(int i=0;i<xiangList.count;i++){
+                     Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                     [tuo.xiang addObject:xiang];
+                 }
+                   [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
 }
 /*
 // Override to support conditional editing of the table view.

@@ -16,12 +16,13 @@
 #import "AFNetOperate.h"
 
 
-@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
+@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 //@property (strong,nonatomic) UIAlertView *printAlert;
 @property (weak, nonatomic) IBOutlet UILabel *scanLabel;
+
 @property (nonatomic)int currentModel;
 //1是运单状态，0是拖状态
 //- (IBAction)fake:(id)sender;
@@ -66,11 +67,17 @@
 {
     [super viewWillAppear:animated];
     [self.scanTextField becomeFirstResponder];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 
+    
     [self.tuoTable reloadData];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -79,39 +86,67 @@
 }
 -(void)decoderDataReceived:(NSString *)data{
     //AFNET 取运单数据（需要下面的拖以及更下面的箱）
-    
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager DELETE:[AFNet yun_receive]
-         parameters:@{@"id":data}
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [AFNet.activeView stopAnimating];
-                if([responseObject[@"result"] integerValue]==1){
-                    self.yun=[[Yun alloc] init];
-                    NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                    for(int i=0;i<tuoArray.count;i++){
-                        Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                        NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
-                        for(int j=0;j<xiangArray.count;j++){
-                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
-                            [tuoItem.xiang addObject:xiangItem];
+    if(self.currentModel==1){
+        //运单
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_receive]
+             parameters:@{@"id":data}
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    [AFNet.activeView stopAnimating];
+                    if([responseObject[@"result"] integerValue]==1){
+                    
+                        self.yun=[[Yun alloc] init];
+                        NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                        for(int i=0;i<tuoArray.count;i++){
+                            Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                            NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                            for(int j=0;j<xiangArray.count;j++){
+                                Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
+                                [tuoItem.xiang addObject:xiangItem];
+                            }
+                            self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                            [self.yun.tuoArray addObject:tuoItem];
                         }
-                        [self.yun.tuoArray addObject:tuoItem];
+                        [self tuoModel];
+                        [self.tuoTable reloadData];
                     }
-                    [self tuoModel];
-                    [self.tuoTable reloadData];
+                    else{
+                        [AFNet alert:responseObject[@"content"]];
+                    }
                 }
-                else{
-                    [AFNet alert:responseObject[@"content"]];
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    [AFNet.activeView stopAnimating];
+                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
+         ];
+    }
+    else if(self.currentModel==0){
+        //托清单
+        int count=0;
+        NSString *tuoID=data;
+        Tuo *tuo;
+        NSArray *tuoArray=[self.yun.tuoArray copy];
+        for(int i=0;i<tuoArray.count;i++){
+            if([tuoID isEqualToString:[tuoArray[i] ID]]){
+                tuo=tuoArray[i];
+                count++;
+                break;
             }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [AFNet.activeView stopAnimating];
-                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-            }
-     ];
-    
-//    [self tuoModel];
+        }
+        if(count==0){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该拖"
+                                                           message:[NSString stringWithFormat:@"未在该运单中发现托清单%@",tuoID]
+                                                          delegate:self
+                                                 cancelButtonTitle:@"确定"
+                                                 otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1051);
+            [alert show];
+        }
+        else{
+            [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo}];
+        }
+    }
 }
 -(void)tuoModel
 {
@@ -124,7 +159,7 @@
                                                                             style:UIBarButtonItemStyleBordered target:self
                                                                            action:@selector(unReceive)];
     self.scanLabel.text=@"扫描托清单号";
-    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",[self.yun.tuoArray count]];
+    self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",(int)[self.yun.tuoArray count]];
     self.tuoTable.hidden=NO;
     [self.tuoTable reloadData];
     [self.scanTextField becomeFirstResponder];
@@ -146,6 +181,7 @@
 -(void)unReceive
 {
     [self yunModel];
+    self.scanTextField.text=@"";
 }
 #pragma table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -163,7 +199,7 @@
     cell.nameLabel.text=tuo.department;
     cell.dateLabel.text=tuo.date;
     NSMutableArray *array=tuo.xiang;
-    int count=[array count];
+    int count=(int)[array count];
     int checked=0;
     for(int i=0;i<count;i++){
         if([array[i] checked]){
@@ -189,42 +225,70 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager POST:[AFNet yun_receive]
-         parameters:@{@"id":@"D1402904717009"}
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [AFNet.activeView stopAnimating];
-                if([responseObject[@"result"] integerValue]==1){
-                    NSLog(@"%@",responseObject);
-                    self.yun=[[Yun alloc] init];
-                    NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                    for(int i=0;i<tuoArray.count;i++){
-                        Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                        NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
-                        for(int j=0;j<xiangArray.count;j++){
-                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
-                            [tuoItem.xiang addObject:xiangItem];
-                        }
-                        [self.yun.tuoArray addObject:tuoItem];
-                    }
-                    [self tuoModel];
-                    [self.tuoTable reloadData];
-                }
-                else{
-                    [AFNet alert:responseObject[@"content"]];
-                }
+    if(self.currentModel==1){
+        //运单
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_receive]
+           parameters:@{@"id":@"D1402970595617"}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+//                      NSLog(@"%@",responseObject[@"content"]);
+                      self.yun=[[Yun alloc] init];
+                      NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                      for(int i=0;i<tuoArray.count;i++){
+                          Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                          NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                          for(int j=0;j<xiangArray.count;j++){
+                              Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
+                              [tuoItem.xiang addObject:xiangItem];
+                          }
+                          self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                          [self.yun.tuoArray addObject:tuoItem];
+                      }
+                      [self tuoModel];
+                      [self.tuoTable reloadData];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
+    }
+    else if(self.currentModel==0){
+        //托清单
+        NSString *tuoID=@"D1402970595617";
+        NSArray *tuoArray=[self.yun.tuoArray copy];
+        Tuo *tuo;
+        for(int i=0;i<tuoArray.count;i++){
+            if([tuoID isEqualToString:[tuoArray[i] ID]]){
+                tuo=tuoArray[i];
+                break;
             }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [AFNet.activeView stopAnimating];
-                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-            }
-     ];
+        }
+        if(tuo){
+            [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo}];
+        }
+        else{
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该拖"
+                                                           message:[NSString stringWithFormat:@"未在该运单中发现托清单%@",tuoID]
+                                                          delegate:self
+                                                 cancelButtonTitle:@"确定"
+                                                 otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1051);
+            [alert show];
+        }
+    }
     return YES;
 }
 #pragma mark - Navigation

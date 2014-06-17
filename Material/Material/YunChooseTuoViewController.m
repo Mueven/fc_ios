@@ -30,7 +30,11 @@
     }
     return self;
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

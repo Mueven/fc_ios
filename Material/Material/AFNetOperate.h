@@ -23,6 +23,7 @@
 -(NSString *)xiang_root;
 -(NSString *)xiang_edit:(NSString *)id;
 -(NSString *)xiang_validate;
+-(NSString *)xiang_check;
 
 -(NSString *)tuo_index;
 -(NSString *)tuo_root;
@@ -41,7 +42,14 @@
 -(NSString *)yun_add_tuo;
 -(NSString *)yun_send;
 -(NSString *)yun_receive;
+-(NSString *)yun_received;
+-(NSString *)yun_confirm_receive;
 
 -(NSString *)log_in;
 -(NSString *)log_out;
+
+-(NSString *)print_stock_tuo:(NSString *)ID;
+-(NSString *)print_stock_yun:(NSString *)ID;
+-(NSString *)print_shop_receive:(NSString *)ID;
+-(NSString *)print_shop_unreceive:(NSString *)ID;
 @end

@@ -43,7 +43,12 @@
     }
     return self;
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -117,12 +122,7 @@
    
     
 }
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.firstResponder resignFirstResponder];
-    self.firstResponder=nil;
-    
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -130,6 +130,9 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
+//    self.firstResponder.text=data;
+//    int originTag=(int)self.firstResponder.tag;
+//    [self textFieldShouldReturn:self.firstResponder];
     if(self.firstResponder.tag==3 || self.firstResponder.tag==4){
         self.firstResponder.text=data;
         [self textFieldShouldReturn:self.firstResponder];
@@ -138,6 +141,7 @@
         //验证数据的合法性
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [AFNet.activeView stopAnimating];
         NSString *address=[[NSString alloc] init];
         switch (self.firstResponder.tag){
             case 1:
@@ -150,48 +154,52 @@
                 address=@"still waiting";
                 break;
         }
-        [manager POST:address
-           parameters:@{@"id":data}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      //如果数据是唯一码且在拖状态下，查看是否已经绑定
-                      if(self.tuo.ID.length>0 && self.firstResponder.tag==1){
+        if(self.tuo.ID.length>0 && self.firstResponder.tag==1){
+            [manager POST:[AFNet tuo_key_for_bundle]
+               parameters:@{
+                            @"forklift_id":self.tuo.ID,
+                            @"package_id":data
+                            }
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          //绑定了直接添加
+                          
+                          Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                          [self.tuo addXiang:xiang];
+                          [self.xiangTable reloadData];
+                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                message:@"绑定成功！"
+                                                               delegate:self
+                                                      cancelButtonTitle:nil
+                                                      otherButtonTitles:nil];
+                          [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                           target:self
+                                                         selector:@selector(dissmissAlert:)
+                                                         userInfo:nil
+                                                          repeats:NO];
+                          AudioServicesPlaySystemSound(1012);
+                          [self.alert show];
+                          [self.key becomeFirstResponder];
+                      }
+                      else{
                           AFNetOperate *AFNet=[[AFNetOperate alloc] init];
                           AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-                          [manager POST:[AFNet tuo_key_for_bundle]
-                             parameters:@{
-                                          @"forklift_id":self.tuo.ID,
-                                          @"package_id":data
-                                          }
+                          [AFNet.activeView stopAnimating];
+                          [manager POST:address
+                             parameters:@{@"id":data}
                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     [AFNet.activeView stopAnimating];
                                     if([responseObject[@"result"] integerValue]==1){
-                                        //绑定了直接添加
-                                        Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                                        [self.tuo addXiang:xiang];
-                                        [self.xiangTable reloadData];
-                                        self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                              message:@"绑定成功！"
-                                                                             delegate:self
-                                                                    cancelButtonTitle:nil
-                                                                    otherButtonTitles:nil];
-                                        [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                                         target:self
-                                                                       selector:@selector(dissmissAlert:)
-                                                                       userInfo:nil
-                                                                        repeats:NO];
-                                        AudioServicesPlaySystemSound(1012);
-                                        [self.alert show];
+//                                        self.firstResponder.text=data;
+//                                        [self textFieldShouldReturn:self.firstResponder];
                                         
-                                        return;
                                     }
                                     else{
-                                        //没有绑定跟以前一样跳到下一个textField
-                                        self.firstResponder.text=data;
-                                        [self textFieldShouldReturn:self.firstResponder];
-                                        return;
+                                        [AFNet alert:responseObject[@"content"]];
+                                        AudioServicesPlaySystemSound(1051);
                                     }
+                                    
                                 }
                                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     [AFNet.activeView stopAnimating];
@@ -199,42 +207,61 @@
                                 }
                            ];
                       }
-                      else{
-                          self.firstResponder.text=data;
-                          [self textFieldShouldReturn:self.firstResponder];
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                  }
+             ];
+        }
+        else{
+            [manager POST:address
+               parameters:@{@"id":data}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+//                          self.firstResponder.text=data;
+//                          [self textFieldShouldReturn:self.firstResponder];
+                          
                       }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                          AudioServicesPlaySystemSound(1051);
+                      }
+                      
                   }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
-                      AudioServicesPlaySystemSound(1051);
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                   }
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-              }
-         ];
+             ];
+        }
     }
 }
+
+
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 //-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-
-    __block long tag=textField.tag;
+    NSString *key=self.key.text;
+    NSString *partNumber=self.partNumber.text;
+    NSString *quantity=self.quatity.text;
+    NSString *date=self.dateTextField.text;
+    __block long tag;
+    if(key.length>0 && partNumber.length>0 && quantity.length>0 && date.length>0){
+        tag=4;
+    }
+    else{
+        tag=textField.tag;
+    }
     if(tag==4){
-        NSString *key=self.key.text;
-        NSString *partNumber=self.partNumber.text;
-        NSString *quantity=self.quatity.text;
-        NSString *date=self.dateTextField.text;
-        
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         

@@ -10,11 +10,13 @@
 #import "HuoTableViewCell.h"
 #import "Xiang.h"
 #import "XiangTableViewCell.h"
+#import "AFNetOperate.h"
 
 @interface TuoPrintViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *agentLabel;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
+- (IBAction)confirmPrint:(id)sender;
 
 @end
 
@@ -81,4 +83,24 @@
 }
 */
 
+- (IBAction)confirmPrint:(id)sender {
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet print_stock_tuo:self.tuo.ID]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                 [self performSegueWithIdentifier:@"finishTuo" sender:self];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
+}
 @end

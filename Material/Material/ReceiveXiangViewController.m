@@ -9,8 +9,10 @@
 #import "ReceiveXiangViewController.h"
 #import "Xiang.h"
 #import "ShopXiangTableViewCell.h"
+#import "AFNetOperate.h"
+#import <AudioToolbox/AudioToolbox.h>
 
-@interface ReceiveXiangViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ReceiveXiangViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
@@ -40,21 +42,115 @@
     [self.scanTextField becomeFirstResponder];
     UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
-    self.countLabel.text=[NSString stringWithFormat:@"包含箱：%d",[self.tuo.xiang count]];
+    self.countLabel.text=[NSString stringWithFormat:@"包含箱：%d",(int)[self.tuo.xiang count]];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma captuvo delegate
+-(void)decoderDataReceived:(NSString *)data
+{
+    NSMutableArray *xiangArray=self.tuo.xiang;
+    int count=0;
+    for(int i=0;i<xiangArray.count;i++){
+        if([data isEqualToString:[xiangArray[i] ID]]){
+            count++;
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [manager POST:[AFNet xiang_check]
+               parameters:@{@"id":data}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
+                          [self.xiangTable reloadData];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                  }
+             ];
+            break;
+        }
+    }
+    if(count==0){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
+                                                       message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",data]
+                                                      delegate:self
+                                             cancelButtonTitle:@"确定"
+                                             otherButtonTitles:nil];
+        AudioServicesPlaySystemSound(1051);
+        [alert show];
+        
+    }
+}
 #pragma textField
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView=dummyView;
 }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSMutableArray *xiangArray=self.tuo.xiang;
+    int count=0;
+    for(int i=0;i<xiangArray.count;i++){
+        if([textField.text isEqualToString:[xiangArray[i] ID]]){
+            count++;
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [manager POST:[AFNet xiang_check]
+               parameters:@{@"id":textField.text}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
+                          [self.xiangTable reloadData];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                  }
+             ];
+            break;
+        }
+    }
+    if(count==0){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
+                                                       message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",textField.text]
+                                                      delegate:self
+                                             cancelButtonTitle:@"确定"
+                                             otherButtonTitles:nil];
+        AudioServicesPlaySystemSound(1051);
+        [alert show];
 
+    }
+    
+    return YES;
+}
 #pragma table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -88,8 +184,8 @@
 //        xiang.checked=YES;
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
-        cell.accessoryType=UITableViewCellAccessoryNone;
-        xiang.checked=NO;
+//        cell.accessoryType=UITableViewCellAccessoryNone;
+//        xiang.checked=NO;
     }
 }
 

@@ -107,7 +107,7 @@
     for(int i=0;i<self.yun.tuoArray.count;i++){
         [tuoArrayID addObject:[self.yun.tuoArray[i] ID]];
     }
-    NSLog(@"address:%@ params:%@",[AFNet yun_index],tuoArrayID);
+//    NSLog(@"address:%@ params:%@",[AFNet yun_index],tuoArrayID);
     
     [manager POST:[AFNet yun_index]
        parameters:@{
@@ -202,14 +202,32 @@
     else{
         //打印
         if(buttonIndex==1){
-            
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [manager GET:[AFNet print_stock_yun:self.yun.ID]
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     [AFNet.activeView stopAnimating];
+                     if([responseObject[@"result"] integerValue]==1){
+                         self.printAlert=nil;
+                         [self performSegueWithIdentifier:@"finishYun" sender:self];
+                     }
+                     else{
+                         [AFNet alert:responseObject[@"content"]];
+                     }
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [AFNet.activeView stopAnimating];
+                     [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                 }
+             ];
         }
         //不打印
         else{
-           
+            self.printAlert=nil;
+            [self performSegueWithIdentifier:@"finishYun" sender:self];
         }
-        self.printAlert=nil;
-        [self performSegueWithIdentifier:@"finishYun" sender:self];
+       
     }
 }
 @end

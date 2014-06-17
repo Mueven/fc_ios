@@ -125,6 +125,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if(yun.sended){
+        //查看
         [manager GET:[AFNet yun_single]
           parameters:@{@"id":yun.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -153,6 +154,7 @@
 //        [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
     }
     else{
+        //修改
         [manager GET:[AFNet yun_single]
           parameters:@{@"id":yun.ID}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {

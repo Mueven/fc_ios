@@ -53,6 +53,19 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+-(void)handleForeground
+{
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -65,36 +78,47 @@
         [self textFieldShouldReturn:self.firstResponder];
     }
     else{
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        
         NSString *address=[[NSString alloc] init];
-        switch (self.firstResponder.tag){
-            case 2:
-                address=[AFNet part_validate];
-                break;
-            case 3:
-                address=@"still waiting";
-                break;
-        }
-        [manager POST:address
-           parameters:@{data:data}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      self.firstResponder.text=data;
-                      [self textFieldShouldReturn:self.firstResponder];
+//        switch (self.firstResponder.tag){
+//            case 2:
+//                address=[AFNet part_validate];
+//                break;
+//            case 3:
+//                address=@"still waiting";
+//                break;
+//        }
+        if(self.firstResponder.tag==2){
+            
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            address=[AFNet part_validate];
+            [manager POST:address
+               parameters:@{@"id":data}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          self.firstResponder.text=data;
+                          [self textFieldShouldReturn:self.firstResponder];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                      
                   }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
                   }
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-              }
-         ];
-    }
+             ];
 
+        }
+            }
+
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {

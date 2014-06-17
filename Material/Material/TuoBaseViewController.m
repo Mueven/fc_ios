@@ -28,7 +28,13 @@
     }
     return self;
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,11 +56,7 @@
     self.agent.text=number;
     [self.department becomeFirstResponder];
 }
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.firstResponder resignFirstResponder];
-    self.firstResponder=nil;
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -113,7 +115,7 @@
                             }}
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
-              if(responseObject[@"result"]){
+              if([responseObject[@"result"] integerValue]==1){
                   [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":[responseObject[@"content"] objectForKey:@"id"]}];
               }
               else{

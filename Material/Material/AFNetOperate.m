@@ -111,6 +111,11 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"validate"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_check
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"check"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_edit:(NSString *)id{
     NSString *xiangRoot=[self xiang_index];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
@@ -231,6 +236,16 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"receive"];
     return [[self yun_index] stringByAppendingString:bind];
 }
+-(NSString *)yun_confirm_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"confirm_receive"];
+    return [[self yun_index] stringByAppendingString:bind];
+}
+-(NSString *)yun_received
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"received"];
+    return [[self yun_index] stringByAppendingString:bind];
+}
 -(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
     [self.activeView stopAnimating];
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
@@ -252,6 +267,40 @@
              [self.activeView stopAnimating];
          }
      ];
+}
+
+//打印
+-(NSString *)print_stock_tuo:(NSString *)ID
+{
+    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
+    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *bind=[printDictionary objectForKey:@"stock_tuo"];
+    NSString *joint=[base stringByAppendingString:bind];
+    return [NSString stringWithFormat:@"%@%@",joint,ID];
+}
+-(NSString *)print_stock_yun:(NSString *)ID
+{
+    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
+    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *bind=[printDictionary objectForKey:@"stock_yun"];
+    NSString *joint=[base stringByAppendingString:bind];
+    return [NSString stringWithFormat:@"%@%@",joint,ID];
+}
+-(NSString *)print_shop_receive:(NSString *)ID
+{
+    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
+    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *bind=[printDictionary objectForKey:@"shop_receive"];
+    NSString *joint=[base stringByAppendingString:bind];
+    return [NSString stringWithFormat:@"%@%@",joint,ID];
+}
+-(NSString *)print_shop_unreceive:(NSString *)ID
+{
+    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
+    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *bind=[printDictionary objectForKey:@"shop_unreceive"];
+    NSString *joint=[base stringByAppendingString:bind];
+    return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 
 //login and logout

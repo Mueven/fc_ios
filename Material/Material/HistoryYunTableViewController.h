@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Yun;
 @interface HistoryYunTableViewController : UITableViewController
 @property(nonatomic,strong)NSMutableArray *yunArray;
+@property(nonatomic,strong)NSString *chooseDate;
 @end
