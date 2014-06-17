@@ -191,8 +191,8 @@
                                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                     [AFNet.activeView stopAnimating];
                                     if([responseObject[@"result"] integerValue]==1){
-//                                        self.firstResponder.text=data;
-//                                        [self textFieldShouldReturn:self.firstResponder];
+                                        self.firstResponder.text=data;
+                                        [self textFieldShouldReturn:self.firstResponder];
                                         
                                     }
                                     else{
@@ -220,8 +220,8 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-//                          self.firstResponder.text=data;
-//                          [self textFieldShouldReturn:self.firstResponder];
+                          self.firstResponder.text=data;
+                          [self textFieldShouldReturn:self.firstResponder];
                           
                       }
                       else{
@@ -250,21 +250,22 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 //-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSString *key=self.key.text;
-    NSString *partNumber=self.partNumber.text;
-    NSString *quantity=self.quatity.text;
-    NSString *date=self.dateTextField.text;
-    __block long tag;
-    if(key.length>0 && partNumber.length>0 && quantity.length>0 && date.length>0){
-        tag=4;
-    }
-    else{
-        tag=textField.tag;
-    }
+    
+//    __block long tag;
+//    if(key.length>0 && partNumber.length>0 && quantity.length>0 && date.length>0){
+//        tag=4;
+//    }
+//    else{
+//        tag=textField.tag;
+//    }
+     __block long tag=textField.tag;
     if(tag==4){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        
+        NSString *key=self.key.text;
+        NSString *partNumber=self.partNumber.text;
+        NSString *quantity=self.quatity.text;
+        NSString *date=self.dateTextField.text;
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
 //            NSLog(@"%@",[AFNet tuo_bundle_add]);
