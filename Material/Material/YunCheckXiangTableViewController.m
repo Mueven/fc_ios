@@ -37,7 +37,11 @@
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

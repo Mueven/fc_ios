@@ -36,7 +36,9 @@
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
+
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,8 +55,13 @@
         self.email.text=[keychain objectForKey:(__bridge id)kSecAttrAccount];
         
     }
+    
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 //textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {

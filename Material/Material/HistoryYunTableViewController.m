@@ -50,7 +50,11 @@
 //    
 
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -91,15 +95,18 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-//                 yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                 NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                 [yun.tuoArray removeAllObjects];
-                 
-                 for(int i=0;i<tuoArray.count;i++){
-                     Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                     [yun.tuoArray addObject:tuoItem];
+                 if([(NSDictionary *)responseObject[@"content"] count]>0){
+                     NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                     [yun.tuoArray removeAllObjects];
+                     
+                     for(int i=0;i<tuoArray.count;i++){
+                         Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                         [yun.tuoArray addObject:tuoItem];
+                     }
+                     [self performSegueWithIdentifier:@"checkTuo" sender:@{@"yun":yun}];
                  }
-                 [self performSegueWithIdentifier:@"checkTuo" sender:@{@"yun":yun}];
+                 
+                 
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

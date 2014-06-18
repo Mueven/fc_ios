@@ -50,11 +50,11 @@
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 - (void)didReceiveMemoryWarning
@@ -184,8 +184,26 @@
 //        xiang.checked=YES;
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
-//        cell.accessoryType=UITableViewCellAccessoryNone;
-//        xiang.checked=NO;
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet xiang_uncheck]
+           parameters:@{@"id":xiang.ID}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      cell.accessoryType=UITableViewCellAccessoryNone;
+                      xiang.checked=NO;
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];   
+        
     }
 }
 

@@ -15,6 +15,8 @@
 @property(nonatomic,strong) NSString *agent;
 @property(nonatomic,strong) NSString *date;
 @property(nonatomic,strong) NSMutableArray *xiang;
+@property(nonatomic)int accepted_packages;
+@property(nonatomic)int sum_packages;
 
 -(instancetype)initExample;
 -(instancetype)initWith:(NSString *)ID department:(NSString *)department agent:(NSString *)agent;

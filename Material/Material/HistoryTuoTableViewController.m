@@ -40,7 +40,11 @@
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tableView registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,16 +72,8 @@
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=tuo.department;
     cell.dateLabel.text=tuo.date;
-    NSMutableArray *array=tuo.xiang;
-    int count=(int)[array count];
-    int checked=0;
-    for(int i=0;i<count;i++){
-        if([array[i] checked]){
-            checked++;
-        }
-    }
-    cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",checked,count];
-    if(checked==count){
+    cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
+    if(tuo.accepted_packages==tuo.sum_packages){
         [cell.conditionLabel setTextColor:[UIColor greenColor]];
     }
     else{
@@ -97,14 +93,18 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 NSDictionary *result=responseObject[@"content"];
-                 NSArray *xiangList=result[@"packages"];
-                 [tuo.xiang removeAllObjects];
-                 for(int i=0;i<xiangList.count;i++){
-                     Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
-                     [tuo.xiang addObject:xiang];
+                 if([(NSDictionary *)responseObject[@"content"] count]>0){
+                     NSDictionary *result=responseObject[@"content"];
+                     NSArray *xiangList=result[@"packages"];
+                     [tuo.xiang removeAllObjects];
+                     for(int i=0;i<xiangList.count;i++){
+                         NSLog(@"xiang:%@",xiangList[i]);
+                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                         [tuo.xiang addObject:xiang];
+                     }
+                     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
                  }
-                   [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+                 
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

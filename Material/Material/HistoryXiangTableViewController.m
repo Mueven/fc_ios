@@ -38,7 +38,11 @@
     [self.tableView registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
     self.navigationItem.title=self.tuo.department;
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

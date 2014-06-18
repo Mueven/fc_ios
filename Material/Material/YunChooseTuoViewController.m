@@ -30,11 +30,7 @@
     }
     return self;
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -52,11 +48,18 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.scanTuo becomeFirstResponder];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    [self.scanTuo becomeFirstResponder];
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -73,9 +76,11 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
-                 [self.yun.tuoArray addObject:tuo];
-                 [self.tuoTable reloadData];
+                 if([(NSDictionary *)responseObject[@"content"] count]>0){
+                     Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
+                     [self.yun.tuoArray addObject:tuo];
+                     [self.tuoTable reloadData];
+                 }
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

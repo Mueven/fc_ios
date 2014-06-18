@@ -40,7 +40,11 @@
     self.tuoTable.dataSource=self;
     self.navigationItem.title=self.yun.name;
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -73,13 +77,16 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 NSArray *xiangArray=[responseObject[@"content"] objectForKey:@"packages"];
-                 [tuo.xiang removeAllObjects];
-                 for(int i=0;i<xiangArray.count;i++){
-                     Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
-                     [tuo.xiang addObject:xiangItem];
-                 }
-                [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+                    if([(NSDictionary *)responseObject[@"content"] count]>0){
+                        NSArray *xiangArray=[responseObject[@"content"] objectForKey:@"packages"];
+                        [tuo.xiang removeAllObjects];
+                        for(int i=0;i<xiangArray.count;i++){
+                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
+                            [tuo.xiang addObject:xiangItem];
+                        }
+                        [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+                    }
+                 
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

@@ -13,7 +13,7 @@
 		<key>stock_tuo</key>
 		<string>P001/</string>
 		<key>base</key>
-		<string>http://print_server_ip:9000/printer/print/</string>
+		<string>http://192.168.1.109:9000/printer/print/</string>
 	</dict>
 	<key>log_out</key>
 	<string>/api/v1/users/logout/</string>
@@ -72,6 +72,8 @@
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>uncheck</key>
+		<string>uncheck/</string>
 		<key>check</key>
 		<string>check/</string>
 		<key>validate</key>

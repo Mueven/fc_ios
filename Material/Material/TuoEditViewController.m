@@ -35,6 +35,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
@@ -47,37 +48,9 @@
     self.xiangTable.dataSource=self;
     self.department.delegate=self;
     self.agent.delegate=self;
+    
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-    
-   
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    NSLog(@"id:%@",self.tuo.ID);
-    [manager GET:[AFNet tuo_single]
-      parameters:@{@"id":self.tuo.ID}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-             if([responseObject[@"result"] integerValue]==1){
-                 NSDictionary *result=responseObject[@"content"];
-                 NSArray *xiangList=result[@"packages"];
-                 for(int i=0;i<xiangList.count;i++){
-                     Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
-                     [self.tuo.xiang addObject:xiang];
-                 }
-                 [self.xiangTable reloadData];
-             }
-             else{
-                 [AFNet alert:responseObject[@"content"]];
-             }
-             
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:@"something wrong"];
-         }
-     ];
-    
     
 }
 
@@ -89,12 +62,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.department.text=self.tuo.department;
-    self.agent.text=self.tuo.agent;
-    [self.xiangTable reloadData];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    self.department.text=self.tuo.department;
+    self.agent.text=self.tuo.agent;
+    [self.xiangTable reloadData];
 }
 -(void)decoderDataReceived:(NSString *)data
 {
@@ -103,6 +76,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView=dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -119,7 +94,7 @@
                         self.tuo.department=department;
                         [textField resignFirstResponder];
                         self.firstResponder=nil;
-                        NSLog(@"ok");
+                        
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
@@ -143,7 +118,7 @@
                      self.tuo.agent=agent;
                      [textField resignFirstResponder];
                       self.firstResponder=nil;
-                     NSLog(@"ok");
+                
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];

@@ -43,12 +43,7 @@
     }
     return self;
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,7 +51,6 @@
     self.partNumber.delegate=self;
     self.quatity.delegate=self;
     self.dateTextField.delegate=self;
-//    self.xiangStore=[XiangStore sharedXiangStore:self.view];
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     if([self.type isEqualToString:@"xiang"]){
@@ -69,60 +63,59 @@
     }
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
+    self.alert=nil;
     
-    //example
-//    for(int i=0;i<10;i++){
-//        Xiang *xiang=[[Xiang alloc] initExample];
-//        [self.tuo.xiang addObject:xiang];
-//    }
-//    [self.xiangTable reloadData];
-    
-    if(self.tuo.ID.length>0){
+//    if(self.tuo.ID.length>0){
         //通过拖的id获得它下面有哪些箱
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager GET:[AFNet tuo_single]
-          parameters:@{@"id":self.tuo.ID}
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 [AFNet.activeView stopAnimating];
-                 if([responseObject[@"result"] integerValue]==1){
-                     self.tuo.xiang=[[NSMutableArray alloc] init];
-                     NSArray *xiangs=responseObject[@"packages"];
-                     for(int i=0;i<xiangs.count;i++){
-                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangs[i]];
-                         [self.tuo.xiang addObject:xiang];
-                     }
-                     [self.xiangTable reloadData];
-                 }
-                 else{
-                     [AFNet alert:responseObject[@"content"]];
-                 }
-                 
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 [AFNet.activeView stopAnimating];
-                 [AFNet alert:@"sth wrong"];
-             }
-         ];
-    }
-    else{
-        
-    }
+//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//        [manager GET:[AFNet tuo_single]
+//          parameters:@{@"id":self.tuo.ID}
+//             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                 [AFNet.activeView stopAnimating];
+//                 if([responseObject[@"result"] integerValue]==1){
+//                     self.tuo.xiang=[[NSMutableArray alloc] init];
+//                     NSArray *xiangs=responseObject[@"packages"];
+//                     for(int i=0;i<xiangs.count;i++){
+//                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangs[i]];
+//                         [self.tuo.xiang addObject:xiang];
+//                     }
+//                     [self.xiangTable reloadData];
+//                 }
+//                 else{
+//                     [AFNet alert:responseObject[@"content"]];
+//                 }
+//                 
+//             }
+//             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                 [AFNet.activeView stopAnimating];
+//                 [AFNet alert:@"sth wrong"];
+//             }
+//         ];
+//    }
+//    else{
+//        
+//    }
     
     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.key becomeFirstResponder];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-    
-   
-    
+    [self.key becomeFirstResponder];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -130,9 +123,6 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
-//    self.firstResponder.text=data;
-//    int originTag=(int)self.firstResponder.tag;
-//    [self textFieldShouldReturn:self.firstResponder];
     if(self.firstResponder.tag==3 || self.firstResponder.tag==4){
         self.firstResponder.text=data;
         [self textFieldShouldReturn:self.firstResponder];
@@ -164,23 +154,29 @@
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
                           //绑定了直接添加
+                          if([(NSDictionary *)responseObject[@"content"] count]>0){
+                              Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                              [self.tuo addXiang:xiang];
+                              [self.xiangTable reloadData];
+                              if(self.alert){
+                                  [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+                                  self.alert=nil;
+                              }
+                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                    message:@"绑定成功！"
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+                              [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                               target:self
+                                                             selector:@selector(dissmissAlert:)
+                                                             userInfo:nil
+                                                              repeats:NO];
+                              AudioServicesPlaySystemSound(1012);
+                              [self.alert show];
+                              [self.key becomeFirstResponder];
+                          }
                           
-                          Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                          [self.tuo addXiang:xiang];
-                          [self.xiangTable reloadData];
-                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                message:@"绑定成功！"
-                                                               delegate:self
-                                                      cancelButtonTitle:nil
-                                                      otherButtonTitles:nil];
-                          [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                           target:self
-                                                         selector:@selector(dissmissAlert:)
-                                                         userInfo:nil
-                                                          repeats:NO];
-                          AudioServicesPlaySystemSound(1012);
-                          [self.alert show];
-                          [self.key becomeFirstResponder];
                       }
                       else{
                           AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -248,16 +244,7 @@
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
-//-(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    
-//    __block long tag;
-//    if(key.length>0 && partNumber.length>0 && quantity.length>0 && date.length>0){
-//        tag=4;
-//    }
-//    else{
-//        tag=textField.tag;
-//    }
      __block long tag=textField.tag;
     if(tag==4){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -268,7 +255,6 @@
         NSString *date=self.dateTextField.text;
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
-//            NSLog(@"%@",[AFNet tuo_bundle_add]);
             [manager POST:[AFNet tuo_bundle_add]
                parameters:@{
                             @"forklift_id":self.tuo.ID,
@@ -281,30 +267,32 @@
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-//                          NSLog(@"%@",responseObject);
-                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                          [self.tuo addXiang:newXiang];
-                          [self.xiangTable reloadData];
-                          tag=1;
-                          UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
-                          [nextText becomeFirstResponder];
-                          self.key.text=@"";
-                          self.partNumber.text=@"";
-                          self.quatity.text=@"";
-                          self.dateTextField.text=@"";
+                          if([(NSDictionary *)responseObject[@"content"] count]>0){
+                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                              [self.tuo addXiang:newXiang];
+                              [self.xiangTable reloadData];
+                              tag=1;
+                              UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
+                              [nextText becomeFirstResponder];
+                              self.key.text=@"";
+                              self.partNumber.text=@"";
+                              self.quatity.text=@"";
+                              self.dateTextField.text=@"";
+                              
+                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                    message:@"绑定成功！"
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+                              [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                               target:self
+                                                             selector:@selector(dissmissAlert:)
+                                                             userInfo:nil
+                                                              repeats:NO];
+                              AudioServicesPlaySystemSound(1012);
+                              [self.alert show];
+                          }
                           
-                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                 message:@"绑定成功！"
-                                                                delegate:self
-                                                       cancelButtonTitle:nil
-                                                       otherButtonTitles:nil];
-                          [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                           target:self
-                                                         selector:@selector(dissmissAlert:)
-                                                         userInfo:nil
-                                                          repeats:NO];
-                          AudioServicesPlaySystemSound(1012);
-                          [self.alert show];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
@@ -319,7 +307,6 @@
         }
         else{
             //箱绑定下的绑定
-//            NSLog(@"%@",[AFNet xiang_index]);
             [manager POST:[AFNet xiang_index]
                parameters:@{
                             @"package":@{
@@ -331,31 +318,33 @@
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
-//                      NSLog(@"%@",responseObject);
                       if([responseObject[@"result"] integerValue]==1){
-                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                          [self.tuo addXiang:newXiang];
-                          [self.xiangTable reloadData];
-                          tag=1;
-                          UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
-                          [nextText becomeFirstResponder];
-                          self.key.text=@"";
-                          self.partNumber.text=@"";
-                          self.quatity.text=@"";
-                          self.dateTextField.text=@"";
+                          if([(NSDictionary *)responseObject[@"content"] count]>0){
+                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                              [self.tuo addXiang:newXiang];
+                              [self.xiangTable reloadData];
+                              tag=1;
+                              UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
+                              [nextText becomeFirstResponder];
+                              self.key.text=@"";
+                              self.partNumber.text=@"";
+                              self.quatity.text=@"";
+                              self.dateTextField.text=@"";
+                              
+                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                    message:@"绑定成功！"
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+                              [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                               target:self
+                                                             selector:@selector(dissmissAlert:)
+                                                             userInfo:nil
+                                                              repeats:NO];
+                              AudioServicesPlaySystemSound(1012);
+                              [self.alert show];
+                          }
                           
-                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                message:@"绑定成功！"
-                                                               delegate:self
-                                                      cancelButtonTitle:nil
-                                                      otherButtonTitles:nil];
-                          [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                           target:self
-                                                         selector:@selector(dissmissAlert:)
-                                                         userInfo:nil
-                                                          repeats:NO];
-                          AudioServicesPlaySystemSound(1012);
-                          [self.alert show];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
@@ -378,13 +367,11 @@
 }
 -(void)dissmissAlert:(NSTimer *)timer
 {
-    [self.alert dismissWithClickedButtonIndex:0 animated:YES];
-}
-//扫描唯一码如果已经绑定，则直接添加
--(void)fillAllTextField:(NSDictionary *)xiang
-{
-    // [self.tuo addXiang:newXiang];
-    // [self.xiangTable reloadData];
+    if(self.alert){
+
+        [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+        self.alert=nil;
+    }
 }
 //table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

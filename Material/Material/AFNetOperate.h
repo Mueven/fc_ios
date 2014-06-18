@@ -24,6 +24,7 @@
 -(NSString *)xiang_edit:(NSString *)id;
 -(NSString *)xiang_validate;
 -(NSString *)xiang_check;
+-(NSString *)xiang_uncheck;
 
 -(NSString *)tuo_index;
 -(NSString *)tuo_root;

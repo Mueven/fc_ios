@@ -44,6 +44,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
    
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -54,6 +59,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     NSString *questDate=[formatter stringFromDate:[NSDate date]];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet yun_root]
       parameters:@{@"delivery_date":questDate}
@@ -108,13 +114,23 @@
     Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=yun.name;
     cell.dateLabel.text=yun.date;
-    if(yun.sended>0){
-        cell.statusLabel.text=@"已发送";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
-    }
-    else{
+    if(yun.sended==0){
         cell.statusLabel.text=@"未发送";
         [cell.statusLabel setTextColor:[UIColor redColor]];
+        
+    }
+    else if(yun.sended==1){
+        cell.statusLabel.text=@"在途";
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
+    }
+    else if(yun.sended==2){
+        cell.statusLabel.text=@"到达";
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
+        
+    }
+    else if(yun.sended==3){
+        cell.statusLabel.text=@"已接收";
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -131,14 +147,16 @@
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
-                        yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                        NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                        [yun.tuoArray removeAllObjects];
-                        for(int i=0;i<tuoArray.count;i++){
-                            Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                            [yun.tuoArray addObject:tuoItem];
+                        if([(NSDictionary *)responseObject[@"content"] count]>0){
+                            yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
+                            NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                            [yun.tuoArray removeAllObjects];
+                            for(int i=0;i<tuoArray.count;i++){
+                                Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                                [yun.tuoArray addObject:tuoItem];
+                            }
+                            [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
                         }
-                        [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
@@ -150,8 +168,6 @@
                     [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                 }
          ];
-        
-//        [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
     }
     else{
         //修改
@@ -160,15 +176,16 @@
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
-                     yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                  
-                     NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                     [yun.tuoArray removeAllObjects];
-                     for(int i=0;i<tuoArray.count;i++){
-                         Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                         [yun.tuoArray addObject:tuoItem];
+                     if([(NSDictionary *)responseObject[@"content"] count]>0){
+                         yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
+                         NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                         [yun.tuoArray removeAllObjects];
+                         for(int i=0;i<tuoArray.count;i++){
+                             Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                             [yun.tuoArray addObject:tuoItem];
+                         }
+                         [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
                      }
-                     [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
@@ -180,7 +197,6 @@
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
-//        [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
     }
 }
 

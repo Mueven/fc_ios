@@ -42,7 +42,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.tuoCountLabel.text=[NSString stringWithFormat:@"%d",[self.yun.tuoArray count]];
+    self.tuoCountLabel.text=[NSString stringWithFormat:@"%d",(int)[self.yun.tuoArray count]];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -120,8 +125,11 @@
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){
 //                  NSLog(@"%@",responseObject);
-                  self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
-                  [self generateBelongs];
+                  if([(NSDictionary *)responseObject[@"content"] count]>0){
+                      self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                      [self generateBelongs];
+                  }
+                 
               }
               else{
                   [AFNet alert:responseObject[@"content"]];

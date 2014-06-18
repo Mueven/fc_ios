@@ -33,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+ 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -44,16 +45,23 @@
     
     
 }
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+  
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+   
     //得到数据
     XiangStore *xiangStore=[[XiangStore alloc] init];
     xiangStore.xiangArray=[[NSMutableArray alloc] init];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    
     [manager GET:[AFNet xiang_root]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

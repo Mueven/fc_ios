@@ -44,6 +44,11 @@
     [self.dateTextField setInputView:datePicker];
     self.postDate=[[NSString alloc] init];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 -(void)updateTextField:(id)sender
 {
     UIDatePicker *datePicker=(UIDatePicker *)self.dateTextField.inputView;

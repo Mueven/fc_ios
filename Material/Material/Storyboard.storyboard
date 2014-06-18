@@ -101,7 +101,7 @@
                                 <rect key="frame" x="42" y="109" width="237" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="IP地址：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yj-Zv-MSg">
                                 <rect key="frame" x="42" y="90" width="237" height="21"/>
@@ -114,7 +114,7 @@
                                 <rect key="frame" x="42" y="182" width="237" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="端口：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZN-9t-zju">
                                 <rect key="frame" x="42" y="161" width="237" height="21"/>
@@ -311,9 +311,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="4nD-R8-BuM" kind="push" identifier="tuoEdit" id="e8q-Rz-ZhM"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -328,6 +325,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="4nD-R8-BuM" kind="push" identifier="tuoEdit" id="YWd-Cx-P7y"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pCL-P9-AgI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1718,9 +1718,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="mEd-et-lyR"/>
+        <segue reference="SyV-YF-bxb"/>
+        <segue reference="oOw-in-AQO"/>
         <segue reference="FcC-pN-TYA"/>
-        <segue reference="SkA-08-PWt"/>
+        <segue reference="Neh-iJ-Fpe"/>
     </inferredMetricsTieBreakers>
 </document>

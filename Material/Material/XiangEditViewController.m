@@ -53,18 +53,13 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
-}
--(void)handleForeground
-{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -115,15 +110,10 @@
             }
 
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-}
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField

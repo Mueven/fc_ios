@@ -40,6 +40,11 @@
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -86,6 +91,7 @@
 - (IBAction)confirmPrint:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    NSLog(@"%@",[AFNet print_stock_tuo:self.tuo.ID]);
     [manager GET:[AFNet print_stock_tuo:self.tuo.ID]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

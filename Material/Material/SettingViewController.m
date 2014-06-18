@@ -41,7 +41,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 
 
 - (IBAction)logOut:(id)sender {

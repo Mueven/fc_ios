@@ -46,6 +46,7 @@
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";
         self.date=object[@"check_in_time"]?object[@"check_in_time"]:@"";
+        self.checked=[object[@"state"] integerValue]==3?YES:NO;
     }
     return self;
 }

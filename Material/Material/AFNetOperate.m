@@ -116,6 +116,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"check"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_uncheck{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"uncheck"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_edit:(NSString *)id{
     NSString *xiangRoot=[self xiang_index];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];

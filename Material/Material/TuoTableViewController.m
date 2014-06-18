@@ -11,6 +11,7 @@
 #import "Tuo.h"
 #import "TuoEditViewController.h"
 #import "AFNetOperate.h"
+#import "Xiang.h"
 
 @interface TuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
@@ -37,6 +38,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
 
@@ -46,6 +52,7 @@
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet tuo_root]
       parameters:nil
@@ -141,7 +148,37 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet tuo_single]
+      parameters:@{@"id":tuo.ID}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                 if([(NSDictionary *)responseObject[@"content"] count]>0){
+                     NSDictionary *result=responseObject[@"content"];
+                     NSArray *xiangList=result[@"packages"];
+                     for(int i=0;i<xiangList.count;i++){
+                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                         [tuo.xiang addObject:xiang];
+                     }
+                     [self performSegueWithIdentifier:@"tuoEdit" sender:@{@"tuo":tuo}];
+                 }
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
+}
 
 /*
 // Override to support rearranging the table view.
@@ -173,8 +210,7 @@
 {
     if([segue.identifier isEqualToString:@"tuoEdit"]){
         TuoEditViewController *tuoEdit=segue.destinationViewController;
-        Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:[[self.tableView indexPathForCell:sender] row]];
-        tuoEdit.tuo=tuo;
+        tuoEdit.tuo=[sender objectForKey:@"tuo"];
     }
 }
 

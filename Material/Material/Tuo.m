@@ -59,6 +59,8 @@
         [formatter setDateFormat:@"yyyy.MM.dd"];
         self.date=[formatter stringFromDate:[NSDate date]];
         self.xiang=[[NSMutableArray alloc] init];
+        self.accepted_packages=[dictionary[@"accepted_packages"] integerValue]?[dictionary[@"accepted_packages"] integerValue]:0;
+        self.sum_packages=[dictionary[@"sum_packages"] integerValue]?[dictionary[@"sum_packages"] integerValue]:0;
     }
     return self;
 }

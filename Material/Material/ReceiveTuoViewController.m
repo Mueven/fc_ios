@@ -66,19 +66,19 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.scanTextField becomeFirstResponder];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-
-    
+    [self.scanTextField becomeFirstResponder];
     [self.tuoTable reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -95,21 +95,22 @@
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
-                    
-                        self.yun=[[Yun alloc] init];
-                        NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                        for(int i=0;i<tuoArray.count;i++){
-                            Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                            NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
-                            for(int j=0;j<xiangArray.count;j++){
-                                Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
-                                [tuoItem.xiang addObject:xiangItem];
+                        if([(NSDictionary *)responseObject[@"content"] count]>0){
+                            self.yun=[[Yun alloc] init];
+                            NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                            for(int i=0;i<tuoArray.count;i++){
+                                Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                                NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                                for(int j=0;j<xiangArray.count;j++){
+                                    Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
+                                    [tuoItem.xiang addObject:xiangItem];
+                                }
+                                self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                                [self.yun.tuoArray addObject:tuoItem];
                             }
-                            self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
-                            [self.yun.tuoArray addObject:tuoItem];
+                            [self tuoModel];
+                            [self.tuoTable reloadData];
                         }
-                        [self tuoModel];
-                        [self.tuoTable reloadData];
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
@@ -239,21 +240,23 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
-//                      NSLog(@"%@",responseObject[@"content"]);
-                      self.yun=[[Yun alloc] init];
-                      NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                      for(int i=0;i<tuoArray.count;i++){
-                          Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                          NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
-                          for(int j=0;j<xiangArray.count;j++){
-                              Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
-                              [tuoItem.xiang addObject:xiangItem];
+                      if([(NSDictionary *)responseObject[@"content"] count]>0){
+                          self.yun=[[Yun alloc] init];
+                          NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                          for(int i=0;i<tuoArray.count;i++){
+                              Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                              NSArray *xiangArray=[tuoArray[i] objectForKey:@"packages"];
+                              for(int j=0;j<xiangArray.count;j++){
+                                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
+                                  [tuoItem.xiang addObject:xiangItem];
+                              }
+                              self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                              [self.yun.tuoArray addObject:tuoItem];
                           }
-                          self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
-                          [self.yun.tuoArray addObject:tuoItem];
+                          [self tuoModel];
+                          [self.tuoTable reloadData];
                       }
-                      [self tuoModel];
-                      [self.tuoTable reloadData];
+                      
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];

@@ -28,13 +28,7 @@
     }
     return self;
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    [self.firstResponder resignFirstResponder];
-    self.firstResponder=nil;
-}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -56,7 +50,14 @@
     self.agent.text=number;
     [self.department becomeFirstResponder];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -69,6 +70,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
+//    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView=dummyView;
     self.firstResponder=textField;
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -116,7 +119,9 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){
-                  [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":[responseObject[@"content"] objectForKey:@"id"]}];
+                  if([(NSDictionary *)responseObject[@"content"] count]>0){
+                      [self performSegueWithIdentifier:@"tuoBaseToScan" sender:@{@"ID":[responseObject[@"content"] objectForKey:@"id"]}];
+                  }
               }
               else{
                   [AFNet alert:responseObject[@"content"]];
