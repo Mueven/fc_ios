@@ -43,7 +43,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -91,7 +91,6 @@
 - (IBAction)confirmPrint:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    NSLog(@"%@",[AFNet print_stock_tuo:self.tuo.ID]);
     [manager GET:[AFNet print_stock_tuo:self.tuo.ID]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -7,10 +7,9 @@
 //
 
 #import "PrintViewController.h"
-//#import "TuoStore.h"
-//#import "YunStore.h"
 #import "AFNetOperate.h"
 #import "Tuo.h"
+#import "Yun.h"
 
 @interface PrintViewController ()
 - (IBAction)unPrint:(id)sender;
@@ -31,7 +30,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)viewDidLoad
 {
@@ -57,7 +56,13 @@
 
 
 - (IBAction)unPrint:(id)sender {
-    [self performSegueWithIdentifier:@"finishTuo" sender:self];
+    NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
+     if([containerClass isEqualToString:@"Tuo"]){
+         [self performSegueWithIdentifier:@"finishTuo" sender:self];
+     }
+     else if([containerClass isEqualToString:@"Yun"]){
+         [self performSegueWithIdentifier:@"finishYun" sender:self];
+     }
 }
 
 - (IBAction)print:(id)sender {
@@ -67,13 +72,10 @@
 -(void)sameFinishAction
 {
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if([containerClass isEqualToString:@"Tuo"]){
-//        TuoStore *tuoStore=[TuoStore sharedTuoStore:self.view];
-//        [tuoStore addTuo:self.container];
-        
         //这里掉打印拖的接口
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager GET:[AFNet print_stock_tuo:[(Tuo *)self.container ID]]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -90,13 +92,24 @@
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
-        
-        
     }
     else if([containerClass isEqualToString:@"Yun"]){
-//        YunStore *yunStore=[YunStore sharedYunStore];
-//        [yunStore.yunArray addObject:self.container];
-        [self performSegueWithIdentifier:@"finishYun" sender:self];
+        [manager GET:[AFNet print_stock_yun:[(Yun *)self.container ID]]
+          parameters:nil
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if([responseObject[@"result"] integerValue]==1){
+                     [self performSegueWithIdentifier:@"finishYun" sender:self];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
     }
 }
 @end

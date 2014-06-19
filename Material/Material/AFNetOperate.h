@@ -18,6 +18,7 @@
 -(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view;
 //get URL
 -(NSString *)part_validate;
+-(NSString *)part_quantity_validate;
 
 -(NSString *)xiang_index;
 -(NSString *)xiang_root;

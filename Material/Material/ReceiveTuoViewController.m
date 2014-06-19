@@ -66,16 +66,16 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.scanTextField becomeFirstResponder];
     [self.tuoTable reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 
@@ -236,7 +236,7 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet yun_receive]
-           parameters:@{@"id":@"D1402970595617"}
+           parameters:@{@"id":textField.text}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
@@ -250,9 +250,10 @@
                                   Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[j]];
                                   [tuoItem.xiang addObject:xiangItem];
                               }
-                              self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
+                             
                               [self.yun.tuoArray addObject:tuoItem];
                           }
+                           self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
                           [self tuoModel];
                           [self.tuoTable reloadData];
                       }

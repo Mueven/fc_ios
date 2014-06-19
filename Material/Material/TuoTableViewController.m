@@ -41,13 +41,15 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
 
     [super viewWillAppear:animated];
-    
+
     //得到数据
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
@@ -72,7 +74,8 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-    
+    UITabBarController *tabber= self.tabBarController;
+    tabber.selectedIndex=1;
 //    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
 //    [self.tableView reloadData];
 }
@@ -106,6 +109,8 @@
 //unwind
 - (IBAction)unwindToTuoTable:(UIStoryboardSegue *)unwindSegue{
     [self.tableView reloadData];
+    UITabBarController *tabber= self.tabBarController;
+    tabber.selectedIndex=1;
 }
 
 

@@ -40,9 +40,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
@@ -55,7 +55,7 @@
     [super viewWillDisappear:animated];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 - (void)didReceiveMemoryWarning
@@ -70,8 +70,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView=dummyView;
+    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView=dummyView;
     self.firstResponder=textField;
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

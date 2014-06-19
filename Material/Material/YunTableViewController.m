@@ -42,12 +42,12 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-   
+
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -85,6 +85,8 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -178,6 +180,7 @@
                  if([responseObject[@"result"] integerValue]==1){
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
+                         yun.name=[responseObject[@"content"] objectForKey:@"id"];
                          NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
                          [yun.tuoArray removeAllObjects];
                          for(int i=0;i<tuoArray.count;i++){

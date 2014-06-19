@@ -94,6 +94,11 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"part"] objectForKey:@"validate"];
     return [[self part_index] stringByAppendingString:bind];
 }
+-(NSString *)part_quantity_validate
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"validate_quantity"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 //resource xiang
 -(NSString *)xiang_index
 {
@@ -274,10 +279,30 @@
 }
 
 //打印
+-(NSString *)baseURL_print
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
+    NSString *file=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"file"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        NSString *base=[dictionary objectForKey:@"print_ip"];
+        NSString *port=[dictionary objectForKey:@"print_port"];
+        return [[base stringByAppendingString:port] stringByAppendingString:file];
+    }
+    else{
+        NSString *base=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"base"];
+        NSString *port=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"port"];
+        return [[base stringByAppendingString:port] stringByAppendingString:file];
+    }
+}
+
+
 -(NSString *)print_stock_tuo:(NSString *)ID
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *base=[self baseURL_print];
     NSString *bind=[printDictionary objectForKey:@"stock_tuo"];
     NSString *joint=[base stringByAppendingString:bind];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
@@ -285,7 +310,7 @@
 -(NSString *)print_stock_yun:(NSString *)ID
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[printDictionary objectForKey:@"base"];
+     NSString *base=[self baseURL_print];
     NSString *bind=[printDictionary objectForKey:@"stock_yun"];
     NSString *joint=[base stringByAppendingString:bind];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
@@ -293,7 +318,7 @@
 -(NSString *)print_shop_receive:(NSString *)ID
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *base=[self baseURL_print];
     NSString *bind=[printDictionary objectForKey:@"shop_receive"];
     NSString *joint=[base stringByAppendingString:bind];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
@@ -301,7 +326,7 @@
 -(NSString *)print_shop_unreceive:(NSString *)ID
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[printDictionary objectForKey:@"base"];
+    NSString *base=[self baseURL_print];
     NSString *bind=[printDictionary objectForKey:@"shop_unreceive"];
     NSString *joint=[base stringByAppendingString:bind];
     return [NSString stringWithFormat:@"%@%@",joint,ID];

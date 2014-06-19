@@ -12,8 +12,10 @@
 
 @interface SettingViewController ()<UITextFieldDelegate>
 - (IBAction)logOut:(id)sender;
-
-
+@property (weak, nonatomic) IBOutlet UITextField *addressTextField;
+@property (weak, nonatomic) IBOutlet UITextField *portTextField;
+- (IBAction)saveChange:(id)sender;
+- (IBAction)touchScreen:(id)sender;
 @end
 
 @implementation SettingViewController
@@ -32,9 +34,33 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title=@"账户设置";
-
+    self.addressTextField.delegate=self;
+    self.portTextField.delegate=self;
 }
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        self.addressTextField.text=[dictionary objectForKey:@"print_ip"];
+        self.portTextField.text=[dictionary objectForKey:@"print_port"];
+    }
+    else{
+        NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"URL" ofType:@"plist"];
+        NSMutableDictionary *URLDictionary=[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+        NSDictionary *printAddress=[URLDictionary objectForKey:@"print"];
+        self.addressTextField.text=[printAddress objectForKey:@"base"];
+        self.portTextField.text=[printAddress objectForKey:@"port"];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -44,7 +70,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 
 
@@ -64,11 +90,26 @@
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               [AFNet.activeView stopAnimating];
-              [AFNet alert:@"sth wrong"];
+              [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
           }
      ];
 //    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
+- (IBAction)saveChange:(id)sender {
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:self.addressTextField.text,@"print_ip",self.portTextField.text,@"print_port", nil];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+    [self.addressTextField resignFirstResponder];
+    [self.portTextField resignFirstResponder];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (IBAction)touchScreen:(id)sender {
+    [self.addressTextField resignFirstResponder];
+    [self.portTextField resignFirstResponder];
+}
 @end

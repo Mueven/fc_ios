@@ -569,14 +569,15 @@
                         <viewControllerLayoutGuide type="top" id="v3r-Z7-rns"/>
                         <viewControllerLayoutGuide type="bottom" id="uTK-wR-fEK"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="06a-7j-7pN">
+                    <view key="view" contentMode="scaleToFill" id="06a-7j-7pN" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imF-w6-Ng6">
-                                <rect key="frame" x="42" y="160" width="237" height="36"/>
+                                <rect key="frame" x="52" y="398" width="216" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="退出账户">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -585,10 +586,56 @@
                                     <action selector="logOut:" destination="FJr-dh-3oV" eventType="touchUpInside" id="IDE-On-4Pg"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机地址:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zb-0g-NEr">
+                                <rect key="frame" x="52" y="111" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iGd-jd-tFW">
+                                <rect key="frame" x="51" y="133" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机端口:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BHC-Sx-awE">
+                                <rect key="frame" x="52" y="177" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eML-9b-zhp">
+                                <rect key="frame" x="51" y="199" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yl-nr-zPs">
+                                <rect key="frame" x="52" y="244" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.16608362669999999" green="0.58597735969999998" blue="0.38058867439999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="保存更改">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Z5L-ZJ-cuv"/>
+                                    <action selector="saveChange:" destination="FJr-dh-3oV" eventType="touchUpInside" id="N8C-5v-gXv"/>
+                                    <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="gji-4V-Ukc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="FJr-dh-3oV" eventType="touchUpInside" id="Km9-b7-Fuh"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="设置" id="B3X-cw-UTQ"/>
+                    <connections>
+                        <outlet property="addressTextField" destination="iGd-jd-tFW" id="Wgm-94-FPb"/>
+                        <outlet property="portTextField" destination="eML-9b-zhp" id="t4b-Vu-TAu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x2C-l3-LqM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -855,6 +902,7 @@
                     <connections>
                         <outlet property="remark" destination="cB6-a6-wDp" id="xTc-69-Bfl"/>
                         <outlet property="tuoTable" destination="cmC-dU-XVh" id="aOs-AW-HqW"/>
+                        <segue destination="W31-QG-1bE" kind="push" identifier="printYun" id="oF3-aI-OCw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qd3-nZ-0I9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1259,12 +1307,76 @@
                         <outlet property="amountLabel" destination="mlq-Kv-D93" id="NUe-qU-0Oc"/>
                         <outlet property="checkedLabel" destination="Cua-D0-Dfl" id="UG5-QV-iQF"/>
                         <segue destination="EdX-Mh-gP7" kind="unwind" identifier="unwindToReceive" unwindAction="unwindToReceive:" id="bga-Za-jE9"/>
+                        <segue destination="770-tN-fJ3" kind="push" identifier="printYun" id="L4I-9p-BWh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dQT-97-TEW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="EdX-Mh-gP7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3528" y="5819"/>
+        </scene>
+        <!--Receive Print View Controller-->
+        <scene sceneID="9vz-Rr-CNd">
+            <objects>
+                <viewController id="770-tN-fJ3" customClass="ReceivePrintViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="siv-JJ-dm2"/>
+                        <viewControllerLayoutGuide type="bottom" id="cNh-ML-t1L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="52e-L7-sNR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="是否打印运单？" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4rS-Pn-gZV">
+                                <rect key="frame" x="63" y="148" width="194" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fnM-OY-ZFZ">
+                                <rect key="frame" x="29" y="216" width="116" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="不打印">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unPrint:" destination="770-tN-fJ3" eventType="touchUpInside" id="WKb-76-CdG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LLP-3M-wi6">
+                                <rect key="frame" x="183" y="216" width="116" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="打印">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="print:" destination="770-tN-fJ3" eventType="touchUpInside" id="DN0-mI-beO"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lhC-IZ-dht">
+                                <rect key="frame" x="0.0" y="185" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VjR-vk-j1q"/>
+                    <connections>
+                        <segue destination="zll-gK-mGa" kind="unwind" identifier="unwindToReceive" unwindAction="unwindToReceive:" id="b7r-og-fMv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tMK-O6-TXJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="zll-gK-mGa" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3976" y="5819"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="rsE-JU-4Oz">
@@ -1429,14 +1541,15 @@
                         <viewControllerLayoutGuide type="top" id="g2k-et-dnj"/>
                         <viewControllerLayoutGuide type="bottom" id="Yb0-40-tuD"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9DM-gd-uZX">
+                    <view key="view" contentMode="scaleToFill" id="9DM-gd-uZX" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXG-pW-D0e">
-                                <rect key="frame" x="52" y="200" width="217" height="30"/>
+                                <rect key="frame" x="52" y="385" width="217" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="退出账户">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1445,14 +1558,59 @@
                                     <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Evq-SI-Vnw"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机地址:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmE-XV-eGs">
+                                <rect key="frame" x="53" y="97" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HjL-cw-iCR">
+                                <rect key="frame" x="52" y="119" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机端口:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="md6-wj-864">
+                                <rect key="frame" x="53" y="163" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3xg-Ci-XCq">
+                                <rect key="frame" x="52" y="185" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGZ-Bt-ulp">
+                                <rect key="frame" x="53" y="230" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.16608362669999999" green="0.58597735969999998" blue="0.38058867439999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="保存更改">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="WWL-0b-E7r"/>
+                                    <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="DXB-hC-cwV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Wwh-YS-UPZ"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="设置" id="U70-o5-onN"/>
+                    <connections>
+                        <outlet property="addressTextField" destination="HjL-cw-iCR" id="1iG-ij-zOA"/>
+                        <outlet property="portTextField" destination="3xg-Ci-XCq" id="NG3-Sb-bRT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qdZ-rT-K8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3002" y="7469"/>
+            <point key="canvasLocation" x="3018" y="7469"/>
         </scene>
         <!--Tuo Edit View Controller-->
         <scene sceneID="u5E-xb-CgW">
@@ -1718,9 +1876,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="oF3-aI-OCw"/>
+        <segue reference="Neh-iJ-Fpe"/>
         <segue reference="SyV-YF-bxb"/>
         <segue reference="oOw-in-AQO"/>
-        <segue reference="FcC-pN-TYA"/>
-        <segue reference="Neh-iJ-Fpe"/>
     </inferredMetricsTieBreakers>
 </document>

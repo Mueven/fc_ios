@@ -10,6 +10,7 @@
 #import "Tuo.h"
 #import "AFNetOperate.h"
 #import "YunChooseTuoViewController.h"
+#import "PrintViewController.h"
 
 @interface YunEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
@@ -32,7 +33,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)viewDidLoad
 {
@@ -156,6 +157,10 @@
         chooseTuo.type=@"yunEdit";
         chooseTuo.barTitle=@"完成更改";
     }
+    else if([segue.identifier isEqualToString:@"printYun"]){
+        PrintViewController *yunPrint=segue.destinationViewController;
+        yunPrint.container=[sender objectForKey:@"yun"];
+    }
 }
 
 
@@ -169,8 +174,6 @@
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //是否发送
-    if(!self.printAlert){
         //发送运单
         if(buttonIndex==1){
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -180,12 +183,7 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
-                                                                      message:@"要打印运单吗？"
-                                                                     delegate:self
-                                                            cancelButtonTitle:@"不打印"
-                                                            otherButtonTitles:@"打印",nil];
-                          [self.printAlert show];
+                            [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
@@ -197,32 +195,10 @@
                       [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                   }
              ];
-            
-            //            self.printAlert = [[UIAlertView alloc]initWithTitle:@"打 印"
-            //                                                        message:@"要打印运单吗？"
-            //                                                       delegate:self
-            //                                              cancelButtonTitle:@"不打印"
-            //                                              otherButtonTitles:@"打印",nil];
-            //            [self.printAlert show];
         }
         //不发送运单
         else{
-            [self.navigationController popViewControllerAnimated:YES];
+              [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
         }
-    }
-    //是否打印运单
-    else{
-        //打印
-        if(buttonIndex==1){
-            
-        }
-        //不打印
-        else{
-           
-        }
-        self.printAlert=nil;
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
-
 @end

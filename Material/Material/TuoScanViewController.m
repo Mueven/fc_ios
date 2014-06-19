@@ -64,54 +64,20 @@
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     self.alert=nil;
-    
-//    if(self.tuo.ID.length>0){
-        //通过拖的id获得它下面有哪些箱
-//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//        [manager GET:[AFNet tuo_single]
-//          parameters:@{@"id":self.tuo.ID}
-//             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                 [AFNet.activeView stopAnimating];
-//                 if([responseObject[@"result"] integerValue]==1){
-//                     self.tuo.xiang=[[NSMutableArray alloc] init];
-//                     NSArray *xiangs=responseObject[@"packages"];
-//                     for(int i=0;i<xiangs.count;i++){
-//                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangs[i]];
-//                         [self.tuo.xiang addObject:xiang];
-//                     }
-//                     [self.xiangTable reloadData];
-//                 }
-//                 else{
-//                     [AFNet alert:responseObject[@"content"]];
-//                 }
-//                 
-//             }
-//             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                 [AFNet.activeView stopAnimating];
-//                 [AFNet alert:@"sth wrong"];
-//             }
-//         ];
-//    }
-//    else{
-//        
-//    }
-    
-    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.key becomeFirstResponder];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
@@ -123,7 +89,7 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
-    if(self.firstResponder.tag==3 || self.firstResponder.tag==4){
+    if(self.firstResponder.tag==4){
         self.firstResponder.text=data;
         [self textFieldShouldReturn:self.firstResponder];
     }
@@ -141,7 +107,7 @@
                 address=[AFNet part_validate];
                 break;
             case 3:
-                address=@"still waiting";
+                address=[AFNet part_quantity_validate];
                 break;
         }
         if(self.tuo.ID.length>0 && self.firstResponder.tag==1){
@@ -175,6 +141,7 @@
                               AudioServicesPlaySystemSound(1012);
                               [self.alert show];
                               [self.key becomeFirstResponder];
+                              self.key.text=@"";
                           }
                           
                       }

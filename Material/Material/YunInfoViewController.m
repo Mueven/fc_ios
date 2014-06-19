@@ -18,7 +18,6 @@
 @property (strong,nonatomic) UIAlertView *printAlert;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)generateYun:(id)sender;
-
 @end
 
 @implementation YunInfoViewController
@@ -38,16 +37,18 @@
     // Do any additional setup after loading the view.
 //    self.name.delegate=self;
     self.remark.delegate=self;
+     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.tuoCountLabel.text=[NSString stringWithFormat:@"%d",(int)[self.yun.tuoArray count]];
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -84,13 +85,7 @@
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"printYun"]){
-        PrintViewController *print=segue.destinationViewController;
-        print.container=self.yun;
-    }
-}
+
 
 
 - (IBAction)touchScreen:(id)sender {
@@ -165,77 +160,39 @@
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //是否发送
-    if(!self.printAlert){
-        //发送运单
-        if(buttonIndex==1){
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager POST:[AFNet yun_send]
-               parameters:@{@"id":self.yun.ID}
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [AFNet.activeView stopAnimating];
-                      if([responseObject[@"result"] integerValue]==1){
-                          self.printAlert = [[UIAlertView alloc]initWithTitle:@"打印"
-                                                                      message:@"要打印运单吗？"
-                                                                     delegate:self
-                                                            cancelButtonTitle:@"不打印"
-                                                            otherButtonTitles:@"打印",nil];
-                          [self.printAlert show];
-                      }
-                      else{
-                          [AFNet alert:responseObject[@"content"]];
-                      }
-                      
+    //发送运单
+    if(buttonIndex==1){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_send]
+           parameters:@{@"id":self.yun.ID}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
                   }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      [AFNet.activeView stopAnimating];
-                      [AFNet alert:@"sth wrong"];
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
                   }
-             ];
-
-//            self.printAlert = [[UIAlertView alloc]initWithTitle:@"打 印"
-//                                                        message:@"要打印运单吗？"
-//                                                       delegate:self
-//                                              cancelButtonTitle:@"不打印"
-//                                              otherButtonTitles:@"打印",nil];
-//            [self.printAlert show];
-        }
-        //不发送运单
-        else{
-            [self performSegueWithIdentifier:@"finishYun" sender:self];
-        }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
+              }
+         ];
     }
-    //是否打印运单
     else{
-        //打印
-        if(buttonIndex==1){
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager GET:[AFNet print_stock_yun:self.yun.ID]
-              parameters:nil
-                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                     [AFNet.activeView stopAnimating];
-                     if([responseObject[@"result"] integerValue]==1){
-                         self.printAlert=nil;
-                         [self performSegueWithIdentifier:@"finishYun" sender:self];
-                     }
-                     else{
-                         [AFNet alert:responseObject[@"content"]];
-                     }
-                 }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     [AFNet.activeView stopAnimating];
-                     [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                 }
-             ];
-        }
-        //不打印
-        else{
-            self.printAlert=nil;
-            [self performSegueWithIdentifier:@"finishYun" sender:self];
-        }
-       
+        [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+    }
+    
+    
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"printYun"]){
+        PrintViewController *yunPrint=segue.destinationViewController;
+        yunPrint.container=[sender objectForKey:@"yun"];
     }
 }
 @end

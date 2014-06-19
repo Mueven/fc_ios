@@ -49,14 +49,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
@@ -73,22 +73,18 @@
         [self textFieldShouldReturn:self.firstResponder];
     }
     else{
-        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         NSString *address=[[NSString alloc] init];
-//        switch (self.firstResponder.tag){
-//            case 2:
-//                address=[AFNet part_validate];
-//                break;
-//            case 3:
-//                address=@"still waiting";
-//                break;
-//        }
-        if(self.firstResponder.tag==2){
-            
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            address=[AFNet part_validate];
-            [manager POST:address
+        switch (self.firstResponder.tag){
+            case 2:
+                address=[AFNet part_validate];
+                break;
+            case 3:
+                address=[AFNet part_quantity_validate];
+                break;
+        }
+        [manager POST:address
                parameters:@{@"id":data}
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -104,10 +100,8 @@
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                       [AFNet.activeView stopAnimating];
                   }
-             ];
-
+            ];
         }
-            }
 
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField

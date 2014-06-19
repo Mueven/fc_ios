@@ -35,11 +35,13 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
+  
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,7 +53,7 @@
     
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,13 +64,17 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    
+//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+
+    
+    
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
 }
+
 -(void)decoderDataReceived:(NSString *)data
 {
     self.firstResponder.text=data;
