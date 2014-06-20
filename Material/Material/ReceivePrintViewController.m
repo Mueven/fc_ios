@@ -10,9 +10,9 @@
 #import "AFNetOperate.h"
 #import "Yun.h"
 @interface ReceivePrintViewController ()
-- (IBAction)unPrint:(id)sender;
+- (IBAction)printUncheck:(id)sender;
 - (IBAction)print:(id)sender;
-
+- (IBAction)finishOver:(id)sender;
 @end
 
 @implementation ReceivePrintViewController
@@ -30,6 +30,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,11 +49,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-- (IBAction)unPrint:(id)sender {
-    [self performSegueWithIdentifier:@"unwindToReceive" sender:self];
-}
-
 - (IBAction)print:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -60,11 +56,11 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if([responseObject[@"result"] integerValue]==1){
-                 [self performSegueWithIdentifier:@"unwindToReceive" sender:self];
+             if([responseObject[@"Code"] integerValue]==1){
+                  [AFNet alertSuccess:responseObject[@"Content"]];
              }
              else{
-                 [AFNet alert:responseObject[@"content"]];
+                 [AFNet alert:responseObject[@"Content"]];
              }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -73,5 +69,34 @@
          }
      ];
 
+}
+- (IBAction)printUncheck:(id)sender {
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet print_shop_unreceive:self.yun.ID]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"Code"] integerValue]==1){
+                 [AFNet alertSuccess:responseObject[@"Content"]];
+             }
+             else{
+                 [AFNet alert:responseObject[@"Content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
+}
+- (IBAction)finishOver:(id)sender {
+    if([self.type isEqualToString:@"receive"]){
+        [self performSegueWithIdentifier:@"unwindToReceive" sender:self];
+    }
+    else if([self.type isEqualToString:@"history"]){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 @end

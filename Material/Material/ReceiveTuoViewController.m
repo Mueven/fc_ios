@@ -197,8 +197,8 @@
 {
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    cell.nameLabel.text=tuo.department;
-    cell.dateLabel.text=tuo.date;
+    cell.nameLabel.text=tuo.ID;
+    cell.dateLabel.text=tuo.department;
     NSMutableArray *array=tuo.xiang;
     int count=(int)[array count];
     int checked=0;

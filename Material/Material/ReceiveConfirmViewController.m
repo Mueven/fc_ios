@@ -83,30 +83,40 @@
     if([segue.identifier isEqualToString:@"printYun"]){
         ReceivePrintViewController *receivePrint=segue.destinationViewController;
         receivePrint.yun=[sender objectForKey:@"yun"];
+        receivePrint.type=[sender objectForKey:@"type"];
     }
 }
 
 - (IBAction)cnfirmReceive:(id)sender {
-
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager POST:[AFNet yun_confirm_receive]
-       parameters:@{@"id":self.yun.ID}
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [AFNet.activeView stopAnimating];
-              if([responseObject[@"result"] integerValue]==1){
-                  [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
-              }
-              else{
-                  [AFNet alert:responseObject[@"content"]];
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [AFNet.activeView stopAnimating];
-              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-          }
-     ];
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"确认收货？"
+                                                 delegate:self
+                                        cancelButtonTitle:@"取消"
+                                        otherButtonTitles:@"确定", nil];
+    [alert show];
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_confirm_receive]
+           parameters:@{@"id":self.yun.ID}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"type":@"receive"}];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
+    }
+}
 
 @end

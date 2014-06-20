@@ -80,11 +80,13 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
-                 if([responseObject[@"result"] integerValue]==1){
-                     [self performSegueWithIdentifier:@"finishTuo" sender:self];
+                 if([responseObject[@"Code"] integerValue]==1){
+                     [AFNet alertSuccess:responseObject[@"Content"]];
+                    [self performSegueWithIdentifier:@"finishTuo" sender:self];
+                    
                  }
                  else{
-                     [AFNet alert:responseObject[@"content"]];
+                     [AFNet alert:responseObject[@"Content"]];
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -94,18 +96,23 @@
          ];
     }
     else if([containerClass isEqualToString:@"Yun"]){
+
         [manager GET:[AFNet print_stock_yun:[(Yun *)self.container ID]]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 
                  [AFNet.activeView stopAnimating];
-                 if([responseObject[@"result"] integerValue]==1){
+                 if([responseObject[@"Code"] integerValue]==1){
+                     [AFNet alertSuccess:responseObject[@"Content"]];
                      [self performSegueWithIdentifier:@"finishYun" sender:self];
+                     
                  }
                  else{
-                     [AFNet alert:responseObject[@"content"]];
+                     [AFNet alert:responseObject[@"Content"]];
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
                  [AFNet.activeView stopAnimating];
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }

@@ -36,7 +36,7 @@
 }
 -(void)alert:(NSString *)string
 {
-    self.alert = [[UIAlertView alloc]initWithTitle:@"出现错误"
+    self.alert = [[UIAlertView alloc]initWithTitle:@""
                                                   message:string
                                                  delegate:self
                                         cancelButtonTitle:@"确定"
@@ -49,6 +49,21 @@
     AudioServicesPlaySystemSound(1051);
     [self.alert show];
   
+}
+-(void)alertSuccess:(NSString *)string
+{
+    self.alert = [[UIAlertView alloc]initWithTitle:@""
+                                           message:string
+                                          delegate:self
+                                 cancelButtonTitle:@"确定"
+                                 otherButtonTitles:nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.8f
+                                     target:self
+                                   selector:@selector(dissmissAlert:)
+                                   userInfo:nil
+                                    repeats:NO];
+    AudioServicesPlaySystemSound(1012);
+    [self.alert show];
 }
 -(void)dissmissAlert:(NSTimer *)timer
 {

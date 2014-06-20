@@ -12,7 +12,9 @@
 #import "Xiang.h"
 #import "HistoryXiangTableViewController.h"
 #import "AFNetOperate.h"
+#import "ReceivePrintViewController.h"
 @interface HistoryTuoTableViewController ()
+- (IBAction)printYun:(id)sender;
 
 @end
 
@@ -70,8 +72,8 @@
 {
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    cell.nameLabel.text=tuo.department;
-    cell.dateLabel.text=tuo.date;
+    cell.nameLabel.text=tuo.ID;
+    cell.dateLabel.text=tuo.department;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
     if(tuo.accepted_packages==tuo.sum_packages){
         [cell.conditionLabel setTextColor:[UIColor greenColor]];
@@ -167,7 +169,15 @@
         HistoryXiangTableViewController *historyXiang=segue.destinationViewController;
         historyXiang.tuo=[sender objectForKey:@"tuo"];
     }
+    else if([segue.identifier isEqualToString:@"printYun"]){
+        ReceivePrintViewController *print=segue.destinationViewController;
+        print.yun=self.yun;
+        print.type=@"history";
+    }
 }
 
 
+- (IBAction)printYun:(id)sender {
+    [self performSegueWithIdentifier:@"printYun" sender:self];
+}
 @end

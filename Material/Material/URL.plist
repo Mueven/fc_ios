@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>base</key>
+	<string>http://192.168.1.107</string>
+	<key>port</key>
+	<string>:3000</string>
+	<key>log_in</key>
+	<string>/api/v1/users/login/</string>
+	<key>log_out</key>
+	<string>/api/v1/users/logout/</string>
 	<key>print</key>
 	<dict>
 		<key>shop_unreceive</key>
@@ -18,17 +26,6 @@
 		<string>:9000</string>
 		<key>base</key>
 		<string>http://192.168.1.109</string>
-	</dict>
-	<key>log_out</key>
-	<string>/api/v1/users/logout/</string>
-	<key>log_in</key>
-	<string>/api/v1/users/login/</string>
-	<key>part</key>
-	<dict>
-		<key>validate</key>
-		<string>validate/</string>
-		<key>root</key>
-		<string>/api/v1/parts/</string>
 	</dict>
 	<key>yun</key>
 	<dict>
@@ -89,9 +86,12 @@
 		<key>root</key>
 		<string>/api/v1/packages/</string>
 	</dict>
-	<key>base</key>
-	<string>http://192.168.1.107</string>
-	<key>port</key>
-	<string>:3000</string>
+	<key>part</key>
+	<dict>
+		<key>validate</key>
+		<string>validate/</string>
+		<key>root</key>
+		<string>/api/v1/parts/</string>
+	</dict>
 </dict>
 </plist>

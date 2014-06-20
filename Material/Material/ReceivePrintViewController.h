@@ -10,4 +10,5 @@
 @class Yun;
 @interface ReceivePrintViewController : UIViewController
 @property(nonatomic,strong)Yun *yun;
+@property(nonatomic,strong)NSString *type;
 @end

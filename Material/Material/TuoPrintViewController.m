@@ -95,11 +95,12 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if([responseObject[@"result"] integerValue]==1){
+             if([responseObject[@"Code"] integerValue]==1){
                  [self performSegueWithIdentifier:@"finishTuo" sender:self];
+                  [AFNet alertSuccess:responseObject[@"Content"]];
              }
              else{
-                 [AFNet alert:responseObject[@"content"]];
+                 [AFNet alert:responseObject[@"Content"]];
              }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {

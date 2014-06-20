@@ -164,7 +164,7 @@
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		B085F60C194004CC001F01F3 /* Material.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Material.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B085F60C194004CC001F01F3 /* 物料管理系统.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "物料管理系统.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B085F611194004CC001F01F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B085F613194004CC001F01F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -378,7 +378,7 @@
 		B085F60D194004CC001F01F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B085F60C194004CC001F01F3 /* Material.app */,
+				B085F60C194004CC001F01F3 /* 物料管理系统.app */,
 				B085F627194004CC001F01F3 /* MaterialTests.xctest */,
 			);
 			name = Products;
@@ -548,7 +548,7 @@
 			);
 			name = Material;
 			productName = Material;
-			productReference = B085F60C194004CC001F01F3 /* Material.app */;
+			productReference = B085F60C194004CC001F01F3 /* 物料管理系统.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B085F626194004CC001F01F3 /* MaterialTests */ = {
@@ -817,7 +817,7 @@
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "物料管理系统";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -840,7 +840,7 @@
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "物料管理系统";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
