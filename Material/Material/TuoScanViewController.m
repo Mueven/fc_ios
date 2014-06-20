@@ -9,7 +9,7 @@
 #import "TuoScanViewController.h"
 //#import "XiangStore.h"
 #import "TuoStore.h"
-#import "HuoTableViewCell.h"
+
 #import "Xiang.h"
 #import "PrintViewController.h"
 #import "Tuo.h"

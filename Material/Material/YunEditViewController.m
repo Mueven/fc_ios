@@ -11,6 +11,7 @@
 #import "AFNetOperate.h"
 #import "YunChooseTuoViewController.h"
 #import "PrintViewController.h"
+#import "TuoTableViewCell.h"
 
 @interface YunEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
@@ -43,6 +44,8 @@
     self.remark.delegate=self;
     self.tuoTable.delegate=self;
     self.tuoTable.dataSource=self;
+    UINib *nib=[UINib nibWithNibName:@"TuoTableViewCell" bundle:nil];
+    [self.tuoTable registerNib:nib forCellReuseIdentifier:@"tuoCell"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -70,10 +73,11 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    cell.textLabel.text=tuo.department;
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@   %@",tuo.date,tuo.agent];;
+    TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
+    cell.idLabel.text=tuo.ID;
+    cell.departmentLabel.text=tuo.department;
+    cell.agentLabel.text=tuo.agent;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

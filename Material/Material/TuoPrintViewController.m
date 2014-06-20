@@ -7,7 +7,7 @@
 //
 
 #import "TuoPrintViewController.h"
-#import "HuoTableViewCell.h"
+
 #import "Xiang.h"
 #import "XiangTableViewCell.h"
 #import "AFNetOperate.h"

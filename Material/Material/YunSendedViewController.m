@@ -11,6 +11,7 @@
 #import "YunCheckXiangTableViewController.h"
 #import "Xiang.h"
 #import "AFNetOperate.h"
+#import "ShopTuoTableViewCell.h"
 
 @interface YunSendedViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
@@ -39,6 +40,8 @@
     self.tuoTable.delegate=self;
     self.tuoTable.dataSource=self;
     self.navigationItem.title=self.yun.name;
+    UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
+    [self.tuoTable registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -61,9 +64,16 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
-    cell.textLabel.text=tuo.department ;
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@   %@",tuo.date,tuo.agent];
+    ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
+    cell.nameLabel.text=tuo.department;
+    cell.dateLabel.text=tuo.date;
+    cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
+    if(tuo.accepted_packages==tuo.sum_packages){
+        [cell.conditionLabel setTextColor:[UIColor greenColor]];
+    }
+    else{
+        [cell.conditionLabel setTextColor:[UIColor redColor]];
+    }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

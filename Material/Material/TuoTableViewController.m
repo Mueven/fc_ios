@@ -12,6 +12,7 @@
 #import "TuoEditViewController.h"
 #import "AFNetOperate.h"
 #import "Xiang.h"
+#import "TuoTableViewCell.h"
 
 @interface TuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
@@ -37,6 +38,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UINib *nib=[UINib nibWithNibName:@"TuoTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"tuoCell"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -100,9 +103,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
-    cell.textLabel.text=tuo.department ;
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@   %@",tuo.date,tuo.agent];
+    TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
+    cell.idLabel.text=tuo.ID;
+    cell.departmentLabel.text=tuo.department;
+    cell.agentLabel.text=tuo.agent;
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

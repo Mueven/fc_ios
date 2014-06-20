@@ -11,6 +11,7 @@
 #import "Tuo.h"
 #import "YunChooseTuoViewController.h"
 #import "AFNetOperate.h"
+#import "TuoTableViewCell.h"
 
 @interface YunHaveTuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
@@ -60,6 +61,8 @@
              [AFNet alert:@"something wrong"];
          }
      ];
+    UINib *nib=[UINib nibWithNibName:@"TuoTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"tuoCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,7 +87,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell"];
+    TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     cell.accessoryType=UITableViewCellAccessoryNone;
     Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
     int count=[self.privateTuo count];
@@ -98,8 +101,9 @@
             break ;
         }
     }
-    cell.textLabel.text=tuo.department;
-    cell.detailTextLabel.text=[NSString stringWithFormat:@"%@   %@",tuo.date,tuo.agent];;
+    cell.idLabel.text=tuo.ID;
+    cell.departmentLabel.text=tuo.department;
+    cell.agentLabel.text=tuo.agent;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

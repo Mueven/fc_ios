@@ -10,7 +10,7 @@
 #import "TuoScanViewController.h"
 #import "XiangStore.h"
 #import "Xiang.h"
-#import "HuoTableViewCell.h"
+
 #import "XiangEditViewController.h"
 #import "XiangTableViewCell.h"
 #import "AFNetOperate.h"

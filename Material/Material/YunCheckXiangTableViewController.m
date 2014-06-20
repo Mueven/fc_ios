@@ -7,8 +7,9 @@
 //
 
 #import "YunCheckXiangTableViewController.h"
-#import "XiangTableViewCell.h"
+
 #import "Xiang.h"
+#import "ShopXiangTableViewCell.h"
 @interface YunCheckXiangTableViewController ()
 
 @end
@@ -34,8 +35,8 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.navigationItem.title=self.tuo.department;
-    UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
+    UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -65,14 +66,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    XiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
-    cell.partNumber.text=xiang.number;
-    cell.key.text=xiang.key;
-    cell.quantity.text=xiang.count;
-    cell.position.text=xiang.position;
-    cell.date.text=xiang.date;
-
+    ShopXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
+    cell.partNumberLabel.text=xiang.number;
+    cell.keyLabel.text=xiang.key;
+    cell.quantityLabel.text=[NSString stringWithFormat:@"Q:%@",xiang.count];
+    if(xiang.checked){
+        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+    }
+    else{
+        cell.accessoryType=UITableViewCellAccessoryNone;
+    }
     return cell;
 }
 

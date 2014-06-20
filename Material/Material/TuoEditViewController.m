@@ -7,7 +7,7 @@
 //
 
 #import "TuoEditViewController.h"
-#import "HuoTableViewCell.h"
+
 #import "XiangEditViewController.h"
 #import "Xiang.h"
 #import "TuoScanViewController.h"
