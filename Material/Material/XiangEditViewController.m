@@ -106,8 +106,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -118,7 +118,6 @@
 - (IBAction)finishEdit:(id)sender {
     
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//    NSString *edit_address=[AFNet xiang_edit:self.xiang.ID];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager PUT:[AFNet xiang_index]
       parameters:@{@"package":@{
@@ -130,9 +129,11 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 self.xiang.date=self.dateTextField.text;
-                 self.xiang.number=self.partNumber.text;
-                 self.xiang.count=self.quantity.text;
+                 NSDictionary *dic=responseObject[@"content"];
+                 self.xiang.date=[dic objectForKey:@"check_in_time"];
+                 self.xiang.number=[dic objectForKey:@"part_id"];
+                 self.xiang.count=[dic objectForKey:@"quantity"];
+                 self.xiang.position=[dic objectForKey:@"position_nr"];
                  [self.navigationController popViewControllerAnimated:YES];
              }
              else{

@@ -72,6 +72,7 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
 //    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.key becomeFirstResponder];
+    [self.xiangTable reloadData];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -97,6 +98,7 @@
         //验证数据的合法性
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        
         [AFNet.activeView stopAnimating];
         NSString *address=[[NSString alloc] init];
         switch (self.firstResponder.tag){
@@ -110,6 +112,7 @@
                 address=[AFNet part_quantity_validate];
                 break;
         }
+       
         if(self.tuo.ID.length>0 && self.firstResponder.tag==1){
             [manager POST:[AFNet tuo_key_for_bundle]
                parameters:@{

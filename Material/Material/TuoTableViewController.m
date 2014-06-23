@@ -57,8 +57,8 @@
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

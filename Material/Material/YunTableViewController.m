@@ -59,8 +59,8 @@
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     NSString *questDate=[formatter stringFromDate:[NSDate date]];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
     [manager GET:[AFNet yun_root]
       parameters:@{@"delivery_date":questDate}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

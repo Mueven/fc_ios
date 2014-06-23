@@ -61,7 +61,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    
+    [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -80,8 +80,7 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-    UITabBarController *tabber= self.tabBarController;
-    tabber.selectedIndex=0;
+
 //    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
 //    [self.tableView reloadData];
 }
