@@ -316,5 +316,13 @@
 
 -(IBAction)unwindToReceive:(UIStoryboardSegue *)unwind{
     [self yunModel];
+    
+    dispatch_queue_t backend_dispath;
+    backend_dispath=dispatch_queue_create("com.example.pptalent.dispatch", NULL);
+    dispatch_async(backend_dispath, ^(void){
+            
+    });
 }
+
+
 @end

@@ -93,41 +93,51 @@
 
 - (IBAction)touchScreen:(id)sender {
     if([self.dateTextField isFirstResponder]){
-            [self.dateTextField resignFirstResponder];
+        [self.dateTextField resignFirstResponder];
     }
 
 }
 
 - (IBAction)checkYun:(id)sender {
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet yun_received]
-       parameters:@{@"receive_date":self.postDate}
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [AFNet.activeView stopAnimating];
-              if([responseObject[@"result"] integerValue]==1){
-                  NSMutableArray *yunArray=[[NSMutableArray alloc] init];
-                  NSArray *result=responseObject[@"content"];
-                  for(int i=0;i<result.count;i++){
-                      Yun *yunItem=[[Yun alloc] initWithObject:result[i]];
-                      [yunArray addObject:yunItem];
-                  }
-                  NSLog(@"yunarray:%@,data:%@",yunArray,self.dateTextField.text);
-                  [self performSegueWithIdentifier:@"checkYun" sender:@{
-                                                                        @"yunArray":yunArray,
-                                                                        @"date":self.dateTextField.text
-                                                                    }
-                   ];
-              }
-              else{
-                  [AFNet alert:responseObject[@"content"]];
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [AFNet.activeView stopAnimating];
-              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-          }
-     ];
+    if(self.dateTextField.text.length>0){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet yun_received]
+          parameters:@{@"receive_date":self.postDate}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSMutableArray *yunArray=[[NSMutableArray alloc] init];
+                     NSArray *result=responseObject[@"content"];
+                     for(int i=0;i<result.count;i++){
+                         Yun *yunItem=[[Yun alloc] initWithObject:result[i]];
+                         [yunArray addObject:yunItem];
+                     }
+                     NSLog(@"yunarray:%@,data:%@",yunArray,self.dateTextField.text);
+                     [self performSegueWithIdentifier:@"checkYun" sender:@{
+                                                                           @"yunArray":yunArray,
+                                                                           @"date":self.dateTextField.text
+                                                                           }
+                      ];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请选择日期"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
     
     
 }
