@@ -98,9 +98,15 @@
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
                         self.tuo.department=department;
+                        self.tuo.xiang=[[NSMutableArray alloc] init];
+                        NSArray *xiangArray=[responseObject[@"content"] objectForKey:@"packages"];
+                        for(int i=0;i<xiangArray.count;i++){
+                            Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
+                            [self.tuo.xiang addObject:xiangItem];
+                        }
                         [textField resignFirstResponder];
                         self.firstResponder=nil;
-                        
+                        [self.xiangTable reloadData];
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
