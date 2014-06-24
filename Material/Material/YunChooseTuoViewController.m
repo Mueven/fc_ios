@@ -80,9 +80,19 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
                  if([(NSDictionary *)responseObject[@"content"] count]>0){
-                     Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
-                     [self.yun.tuoArray addObject:tuo];
-                     [self.tuoTable reloadData];
+                     bool judge=1;
+                     for(int i=0;i<self.yun.tuoArray.count;i++){
+                         NSString *idItem=[self.yun.tuoArray[i] ID];
+                         if([idItem isEqualToString:data]){
+                             judge=0;
+                             break;
+                         }
+                     }
+                     if(judge){
+                         Tuo *tuo=[[Tuo alloc] initWithObject:responseObject[@"content"]];
+                         [self.yun.tuoArray addObject:tuo];
+                         [self.tuoTable reloadData];
+                     }
                  }
              }
              else{
@@ -121,6 +131,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [self.yun.tuoArray removeObjectAtIndex:indexPath.row];
+        [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

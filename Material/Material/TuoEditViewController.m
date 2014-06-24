@@ -67,9 +67,6 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     
 //    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-
-    
-    
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
@@ -177,28 +174,48 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager DELETE:[AFNet tuo_remove_xiang]
-             parameters:@{
-                          @"forklift_id":self.tuo.ID,
-                          @"package_id":[[self.tuo.xiang objectAtIndex:indexPath.row] ID]
-                          }
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        int row=indexPath.row;
+        if(self.tuo.xiang.count>row){
+            Xiang *xiangReserve=[[[Xiang alloc] init] copyMe:[self.tuo.xiang objectAtIndex:row]];
+            [self.tuo.xiang removeObjectAtIndex:row];
+            [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
+            
+            dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
+            dispatch_async(deleteRow, ^{
+                AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                dispatch_async(dispatch_get_main_queue(), ^{
                     [AFNet.activeView stopAnimating];
-                    if([responseObject[@"result"] integerValue]==1){
-                        [self.tuo.xiang removeObjectAtIndex:indexPath.row];
-                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                    }
-                    else{
-                        [AFNet alert:responseObject[@"content"]];
-                    }
-                    
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    [AFNet.activeView stopAnimating];
-                }
-         ];
+                });
+                [manager DELETE:[AFNet tuo_remove_xiang]
+                     parameters:@{
+                                  @"forklift_id":self.tuo.ID,
+                                  @"package_id":xiangReserve.ID
+                                  }
+                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                            [AFNet.activeView stopAnimating];
+                            if([responseObject[@"result"] integerValue]==1){
+                                
+                            }
+                            else{
+                                [AFNet alert:responseObject[@"content"]];
+                                [self.tuo.xiang addObject:xiangReserve];
+                                [self.xiangTable reloadData];
+                            }
+                        }
+                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                            [AFNet.activeView stopAnimating];
+                            [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                            [self.tuo.xiang addObject:xiangReserve];
+                            [self.xiangTable reloadData];
+                        }
+                 ];
+            });
+ 
+        }
+        
+
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }

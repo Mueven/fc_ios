@@ -373,7 +373,7 @@
                         <viewControllerLayoutGuide type="top" id="mEW-Ma-E37"/>
                         <viewControllerLayoutGuide type="bottom" id="zGz-O8-et6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="SNs-PE-WvS">
+                    <view key="view" contentMode="scaleToFill" id="SNs-PE-WvS" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -448,6 +448,9 @@
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="Zq0-sm-J8a" eventType="touchUpInside" id="hyQ-95-nEe"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="扫描货物" id="3FT-2O-7PF">
                         <barButtonItem key="rightBarButtonItem" title="完成" id="QTS-tX-nXq">
@@ -1776,9 +1779,9 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="oOw-in-AQO"/>
-        <segue reference="SyV-YF-bxb"/>
+        <segue reference="SkA-08-PWt"/>
+        <segue reference="FcC-pN-TYA"/>
         <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="oF3-aI-OCw"/>
         <segue reference="MS0-BJ-3Kj"/>
     </inferredMetricsTieBreakers>
 </document>

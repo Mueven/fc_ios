@@ -55,6 +55,7 @@
     //得到数据
     YunStore *yunStore=[[YunStore alloc] init];
     yunStore.yunArray=[[NSMutableArray alloc] init];
+     [self.tableView reloadData];
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     NSString *questDate=[formatter stringFromDate:[NSDate date]];
@@ -147,7 +148,9 @@
         [manager GET:[AFNet yun_single]
           parameters:@{@"id":yun.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [AFNet.activeView stopAnimating];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [AFNet.activeView stopAnimating];
+                    });
                     if([responseObject[@"result"] integerValue]==1){
                         if([(NSDictionary *)responseObject[@"content"] count]>0){
                             yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
@@ -217,29 +220,40 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        NSString *ID=[[self.yunStore.yunArray objectAtIndex:indexPath.row] ID];
-        [manager DELETE:[AFNet yun_index]
-             parameters:@{@"id":ID}
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [AFNet.activeView stopAnimating];
-                    if([responseObject[@"result"] integerValue]==1){
-                        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
-                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        int row=indexPath.row;
+        Yun *yunRetain=[[[Yun alloc] init] copyMe:[self.yunStore.yunArray objectAtIndex:row]];
+        
+        dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
+        dispatch_async(deleteRow, ^{
+            NSString *ID=[yunRetain ID];
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [AFNet.activeView stopAnimating];
+            [manager DELETE:[AFNet yun_index]
+                 parameters:@{@"id":ID}
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        [AFNet.activeView stopAnimating];
+                        if([responseObject[@"result"] integerValue]==1){
+
+                        }
+                        else{
+                            [AFNet alert:responseObject[@"content"]];
+                            [self viewWillAppear:YES];
+                        }
+                        
                     }
-                    else{
-                        [AFNet alert:responseObject[@"content"]];
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        [AFNet.activeView stopAnimating];
+                        [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                        [self viewWillAppear:YES];
                     }
-                    
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    [AFNet.activeView stopAnimating];
-                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                }
-         ];
-//        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+             ];
+        });
+        [self.yunStore.yunArray removeObjectAtIndex:indexPath.row];
+        [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

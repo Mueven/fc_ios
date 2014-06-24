@@ -8,6 +8,7 @@
 
 #import "MAppDelegate.h"
 #import "Login.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @implementation MAppDelegate
 
@@ -21,6 +22,26 @@
 //    [self.window makeKeyAndVisible];
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
     [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:NO];
+    
+
+    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+    reachability.reachableBlock = ^(Reachability *reachability) {
+       
+    };
+    reachability.unreachableBlock = ^(Reachability *reachability) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"网络连接已断开"
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1013);
+            [alert show];
+        });
+        
+    };
+    [reachability startNotifier];
+    
     return YES;
 }
 

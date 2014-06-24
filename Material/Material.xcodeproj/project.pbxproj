@@ -64,6 +64,8 @@
 		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
 		B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */; };
 		B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */; };
+		B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B09BF6BC1959508E00FCF00A /* Reachability.m */; };
+		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
 		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
 		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
@@ -194,6 +196,9 @@
 		B08B8F0A1953D39E009739DB /* TuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoTableViewCell.h; sourceTree = "<group>"; };
 		B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoTableViewCell.m; sourceTree = "<group>"; };
 		B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuoTableViewCell.xib; sourceTree = "<group>"; };
+		B09BF6BB1959508E00FCF00A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		B09BF6BC1959508E00FCF00A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B09CC8DD1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09CC8DE1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
@@ -231,6 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */,
 				B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */,
 				B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */,
 				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
@@ -389,6 +395,7 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */,
 				B066FE2F194E714F00C0019D /* AudioToolbox.framework */,
 				B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */,
 				B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */,
@@ -465,6 +472,8 @@
 		B085F64419400FA3001F01F3 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B09BF6BB1959508E00FCF00A /* Reachability.h */,
+				B09BF6BC1959508E00FCF00A /* Reachability.m */,
 				B05EEDD51947FA2A009DDAE9 /* Captuvo.h */,
 				B04EF1F61946E60D00A95D7A /* AFNetworking */,
 				B085F64D194014A8001F01F3 /* KeychainItemWrapper.h */,
@@ -689,6 +698,7 @@
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B04EF20E1946E60D00A95D7A /* AFSecurityPolicy.m in Sources */,
+				B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */,
 				B04EF1D819468A9100A95D7A /* ReceiveTuoViewController.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,
 				B04EF1E51946B3D700A95D7A /* WrapMiniViewController.m in Sources */,

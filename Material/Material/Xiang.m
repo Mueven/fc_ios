@@ -50,4 +50,16 @@
     }
     return self;
 }
+-(instancetype)copyMe:(Xiang *)xiang
+{
+    self.ID=[xiang.ID copy];
+    self.number=[xiang.number copy];
+    self.count=[xiang.count copy];
+    self.key=[xiang.key copy];
+    self.position=[xiang.position copy];
+    self.remark=[xiang.remark copy];
+    self.date=[xiang.date copy];
+    self.checked=xiang.checked?YES:NO;
+    return self;
+}
 @end

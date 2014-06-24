@@ -31,6 +31,7 @@
 //@property (strong, nonatomic) XiangStore *xiangStore;
 //@property (strong,nonatomic) NSArray *validateAddress;
 - (IBAction)finish:(id)sender;
+- (IBAction)touchScreen:(id)sender;
 @end
 
 @implementation TuoScanViewController
@@ -230,6 +231,9 @@
     textField.inputView = dummyView;
     self.firstResponder=textField;
 }
+
+
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
      __block long tag=textField.tag;
@@ -441,6 +445,11 @@
 }
 - (IBAction)finish:(id)sender {
     [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+}
+
+- (IBAction)touchScreen:(id)sender {
+//    NSString *data=[self.firstResponder.text copy];
+//    [self decoderDataReceived:data];
 }
 
 
