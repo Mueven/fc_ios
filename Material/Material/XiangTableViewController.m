@@ -19,6 +19,7 @@
 
 @interface XiangTableViewController ()
 @property (nonatomic , strong) XiangStore *xiangStore;
+
 @end
 
 @implementation XiangTableViewController
@@ -44,8 +45,9 @@
     
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-    
+  
 }
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

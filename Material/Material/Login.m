@@ -10,7 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "AFNetOperate.h"
 
-@interface Login ()<UITextFieldDelegate>
+@interface Login ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
@@ -54,8 +54,7 @@
     if([keychain objectForKey:(__bridge id)kSecAttrAccount]){
         self.email.text=[keychain objectForKey:(__bridge id)kSecAttrAccount];
         
-    }
-    
+    }    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -86,39 +85,53 @@
     KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
                                                                       accessGroup:nil];
     [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
-//    if([email isEqualToString:@"w"]){
-//        [self loginSameAction:@"shop"];
-//    }
-//    else{
-//       [self loginSameAction:@"stock"];
-//    }
     
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//    NSLog(@"%@",[AFNet log_in]);
-    [manager POST:[AFNet log_in]
-       parameters:@{@"user":@{@"id":email,@"password":password}}
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [AFNet.activeView stopAnimating];
-//                NSLog(@"%@",responseObject[@"content"]);
-                if([responseObject[@"result"] integerValue]==1){
-                    NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
-                    if([requestCode isEqualToString:@"300"]){
-                        [self loginSameAction:@"stock"];
-                    }
-                    else if([requestCode isEqualToString:@"400"]){
-                         [self loginSameAction:@"shop"];
-                    }
-                }
-                else{
-                    [AFNet alert:responseObject[@"content"]];
-                }
-            }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [AFNet.activeView stopAnimating];
-                [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-            }
-     ];
+    if(email.length>0){
+        if(password.length>0){
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [manager POST:[AFNet log_in]
+               parameters:@{@"user":@{@"id":email,@"password":password}}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
+                          if([requestCode isEqualToString:@"300"]){
+                              [self loginSameAction:@"stock"];
+                          }
+                          else if([requestCode isEqualToString:@"400"]){
+                              [self loginSameAction:@"shop"];
+                          }
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                  }
+             ];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"请填写密码"
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请填写用户名"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    
 
 }
 -(void)loginSameAction:(NSString *)identifier
