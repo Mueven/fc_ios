@@ -66,4 +66,15 @@
     }
     return self;
 }
+-(instancetype)copyMe:(Yun *)yun
+{
+    self.ID=[yun.ID copy];
+    self.remark=[yun.remark copy];
+    self.name=[yun.name copy];
+    self.sended=yun.sended;
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy.MM.dd"];
+    self.date=[formatter stringFromDate:[NSDate date]];
+    return self;
+}
 @end

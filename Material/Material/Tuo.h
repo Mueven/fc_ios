@@ -23,4 +23,5 @@
 -(instancetype)initWithObject:(NSDictionary *)dictionary;
 -(void)addXiang:(Xiang *)xiang;
 -(NSInteger)xiangAmount;
+-(instancetype)copyMe:(Tuo *)tuo;
 @end

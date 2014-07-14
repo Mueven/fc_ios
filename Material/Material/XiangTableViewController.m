@@ -15,8 +15,11 @@
 #import "XiangTableViewCell.h"
 #import "AFNetOperate.h"
 
+#import "MAppDelegate.h"
+
 @interface XiangTableViewController ()
 @property (nonatomic , strong) XiangStore *xiangStore;
+
 @end
 
 @implementation XiangTableViewController
@@ -42,9 +45,9 @@
     
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-    
-    
+  
 }
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -58,6 +61,7 @@
     //得到数据
     XiangStore *xiangStore=[[XiangStore alloc] init];
     xiangStore.xiangArray=[[NSMutableArray alloc] init];
+     [self.tableView reloadData];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -150,27 +154,43 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        NSString *ID=[[self.xiangStore.xiangArray objectAtIndex:indexPath.row] ID];
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//        NSLog(@"%@",[AFNet xiang_edit:ID]);
-        [manager DELETE:[AFNet xiang_index]
-             parameters:@{@"id":ID}
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [AFNet.activeView stopAnimating];
-                    if([responseObject[@"result"] integerValue]==1){
-                        [self.xiangStore removeXiang:indexPath.row];
-                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        int row=indexPath.row;
+        Xiang *xiangReserve=[[[Xiang alloc] init] copyMe:[self.xiangStore.xiangArray objectAtIndex:row]];
+        
+        dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
+        dispatch_async(deleteRow, ^{
+            NSString *ID=[xiangReserve ID];
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [AFNet.activeView stopAnimating];
+            });
+            [manager DELETE:[AFNet xiang_index]
+                 parameters:@{@"id":ID}
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        [AFNet.activeView stopAnimating];
+                        if([responseObject[@"result"] integerValue]==1){
+                            
+                        }
+                        else{
+                            [AFNet alert:responseObject[@"content"]];
+                            [self viewWillAppear:YES];
+                        }
                     }
-                    else{
-                        [AFNet alert:responseObject[@"content"]];
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        [AFNet.activeView stopAnimating];
+                        [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                        [self viewWillAppear:YES];
                     }
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    [AFNet.activeView stopAnimating];
-                    [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                }
-         ];
+             ];
+        });
+        
+       [self.xiangStore removeXiang:row];
+        [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
+       [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+       
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

@@ -36,6 +36,7 @@
 }
 -(void)alert:(NSString *)string
 {
+    NSLog(@"return is %@",string);
     self.alert = [[UIAlertView alloc]initWithTitle:@""
                                                   message:string
                                                  delegate:self

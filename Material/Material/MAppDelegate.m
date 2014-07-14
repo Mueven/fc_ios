@@ -8,6 +8,10 @@
 
 #import "MAppDelegate.h"
 #import "Login.h"
+#import <AudioToolbox/AudioToolbox.h>
+@interface MAppDelegate()
+@property(nonatomic) BOOL updating;
+@end
 
 @implementation MAppDelegate
 
@@ -20,7 +24,27 @@
 //    self.window.rootViewController=login;
 //    [self.window makeKeyAndVisible];
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
-    [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:NO];
+    
+    [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+
+    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+    reachability.reachableBlock = ^(Reachability *reachability) {
+       
+    };
+    reachability.unreachableBlock = ^(Reachability *reachability) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:@"网络连接已断开"
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1013);
+            [alert show];
+        });
+        
+    };
+    [reachability startNotifier];
+    
     return YES;
 }
 
@@ -45,9 +69,75 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
+    
+    dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);
+    dispatch_sync(observeBattery, ^{
+        double delayInTime=17.0;
+        dispatch_time_t popTime=dispatch_time(DISPATCH_TIME_NOW, (int64_t)delayInTime *NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^{
+            BatteryStatus status=[[Captuvo sharedCaptuvoDevice] getBatteryStatus];
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:@""
+                                                         delegate:self
+                                                cancelButtonTitle:@"ok"
+                                                otherButtonTitles: nil];
+            
+            switch (status) {
+                case BatteryStatus4Of4Bars:
+//                    alert.message=@"40";
+//                    [alert show];
+                    break;
+                case BatteryStatus3Of4Bars:
+//                    alert.message=@"30";
+//                    [alert show];
+                    break;
+                case BatteryStatus2Of4Bars:
+                    alert.message=@"设备电量低，建议使用完后立刻充电";
+                    [alert show];
+                    AudioServicesPlaySystemSound(1013);
+                    break;
+                case BatteryStatus1Of4Bars:
+                    alert.message=@"设备电量极低，建议充电后使用";
+                    [alert show];
+                    AudioServicesPlaySystemSound(1013);
+                    break;
+                case BatteryStatus0Of4Bars:
+                    alert.message=@"设备电量耗尽，请立刻充电";
+                    [alert show];
+                    AudioServicesPlaySystemSound(1013);
+                    break;
+                case BatteryStatusPowerSourceConnected:
+//                    alert.message=@"BatteryStatusPowerSourceConnected";
+//                    [alert show];
+                    break;
+                case BatteryStatusUndefined:
+//                    alert.message=@"BatteryStatusUndefined";
+//                    [alert show];
+                    break;
+                default:
+//                    alert.message=@"default";
+//                    [alert show];
+                    break;
+            }
+            
+        });
+
+    });
+    
+    
+    
+//    [self getStatusOfBattery];
+//    BatteryStatusPowerSourceConnected,        /**< Device is connected to a power source */
+//    BatteryStatus4Of4Bars,                    /**< Battery indicator should read 4 of 4 bars */
+//    BatteryStatus3Of4Bars,                    /**< Battery indicator should read 3 of 4 bars */
+//    BatteryStatus2Of4Bars,                    /**< Battery indicator should read 2 of 4 bars */
+//    BatteryStatus1Of4Bars,                    /**< Battery indicator should read 1 of 4 bars */
+//    BatteryStatus0Of4Bars,                    /**< Battery indicator should read 0 of 4 bars */
+//    BatteryStatusUndefined
+    
     // Restart any tasks that were paused (or not yet started) while  the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

@@ -64,6 +64,18 @@
     }
     return self;
 }
+-(instancetype)copyMe:(Tuo *)tuo
+{
+    self.ID=[tuo.ID copy];
+    self.department=[tuo.department copy];
+    self.agent=[tuo.agent copy];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy.MM.dd"];
+    self.date=[formatter stringFromDate:[NSDate date]];
+    self.accepted_packages=tuo.accepted_packages;
+    self.sum_packages=tuo.sum_packages;
+    return self;
+}
 -(void)addXiang:(Xiang *)xiang
 {
     [self.xiang addObject:xiang];

@@ -56,6 +56,7 @@
     //得到数据
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
+     [self.tableView reloadData];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
@@ -77,8 +78,6 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-    UITabBarController *tabber= self.tabBarController;
-    tabber.selectedIndex=1;
 //    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
 //    [self.tableView reloadData];
 }
@@ -114,8 +113,7 @@
 //unwind
 - (IBAction)unwindToTuoTable:(UIStoryboardSegue *)unwindSegue{
     [self.tableView reloadData];
-    UITabBarController *tabber= self.tabBarController;
-    tabber.selectedIndex=1;
+
 }
 
 
@@ -133,27 +131,44 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        NSString *ID=[[self.tuoStore.tuoList objectAtIndex:indexPath.row] ID];
-        [manager DELETE:[AFNet tuo_index]
-             parameters:@{@"id":ID}
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [AFNet.activeView stopAnimating];
-                    if([responseObject[@"result"] integerValue]==1){
-                        [self.tuoStore removeTuo:indexPath.row];
-                        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        int row=indexPath.row;
+        Tuo *tuoRetain=[[[Tuo alloc] init] copyMe:[self.tuoStore.tuoList objectAtIndex:row]];
+        
+        
+        dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
+        dispatch_async(deleteRow, ^{
+            NSString *ID=[tuoRetain ID];
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [AFNet.activeView stopAnimating];
+            });
+            [manager DELETE:[AFNet tuo_index]
+                 parameters:@{@"id":ID}
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        if([responseObject[@"result"] integerValue]==1){
+                        }
+                        else{
+
+                            [AFNet alert:responseObject[@"content"]];
+                            [self viewWillAppear:YES];
+                        }
+                        
                     }
-                    else{
-                        [AFNet alert:responseObject[@"content"]];
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+                        [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                        [self viewWillAppear:YES];
                     }
-                    
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    [AFNet.activeView stopAnimating];
-                    [AFNet alert:@"sth wrong"];
-                }
-         ]; 
+             ];
+        });
+        
+        [self.tuoStore removeTuo:row];
+        [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

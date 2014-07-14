@@ -106,8 +106,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -128,11 +128,12 @@
                            }}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
+            
              if([responseObject[@"result"] integerValue]==1){
                  NSDictionary *dic=responseObject[@"content"];
                  self.xiang.date=[dic objectForKey:@"check_in_time"];
                  self.xiang.number=[dic objectForKey:@"part_id"];
-                 self.xiang.count=[dic objectForKey:@"quantity"];
+                 self.xiang.count=[dic objectForKey:@"quantity_str"];
                  self.xiang.position=[dic objectForKey:@"position_nr"];
                  [self.navigationController popViewControllerAnimated:YES];
              }
