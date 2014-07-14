@@ -54,9 +54,23 @@
     [super viewWillAppear:animated];
 
     //得到数据
+    [self selfState];
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark - 筛选显示的状态
+-(void)selfState
+{
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"查看全部"
+                                                                           style:UIBarButtonItemStyleBordered
+                                                                          target:self
+                                                                          action:@selector(allState)];
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
-     [self.tableView reloadData];
+    [self.tableView reloadData];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
@@ -67,7 +81,6 @@
              NSArray *resultArray=responseObject;
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
-//                 NSLog(@"%@",resultArray[i]);
                  [tuoStore.listArray addObject:tuo];
              }
              self.tuoStore=tuoStore;
@@ -78,15 +91,37 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-//    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
-//    [self.tableView reloadData];
 }
-- (void)didReceiveMemoryWarning
+-(void)allState
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"查看个人"
+                                                                           style:UIBarButtonItemStyleBordered
+                                                                          target:self
+                                                                          action:@selector(selfState)];
+    TuoStore *tuoStore=[[TuoStore alloc] init];
+    tuoStore.listArray=[[NSMutableArray alloc] init];
+    [self.tableView reloadData];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager GET:[AFNet tuo_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             NSArray *resultArray=responseObject;
+             for(int i=0;i<[resultArray count];i++){
+                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
+                 [tuoStore.listArray addObject:tuo];
+             }
+             self.tuoStore=tuoStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
 }
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

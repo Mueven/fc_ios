@@ -57,11 +57,23 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-   
     //得到数据
+    [self selfState];
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+#pragma mark - 筛选显示的状态
+-(void)selfState
+{
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"查看全部"
+                                                                           style:UIBarButtonItemStyleBordered
+                                                                          target:self
+                                                                          action:@selector(allState)];
     XiangStore *xiangStore=[[XiangStore alloc] init];
     xiangStore.xiangArray=[[NSMutableArray alloc] init];
-     [self.tableView reloadData];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -70,7 +82,7 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-//             NSLog(@"%@",responseObject);
+             
              NSArray *xiangArrayResult=responseObject;
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
@@ -84,14 +96,37 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-
-//    self.xiangStore=[XiangStore sharedXiangStore:self.tableView];
-//    [self.tableView reloadData];
 }
-- (void)didReceiveMemoryWarning
+-(void)allState
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"查看个人"
+                                                                           style:UIBarButtonItemStyleBordered
+                                                                          target:self
+                                                                          action:@selector(selfState)];
+    XiangStore *xiangStore=[[XiangStore alloc] init];
+    xiangStore.xiangArray=[[NSMutableArray alloc] init];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager GET:[AFNet xiang_root]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             
+             NSArray *xiangArrayResult=responseObject;
+             for(int i=0;i<xiangArrayResult.count;i++){
+                 Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
+                 [xiangStore.xiangArray addObject:xiangItem];
+             }
+             self.xiangStore=xiangStore;
+             [self.tableView reloadData];
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
 }
 
 #pragma mark - Table view data source
