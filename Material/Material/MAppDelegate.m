@@ -24,7 +24,7 @@
 //    self.window.rootViewController=login;
 //    [self.window makeKeyAndVisible];
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
-    [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:NO];
+    
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
 
     Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
@@ -69,7 +69,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-    
+    [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
     
     dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);
     dispatch_sync(observeBattery, ^{

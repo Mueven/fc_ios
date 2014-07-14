@@ -78,8 +78,6 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
-    UITabBarController *tabber= self.tabBarController;
-    tabber.selectedIndex=1;
 //    self.tuoStore=[TuoStore sharedTuoStore:self.tableView];
 //    [self.tableView reloadData];
 }
@@ -115,8 +113,7 @@
 //unwind
 - (IBAction)unwindToTuoTable:(UIStoryboardSegue *)unwindSegue{
     [self.tableView reloadData];
-    UITabBarController *tabber= self.tabBarController;
-    tabber.selectedIndex=1;
+
 }
 
 

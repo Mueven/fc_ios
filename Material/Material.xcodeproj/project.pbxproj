@@ -18,7 +18,6 @@
 		B04EF1DB19469CBA00A95D7A /* ReceiveXiangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1DA19469CBA00A95D7A /* ReceiveXiangViewController.m */; };
 		B04EF1DF1946A49500A95D7A /* ShopXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1DD1946A49500A95D7A /* ShopXiangTableViewCell.m */; };
 		B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04EF1DE1946A49500A95D7A /* ShopXiangTableViewCell.xib */; };
-		B04EF1E51946B3D700A95D7A /* WrapMiniViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1E41946B3D700A95D7A /* WrapMiniViewController.m */; };
 		B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1E71946B41300A95D7A /* HistoryReceiveViewController.m */; };
 		B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1EB1946DE1000A95D7A /* HistoryYunTableViewController.m */; };
 		B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF1EE1946DE1C00A95D7A /* HistoryTuoTableViewController.m */; };
@@ -114,8 +113,6 @@
 		B04EF1DC1946A49500A95D7A /* ShopXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopXiangTableViewCell.h; sourceTree = "<group>"; };
 		B04EF1DD1946A49500A95D7A /* ShopXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopXiangTableViewCell.m; sourceTree = "<group>"; };
 		B04EF1DE1946A49500A95D7A /* ShopXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopXiangTableViewCell.xib; sourceTree = "<group>"; };
-		B04EF1E31946B3D700A95D7A /* WrapMiniViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrapMiniViewController.h; sourceTree = "<group>"; };
-		B04EF1E41946B3D700A95D7A /* WrapMiniViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrapMiniViewController.m; sourceTree = "<group>"; };
 		B04EF1E61946B41300A95D7A /* HistoryReceiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryReceiveViewController.h; sourceTree = "<group>"; };
 		B04EF1E71946B41300A95D7A /* HistoryReceiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryReceiveViewController.m; sourceTree = "<group>"; };
 		B04EF1EA1946DE1000A95D7A /* HistoryYunTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryYunTableViewController.h; sourceTree = "<group>"; };
@@ -533,8 +530,6 @@
 			isa = PBXGroup;
 			children = (
 				B04EF1E11946B1CC00A95D7A /* Receive */,
-				B04EF1E31946B3D700A95D7A /* WrapMiniViewController.h */,
-				B04EF1E41946B3D700A95D7A /* WrapMiniViewController.m */,
 				B04EF1E91946BDA900A95D7A /* History */,
 				B04EF1F31946E53600A95D7A /* ShopSettingViewController.h */,
 				B04EF1F41946E53600A95D7A /* ShopSettingViewController.m */,
@@ -701,7 +696,6 @@
 				B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */,
 				B04EF1D819468A9100A95D7A /* ReceiveTuoViewController.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,
-				B04EF1E51946B3D700A95D7A /* WrapMiniViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

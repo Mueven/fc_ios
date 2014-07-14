@@ -62,8 +62,6 @@
 		<string>check_package/</string>
 		<key>bundle_add</key>
 		<string>add_package/</string>
-		<key>New item</key>
-		<string></string>
 		<key>single</key>
 		<string>detail/</string>
 		<key>index</key>

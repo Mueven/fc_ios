@@ -36,7 +36,7 @@
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
-
+    
 }
 
 
@@ -54,12 +54,25 @@
     if([keychain objectForKey:(__bridge id)kSecAttrAccount]){
         self.email.text=[keychain objectForKey:(__bridge id)kSecAttrAccount];
         
-    }    
+    }
+     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+//    [self.email becomeFirstResponder];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 //    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
+-(void)decoderDataReceived:(NSString *)data{
+    if(data.length>0){
+        self.email.text=data;
+        [self.password becomeFirstResponder];
+    }
 }
 //textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
