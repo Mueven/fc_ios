@@ -55,4 +55,6 @@
 -(NSString *)print_stock_yun:(NSString *)ID;
 -(NSString *)print_shop_receive:(NSString *)ID;
 -(NSString *)print_shop_unreceive:(NSString *)ID;
+
+-(NSString *)scan_validate;
 @end

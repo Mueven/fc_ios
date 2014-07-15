@@ -105,7 +105,7 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
-      parameters:nil
+      parameters:@{@"all":@YES}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              NSArray *resultArray=responseObject;

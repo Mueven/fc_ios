@@ -34,6 +34,7 @@
 		B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2091946E60D00A95D7A /* AFURLSessionManager.m */; };
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
+		B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E9851973B01D009E4D53 /* ScanStandard.m */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
 		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
@@ -145,6 +146,8 @@
 		B04EF2131946E87800A95D7A /* AFNetOperate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetOperate.h; sourceTree = "<group>"; };
 		B04EF2141946E87800A95D7A /* AFNetOperate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetOperate.m; sourceTree = "<group>"; };
 		B04EF2161946E89400A95D7A /* URL.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = URL.plist; sourceTree = "<group>"; };
+		B052E9841973B01D009E4D53 /* ScanStandard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanStandard.h; sourceTree = "<group>"; };
+		B052E9851973B01D009E4D53 /* ScanStandard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanStandard.m; sourceTree = "<group>"; };
 		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				B06139801941680C00A0CF62 /* Xiang.m */,
 				B0613985194173B600A0CF62 /* XiangStore.h */,
 				B0613986194173B600A0CF62 /* XiangStore.m */,
+				B052E9841973B01D009E4D53 /* ScanStandard.h */,
+				B052E9851973B01D009E4D53 /* ScanStandard.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -674,6 +679,7 @@
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
+				B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */,
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
 				B0DF644819448B75002D044B /* YunStore.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,

@@ -359,4 +359,10 @@
     NSString *base=[self baseURL];
     return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"log_out"]];
 }
+
+#pragma validate
+-(NSString *)scan_validate{
+    NSString *base=[self baseURL];
+    return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"scan_validate"]];
+}
 @end

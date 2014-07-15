@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>scan_validate</key>
+	<string>/api/v1/regexes/package_label</string>
 	<key>base</key>
-	<string>http://www.cz-tek.com</string>
+	<string>http://192.168.1.109</string>
 	<key>port</key>
-	<string>:9000</string>
+	<string>:3000</string>
 	<key>log_in</key>
 	<string>/api/v1/users/login/</string>
 	<key>log_out</key>

@@ -9,6 +9,7 @@
 #import "Login.h"
 #import "KeychainItemWrapper.h"
 #import "AFNetOperate.h"
+#import "ScanStandard.h"
 
 @interface Login ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *email;
@@ -36,7 +37,6 @@
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
-    
 }
 
 
@@ -115,6 +115,7 @@
                           else if([requestCode isEqualToString:@"400"]){
                               [self loginSameAction:@"shop"];
                           }
+                          [ScanStandard sharedScanStandard];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];

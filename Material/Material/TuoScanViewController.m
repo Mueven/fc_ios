@@ -17,6 +17,7 @@
 #import "AFNetOperate.h"
 #import "XiangTableViewCell.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "ScanStandard.h"
 
 
 @interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
@@ -93,136 +94,237 @@
 -(void)decoderDataReceived:(NSString *)data{
     self.firstResponder.text=[data copy];
     UITextField *targetTextField=self.firstResponder;
-    [self textFieldShouldReturn:self.firstResponder];
-    if(targetTextField.tag==2 || targetTextField.tag==3 || targetTextField.tag==4 ){
+    
+    ScanStandard *scanStandard=[ScanStandard sharedScanStandard];
+    NSString *regex=[NSString string];
+    if(targetTextField.tag==4 ){
+        //date
+        regex=[[scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
+        NSString *alertString=@"请扫描日期";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            [self textFieldShouldReturn:self.firstResponder];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                             target:self
+                                           selector:@selector(removeAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
+    }
+    else if(targetTextField.tag==2){
+        //part number
+        regex=[[scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
+         NSString *alertString=@"请扫描零件号";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            [self textFieldShouldReturn:self.firstResponder];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                             target:self
+                                           selector:@selector(removeAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
+    }
+    else if(targetTextField.tag==3){
+        //count
+        regex=[[scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
+         NSString *alertString=@"请扫描数量";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            [self textFieldShouldReturn:self.firstResponder];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                             target:self
+                                           selector:@selector(removeAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
         
     }
     else{
-        //验证数据的合法性
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [AFNet.activeView stopAnimating];
-        NSString *address=[[NSString alloc] init];
-        switch (targetTextField.tag){
-            case 1:
-                address=[AFNet xiang_validate];
-                break;
-            case 2:
-                address=[AFNet part_validate];
-                break;
-            case 3:
-                address=[AFNet part_quantity_validate];
-                break;
-        }
-       
-        dispatch_queue_t validate=dispatch_queue_create("com.validate.pptalent", NULL);
-        dispatch_async(validate, ^{
-            NSString *myData=data;
-            if(self.tuo.ID.length>0 && targetTextField.tag==1){
-                [manager POST:[AFNet tuo_key_for_bundle]
-                   parameters:@{
-                                @"forklift_id":self.tuo.ID,
-                                @"package_id":myData
-                                }
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          [AFNet.activeView stopAnimating];
-                          if([responseObject[@"result"] integerValue]==1){
-                              //如果已经绑定了就直接添加
-                              if([(NSDictionary *)responseObject[@"content"] count]>0){
-                                  Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                                  [self.tuo addXiang:xiang];
-                                  [self.xiangTable reloadData];
-                                  if(self.alert){
-                                      [self.alert dismissWithClickedButtonIndex:0 animated:YES];
-                                      self.alert=nil;
-                                  }
-                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                        message:@"绑定成功！"
-                                                                       delegate:self
-                                                              cancelButtonTitle:nil
-                                                              otherButtonTitles:nil];
-                                  [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                                   target:self
-                                                                 selector:@selector(dissmissAlert:)
-                                                                 userInfo:nil
-                                                                  repeats:NO];
-                                  AudioServicesPlaySystemSound(1012);
-                                  [self.alert show];
-                                  [self.key becomeFirstResponder];
-                                  self.key.text=@"";
-                                  self.partNumber.text=@"";
-                                  self.quatity.text=@"";
-                                  self.dateTextField.text=@"";
-                              }
-                              
-                          }
-                          else{
-                              AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-                              AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        //唯一码
+        regex=[[scanStandard.rules objectForKey:@"UNIQ"] objectForKey:@"regex_string"];
+        NSString *alertString=@"请扫描唯一码";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            
+            [self textFieldShouldReturn:self.firstResponder];
+            //验证数据的合法性
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [AFNet.activeView stopAnimating];
+            NSString *address=[AFNet xiang_validate];
+            
+            
+            dispatch_queue_t validate=dispatch_queue_create("com.validate.pptalent", NULL);
+            dispatch_async(validate, ^{
+                NSString *myData=data;
+                if(self.tuo.ID.length>0 && targetTextField.tag==1){
+                    [manager POST:[AFNet tuo_key_for_bundle]
+                       parameters:@{
+                                    @"forklift_id":self.tuo.ID,
+                                    @"package_id":myData
+                                    }
+                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               [AFNet.activeView stopAnimating];
-                              [manager POST:address
-                                 parameters:@{@"id":myData}
-                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                        [AFNet.activeView stopAnimating];
-                                        if([responseObject[@"result"] integerValue]==1){
-//                                            self.firstResponder.text=data;
-//                                            [self textFieldShouldReturn:self.firstResponder];
+                              if([responseObject[@"result"] integerValue]==1){
+                                  //如果已经绑定了就直接添加
+                                  if([(NSDictionary *)responseObject[@"content"] count]>0){
+                                      Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                                      [self.tuo addXiang:xiang];
+                                      [self.xiangTable reloadData];
+                                      if(self.alert){
+                                          [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+                                          self.alert=nil;
+                                      }
+                                      self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                            message:@"绑定成功！"
+                                                                           delegate:self
+                                                                  cancelButtonTitle:nil
+                                                                  otherButtonTitles:nil];
+                                      [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                                       target:self
+                                                                     selector:@selector(dissmissAlert:)
+                                                                     userInfo:nil
+                                                                      repeats:NO];
+                                      AudioServicesPlaySystemSound(1012);
+                                      [self.alert show];
+                                      [self.key becomeFirstResponder];
+                                      self.key.text=@"";
+                                      self.partNumber.text=@"";
+                                      self.quatity.text=@"";
+                                      self.dateTextField.text=@"";
+                                  }
+                                  
+                              }
+                              else{
+                                  AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                                  AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                                  [AFNet.activeView stopAnimating];
+                                  [manager POST:address
+                                     parameters:@{@"id":myData}
+                                        success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                            [AFNet.activeView stopAnimating];
+                                            if([responseObject[@"result"] integerValue]==1){
+                                                //                                            self.firstResponder.text=data;
+                                                //                                            [self textFieldShouldReturn:self.firstResponder];
+                                            }
+                                            else{
+                                                [AFNet alert:responseObject[@"content"]];
+                                                AudioServicesPlaySystemSound(1051);
+                                                targetTextField.text=@"";
+                                                [targetTextField becomeFirstResponder];
+                                            }
+                                            
                                         }
-                                        else{
-                                            [AFNet alert:responseObject[@"content"]];
-                                            AudioServicesPlaySystemSound(1051);
+                                        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                            [AFNet.activeView stopAnimating];
+                                            [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                                             targetTextField.text=@"";
                                             [targetTextField becomeFirstResponder];
                                         }
-                                        
-                                    }
-                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        [AFNet.activeView stopAnimating];
-                                        [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                                        targetTextField.text=@"";
-                                        [targetTextField becomeFirstResponder];
-                                    }
-                               ];
+                                   ];
+                              }
                           }
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          [AFNet.activeView stopAnimating];
-                          [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                          targetTextField.text=@"";
-                          [targetTextField becomeFirstResponder];
-                      }
-                 ];
-            }
-            else{
-                [manager POST:address
-                   parameters:@{@"id":data}
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          [AFNet.activeView stopAnimating];
-                          if([responseObject[@"result"] integerValue]==1){
-//                              self.firstResponder.text=data;
-//                              [self textFieldShouldReturn:self.firstResponder];
-                              
-                          }
-                          else{
-                              [AFNet alert:responseObject[@"content"]];
-                              AudioServicesPlaySystemSound(1051);
+                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [AFNet.activeView stopAnimating];
+                              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                               targetTextField.text=@"";
                               [targetTextField becomeFirstResponder];
                           }
-                          
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          [AFNet.activeView stopAnimating];
-                          [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                          targetTextField.text=@"";
-                          [targetTextField becomeFirstResponder];
-                      }
-                 ];
-            }
-        });
+                     ];
+                }
+                else{
+                    [manager POST:address
+                       parameters:@{@"id":data}
+                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                              [AFNet.activeView stopAnimating];
+                              if([responseObject[@"result"] integerValue]==1){
+                                  //                              self.firstResponder.text=data;
+                                  //                              [self textFieldShouldReturn:self.firstResponder];
+                                  
+                              }
+                              else{
+                                  [AFNet alert:responseObject[@"content"]];
+                                  AudioServicesPlaySystemSound(1051);
+                                  targetTextField.text=@"";
+                                  [targetTextField becomeFirstResponder];
+                              }
+                              
+                          }
+                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [AFNet.activeView stopAnimating];
+                              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                              targetTextField.text=@"";
+                              [targetTextField becomeFirstResponder];
+                          }
+                     ];
+                }
+            });
+
+            
+            
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:2.0f
+                                             target:self
+                                           selector:@selector(removeAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
+        
+        
     }
 }
-
+-(void)removeAlert:(NSTimer *)timer{
+    UIAlertView *alert = [[timer userInfo]  objectForKey:@"alert"];
+    [alert dismissWithClickedButtonIndex:0 animated:YES];
+}
 
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
