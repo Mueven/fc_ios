@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *xiangListLabel;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong,nonatomic)UIAlertView *alert;
+@property (strong,nonatomic)ScanStandard *scanStandard;
 //@property (strong, nonatomic) XiangStore *xiangStore;
 //@property (strong,nonatomic) NSArray *validateAddress;
 - (IBAction)finish:(id)sender;
@@ -66,6 +67,7 @@
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     self.alert=nil;
+    self.scanStandard=[ScanStandard sharedScanStandard];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -95,11 +97,11 @@
     self.firstResponder.text=[data copy];
     UITextField *targetTextField=self.firstResponder;
     
-    ScanStandard *scanStandard=[ScanStandard sharedScanStandard];
+    
     NSString *regex=[NSString string];
     if(targetTextField.tag==4 ){
         //date
-        regex=[[scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
+        regex=[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描日期";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
@@ -125,7 +127,7 @@
     }
     else if(targetTextField.tag==2){
         //part number
-        regex=[[scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
+        regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
          NSString *alertString=@"请扫描零件号";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
@@ -151,7 +153,7 @@
     }
     else if(targetTextField.tag==3){
         //count
-        regex=[[scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
+        regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
          NSString *alertString=@"请扫描数量";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
@@ -178,7 +180,7 @@
     }
     else{
         //唯一码
-        regex=[[scanStandard.rules objectForKey:@"UNIQ"] objectForKey:@"regex_string"];
+        regex=[[self.scanStandard.rules objectForKey:@"UNIQ"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描唯一码";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
@@ -346,15 +348,29 @@
         NSString *partNumber=self.partNumber.text;
         NSString *quantity=self.quatity.text;
         NSString *date=self.dateTextField.text;
+        
+        //after regex partNumber
+        int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
+        int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
+        NSString *partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+        //after regex quantity
+        int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
+        int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
+        NSString *quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+        //after regex date
+        int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
+        int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
+        NSString *datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
+        
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
             [manager POST:[AFNet tuo_bundle_add]
                parameters:@{
                             @"forklift_id":self.tuo.ID,
                             @"package_id":key,
-                            @"part_id":partNumber,
-                            @"quantity_str":quantity,
-                            @"check_in_time":date
+                            @"part_id":partNumberPost,
+                            @"quantity_str":quantityPost,
+                            @"check_in_time":datePost
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       //箱绑定成功了
@@ -404,9 +420,9 @@
                parameters:@{
                             @"package":@{
                                     @"id":key,
-                                    @"part_id":partNumber,
-                                    @"quantity_str":quantity,
-                                    @"check_in_time":date
+                                    @"part_id":partNumberPost,
+                                    @"quantity_str":quantityPost,
+                                    @"check_in_time":datePost
                                     }
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
