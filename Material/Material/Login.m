@@ -101,31 +101,35 @@
     
     if(email.length>0){
         if(password.length>0){
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager POST:[AFNet log_in]
-               parameters:@{@"user":@{@"id":email,@"password":password}}
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [AFNet.activeView stopAnimating];
-                      if([responseObject[@"result"] integerValue]==1){
-                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
-                          if([requestCode isEqualToString:@"300"]){
-                              [self loginSameAction:@"stock"];
-                          }
-                          else if([requestCode isEqualToString:@"400"]){
-                              [self loginSameAction:@"shop"];
-                          }
-                          [ScanStandard sharedScanStandard];
-                      }
-                      else{
-                          [AFNet alert:responseObject[@"content"]];
-                      }
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      [AFNet.activeView stopAnimating];
-                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                  }
-             ];
+            [self loginSameAction:@"require"];
+//            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//            [manager POST:[AFNet log_in]
+//               parameters:@{@"user":@{@"id":email,@"password":password}}
+//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                      [AFNet.activeView stopAnimating];
+//                      if([responseObject[@"result"] integerValue]==1){
+//                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
+//                          if([requestCode isEqualToString:@"300"]){
+//                              [self loginSameAction:@"stock"];
+//                          }
+//                          else if([requestCode isEqualToString:@"400"]){
+//                              [self loginSameAction:@"shop"];
+//                          }
+//                          else if([requestCode isEqualToString:@"500"]){
+//                              [self loginSameAction:@"require"];
+//                          }
+//                          [ScanStandard sharedScanStandard];
+//                      }
+//                      else{
+//                          [AFNet alert:responseObject[@"content"]];
+//                      }
+//                  }
+//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                      [AFNet.activeView stopAnimating];
+//                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//                  }
+//             ];
         }
         else{
             UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""

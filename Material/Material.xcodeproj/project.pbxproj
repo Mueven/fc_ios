@@ -41,6 +41,15 @@
 		B0613987194173B600A0CF62 /* XiangStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0613986194173B600A0CF62 /* XiangStore.m */; };
 		B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */; };
 		B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398F1941BD1300A0CF62 /* TuoScanViewController.m */; };
+		B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */; };
+		B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */; };
+		B0619E49197CB318000C1C69 /* RequireBill.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E48197CB318000C1C69 /* RequireBill.m */; };
+		B0619E4C197CB35C000C1C69 /* RequireXiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E4B197CB35C000C1C69 /* RequireXiang.m */; };
+		B0619E54197CB6F9000C1C69 /* RequireBillList.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E53197CB6F9000C1C69 /* RequireBillList.m */; };
+		B0619E58197CBE17000C1C69 /* RequireXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */; };
+		B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */; };
+		B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */; };
+		B0619E5F197D0D32000C1C69 /* RequireGenerateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */; };
 		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
@@ -162,6 +171,22 @@
 		B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoBaseViewController.m; sourceTree = "<group>"; };
 		B061398E1941BD1300A0CF62 /* TuoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoScanViewController.h; sourceTree = "<group>"; };
 		B061398F1941BD1300A0CF62 /* TuoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoScanViewController.m; sourceTree = "<group>"; };
+		B0619E42197CB044000C1C69 /* RequireListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireListTableViewCell.h; sourceTree = "<group>"; };
+		B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireListTableViewCell.m; sourceTree = "<group>"; };
+		B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireListTableViewCell.xib; sourceTree = "<group>"; };
+		B0619E47197CB318000C1C69 /* RequireBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireBill.h; sourceTree = "<group>"; };
+		B0619E48197CB318000C1C69 /* RequireBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireBill.m; sourceTree = "<group>"; };
+		B0619E4A197CB35C000C1C69 /* RequireXiang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiang.h; sourceTree = "<group>"; };
+		B0619E4B197CB35C000C1C69 /* RequireXiang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiang.m; sourceTree = "<group>"; };
+		B0619E52197CB6F9000C1C69 /* RequireBillList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireBillList.h; sourceTree = "<group>"; };
+		B0619E53197CB6F9000C1C69 /* RequireBillList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireBillList.m; sourceTree = "<group>"; };
+		B0619E55197CBE17000C1C69 /* RequireXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangTableViewCell.h; sourceTree = "<group>"; };
+		B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiangTableViewCell.m; sourceTree = "<group>"; };
+		B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireXiangTableViewCell.xib; sourceTree = "<group>"; };
+		B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireTodayViewController.h; sourceTree = "<group>"; };
+		B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTodayViewController.m; sourceTree = "<group>"; };
+		B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireGenerateViewController.h; sourceTree = "<group>"; };
+		B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireGenerateViewController.m; sourceTree = "<group>"; };
 		B066FE2F194E714F00C0019D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
@@ -282,6 +307,10 @@
 		B0454CCA19760121001476F4 /* REQUIRE */ = {
 			isa = PBXGroup;
 			children = (
+				B0619E47197CB318000C1C69 /* RequireBill.h */,
+				B0619E48197CB318000C1C69 /* RequireBill.m */,
+				B0619E4A197CB35C000C1C69 /* RequireXiang.h */,
+				B0619E4B197CB35C000C1C69 /* RequireXiang.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -289,6 +318,10 @@
 		B0454CCB19760224001476F4 /* REQUIRE */ = {
 			isa = PBXGroup;
 			children = (
+				B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */,
+				B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */,
+				B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */,
+				B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -327,6 +360,12 @@
 		B0454CCE1976024E001476F4 /* REQUIRE */ = {
 			isa = PBXGroup;
 			children = (
+				B0619E42197CB044000C1C69 /* RequireListTableViewCell.h */,
+				B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */,
+				B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */,
+				B0619E55197CBE17000C1C69 /* RequireXiangTableViewCell.h */,
+				B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */,
+				B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -436,6 +475,23 @@
 			name = Yun;
 			sourceTree = "<group>";
 		};
+		B0619E50197CB610000C1C69 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E51197CB6D1000C1C69 /* REQUIRE */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		B0619E51197CB6D1000C1C69 /* REQUIRE */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E52197CB6F9000C1C69 /* RequireBillList.h */,
+				B0619E53197CB6F9000C1C69 /* RequireBillList.m */,
+			);
+			name = REQUIRE;
+			sourceTree = "<group>";
+		};
 		B085F603194004CC001F01F3 = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +533,7 @@
 				B085F64419400FA3001F01F3 /* vendor */,
 				B096C63D194291FB00271AE4 /* View */,
 				B06139751941573B00A0CF62 /* Model */,
+				B0619E50197CB610000C1C69 /* Service */,
 				B085F63E194006EE001F01F3 /* Controller */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
@@ -679,6 +736,8 @@
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
+				B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */,
+				B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -706,9 +765,13 @@
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
+				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
 				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
 				B04EF2111946E60D00A95D7A /* AFURLResponseSerialization.m in Sources */,
+				B0619E5F197D0D32000C1C69 /* RequireGenerateViewController.m in Sources */,
+				B0619E58197CBE17000C1C69 /* RequireXiangTableViewCell.m in Sources */,
+				B0619E4C197CB35C000C1C69 /* RequireXiang.m in Sources */,
 				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
 				B0FDC97219458B6F008E4B72 /* YunEditViewController.m in Sources */,
 				B04EF1DF1946A49500A95D7A /* ShopXiangTableViewCell.m in Sources */,
@@ -716,6 +779,7 @@
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
+				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
@@ -726,6 +790,7 @@
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
+				B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
 				B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */,
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
@@ -745,6 +810,7 @@
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
 				B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */,
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
+				B0619E54197CB6F9000C1C69 /* RequireBillList.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B04EF20E1946E60D00A95D7A /* AFSecurityPolicy.m in Sources */,
 				B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */,
