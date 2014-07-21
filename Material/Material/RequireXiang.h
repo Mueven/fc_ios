@@ -13,4 +13,5 @@
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *partNumber;
 @property(nonatomic,strong)NSString *quantity;
+-(instancetype)initWithObject:(id)object;
 @end

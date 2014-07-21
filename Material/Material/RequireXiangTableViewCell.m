@@ -18,7 +18,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    self.partNumberTextField.adjustsFontSizeToFitWidth=YES;
+    self.positionTextField.adjustsFontSizeToFitWidth=YES;
+    self.quantityTextField.adjustsFontSizeToFitWidth=YES;
     // Configure the view for the selected state
 }
 

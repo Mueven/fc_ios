@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RequireXiangTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *partNumberTextField;
+@property (weak, nonatomic) IBOutlet UILabel *quantityTextField;
+@property (weak, nonatomic) IBOutlet UILabel *positionTextField;
 
 @end
