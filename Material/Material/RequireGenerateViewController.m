@@ -11,6 +11,7 @@
 #import "RequireXiang.h"
 #import "RequirePrintViewController.h"
 #import "AFNetOperate.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -105,6 +106,21 @@
                  if([responseObject[@"result"] integerValue]==1){
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:responseObject[@"content"]];
                      [self.xiangArray addObject:xiang];
+                      AudioServicesPlaySystemSound(1012);
+                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                                   message:@"添加成功"
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"确定"
+                                                         otherButtonTitles: nil];
+                     [NSTimer scheduledTimerWithTimeInterval:2.1f
+                                                      target:self
+                                                    selector:@selector(dismissAlert:)
+                                                    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                                     repeats:NO];
+                     [alert show];
+                     self.partTextField.text=@"";
+                     self.positionTextField.text=@"";
+                     self.quantityTextField.text=@"";
                      [self.xiangTable reloadData];
                  }
                  else{
@@ -124,6 +140,11 @@
     UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
     [nextText becomeFirstResponder];
     return YES;
+}
+-(void)dismissAlert:(NSTimer *)timer
+{
+    UIAlertView *alert=[[timer userInfo] objectForKey:@"alert"];
+    [alert dismissWithClickedButtonIndex:0 animated:YES];
 }
 #pragma table delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -168,6 +189,26 @@
 - (IBAction)finish:(id)sender {
 //    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
     if(self.xiangArray.count>0){
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"确认发送需求？"
+                                                     delegate:self
+                                            cancelButtonTitle:@"取消"
+                                            otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请添加至少一个零件"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles: nil];
+        [alert show];
+    }
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //发送运单
+    if(buttonIndex==1){
         NSMutableArray *postItems=[[NSMutableArray alloc] init];
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiang=self.xiangArray[i];
@@ -183,7 +224,7 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
-                     [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
+                      [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];
@@ -194,16 +235,6 @@
                   [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
               }
          ];
-
-        
-    }
-    else{
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                      message:@"请添加至少一个零件"
-                                                     delegate:self
-                                            cancelButtonTitle:@"确定"
-                                            otherButtonTitles: nil];
-        [alert show];
     }
 }
 @end

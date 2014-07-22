@@ -9,6 +9,7 @@
 #import "RequireTodayViewController.h"
 #import "RequireListTableViewCell.h"
 #import "RequireBill.h"
+#import "RequireXiang.h"
 #import "RequireDetailViewController.h"
 #import "AFNetOperate.h"
 
@@ -118,7 +119,34 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      RequireBill *bill=self.billListArray[indexPath.row];
-    [self performSegueWithIdentifier:@"requireDetail" sender:@{@"billName":bill.date}];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager GET:[AFNet order_root]
+      parameters:@{@"id":bill.id}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                NSArray *order_items=(NSArray *)[responseObject[@"content"] objectForKey:@"order_items"];
+                 NSMutableArray *itemArray=[[NSMutableArray alloc] init];
+                 for(int i=0;i<[order_items count];i++){
+                     RequireXiang *xiang=[[RequireXiang alloc] initWithObject:order_items[i]];
+                     [itemArray addObject:xiang];
+                 }
+                [self performSegueWithIdentifier:@"requireDetail" sender:@{@"billName":bill.date,@"xiangArray":itemArray}];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
+    
+//    [self performSegueWithIdentifier:@"requireDetail" sender:@{@"billName":bill.date}];
 }
 #pragma mark - Navigation
 
@@ -131,6 +159,7 @@
     else if([segue.identifier isEqualToString:@"requireDetail"]){
         RequireDetailViewController *requireDetail=segue.destinationViewController;
         requireDetail.billName=[sender objectForKey:@"billName"];
+        requireDetail.xiangArray=[sender objectForKey:@"xiangArray"];
     }
 }
 

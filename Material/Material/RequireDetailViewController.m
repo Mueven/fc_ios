@@ -14,7 +14,7 @@
 @interface RequireDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
-@property (strong,nonatomic) NSMutableArray *xiangArray;
+
 - (IBAction)print:(id)sender;
 @end
 
