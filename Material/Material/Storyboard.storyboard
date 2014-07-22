@@ -2070,36 +2070,52 @@
             </objects>
             <point key="canvasLocation" x="1866" y="8953"/>
         </scene>
-        <!--View Controller-->
+        <!--Require History View Controller - 查看已发送需求单-->
         <scene sceneID="7zo-ln-rvH">
             <objects>
-                <viewController id="Pbv-DW-CHb" sceneMemberID="viewController">
+                <viewController id="Pbv-DW-CHb" customClass="RequireHistoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cz0-Al-zIj"/>
                         <viewControllerLayoutGuide type="bottom" id="5sm-fi-m0p"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pdY-QY-6Ct">
+                    <view key="view" contentMode="scaleToFill" id="pdY-QY-6Ct" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Ko-bo-nLa">
-                                <rect key="frame" x="86" y="157" width="148" height="30"/>
+                                <rect key="frame" x="49" y="159" width="222" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nKu-iy-nS3">
-                                <rect key="frame" x="127" y="320" width="46" height="30"/>
+                                <rect key="frame" x="49" y="244" width="222" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="查询">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="query:" destination="Pbv-DW-CHb" eventType="touchUpInside" id="GIy-ob-i80"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="查询时间" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuO-2m-sLE">
+                                <rect key="frame" x="49" y="130" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="Pbv-DW-CHb" eventType="touchUpInside" id="XX5-7z-TnT"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="WXn-Sj-PLh"/>
+                    <navigationItem key="navigationItem" title="查看已发送需求单" id="WXn-Sj-PLh"/>
                     <connections>
+                        <outlet property="dateTextField" destination="4Ko-bo-nLa" id="ltL-3w-48P"/>
                         <segue destination="Man-f2-2bq" kind="push" id="57W-Vm-1Ct"/>
                     </connections>
                 </viewController>
