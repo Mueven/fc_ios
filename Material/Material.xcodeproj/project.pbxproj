@@ -50,6 +50,8 @@
 		B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */; };
 		B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */; };
 		B0619E5F197D0D32000C1C69 /* RequireGenerateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */; };
+		B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */; };
+		B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0643D65197DF40D0036AADA /* RequireDetailViewController.m */; };
 		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
@@ -187,6 +189,10 @@
 		B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTodayViewController.m; sourceTree = "<group>"; };
 		B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireGenerateViewController.h; sourceTree = "<group>"; };
 		B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireGenerateViewController.m; sourceTree = "<group>"; };
+		B0643D60197DEF6F0036AADA /* RequirePrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequirePrintViewController.h; sourceTree = "<group>"; };
+		B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequirePrintViewController.m; sourceTree = "<group>"; };
+		B0643D64197DF40D0036AADA /* RequireDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireDetailViewController.h; sourceTree = "<group>"; };
+		B0643D65197DF40D0036AADA /* RequireDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireDetailViewController.m; sourceTree = "<group>"; };
 		B066FE2F194E714F00C0019D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
@@ -318,10 +324,7 @@
 		B0454CCB19760224001476F4 /* REQUIRE */ = {
 			isa = PBXGroup;
 			children = (
-				B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */,
-				B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */,
-				B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */,
-				B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */,
+				B0643D63197DF3F70036AADA /* list */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -490,6 +493,21 @@
 				B0619E53197CB6F9000C1C69 /* RequireBillList.m */,
 			);
 			name = REQUIRE;
+			sourceTree = "<group>";
+		};
+		B0643D63197DF3F70036AADA /* list */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */,
+				B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */,
+				B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */,
+				B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */,
+				B0643D60197DEF6F0036AADA /* RequirePrintViewController.h */,
+				B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */,
+				B0643D64197DF40D0036AADA /* RequireDetailViewController.h */,
+				B0643D65197DF40D0036AADA /* RequireDetailViewController.m */,
+			);
+			name = list;
 			sourceTree = "<group>";
 		};
 		B085F603194004CC001F01F3 = {
@@ -764,6 +782,7 @@
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */,
+				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
@@ -808,6 +827,7 @@
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
+				B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */,
 				B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */,
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
 				B0619E54197CB6F9000C1C69 /* RequireBillList.m in Sources */,

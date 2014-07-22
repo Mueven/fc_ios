@@ -9,6 +9,7 @@
 #import "RequireTodayViewController.h"
 #import "RequireListTableViewCell.h"
 #import "RequireBill.h"
+#import "RequireDetailViewController.h"
 
 @interface RequireTodayViewController ()<UITableViewDataSource,UITableViewDelegate>
 - (IBAction)requireGenerate:(id)sender;
@@ -81,7 +82,11 @@
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     RequireBill *bill=self.billListArray[indexPath.row];
+    [self performSegueWithIdentifier:@"requireDetail" sender:@{@"billName":bill.date}];
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -90,10 +95,18 @@
     if([segue.identifier isEqualToString:@"generateRequire"]){
         
     }
+    else if([segue.identifier isEqualToString:@"requireDetail"]){
+        RequireDetailViewController *requireDetail=segue.destinationViewController;
+        requireDetail.billName=[sender objectForKey:@"billName"];
+    }
 }
-
 
 - (IBAction)requireGenerate:(id)sender {
     [self performSegueWithIdentifier:@"generateRequire" sender:self];
 }
+
+-(IBAction)unwindToRequireList:(UIStoryboardSegue *)unwind{
+    
+}
+
 @end

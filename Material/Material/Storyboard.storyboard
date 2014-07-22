@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -1769,7 +1769,7 @@
                     <connections>
                         <outlet property="billTable" destination="Jp8-Vt-Zcd" id="aDa-ca-jUG"/>
                         <segue destination="d9m-In-y9s" kind="push" identifier="generateRequire" id="Zco-A8-z7q"/>
-                        <segue destination="i8u-Mw-b1s" kind="push" id="PPk-8F-ZrK"/>
+                        <segue destination="i8u-Mw-b1s" kind="push" identifier="requireDetail" id="PPk-8F-ZrK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wUi-7C-Ufr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1888,17 +1888,17 @@
                         <outlet property="positionTextField" destination="HyA-XO-olK" id="fiF-SP-ZYI"/>
                         <outlet property="quantityTextField" destination="tVg-SA-YJZ" id="YMi-wF-4ft"/>
                         <outlet property="xiangTable" destination="ewX-lB-w9O" id="Nyw-IX-slN"/>
-                        <segue destination="rcc-cJ-RHf" kind="push" id="UAK-rn-23P"/>
+                        <segue destination="rcc-cJ-RHf" kind="push" identifier="printFormGenerate" id="UAK-rn-23P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGS-HO-dwf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3922" y="8253"/>
         </scene>
-        <!--View Controller-->
+        <!--Require Detail View Controller-->
         <scene sceneID="jZ0-7N-uuU">
             <objects>
-                <viewController id="i8u-Mw-b1s" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="i8u-Mw-b1s" customClass="RequireDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CtK-fZ-ftQ"/>
                         <viewControllerLayoutGuide type="bottom" id="K95-KB-mNB"/>
@@ -1942,13 +1942,16 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gjo-gk-yYf">
-                                <rect key="frame" x="58" y="482" width="204" height="39"/>
+                                <rect key="frame" x="58" y="481" width="204" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="打印">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="print:" destination="i8u-Mw-b1s" eventType="touchUpInside" id="4Y4-bn-re9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1956,7 +1959,9 @@
                     <navigationItem key="navigationItem" id="kEe-5f-4fD"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="rcc-cJ-RHf" kind="push" id="Get-Zr-2fp"/>
+                        <outlet property="departmentTextField" destination="Ngs-rk-y6R" id="eG7-Fy-N4h"/>
+                        <outlet property="xiangTable" destination="kfd-KL-3x6" id="KyO-Hb-jr2"/>
+                        <segue destination="rcc-cJ-RHf" kind="push" identifier="printFromDetail" id="Get-Zr-2fp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ho5-zF-71O" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1985,10 +1990,10 @@
             </objects>
             <point key="canvasLocation" x="3372" y="9669"/>
         </scene>
-        <!--View Controller - 打印需求订单-->
+        <!--Require Print View Controller - 打印-->
         <scene sceneID="L9X-mX-YbL">
             <objects>
-                <viewController id="rcc-cJ-RHf" sceneMemberID="viewController">
+                <viewController id="rcc-cJ-RHf" customClass="RequirePrintViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VNr-ot-gi8"/>
                         <viewControllerLayoutGuide type="bottom" id="fzk-4a-cio"/>
@@ -1997,21 +2002,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yj-Q7-4VT">
-                                <rect key="frame" x="57" y="251" width="206" height="40"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印需求订单？" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKh-cV-XLB">
+                                <rect key="frame" x="46" y="152" width="229" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkb-pP-EwS">
+                                <rect key="frame" x="33" y="219" width="96" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="不打印">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="unPrint:" destination="rcc-cJ-RHf" eventType="touchUpInside" id="Ce6-km-NGE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVG-lc-JMZ">
+                                <rect key="frame" x="188" y="219" width="96" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="打印">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="print:" destination="rcc-cJ-RHf" eventType="touchUpInside" id="gEr-df-mbi"/>
+                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OlB-OG-ezt">
+                                <rect key="frame" x="20" y="191" width="280" height="2"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="打印需求订单" id="jdC-SU-NBr"/>
+                    <navigationItem key="navigationItem" title="打印" id="jdC-SU-NBr"/>
+                    <connections>
+                        <segue destination="XyM-dM-cNi" kind="unwind" identifier="unwindToRequireList" unwindAction="unwindToRequireList:" id="tyf-qQ-eFR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QPQ-hd-khw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XyM-dM-cNi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4516" y="8669"/>
         </scene>
@@ -2215,12 +2250,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="FcC-pN-TYA"/>
-        <segue reference="oOw-in-AQO"/>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="SkA-08-PWt"/>
-        <segue reference="UAK-rn-23P"/>
-        <segue reference="PPk-8F-ZrK"/>
         <segue reference="MS0-BJ-3Kj"/>
+        <segue reference="PPk-8F-ZrK"/>
+        <segue reference="Get-Zr-2fp"/>
+        <segue reference="oOw-in-AQO"/>
+        <segue reference="FcC-pN-TYA"/>
+        <segue reference="SkA-08-PWt"/>
+        <segue reference="Neh-iJ-Fpe"/>
     </inferredMetricsTieBreakers>
 </document>

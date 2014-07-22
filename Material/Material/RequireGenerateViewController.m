@@ -9,6 +9,7 @@
 #import "RequireGenerateViewController.h"
 #import "RequireXiangTableViewCell.h"
 #import "RequireXiang.h"
+#import "RequirePrintViewController.h"
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -68,7 +69,7 @@
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
      self.firstResponder.text=[data copy];
-     UITextField *targetTextField=self.firstResponder;
+//     UITextField *targetTextField=self.firstResponder;
      [self textFieldShouldReturn:self.firstResponder];
 }
 #pragma textField delegate
@@ -81,7 +82,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-     __block long tag=textField.tag;
+    long tag=textField.tag;
     NSString *partNumber=self.partTextField.text;
     NSString *position=self.positionTextField.text;
     NSString *quantity=self.quantityTextField.text;
@@ -106,16 +107,18 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return [self.xiangArray count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RequireXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     RequireXiang *xiang=self.xiangArray[indexPath.row];
-    
+    cell.positionTextField.text=xiang.position;
+    cell.partNumberTextField.text=xiang.partNumber;
+    cell.quantityTextField.text=xiang.quantity;
     return cell;
 }
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -123,9 +126,14 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"printFormGenerate"]){
+        RequirePrintViewController *print=segue.destinationViewController;
+        print.type=[sender objectForKey:@"type"];
+    }
 }
-*/
+
 
 - (IBAction)finish:(id)sender {
+    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
 }
 @end

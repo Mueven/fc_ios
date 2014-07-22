@@ -313,37 +313,32 @@
     }
 }
 
-
--(NSString *)print_stock_tuo:(NSString *)ID
+-(NSString *)base_for_print:(NSString *)key
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
     NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"stock_tuo"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *bind=[printDictionary objectForKey:key];
+    return [base stringByAppendingString:bind];
+}
+
+-(NSString *)print_stock_tuo:(NSString *)ID
+{
+    NSString *joint=[self base_for_print:@"stock_tuo"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_stock_yun:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-     NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"stock_yun"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"stock_yun"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_shop_receive:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"shop_receive"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"shop_receive"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_shop_unreceive:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"shop_unreceive"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"shop_unreceive"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 
