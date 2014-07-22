@@ -14,6 +14,7 @@
 @property(nonatomic,strong)NSString *date;
 @property(nonatomic,strong)NSString *department;
 @property(nonatomic,strong)NSString *status;
+@property(nonatomic,strong)NSString *id;
 -(instancetype)init;
 -(instancetype)initWithObject:(id)object;
 @end

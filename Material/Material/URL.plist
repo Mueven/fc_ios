@@ -12,6 +12,20 @@
 	<string>/api/v1/users/login/</string>
 	<key>log_out</key>
 	<string>/api/v1/users/logout/</string>
+	<key>order_item</key>
+	<dict>
+		<key>verify</key>
+		<string>verify</string>
+		<key>root</key>
+		<string>/api/v1/order_items/</string>
+	</dict>
+	<key>orders</key>
+	<dict>
+		<key>history</key>
+		<string>history</string>
+		<key>root</key>
+		<string>/api/v1/orders/</string>
+	</dict>
 	<key>print</key>
 	<dict>
 		<key>shop_unreceive</key>

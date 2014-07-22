@@ -13,10 +13,10 @@
 {
     self=[super init];
     if(self){
-        self.department=[object objectForKey:@"department"];
-        self.position=[object objectForKey:@"position"];
-        self.partNumber=[object objectForKey:@"partNumber"];
-        self.quantity=[object objectForKey:@"quantity"];
+        self.department=[object objectForKey:@"department"]?[object objectForKey:@"department"]:@"";
+        self.position=[object objectForKey:@"location_id"]?[object objectForKey:@"location_id"]:@"";
+        self.partNumber=[object objectForKey:@"part_id"]?[object objectForKey:@"part_id"]:@"";
+        self.quantity=[object objectForKey:@"quantity"]?[object objectForKey:@"quantity"]:@"";
     }
     return self;
 }

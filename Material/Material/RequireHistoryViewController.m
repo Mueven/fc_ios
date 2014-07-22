@@ -50,14 +50,22 @@
     self.postDate=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
     
 }
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    if(self.dateTextField.text.length==0){
+        NSDateFormatter *formater=[[NSDateFormatter alloc] init];
+        [formater setDateFormat:@"yyyy-MM-dd"];
+        textField.text=[formater stringFromDate:[NSDate date]];
+        [formater setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+        self.postDate=[formater stringFromDate:[NSDate date]];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -65,10 +73,27 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"queryRequire"]){
+        
+    }
 }
-*/
+
 
 - (IBAction)query:(id)sender {
+    NSString *dateText=self.dateTextField.text;
+    if(dateText.length>0){
+        [self.dateTextField resignFirstResponder];
+        [self performSegueWithIdentifier:@"queryRequire" sender:self];
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请选择日期"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
+    
 }
 
 - (IBAction)touchScreen:(id)sender {

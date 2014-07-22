@@ -359,4 +359,26 @@
     NSString *base=[self baseURL];
     return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"scan_validate"]];
 }
+//order
+-(NSString *)order_root
+{
+    NSString *base=[self baseURL];
+    NSString *order=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"root"];
+    return [base stringByAppendingString:order];
+}
+-(NSString *)order_history
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"history"];
+    return [[self order_root] stringByAppendingString:bind];
+}
+//order item
+-(NSString *)order_item_root{
+    NSString *base=[self baseURL];
+    NSString *order_item=[[[self URLDictionary] objectForKey:@"order_item"] objectForKey:@"root"];
+    return [base stringByAppendingString:order_item];
+}
+-(NSString *)order_item_verify{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"order_item"] objectForKey:@"verify"];
+    return [[self order_item_root] stringByAppendingString:bind];
+}
 @end

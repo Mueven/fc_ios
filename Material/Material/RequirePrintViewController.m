@@ -28,6 +28,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if([self.type isEqualToString:@"list"]){
+        [self.navigationItem setHidesBackButton:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning

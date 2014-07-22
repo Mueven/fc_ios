@@ -10,6 +10,7 @@
 #import "RequireXiangTableViewCell.h"
 #import "RequireXiang.h"
 #import "RequirePrintViewController.h"
+#import "AFNetOperate.h"
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -91,6 +92,30 @@
     }
     if(partNumber.length>0&&position.length>0&&quantity.length>0){
         //发送请求
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet order_item_verify]
+          parameters:@{
+                        @"position":position,
+                        @"part_id":partNumber,
+                        @"quantity:":quantity
+                               }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if([responseObject[@"result"] integerValue]==1){
+                     RequireXiang *xiang=[[RequireXiang alloc] initWithObject:responseObject[@"content"]];
+                     [self.xiangArray addObject:xiang];
+                     [self.xiangTable reloadData];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
     }
     tag++;
     if(tag>3){
@@ -118,7 +143,14 @@
     cell.quantityTextField.text=xiang.quantity;
     return cell;
 }
-
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.xiangArray removeObjectAtIndex:indexPath.row];
+        [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -134,6 +166,44 @@
 
 
 - (IBAction)finish:(id)sender {
-    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
+//    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
+    if(self.xiangArray.count>0){
+        NSMutableArray *postItems=[[NSMutableArray alloc] init];
+        for(int i=0;i<self.xiangArray.count;i++){
+            RequireXiang *xiang=self.xiangArray[i];
+            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.position,@"position",xiang.partNumber,@"part_id",xiang.quantity,@"quantity", nil];
+            [postItems addObject:dic];
+        }
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet order_root]
+           parameters:@{
+                        @"order_items":postItems
+                        }
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                     [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
+
+        
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"请添加至少一个零件"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles: nil];
+        [alert show];
+    }
 }
 @end
