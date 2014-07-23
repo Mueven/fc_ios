@@ -9,9 +9,12 @@
 #import "RequireHistoryListTableViewController.h"
 #import "RequireBill.h"
 #import "RequireListTableViewCell.h"
+#import "AFNetOperate.h"
+#import "RequireXiang.h"
+#import "RequireDetailViewController.h"
 
 @interface RequireHistoryListTableViewController ()
-@property(nonatomic,strong)NSMutableArray *billArray;
+
 @end
 
 @implementation RequireHistoryListTableViewController
@@ -74,8 +77,34 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-     RequireBill *bill=self.billArray[indexPath.row];
-    [self performSegueWithIdentifier:@"historyXiang" sender:self];
+    RequireBill *bill=self.billArray[indexPath.row];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    [AFNet.activeView stopAnimating];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager GET:[AFNet order_root]
+      parameters:@{@"id":bill.id}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                 NSArray *order_items=(NSArray *)[responseObject[@"content"] objectForKey:@"order_items"];
+                 NSMutableArray *itemArray=[[NSMutableArray alloc] init];
+                 for(int i=0;i<[order_items count];i++){
+                     RequireXiang *xiang=[[RequireXiang alloc] initWithObject:order_items[i]];
+                     [itemArray addObject:xiang];
+                 }
+                 [self performSegueWithIdentifier:@"historyXiang" sender:@{@"billName":bill.date,@"xiangArray":itemArray}];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
+    
 }
 
 /*
@@ -125,7 +154,9 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"historyXiang"]){
-        
+        RequireDetailViewController *requireDetail=segue.destinationViewController;
+        requireDetail.billName=[sender objectForKey:@"billName"];
+        requireDetail.xiangArray=[sender objectForKey:@"xiangArray"];
     }
 }
 

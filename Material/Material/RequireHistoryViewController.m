@@ -7,6 +7,9 @@
 //
 
 #import "RequireHistoryViewController.h"
+#import "AFNetOperate.h"
+#import "RequireBill.h"
+#import "RequireHistoryListTableViewController.h"
 
 @interface RequireHistoryViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
@@ -74,7 +77,8 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"queryRequire"]){
-        
+        RequireHistoryListTableViewController *historyList=segue.destinationViewController;
+        historyList.billArray=[sender objectForKey:@"billArray"];
     }
 }
 
@@ -82,8 +86,37 @@
 - (IBAction)query:(id)sender {
     NSString *dateText=self.dateTextField.text;
     if(dateText.length>0){
-        [self.dateTextField resignFirstResponder];
-        [self performSegueWithIdentifier:@"queryRequire" sender:self];
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        [AFNet.activeView stopAnimating];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [AFNet.activeView stopAnimating];
+        [manager GET:[AFNet order_history]
+          parameters:@{@"start":self.postDate,@"end":self.postDate}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSMutableArray *billList=[[NSMutableArray alloc] init];
+                     for(int i=0;i<5;i++){
+                         NSDictionary *dic=responseObject[i];
+                         RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
+                         [billList addObject:bill];
+                     }
+                    [self.dateTextField resignFirstResponder];
+                    [self performSegueWithIdentifier:@"queryRequire" sender:@{@"billArray": [billList copy]}];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+        
+//        [self.dateTextField resignFirstResponder];
+//        [self performSegueWithIdentifier:@"queryRequire" sender:self];
     }
     else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""

@@ -91,6 +91,7 @@
 		B0DF644519448B67002D044B /* Yun.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644419448B67002D044B /* Yun.m */; };
 		B0DF644819448B75002D044B /* YunStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644719448B75002D044B /* YunStore.m */; };
 		B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */; };
+		B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */; };
 		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
 		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
 		B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */; };
@@ -258,6 +259,8 @@
 		B0DF644719448B75002D044B /* YunStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunStore.m; sourceTree = "<group>"; };
 		B0E1D4F01952CD3500105D4D /* ReceivePrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivePrintViewController.h; sourceTree = "<group>"; };
 		B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivePrintViewController.m; sourceTree = "<group>"; };
+		B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireSettingViewController.h; sourceTree = "<group>"; };
+		B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSettingViewController.m; sourceTree = "<group>"; };
 		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
 		B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChooseTuoViewController.m; sourceTree = "<group>"; };
 		B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunHaveTuoTableViewController.h; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 			children = (
 				B0643D63197DF3F70036AADA /* list */,
 				B0643D67197E03F30036AADA /* history */,
+				B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */,
+				B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -792,6 +797,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */,
 				B04EF20A1946E60D00A95D7A /* AFHTTPRequestOperation.m in Sources */,
 				B04EF20D1946E60D00A95D7A /* AFNetworkReachabilityManager.m in Sources */,
 				B04EF20C1946E60D00A95D7A /* AFHTTPSessionManager.m in Sources */,

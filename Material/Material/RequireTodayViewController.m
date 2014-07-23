@@ -73,9 +73,7 @@
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
-
-        
-        
+    
         
         //example
 //        NSMutableArray *billList=[[NSMutableArray alloc] init];

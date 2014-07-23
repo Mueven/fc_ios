@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RequireHistoryListTableViewController : UITableViewController
-
+@property(nonatomic,strong)NSArray *billArray;
 @end
