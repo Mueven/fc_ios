@@ -104,6 +104,7 @@
     cell.idLabel.text=tuo.ID;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
+     cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

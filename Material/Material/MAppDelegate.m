@@ -29,7 +29,7 @@
 
     Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
     reachability.reachableBlock = ^(Reachability *reachability) {
-       
+        
     };
     reachability.unreachableBlock = ^(Reachability *reachability) {
         dispatch_async(dispatch_get_main_queue(), ^{

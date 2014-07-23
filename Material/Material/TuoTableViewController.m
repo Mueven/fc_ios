@@ -82,6 +82,7 @@
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
+                
              }
              self.tuoStore=tuoStore;
              [self.tableView reloadData];
@@ -109,6 +110,7 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              NSArray *resultArray=responseObject;
+             NSLog(@"%@",responseObject);
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -141,6 +143,7 @@
     cell.idLabel.text=tuo.ID;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
+    cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

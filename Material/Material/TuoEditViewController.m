@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *agent;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong, nonatomic) UITextField *firstResponder;
+@property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
+@property (nonatomic)int sum_packages_count;
 @end
 
 @implementation TuoEditViewController
@@ -50,7 +52,7 @@
     self.xiangTable.dataSource=self;
     self.department.delegate=self;
     self.agent.delegate=self;
-    
+    self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
 
@@ -70,6 +72,8 @@
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
+    self.sum_packages_count=self.tuo.sum_packages;
+    [self updateXiangCountLabel];
 }
 
 -(void)decoderDataReceived:(NSString *)data
@@ -180,7 +184,8 @@
             [self.tuo.xiang removeObjectAtIndex:row];
             [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
-            
+            self.sum_packages_count--;
+            [self updateXiangCountLabel];
             dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
             dispatch_async(deleteRow, ^{
                 AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -201,12 +206,16 @@
                             else{
                                 [AFNet alert:responseObject[@"content"]];
                                 [self.tuo.xiang addObject:xiangReserve];
+                                self.sum_packages_count++;
+                                [self updateXiangCountLabel];
                                 [self.xiangTable reloadData];
                             }
                         }
                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                             [AFNet.activeView stopAnimating];
                             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                            self.sum_packages_count++;
+                            [self updateXiangCountLabel];
                             [self.tuo.xiang addObject:xiangReserve];
                             [self.xiangTable reloadData];
                         }
@@ -236,5 +245,9 @@
         TuoPrintViewController *tuoPrint=segue.destinationViewController;
         tuoPrint.tuo=self.tuo;
     }
+}
+-(void)updateXiangCountLabel
+{
+    self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
 }
 @end

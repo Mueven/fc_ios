@@ -14,8 +14,9 @@
 {
     // Initialization code
     self.idLabel.adjustsFontSizeToFitWidth=YES;
-    [self.departmentLabel sizeToFit];
-    [self.agentLabel sizeToFit];
+    self.departmentLabel.adjustsFontSizeToFitWidth=YES;
+    self.agentLabel.adjustsFontSizeToFitWidth=YES;
+    self.sumPackageLabel.adjustsFontSizeToFitWidth=YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

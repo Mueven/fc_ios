@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *idLabel;
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *agentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sumPackageLabel;
 @end

@@ -32,6 +32,8 @@
 @property (strong,nonatomic)ScanStandard *scanStandard;
 //@property (strong, nonatomic) XiangStore *xiangStore;
 //@property (strong,nonatomic) NSArray *validateAddress;
+@property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
+@property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
 - (IBAction)touchScreen:(id)sender;
 @end
@@ -62,19 +64,22 @@
     }
     else if([self.type isEqualToString:@"addXiang"]){
         self.navigationItem.rightBarButtonItem=NULL;
-        self.xiangListLabel.text=@"该拖已经绑定的箱";
+        self.xiangListLabel.text=@"已绑定箱数:";
     }
+    self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     self.alert=nil;
     self.scanStandard=[ScanStandard sharedScanStandard];
+    self.sum_packages_count=[self.tuo.xiang count];
+    [self updateXiangCountLabel];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    //    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
+    //    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.key becomeFirstResponder];
     [self.xiangTable reloadData];
 }
@@ -82,7 +87,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
+    //    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [self.firstResponder resignFirstResponder];
     self.firstResponder=nil;
@@ -128,7 +133,7 @@
     else if(targetTextField.tag==2){
         //part number
         regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
-         NSString *alertString=@"请扫描零件号";
+        NSString *alertString=@"请扫描零件号";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
         if(isMatch){
@@ -154,7 +159,7 @@
     else if(targetTextField.tag==3){
         //count
         regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
-         NSString *alertString=@"请扫描数量";
+        NSString *alertString=@"请扫描数量";
         NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
         BOOL isMatch  = [pred evaluateWithObject:data];
         if(isMatch){
@@ -232,6 +237,7 @@
                                       self.partNumber.text=@"";
                                       self.quatity.text=@"";
                                       self.dateTextField.text=@"";
+                                      [self updateAddXiangCount];
                                   }
                                   
                               }
@@ -299,7 +305,7 @@
                      ];
                 }
             });
-
+            
             
             
         }
@@ -340,7 +346,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-     __block long tag=textField.tag;
+    __block long tag=textField.tag;
     if(tag==4){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -400,6 +406,7 @@
                                                               repeats:NO];
                               AudioServicesPlaySystemSound(1012);
                               [self.alert show];
+                              [self updateAddXiangCount];
                           }
                           
                       }
@@ -452,6 +459,7 @@
                                                               repeats:NO];
                               AudioServicesPlaySystemSound(1012);
                               [self.alert show];
+                              [self updateAddXiangCount];
                           }
                           
                       }
@@ -477,7 +485,7 @@
 -(void)dissmissAlert:(NSTimer *)timer
 {
     if(self.alert){
-
+        
         [self.alert dismissWithClickedButtonIndex:0 animated:YES];
         self.alert=nil;
     }
@@ -520,6 +528,7 @@
                     if([responseObject[@"result"] integerValue]==1){
                         [self.tuo.xiang removeObjectAtIndex:indexPath.row];
                         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                        [self updateMinusXiangCount];
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
@@ -536,15 +545,15 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
-     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
+    //    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
+    Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"fromTuo" sender:@{@"xiang":xiang}];
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //单独绑定箱的时候，不让删除，会误导，在最外面删去
     if([self.type isEqualToString:@"xiang"]){
-      return NO;
+        return NO;
     }
     else{
         return YES;
@@ -564,11 +573,19 @@
 - (IBAction)finish:(id)sender {
     [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
 }
-
-- (IBAction)touchScreen:(id)sender {
-//    NSString *data=[self.firstResponder.text copy];
-//    [self decoderDataReceived:data];
+-(void)updateAddXiangCount{
+    self.sum_packages_count++;
+    [self updateXiangCountLabel];
 }
-
-
+-(void)updateMinusXiangCount{
+    self.sum_packages_count--;
+    [self updateXiangCountLabel];
+}
+-(void)updateXiangCountLabel
+{
+    self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
+}
+-(void)touchScreen:(id)sender{
+    
+}
 @end
