@@ -225,7 +225,7 @@
                                                                            delegate:self
                                                                   cancelButtonTitle:nil
                                                                   otherButtonTitles:nil];
-                                      [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                      [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                                        target:self
                                                                      selector:@selector(dissmissAlert:)
                                                                      userInfo:nil
@@ -399,7 +399,7 @@
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:1.5f
+                              [NSTimer scheduledTimerWithTimeInterval:1.0f
                                                                target:self
                                                              selector:@selector(dissmissAlert:)
                                                              userInfo:nil
