@@ -12,5 +12,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *partNumberTextField;
 @property (weak, nonatomic) IBOutlet UILabel *quantityTextField;
 @property (weak, nonatomic) IBOutlet UILabel *positionTextField;
-
+@property (weak, nonatomic) IBOutlet UIButton *urgentButton;
+@property (strong , nonatomic) void (^clickCell)();
+- (IBAction)setUrgent:(id)sender;
+-(void)urgentState;
+-(void)normalState;
 @end

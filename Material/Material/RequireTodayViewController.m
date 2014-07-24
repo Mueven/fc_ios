@@ -46,47 +46,47 @@
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
     NSString *endDate=[formatter stringFromDate:[NSDate date]];
     
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    [AFNet.activeView stopAnimating];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [AFNet.activeView stopAnimating];
-     [manager GET:[AFNet order_history]
-      parameters:@{@"start":startDate,@"end":endDate}
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 [AFNet.activeView stopAnimating];
-                 if([responseObject[@"result"] integerValue]==1){
-                     NSMutableArray *billList=[[NSMutableArray alloc] init];
-                     for(int i=0;i<5;i++){
-                         NSDictionary *dic=responseObject[i];
-                         RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
-                         [billList addObject:bill];
-                         self.billListArray=[billList copy];
-                     }
-                     [self.billTable reloadData];
-                 }
-                 else{
-                       [AFNet alert:responseObject[@"content"]];
-                 }
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 [AFNet.activeView stopAnimating];
-                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-             }
-         ];
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    [AFNet.activeView stopAnimating];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [AFNet.activeView stopAnimating];
+//     [manager GET:[AFNet order_history]
+//      parameters:@{@"start":startDate,@"end":endDate}
+//             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                 [AFNet.activeView stopAnimating];
+//                 if([responseObject[@"result"] integerValue]==1){
+//                     NSMutableArray *billList=[[NSMutableArray alloc] init];
+//                     for(int i=0;i<5;i++){
+//                         NSDictionary *dic=responseObject[i];
+//                         RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
+//                         [billList addObject:bill];
+//                         self.billListArray=[billList copy];
+//                     }
+//                     [self.billTable reloadData];
+//                 }
+//                 else{
+//                       [AFNet alert:responseObject[@"content"]];
+//                 }
+//             }
+//             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                 [AFNet.activeView stopAnimating];
+//                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//             }
+//         ];
     
         
         //example
-//        NSMutableArray *billList=[[NSMutableArray alloc] init];
-//        for(int i=0;i<5;i++){
-//            NSDictionary *dic=@{@"date":[NSString stringWithFormat:@"2014-08-0%d 18:00",i],
-//                                @"department":@"MB",
-//                                @"status":@"在途"};
-//            RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
-//            [billList addObject:bill];
-//            self.billListArray=[billList copy];
-//            
-//        }
-//       [self.billTable reloadData];
+        NSMutableArray *billList=[[NSMutableArray alloc] init];
+        for(int i=0;i<5;i++){
+            NSDictionary *dic=@{@"date":[NSString stringWithFormat:@"2014-08-0%d 18:00",i],
+                                @"department":@"MB",
+                                @"status":@"在途"};
+            RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
+            [billList addObject:bill];
+            self.billListArray=[billList copy];
+            
+        }
+       [self.billTable reloadData];
     
 }
 

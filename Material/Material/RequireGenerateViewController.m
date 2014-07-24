@@ -14,8 +14,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
+@property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
-@property (weak, nonatomic) IBOutlet UITextField *positionTextField;
 @property (weak, nonatomic) IBOutlet UITextField *quantityTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong, nonatomic) UITextField *firstResponder;
@@ -39,13 +39,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.partTextField.delegate=self;
-    self.positionTextField.delegate=self;
+    self.departmentTextField.delegate=self;
     self.quantityTextField.delegate=self;
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     UINib *nib=[UINib nibWithNibName:@"RequireXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"cell"];
     self.xiangArray=[[NSMutableArray alloc] init];
+    
+    //experiment
+    for(int i=0;i<10;i++){
+        NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"location_id",@"21",@"part_id",@"300",@"quantity", nil];
+        RequireXiang *xiang=[[RequireXiang alloc] initWithObject:dic];
+        [self.xiangArray addObject:xiang];
+    }
+    [self.xiangTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,7 +65,7 @@
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    [self.partTextField becomeFirstResponder];
+    [self.departmentTextField becomeFirstResponder];
  
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -86,18 +94,16 @@
 {
     long tag=textField.tag;
     NSString *partNumber=self.partTextField.text;
-    NSString *position=self.positionTextField.text;
+    NSString *department=self.departmentTextField.text;
     NSString *quantity=self.quantityTextField.text;
-    if(tag==2){
-        //有了位置可以显示出部门
-    }
-    if(partNumber.length>0&&position.length>0&&quantity.length>0){
+
+    if(partNumber.length>0&&department.length>0&&quantity.length>0){
         //发送请求
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet order_item_verify]
           parameters:@{
-                        @"position":position,
+                        @"department":department,
                         @"part_id":partNumber,
                         @"quantity:":quantity
                                }
@@ -119,8 +125,8 @@
                                                      repeats:NO];
                      [alert show];
                      self.partTextField.text=@"";
-                     self.positionTextField.text=@"";
                      self.quantityTextField.text=@"";
+                     [self.partTextField becomeFirstResponder];
                      [self.xiangTable reloadData];
                  }
                  else{
@@ -162,6 +168,35 @@
     cell.positionTextField.text=xiang.position;
     cell.partNumberTextField.text=xiang.partNumber;
     cell.quantityTextField.text=xiang.quantity;
+    __weak RequireXiangTableViewCell *cellForBlock=cell;
+    cell.clickCell=^(){
+        if(xiang.urgent){
+            //取消加急
+            xiang.urgent=0;
+            cellForBlock.backgroundColor=[UIColor whiteColor];
+            cellForBlock.urgentButton.backgroundColor=[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0];
+            [cellForBlock.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
+        }
+        else{
+            //加急
+            xiang.urgent=1;
+            cellForBlock.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:0.3];
+            cellForBlock.urgentButton.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1.0];
+            [cellForBlock.urgentButton setTitle:@"取消加急" forState:UIControlStateNormal];
+        }
+    };
+    if(xiang.urgent){
+        //加急状态下
+        cell.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:0.3];
+        cell.urgentButton.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1.0];
+        [cell.urgentButton setTitle:@"取消加急" forState:UIControlStateNormal];
+    }
+    else{
+        //不加急状态
+        cell.backgroundColor=[UIColor whiteColor];
+        cell.urgentButton.backgroundColor=[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0];
+        [cell.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

@@ -17,6 +17,7 @@
         self.position=[object objectForKey:@"location_id"]?[object objectForKey:@"location_id"]:@"";
         self.partNumber=[object objectForKey:@"part_id"]?[object objectForKey:@"part_id"]:@"";
         self.quantity=[object objectForKey:@"quantity"]?[object objectForKey:@"quantity"]:@"";
+        self.urgent=0;
     }
     return self;
 }
