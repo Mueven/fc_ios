@@ -11,6 +11,7 @@
 #import "RequireXiang.h"
 #import "RequirePrintViewController.h"
 #import "AFNetOperate.h"
+#import "RequireXiangDetailViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
@@ -20,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (strong,nonatomic)NSMutableArray *xiangArray;
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (nonatomic)int xiangCount;
 - (IBAction)finish:(id)sender;
 @end
 
@@ -46,6 +49,8 @@
     UINib *nib=[UINib nibWithNibName:@"RequireXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"cell"];
     self.xiangArray=[[NSMutableArray alloc] init];
+    self.xiangCount=0;
+    [self updateCountLabel];
     
     //experiment
     for(int i=0;i<10;i++){
@@ -128,6 +133,7 @@
                      self.quantityTextField.text=@"";
                      [self.partTextField becomeFirstResponder];
                      [self.xiangTable reloadData];
+                     [self updateAddCount];
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
@@ -199,12 +205,18 @@
     }
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RequireXiang *xiang=self.xiangArray[indexPath.row];
+    [self performSegueWithIdentifier:@"xiangDetail" sender:@{@"xiang":xiang}];
+}
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.xiangArray removeObjectAtIndex:indexPath.row];
         [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self updateMinusCount];
     }
 }
 #pragma mark - Navigation
@@ -217,6 +229,10 @@
     if([segue.identifier isEqualToString:@"printFormGenerate"]){
         RequirePrintViewController *print=segue.destinationViewController;
         print.type=[sender objectForKey:@"type"];
+    }
+    else if([segue.identifier isEqualToString:@"xiangDetail"]){
+        RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
+        xiangDetail.xiang=[sender objectForKey:@"xiang"];
     }
 }
 
@@ -271,5 +287,20 @@
               }
          ];
     }
+}
+-(void)updateCountLabel
+{
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCount];
+    self.countLabel.text=count;
+}
+-(void)updateAddCount
+{
+    self.xiangCount++;
+    [self updateCountLabel];
+}
+-(void)updateMinusCount
+{
+    self.xiangCount--;
+    [self updateCountLabel];
 }
 @end

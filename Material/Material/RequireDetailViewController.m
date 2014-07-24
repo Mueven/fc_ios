@@ -11,6 +11,7 @@
 #import "RequireXiang.h"
 #import "RequirePrintViewController.h"
 
+
 @interface RequireDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
@@ -77,6 +78,7 @@
         RequirePrintViewController *print=segue.destinationViewController;
         print.type=[sender objectForKey:@"type"];
     }
+
 }
 
 
