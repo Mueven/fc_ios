@@ -76,7 +76,7 @@
     cell.dateLabel.text=tuo.department;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
     if(tuo.accepted_packages==tuo.sum_packages){
-        [cell.conditionLabel setTextColor:[UIColor greenColor]];
+        [cell.conditionLabel setTextColor:[UIColor colorWithRed:68.0/255.0 green:178.0/255.0 blue:29.0/255.0 alpha:1.0]];
     }
     else{
         [cell.conditionLabel setTextColor:[UIColor redColor]];

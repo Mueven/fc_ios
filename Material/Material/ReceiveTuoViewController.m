@@ -209,7 +209,7 @@
     }
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",checked,count];
     if(checked==count){
-        [cell.conditionLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
+        [cell.conditionLabel setTextColor:[UIColor colorWithRed:68.0/255.0 green:178.0/255.0 blue:29.0/255.0 alpha:1.0]];
     }
     else{
         [cell.conditionLabel setTextColor:[UIColor redColor]];

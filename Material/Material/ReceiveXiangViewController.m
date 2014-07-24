@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (nonatomic) int xiangCheckedCount;
 - (IBAction)finish:(id)sender;
 
 @end
@@ -42,7 +43,28 @@
     [self.scanTextField becomeFirstResponder];
     UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
-    self.countLabel.text=[NSString stringWithFormat:@"包含箱：%d",(int)[self.tuo.xiang count]];
+    self.xiangCheckedCount=0;
+    for(int i=0;i<self.tuo.xiang.count;i++){
+        Xiang *xiang=self.tuo.xiang[i];
+        if(xiang.checked){
+            self.xiangCheckedCount++;
+        }
+    }
+    [self updateCheckedLabel];
+}
+-(void)updateCheckedLabel{
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    self.countLabel.text=count;
+}
+-(void)updateAddCheckedLabel{
+    self.xiangCheckedCount++;
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    self.countLabel.text=count;
+}
+-(void)updateMinusCheckedLabel{
+    self.xiangCheckedCount--;
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    self.countLabel.text=count;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -130,6 +152,7 @@
                       if([responseObject[@"result"] integerValue]==1){
                           [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
                           [self.xiangTable reloadData];
+                          [self updateAddCheckedLabel];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
@@ -198,6 +221,7 @@
                   if([responseObject[@"result"] integerValue]==1){
                       cell.accessoryType=UITableViewCellAccessoryNone;
                       xiang.checked=NO;
+                      [self updateMinusCheckedLabel];
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];
