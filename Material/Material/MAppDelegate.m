@@ -9,6 +9,7 @@
 #import "MAppDelegate.h"
 #import "Login.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "AFNetOperate.h"
 @interface MAppDelegate()
 @property(nonatomic) BOOL updating;
 @end
@@ -17,16 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    // Override point for customization after application launch.
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    Login *login=[[Login alloc] init];
-//    self.window.rootViewController=login;
-//    [self.window makeKeyAndVisible];
+    //霍尼韦尔设备
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
-    
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
-
     Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
     reachability.reachableBlock = ^(Reachability *reachability) {
         
@@ -45,9 +39,54 @@
     };
     [reachability startNotifier];
     
+    //自动更新
+//    UpdatePolicy policy = LATEST;
+//    @try {
+//        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+//        NSString *toReplace = [[[AFNetOperate alloc] init] version];
+//        NSString* path = [NSString stringWithFormat:@"%@%@%@",toReplace,@"?version=",version];
+// 
+//        NSURL* url = [NSURL URLWithString:path];
+//        NSString* jsonString = [[NSString alloc]initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
+//        if(dic){
+//            if([[dic objectForKey:@"result"] boolValue]==YES) {
+//                if([[dic objectForKey:@"is_option"] boolValue]==YES){
+//                    policy = MUST;
+//                }
+//                else {
+//                    policy = OPTION;
+//                }
+//            }
+//        }
+//    }
+//    @catch (NSException *exception) {
+//    }
+//    @finally {
+//    }
+//    
+//    NSString *title = @"New version avilable";
+//    NSString *cancelTxt = @"No,thanks";
+//    NSString *otherTxt = @"Update now";
+//    
+//    if(policy== OPTION){
+//        UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title message:nil delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt,nil];
+//        [view show ];
+//    }
+//    else if (policy == MUST){
+//        UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title message:@"It's a mere update and you have to update to this version" delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt, nil];
+//        [view show ];
+//    }
+    
     return YES;
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://121.199.48.53/clearinsight.plist"]];
+    }
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

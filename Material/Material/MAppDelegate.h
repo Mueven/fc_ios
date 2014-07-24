@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef enum {
+    LATEST = 0,    //无更新
+    OPTION = 1,    //有更新，但可选
+    MUST = 2,      //必须更新
+    
+} UpdatePolicy;
 @interface MAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

@@ -358,7 +358,12 @@
     NSString *base=[self baseURL];
     return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"log_out"]];
 }
-
+//version
+-(NSString *)version
+{
+    NSString *base=[self baseURL];
+    return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"version"]];
+}
 #pragma validate
 -(NSString *)scan_validate{
     NSString *base=[self baseURL];

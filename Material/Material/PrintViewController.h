@@ -10,4 +10,5 @@
 
 @interface PrintViewController : UIViewController
 @property(nonatomic , strong) id container;
+@property(nonatomic , strong) NSString *successContent;
 @end

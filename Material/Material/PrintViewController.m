@@ -15,6 +15,7 @@
 - (IBAction)unPrint:(id)sender;
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
 @end
 
 @implementation PrintViewController
@@ -36,6 +37,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.yunSuccessContentLabel.text=self.successContent?self.successContent:@"";
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {

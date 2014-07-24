@@ -169,7 +169,7 @@
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
-                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"content":responseObject[@"content"]}];
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];
@@ -193,6 +193,7 @@
     if([segue.identifier isEqualToString:@"printYun"]){
         PrintViewController *yunPrint=segue.destinationViewController;
         yunPrint.container=[sender objectForKey:@"yun"];
+        yunPrint.successContent=[sender objectForKey:@"content"];
     }
 }
 @end
