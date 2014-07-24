@@ -51,6 +51,7 @@
     self.xiangArray=[[NSMutableArray alloc] init];
     self.xiangCount=0;
     [self updateCountLabel];
+    NSLog(@"show");
     
     //experiment
     for(int i=0;i<10;i++){
@@ -71,6 +72,7 @@
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [self.departmentTextField becomeFirstResponder];
+    [self.xiangTable reloadData];
  
 }
 -(void)viewWillDisappear:(BOOL)animated
