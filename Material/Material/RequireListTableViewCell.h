@@ -10,6 +10,6 @@
 
 @interface RequireListTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @end

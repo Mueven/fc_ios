@@ -10,8 +10,13 @@
 
 @interface RequireXiangDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *urgentButton;
+@property (weak, nonatomic) IBOutlet UILabel *partNumber;
+@property (weak, nonatomic) IBOutlet UILabel *quantity;
+@property (weak, nonatomic) IBOutlet UILabel *source;
+@property (weak, nonatomic) IBOutlet UILabel *department;
+@property (weak, nonatomic) IBOutlet UILabel *position;
+@property (weak, nonatomic) IBOutlet UILabel *agent;
 - (IBAction)setUrgent:(id)sender;
-
 @end
 
 @implementation RequireXiangDetailViewController
@@ -37,7 +42,23 @@
     else{
         self.urgentButton.backgroundColor=[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0];
         [self.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
-        
+    }
+    self.partNumber.text=self.xiang.partNumber;
+    self.quantity.text=self.xiang.quantity;
+    self.source.text=self.xiang.source;
+    self.department.text=self.xiang.department;
+    self.position.text=self.xiang.position;
+    self.agent.text=self.xiang.agent;
+    
+    self.partNumber.adjustsFontSizeToFitWidth=YES;
+    self.quantity.adjustsFontSizeToFitWidth=YES;
+    self.source.adjustsFontSizeToFitWidth=YES;
+    self.department.adjustsFontSizeToFitWidth=YES;
+    self.position.adjustsFontSizeToFitWidth=YES;
+    self.agent.adjustsFontSizeToFitWidth=YES;
+    
+    if(self.invisible){
+        self.urgentButton.hidden=YES;
     }
 }
 

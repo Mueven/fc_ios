@@ -14,7 +14,7 @@
 {
     // Initialization code
     self.dateLabel.adjustsFontSizeToFitWidth=YES;
-    self.departmentLabel.adjustsFontSizeToFitWidth=YES;
+
     self.statusLabel.adjustsFontSizeToFitWidth=YES;
 }
 

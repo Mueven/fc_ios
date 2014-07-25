@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property (nonatomic)int xiangCount;
 - (IBAction)finish:(id)sender;
+- (IBAction)touchScreen:(id)sender;
 @end
 
 @implementation RequireGenerateViewController
@@ -51,15 +52,15 @@
     self.xiangArray=[[NSMutableArray alloc] init];
     self.xiangCount=0;
     [self updateCountLabel];
-    NSLog(@"show");
+   
     
     //experiment
-    for(int i=0;i<10;i++){
-        NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"location_id",@"21",@"part_id",@"300",@"quantity", nil];
-        RequireXiang *xiang=[[RequireXiang alloc] initWithObject:dic];
-        [self.xiangArray addObject:xiang];
-    }
-    [self.xiangTable reloadData];
+//    for(int i=0;i<10;i++){
+//        NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"location_id",@"21",@"part_id",@"300",@"quantity", nil];
+//        RequireXiang *xiang=[[RequireXiang alloc] initWithObject:dic];
+//        [self.xiangArray addObject:xiang];
+//    }
+//    [self.xiangTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,15 +87,14 @@
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
      self.firstResponder.text=[data copy];
-//     UITextField *targetTextField=self.firstResponder;
      [self textFieldShouldReturn:self.firstResponder];
 }
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
-    self.firstResponder=textField;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
+//    self.firstResponder=textField;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -117,7 +117,9 @@
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
-                     RequireXiang *xiang=[[RequireXiang alloc] initWithObject:responseObject[@"content"]];
+                     NSMutableDictionary *content=[responseObject[@"content"] mutableCopy];
+                     [content setObject:quantity forKey:@"quantity"];
+                     RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
                      [self.xiangArray addObject:xiang];
                       AudioServicesPlaySystemSound(1012);
                      UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
@@ -125,7 +127,7 @@
                                                                   delegate:self
                                                          cancelButtonTitle:@"确定"
                                                          otherButtonTitles: nil];
-                     [NSTimer scheduledTimerWithTimeInterval:2.1f
+                     [NSTimer scheduledTimerWithTimeInterval:1.5f
                                                       target:self
                                                     selector:@selector(dismissAlert:)
                                                     userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
@@ -231,6 +233,7 @@
     if([segue.identifier isEqualToString:@"printFormGenerate"]){
         RequirePrintViewController *print=segue.destinationViewController;
         print.type=[sender objectForKey:@"type"];
+        print.success=[[sender objectForKey:@"success"] integerValue];
     }
     else if([segue.identifier isEqualToString:@"xiangDetail"]){
         RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
@@ -265,19 +268,21 @@
         NSMutableArray *postItems=[[NSMutableArray alloc] init];
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiang=self.xiangArray[i];
-            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.position,@"position",xiang.partNumber,@"part_id",xiang.quantity,@"quantity", nil];
+            NSNumber *emergency=xiang.urgent?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
+            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber,@"part_id",xiang.quantity,@"quantity",emergency,@"is_emergency",nil];
             [postItems addObject:dic];
         }
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet order_root]
            parameters:@{
+                        @"order":@{},
                         @"order_items":postItems
                         }
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
-                      [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
+                      [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list",@"success":@1}];
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];
@@ -304,5 +309,11 @@
 {
     self.xiangCount--;
     [self updateCountLabel];
+}
+
+- (IBAction)touchScreen:(id)sender {
+    [self.departmentTextField resignFirstResponder];
+    [self.partTextField resignFirstResponder];
+    [self.quantityTextField resignFirstResponder];
 }
 @end

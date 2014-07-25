@@ -11,6 +11,8 @@
 @interface RequirePrintViewController ()
 - (IBAction)unPrint:(id)sender;
 - (IBAction)print:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *successView;
+@property (weak, nonatomic) IBOutlet UILabel *successLabel;
 @end
 
 @implementation RequirePrintViewController
@@ -30,6 +32,10 @@
     // Do any additional setup after loading the view.
     if([self.type isEqualToString:@"list"]){
         [self.navigationItem setHidesBackButton:YES];
+    }
+    if(self.success){
+        self.successView.hidden=NO;
+        self.successLabel.text=@"需求单生成成功";
     }
 }
 

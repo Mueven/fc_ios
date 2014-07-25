@@ -11,4 +11,5 @@
 @interface RequireDetailViewController : UIViewController
 @property(nonatomic,strong)NSString *billName;
 @property(nonatomic,strong)NSArray *xiangArray;
+@property(nonatomic)BOOL status;
 @end

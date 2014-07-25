@@ -69,8 +69,14 @@
     RequireListTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     RequireBill *bill=self.billArray[indexPath.row];
     cell.dateLabel.text=bill.date;
-    cell.departmentLabel.text=bill.department;
-    cell.statusLabel.text=bill.status;
+    cell.statusLabel.text=bill.status?@"已处理":@"未处理";
+    if(bill.status){
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
+    }
+    else{
+        [cell.statusLabel setTextColor:[UIColor redColor]];
+    }
+
     // Configure the cell...
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -87,13 +93,14 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 NSArray *order_items=(NSArray *)[responseObject[@"content"] objectForKey:@"order_items"];
+                 NSArray *order_items=(NSArray *)[responseObject[@"content"][@"order"] objectForKey:@"order_items"];
                  NSMutableArray *itemArray=[[NSMutableArray alloc] init];
                  for(int i=0;i<[order_items count];i++){
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:order_items[i]];
                      [itemArray addObject:xiang];
                  }
-                 [self performSegueWithIdentifier:@"historyXiang" sender:@{@"billName":bill.date,@"xiangArray":itemArray}];
+                 NSNumber *status=bill.status?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
+                 [self performSegueWithIdentifier:@"historyXiang" sender:@{@"billName":bill.date,@"status":status,@"xiangArray":itemArray}];
              }
              else{
                  [AFNet alert:responseObject[@"content"]];
@@ -157,6 +164,7 @@
         RequireDetailViewController *requireDetail=segue.destinationViewController;
         requireDetail.billName=[sender objectForKey:@"billName"];
         requireDetail.xiangArray=[sender objectForKey:@"xiangArray"];
+        requireDetail.status=[[sender objectForKey:@"status"] integerValue];
     }
 }
 

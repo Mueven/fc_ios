@@ -10,4 +10,5 @@
 #import "RequireXiang.h"
 @interface RequireXiangDetailViewController : UIViewController
 @property(nonatomic,strong)RequireXiang *xiang;
+@property(nonatomic)BOOL invisible;
 @end

@@ -24,10 +24,12 @@
     self=[super init];
     if(self){
         self.xiangList=[NSArray array];
-        self.date=[object objectForKey:@"date"]?[object objectForKey:@"date"]:@"";
-        self.department=[object objectForKey:@"department"]?[object objectForKey:@"department"]:@"";
-        self.status=[object objectForKey:@"status"]?[object objectForKey:@"status"]:@"";
+        NSRange dateRange=NSMakeRange(0, 10);
+        self.date=[object objectForKey:@"created_at"]? [[object objectForKey:@"created_at"] substringWithRange:dateRange]:@"";
+        //self.department=[object objectForKey:@"department"]?[object objectForKey:@"department"]:@"";
+        self.status=[object objectForKey:@"handled"]?[[object objectForKey:@"handled"] intValue]:0;
         self.id=[object objectForKey:@"id"]?[object objectForKey:@"id"]:@"";
+        self.user_id=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
     }
     return self;
 }

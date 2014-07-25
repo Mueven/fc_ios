@@ -13,7 +13,7 @@
 
 @interface RequireHistoryViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property (strong,nonatomic)NSString *postDate;
+@property (strong,nonatomic)NSDate *postDate;
 - (IBAction)query:(id)sender;
 - (IBAction)touchScreen:(id)sender;
 @end
@@ -41,7 +41,7 @@
          forControlEvents:UIControlEventValueChanged];
     datePicker.datePickerMode=UIDatePickerModeDate;
     [self.dateTextField setInputView:datePicker];
-    self.postDate=[[NSString alloc] init];
+    self.postDate=[[NSDate alloc] init];
 }
 -(void)updateDateTextField:(id)sender
 {
@@ -49,8 +49,7 @@
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     self.dateTextField.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    self.postDate=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    self.postDate=datePicker.date;
     
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -58,8 +57,8 @@
         NSDateFormatter *formater=[[NSDateFormatter alloc] init];
         [formater setDateFormat:@"yyyy-MM-dd"];
         textField.text=[formater stringFromDate:[NSDate date]];
-        [formater setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-        self.postDate=[formater stringFromDate:[NSDate date]];
+        [formater setDateFormat:@"yyyy-MM-dd'T'00:00:00ZZZZZ"];
+        self.postDate=[NSDate date];
     }
 }
 - (void)didReceiveMemoryWarning
@@ -86,19 +85,28 @@
 - (IBAction)query:(id)sender {
     NSString *dateText=self.dateTextField.text;
     if(dateText.length>0){
+        NSDateComponents *components=[[NSDateComponents alloc] init];
+        [components setDay:1];
+        NSCalendar *calendar=[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDate *endDate=[calendar dateByAddingComponents:components toDate:self.postDate options:0];
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd'T'00:00:00ZZZZZ"];
+        NSString *begin=[formatter stringFromDate:self.postDate];
+        NSString *end=[formatter stringFromDate:endDate];
         
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         [AFNet.activeView stopAnimating];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [AFNet.activeView stopAnimating];
         [manager GET:[AFNet order_history]
-          parameters:@{@"start":self.postDate,@"end":self.postDate}
+          parameters:@{@"start":begin,@"end":end}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
                      NSMutableArray *billList=[[NSMutableArray alloc] init];
-                     for(int i=0;i<5;i++){
-                         NSDictionary *dic=responseObject[i];
+                     NSArray *resultArray=responseObject[@"content"][@"orders"];
+                     for(int i=0;i<resultArray.count;i++){
+                         NSDictionary *dic=resultArray[i];
                          RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
                          [billList addObject:bill];
                      }

@@ -10,4 +10,5 @@
 
 @interface RequirePrintViewController : UIViewController
 @property(nonatomic,strong)NSString *type;
+@property(nonatomic)BOOL success;
 @end
