@@ -105,6 +105,7 @@
                           if([responseObject[@"result"] integerValue]==1){
                               [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
                               [self.xiangTable reloadData];
+                              [self updateAddCheckedLabel];
                           }
                           else{
                               [AFNet alert:responseObject[@"content"]];
@@ -207,13 +208,29 @@
 {
     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
     ShopXiangTableViewCell *cell=(ShopXiangTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if(cell.accessoryType==UITableViewCellAccessoryNone){
-//        cell.accessoryType=UITableViewCellAccessoryCheckmark;
-//        xiang.checked=YES;
+        [manager POST:[AFNet xiang_check]
+           parameters:@{@"id":xiang.ID}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      cell.accessoryType=UITableViewCellAccessoryCheckmark;
+                      xiang.checked=YES;
+                      [self updateAddCheckedLabel];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet xiang_uncheck]
            parameters:@{@"id":xiang.ID}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
