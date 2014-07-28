@@ -101,8 +101,6 @@
 -(void)decoderDataReceived:(NSString *)data{
     self.firstResponder.text=[data copy];
     UITextField *targetTextField=self.firstResponder;
-    
-    
     NSString *regex=[NSString string];
     if(targetTextField.tag==4 ){
         //date

@@ -37,6 +37,7 @@
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
+
 }
 
 
@@ -101,6 +102,7 @@
     
     if(email.length>0){
         if(password.length>0){
+//            [self loginSameAction:@"require"];
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet log_in]
@@ -114,6 +116,9 @@
                           }
                           else if([requestCode isEqualToString:@"400"]){
                               [self loginSameAction:@"shop"];
+                          }
+                          else if([requestCode isEqualToString:@"500"]){
+                              [self loginSameAction:@"require"];
                           }
                           [ScanStandard sharedScanStandard];
                       }

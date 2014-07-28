@@ -113,7 +113,6 @@
                          Yun *yunItem=[[Yun alloc] initWithObject:result[i]];
                          [yunArray addObject:yunItem];
                      }
-                     NSLog(@"yunarray:%@,data:%@",yunArray,self.dateTextField.text);
                      [self performSegueWithIdentifier:@"checkYun" sender:@{
                                                                            @"yunArray":yunArray,
                                                                            @"date":self.dateTextField.text

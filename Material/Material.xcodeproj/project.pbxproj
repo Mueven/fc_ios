@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */; };
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
 		B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D524B194D412300696E4E /* YunSendedViewController.m */; };
@@ -35,12 +36,24 @@
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
 		B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E9851973B01D009E4D53 /* ScanStandard.m */; };
+		B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FDFAD1985E99500608CBA /* NewValidate.m */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
 		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
 		B0613987194173B600A0CF62 /* XiangStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0613986194173B600A0CF62 /* XiangStore.m */; };
 		B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */; };
 		B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B061398F1941BD1300A0CF62 /* TuoScanViewController.m */; };
+		B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */; };
+		B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */; };
+		B0619E49197CB318000C1C69 /* RequireBill.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E48197CB318000C1C69 /* RequireBill.m */; };
+		B0619E4C197CB35C000C1C69 /* RequireXiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E4B197CB35C000C1C69 /* RequireXiang.m */; };
+		B0619E58197CBE17000C1C69 /* RequireXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */; };
+		B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */; };
+		B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */; };
+		B0619E5F197D0D32000C1C69 /* RequireGenerateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */; };
+		B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */; };
+		B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0643D65197DF40D0036AADA /* RequireDetailViewController.m */; };
+		B0643D6A197E041B0036AADA /* RequireHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0643D69197E041B0036AADA /* RequireHistoryViewController.m */; };
 		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
@@ -68,6 +81,7 @@
 		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
 		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
 		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
+		B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
@@ -78,6 +92,7 @@
 		B0DF644519448B67002D044B /* Yun.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644419448B67002D044B /* Yun.m */; };
 		B0DF644819448B75002D044B /* YunStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644719448B75002D044B /* YunStore.m */; };
 		B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */; };
+		B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */; };
 		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
 		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
 		B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */; };
@@ -95,6 +110,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryListTableViewController.h; sourceTree = "<group>"; };
+		B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryListTableViewController.m; sourceTree = "<group>"; };
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
 		B037ECF8194BDC50008C456E /* YunTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunTableViewCell.m; sourceTree = "<group>"; };
 		B037ECF9194BDC50008C456E /* YunTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YunTableViewCell.xib; sourceTree = "<group>"; };
@@ -150,6 +167,8 @@
 		B052E9851973B01D009E4D53 /* ScanStandard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanStandard.m; sourceTree = "<group>"; };
 		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B05FDFAC1985E99500608CBA /* NewValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewValidate.h; sourceTree = "<group>"; };
+		B05FDFAD1985E99500608CBA /* NewValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewValidate.m; sourceTree = "<group>"; };
 		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
 		B061397A194163DF00A0CF62 /* TuoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoStore.m; sourceTree = "<group>"; };
 		B061397C1941643E00A0CF62 /* Tuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuo.h; sourceTree = "<group>"; };
@@ -162,6 +181,26 @@
 		B061398C1941BCF900A0CF62 /* TuoBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoBaseViewController.m; sourceTree = "<group>"; };
 		B061398E1941BD1300A0CF62 /* TuoScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoScanViewController.h; sourceTree = "<group>"; };
 		B061398F1941BD1300A0CF62 /* TuoScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoScanViewController.m; sourceTree = "<group>"; };
+		B0619E42197CB044000C1C69 /* RequireListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireListTableViewCell.h; sourceTree = "<group>"; };
+		B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireListTableViewCell.m; sourceTree = "<group>"; };
+		B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireListTableViewCell.xib; sourceTree = "<group>"; };
+		B0619E47197CB318000C1C69 /* RequireBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireBill.h; sourceTree = "<group>"; };
+		B0619E48197CB318000C1C69 /* RequireBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireBill.m; sourceTree = "<group>"; };
+		B0619E4A197CB35C000C1C69 /* RequireXiang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiang.h; sourceTree = "<group>"; };
+		B0619E4B197CB35C000C1C69 /* RequireXiang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiang.m; sourceTree = "<group>"; };
+		B0619E55197CBE17000C1C69 /* RequireXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangTableViewCell.h; sourceTree = "<group>"; };
+		B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiangTableViewCell.m; sourceTree = "<group>"; };
+		B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireXiangTableViewCell.xib; sourceTree = "<group>"; };
+		B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireTodayViewController.h; sourceTree = "<group>"; };
+		B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTodayViewController.m; sourceTree = "<group>"; };
+		B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireGenerateViewController.h; sourceTree = "<group>"; };
+		B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireGenerateViewController.m; sourceTree = "<group>"; };
+		B0643D60197DEF6F0036AADA /* RequirePrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequirePrintViewController.h; sourceTree = "<group>"; };
+		B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequirePrintViewController.m; sourceTree = "<group>"; };
+		B0643D64197DF40D0036AADA /* RequireDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireDetailViewController.h; sourceTree = "<group>"; };
+		B0643D65197DF40D0036AADA /* RequireDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireDetailViewController.m; sourceTree = "<group>"; };
+		B0643D68197E041B0036AADA /* RequireHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryViewController.h; sourceTree = "<group>"; };
+		B0643D69197E041B0036AADA /* RequireHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryViewController.m; sourceTree = "<group>"; };
 		B066FE2F194E714F00C0019D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
@@ -202,6 +241,8 @@
 		B09CC8DD1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09CC8DE1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangDetailViewController.h; sourceTree = "<group>"; };
+		B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiangDetailViewController.m; sourceTree = "<group>"; };
 		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
 		B0BE292E1949921900061E67 /* XiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewCell.m; sourceTree = "<group>"; };
 		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
@@ -221,6 +262,8 @@
 		B0DF644719448B75002D044B /* YunStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunStore.m; sourceTree = "<group>"; };
 		B0E1D4F01952CD3500105D4D /* ReceivePrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivePrintViewController.h; sourceTree = "<group>"; };
 		B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivePrintViewController.m; sourceTree = "<group>"; };
+		B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireSettingViewController.h; sourceTree = "<group>"; };
+		B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSettingViewController.m; sourceTree = "<group>"; };
 		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
 		B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChooseTuoViewController.m; sourceTree = "<group>"; };
 		B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunHaveTuoTableViewController.h; sourceTree = "<group>"; };
@@ -260,6 +303,91 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0454CC9197600D1001476F4 /* DELIVERY */ = {
+			isa = PBXGroup;
+			children = (
+				B0DF644319448B67002D044B /* Yun.h */,
+				B0DF644419448B67002D044B /* Yun.m */,
+				B0DF644619448B75002D044B /* YunStore.h */,
+				B0DF644719448B75002D044B /* YunStore.m */,
+				B061397C1941643E00A0CF62 /* Tuo.h */,
+				B061397D1941643E00A0CF62 /* Tuo.m */,
+				B0613979194163DF00A0CF62 /* TuoStore.h */,
+				B061397A194163DF00A0CF62 /* TuoStore.m */,
+				B061397F1941680C00A0CF62 /* Xiang.h */,
+				B06139801941680C00A0CF62 /* Xiang.m */,
+				B0613985194173B600A0CF62 /* XiangStore.h */,
+				B0613986194173B600A0CF62 /* XiangStore.m */,
+			);
+			name = DELIVERY;
+			sourceTree = "<group>";
+		};
+		B0454CCA19760121001476F4 /* REQUIRE */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E47197CB318000C1C69 /* RequireBill.h */,
+				B0619E48197CB318000C1C69 /* RequireBill.m */,
+				B0619E4A197CB35C000C1C69 /* RequireXiang.h */,
+				B0619E4B197CB35C000C1C69 /* RequireXiang.m */,
+			);
+			name = REQUIRE;
+			sourceTree = "<group>";
+		};
+		B0454CCB19760224001476F4 /* REQUIRE */ = {
+			isa = PBXGroup;
+			children = (
+				B0643D63197DF3F70036AADA /* list */,
+				B0643D67197E03F30036AADA /* history */,
+				B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */,
+				B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */,
+			);
+			name = REQUIRE;
+			sourceTree = "<group>";
+		};
+		B0454CCC1976022B001476F4 /* DELIVERY */ = {
+			isa = PBXGroup;
+			children = (
+				B0FDC9761945AFA3008E4B72 /* STOCK */,
+				B0FDC9771945AFC9008E4B72 /* SHOP */,
+			);
+			name = DELIVERY;
+			sourceTree = "<group>";
+		};
+		B0454CCD19760244001476F4 /* DELIVERY */ = {
+			isa = PBXGroup;
+			children = (
+				B0BE292D1949921900061E67 /* XiangTableViewCell.h */,
+				B0BE292E1949921900061E67 /* XiangTableViewCell.m */,
+				B0BE292F1949921900061E67 /* XiangTableViewCell.xib */,
+				B08B8F0A1953D39E009739DB /* TuoTableViewCell.h */,
+				B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */,
+				B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */,
+				B04EF1D11946888900A95D7A /* ShopTuoTableViewCell.h */,
+				B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */,
+				B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */,
+				B04EF1DC1946A49500A95D7A /* ShopXiangTableViewCell.h */,
+				B04EF1DD1946A49500A95D7A /* ShopXiangTableViewCell.m */,
+				B04EF1DE1946A49500A95D7A /* ShopXiangTableViewCell.xib */,
+				B037ECF7194BDC50008C456E /* YunTableViewCell.h */,
+				B037ECF8194BDC50008C456E /* YunTableViewCell.m */,
+				B037ECF9194BDC50008C456E /* YunTableViewCell.xib */,
+			);
+			name = DELIVERY;
+			sourceTree = "<group>";
+		};
+		B0454CCE1976024E001476F4 /* REQUIRE */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E42197CB044000C1C69 /* RequireListTableViewCell.h */,
+				B0619E43197CB044000C1C69 /* RequireListTableViewCell.m */,
+				B0619E44197CB044000C1C69 /* RequireListTableViewCell.xib */,
+				B0619E55197CBE17000C1C69 /* RequireXiangTableViewCell.h */,
+				B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */,
+				B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */,
+			);
+			name = REQUIRE;
+			sourceTree = "<group>";
+		};
 		B04EF1E11946B1CC00A95D7A /* Receive */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,18 +447,8 @@
 		B06139751941573B00A0CF62 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B0DF644319448B67002D044B /* Yun.h */,
-				B0DF644419448B67002D044B /* Yun.m */,
-				B0DF644619448B75002D044B /* YunStore.h */,
-				B0DF644719448B75002D044B /* YunStore.m */,
-				B061397C1941643E00A0CF62 /* Tuo.h */,
-				B061397D1941643E00A0CF62 /* Tuo.m */,
-				B0613979194163DF00A0CF62 /* TuoStore.h */,
-				B061397A194163DF00A0CF62 /* TuoStore.m */,
-				B061397F1941680C00A0CF62 /* Xiang.h */,
-				B06139801941680C00A0CF62 /* Xiang.m */,
-				B0613985194173B600A0CF62 /* XiangStore.h */,
-				B0613986194173B600A0CF62 /* XiangStore.m */,
+				B0454CCA19760121001476F4 /* REQUIRE */,
+				B0454CC9197600D1001476F4 /* DELIVERY */,
 				B052E9841973B01D009E4D53 /* ScanStandard.h */,
 				B052E9851973B01D009E4D53 /* ScanStandard.m */,
 			);
@@ -375,6 +493,51 @@
 			name = Yun;
 			sourceTree = "<group>";
 		};
+		B0619E50197CB610000C1C69 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E51197CB6D1000C1C69 /* REQUIRE */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		B0619E51197CB6D1000C1C69 /* REQUIRE */ = {
+			isa = PBXGroup;
+			children = (
+				B05FDFAC1985E99500608CBA /* NewValidate.h */,
+				B05FDFAD1985E99500608CBA /* NewValidate.m */,
+			);
+			name = REQUIRE;
+			sourceTree = "<group>";
+		};
+		B0643D63197DF3F70036AADA /* list */ = {
+			isa = PBXGroup;
+			children = (
+				B0619E5A197CC8EB000C1C69 /* RequireTodayViewController.h */,
+				B0619E5B197CC8EB000C1C69 /* RequireTodayViewController.m */,
+				B0619E5D197D0D32000C1C69 /* RequireGenerateViewController.h */,
+				B0619E5E197D0D32000C1C69 /* RequireGenerateViewController.m */,
+				B0643D60197DEF6F0036AADA /* RequirePrintViewController.h */,
+				B0643D61197DEF6F0036AADA /* RequirePrintViewController.m */,
+				B0643D64197DF40D0036AADA /* RequireDetailViewController.h */,
+				B0643D65197DF40D0036AADA /* RequireDetailViewController.m */,
+				B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */,
+				B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */,
+			);
+			name = list;
+			sourceTree = "<group>";
+		};
+		B0643D67197E03F30036AADA /* history */ = {
+			isa = PBXGroup;
+			children = (
+				B0643D68197E041B0036AADA /* RequireHistoryViewController.h */,
+				B0643D69197E041B0036AADA /* RequireHistoryViewController.m */,
+				B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */,
+				B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */,
+			);
+			name = history;
+			sourceTree = "<group>";
+		};
 		B085F603194004CC001F01F3 = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +579,7 @@
 				B085F64419400FA3001F01F3 /* vendor */,
 				B096C63D194291FB00271AE4 /* View */,
 				B06139751941573B00A0CF62 /* Model */,
+				B0619E50197CB610000C1C69 /* Service */,
 				B085F63E194006EE001F01F3 /* Controller */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
@@ -461,12 +625,12 @@
 		B085F63E194006EE001F01F3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B0454CCB19760224001476F4 /* REQUIRE */,
+				B0454CCC1976022B001476F4 /* DELIVERY */,
 				B085F63F1940071A001F01F3 /* Login.h */,
 				B085F6401940071A001F01F3 /* Login.m */,
 				B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */,
 				B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */,
-				B0FDC9761945AFA3008E4B72 /* STOCK */,
-				B0FDC9771945AFC9008E4B72 /* SHOP */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -487,21 +651,8 @@
 		B096C63D194291FB00271AE4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B0BE292D1949921900061E67 /* XiangTableViewCell.h */,
-				B0BE292E1949921900061E67 /* XiangTableViewCell.m */,
-				B0BE292F1949921900061E67 /* XiangTableViewCell.xib */,
-				B08B8F0A1953D39E009739DB /* TuoTableViewCell.h */,
-				B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */,
-				B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */,
-				B04EF1D11946888900A95D7A /* ShopTuoTableViewCell.h */,
-				B04EF1D21946888900A95D7A /* ShopTuoTableViewCell.m */,
-				B04EF1D31946888900A95D7A /* ShopTuoTableViewCell.xib */,
-				B04EF1DC1946A49500A95D7A /* ShopXiangTableViewCell.h */,
-				B04EF1DD1946A49500A95D7A /* ShopXiangTableViewCell.m */,
-				B04EF1DE1946A49500A95D7A /* ShopXiangTableViewCell.xib */,
-				B037ECF7194BDC50008C456E /* YunTableViewCell.h */,
-				B037ECF8194BDC50008C456E /* YunTableViewCell.m */,
-				B037ECF9194BDC50008C456E /* YunTableViewCell.xib */,
+				B0454CCE1976024E001476F4 /* REQUIRE */,
+				B0454CCD19760244001476F4 /* DELIVERY */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -631,6 +782,8 @@
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
+				B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */,
+				B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,6 +802,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */,
 				B04EF20A1946E60D00A95D7A /* AFHTTPRequestOperation.m in Sources */,
 				B04EF20D1946E60D00A95D7A /* AFNetworkReachabilityManager.m in Sources */,
 				B04EF20C1946E60D00A95D7A /* AFHTTPSessionManager.m in Sources */,
@@ -657,17 +811,26 @@
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */,
+				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
+				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
 				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
 				B04EF2111946E60D00A95D7A /* AFURLResponseSerialization.m in Sources */,
+				B0619E5F197D0D32000C1C69 /* RequireGenerateViewController.m in Sources */,
+				B0619E58197CBE17000C1C69 /* RequireXiangTableViewCell.m in Sources */,
+				B0619E4C197CB35C000C1C69 /* RequireXiang.m in Sources */,
 				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
 				B0FDC97219458B6F008E4B72 /* YunEditViewController.m in Sources */,
 				B04EF1DF1946A49500A95D7A /* ShopXiangTableViewCell.m in Sources */,
+				B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */,
+				B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */,
 				B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
+				B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */,
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
+				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
@@ -678,11 +841,13 @@
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
+				B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
 				B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */,
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
 				B0DF644819448B75002D044B /* YunStore.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
+				B0643D6A197E041B0036AADA /* RequireHistoryViewController.m in Sources */,
 				B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
@@ -695,6 +860,7 @@
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
+				B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */,
 				B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */,
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
