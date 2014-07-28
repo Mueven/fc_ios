@@ -58,6 +58,8 @@
 
 -(NSString *)scan_validate;
 
+-(NSString *)version;
+
 -(NSString *)order_root;
 -(NSString *)order_history;
 -(NSString *)order_detail;
