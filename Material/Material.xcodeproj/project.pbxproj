@@ -36,6 +36,7 @@
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
 		B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E9851973B01D009E4D53 /* ScanStandard.m */; };
+		B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FDFAD1985E99500608CBA /* NewValidate.m */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
 		B06139811941680C00A0CF62 /* Xiang.m in Sources */ = {isa = PBXBuildFile; fileRef = B06139801941680C00A0CF62 /* Xiang.m */; };
@@ -166,6 +167,8 @@
 		B052E9851973B01D009E4D53 /* ScanStandard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanStandard.m; sourceTree = "<group>"; };
 		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B05FDFAC1985E99500608CBA /* NewValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewValidate.h; sourceTree = "<group>"; };
+		B05FDFAD1985E99500608CBA /* NewValidate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewValidate.m; sourceTree = "<group>"; };
 		B0613979194163DF00A0CF62 /* TuoStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoStore.h; sourceTree = "<group>"; };
 		B061397A194163DF00A0CF62 /* TuoStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoStore.m; sourceTree = "<group>"; };
 		B061397C1941643E00A0CF62 /* Tuo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tuo.h; sourceTree = "<group>"; };
@@ -501,6 +504,8 @@
 		B0619E51197CB6D1000C1C69 /* REQUIRE */ = {
 			isa = PBXGroup;
 			children = (
+				B05FDFAC1985E99500608CBA /* NewValidate.h */,
+				B05FDFAD1985E99500608CBA /* NewValidate.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -823,6 +828,7 @@
 				B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
+				B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */,
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
 				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,

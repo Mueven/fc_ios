@@ -13,9 +13,9 @@
 @property(nonatomic,strong)NSArray *xiangList;
 @property(nonatomic,strong)NSString *date;
 @property(nonatomic,strong)NSString *department;
-@property(nonatomic)BOOL status;
 @property(nonatomic,strong)NSString *id;
 @property(nonatomic,strong)NSString *user_id;
+@property(nonatomic)BOOL status;
 -(instancetype)init;
 -(instancetype)initWithObject:(id)object;
 @end

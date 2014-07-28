@@ -13,6 +13,7 @@
 #import "AFNetOperate.h"
 #import "RequireXiangDetailViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "NewValidate.h"
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (strong,nonatomic)NSMutableArray *xiangArray;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (strong ,nonatomic)NewValidate *validate;
 @property (nonatomic)int xiangCount;
 - (IBAction)finish:(id)sender;
 - (IBAction)touchScreen:(id)sender;
@@ -52,7 +54,8 @@
     self.xiangArray=[[NSMutableArray alloc] init];
     self.xiangCount=0;
     [self updateCountLabel];
-   
+    self.validate=[NewValidate sharedValidate];
+
     
     //experiment
 //    for(int i=0;i<10;i++){
@@ -118,33 +121,34 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
                      NSMutableDictionary *content=[responseObject[@"content"] mutableCopy];
+                     NSString *source=[content objectForKey:@"source_id"];
                      [content setObject:quantity forKey:@"quantity"];
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
-                     [self.xiangArray addObject:xiang];
-                      AudioServicesPlaySystemSound(1012);
-                     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                                   message:@"添加成功"
-                                                                  delegate:self
-                                                         cancelButtonTitle:@"确定"
-                                                         otherButtonTitles: nil];
-                     [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                      target:self
-                                                    selector:@selector(dismissAlert:)
-                                                    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
-                                                     repeats:NO];
-                     [alert show];
-                     self.partTextField.text=@"";
-                     self.quantityTextField.text=@"";
-                     [self.partTextField becomeFirstResponder];
-                     [self.xiangTable reloadData];
-                     [self updateAddCount];
+                     if(self.xiangArray.count>0){
+                         BOOL result=[self.validate sourceValidate:source];
+                         if(result){
+                             //和初始化的零件source一样
+                             [self xiangAdd:xiang];
+                         }
+                         else{
+                             //和初始化零件的source不一样
+                             [self xiangAddFail];
+                         }
+                     }
+                     else{
+                         //加入的第一个零件，初始化对比的对象
+                         [self.validate firstSetSource:source];
+                         [self xiangAdd:xiang];
+                     }
                  }
                  else{
+                     AudioServicesPlaySystemSound(1051);
                      [AFNet alert:responseObject[@"content"]];
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [AFNet.activeView stopAnimating];
+                  AudioServicesPlaySystemSound(1051);
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
@@ -156,6 +160,44 @@
     UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
     [nextText becomeFirstResponder];
     return YES;
+}
+-(void)xiangAdd:(RequireXiang *)xiang
+{
+    [self.xiangArray addObject:xiang];
+    AudioServicesPlaySystemSound(1012);
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"添加成功"
+                                                 delegate:self
+                                        cancelButtonTitle:@"确定"
+                                        otherButtonTitles: nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                     target:self
+                                   selector:@selector(dismissAlert:)
+                                   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                    repeats:NO];
+    [alert show];
+    self.partTextField.text=@"";
+    self.quantityTextField.text=@"";
+    [self.partTextField becomeFirstResponder];
+    [self.xiangTable reloadData];
+    [self updateAddCount];
+}
+-(void)xiangAddFail
+{
+    AudioServicesPlaySystemSound(1051);
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"零件来源地不一致"
+                                                 delegate:self
+                                        cancelButtonTitle:@"确定"
+                                        otherButtonTitles: nil];
+    [NSTimer scheduledTimerWithTimeInterval:2.1f
+                                     target:self
+                                   selector:@selector(dismissAlert:)
+                                   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                    repeats:NO];
+    [alert show];
+    self.partTextField.text=@"";
+    [self.partTextField becomeFirstResponder];
 }
 -(void)dismissAlert:(NSTimer *)timer
 {
