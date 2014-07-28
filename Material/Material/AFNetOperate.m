@@ -95,8 +95,22 @@
         NSString *base=[[self URLDictionary] objectForKey:@"base"];
         NSString *port=[[self URLDictionary] objectForKey:@"port"];
         return [base stringByAppendingString:port];
+    }    
+}
+-(NSString *)baseURLWithoutPort
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"ip.address.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        NSString *base=[dictionary objectForKey:@"ip"];
+        return base;
     }
-    
+    else{
+        NSString *base=[[self URLDictionary] objectForKey:@"base"];
+        return base;
+    }
 }
 //resource part
 -(NSString *)part_index

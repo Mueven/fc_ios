@@ -40,51 +40,70 @@
     [reachability startNotifier];
     
     //自动更新
-//    UpdatePolicy policy = LATEST;
 //    @try {
 //        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-//        NSString *toReplace = [[[AFNetOperate alloc] init] version];
-//        NSString* path = [NSString stringWithFormat:@"%@%@%@",toReplace,@"?version=",version];
-// 
-//        NSURL* url = [NSURL URLWithString:path];
-//        NSString* jsonString = [[NSString alloc]initWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
-//        NSData* jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary* dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
-//        if(dic){
-//            if([[dic objectForKey:@"result"] boolValue]==YES) {
-//                if([[dic objectForKey:@"is_option"] boolValue]==YES){
-//                    policy = MUST;
-//                }
-//                else {
-//                    policy = OPTION;
-//                }
-//            }
-//        }
+//        
+//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        NSLog(@"address:%@",[AFNet version]);
+//        [manager GET:[AFNet version]
+//           parameters:@{@"version":version}
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  UpdatePolicy policy = LATEST;
+//                  NSLog(@"update:%@",responseObject);
+//                  if([responseObject[@"result"] integerValue]==1){
+//                        //有更新
+//                      if([responseObject[@"is_force"] integerValue]==1){
+//                          //强制更新
+//                          policy = MUST;
+//                      }
+//                      else{
+//                          //可选更新
+//                          policy = OPTION;
+//                      }
+//                      NSString *title = @"有新版本可以使用";
+//                      NSString *cancelTxt = @"下次再说";
+//                      NSString *otherTxt = @"立刻升级";
+//                      if(policy== OPTION){
+//                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
+//                                                                         message:nil
+//                                                                        delegate:self
+//                                                               cancelButtonTitle:cancelTxt
+//                                                               otherButtonTitles:otherTxt,nil];
+//                          [view show ];
+//                      }
+//                      else if (policy == MUST){
+//                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
+//                                                                         message:@"必须更新版本才能继续使用"
+//                                                                        delegate:self
+//                                                               cancelButtonTitle:cancelTxt
+//                                                               otherButtonTitles:otherTxt, nil];
+//                          [view show ];
+//                      }
+//                  }
+//  
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//              }
+//         ];
 //    }
 //    @catch (NSException *exception) {
 //    }
 //    @finally {
 //    }
-//    
-//    NSString *title = @"New version avilable";
-//    NSString *cancelTxt = @"No,thanks";
-//    NSString *otherTxt = @"Update now";
-//    
-//    if(policy== OPTION){
-//        UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title message:nil delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt,nil];
-//        [view show ];
-//    }
-//    else if (policy == MUST){
-//        UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title message:@"It's a mere update and you have to update to this version" delegate:self cancelButtonTitle:cancelTxt otherButtonTitles:otherTxt, nil];
-//        [view show ];
-//    }
+    
+    
     
     return YES;
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSString *base=[[[AFNetOperate alloc] init] baseURLWithoutPort];
+    NSString *fileName=@"material";
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"itms-services://?action=download-manifest&url=%@/plist/%@.plist",base,fileName]];
     if (buttonIndex == 1) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=http://121.199.48.53/clearinsight.plist"]];
+        [[UIApplication sharedApplication] openURL:url];
     }
 }
 - (void)applicationWillResignActive:(UIApplication *)application

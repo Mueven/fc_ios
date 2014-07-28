@@ -58,7 +58,7 @@
 
 -(NSString *)scan_validate;
 
- 
+
 -(NSString *)version;
 
 
@@ -69,4 +69,5 @@
 -(NSString *)order_item_root;
 -(NSString *)order_item_verify;
 
+-(NSString *)baseURLWithoutPort;
 @end

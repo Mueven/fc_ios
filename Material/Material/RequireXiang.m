@@ -27,15 +27,19 @@
         }
         @try {
             self.source=[object objectForKey:@"source_id"]?[object objectForKey:@"source_id"]:@"";
+            self.source_name=[object objectForKey:@"source"]?[object objectForKey:@"source"]:@"";
         }
         @catch (NSException *exception) {
             self.source=@"";
+            self.source_name=@"";
         }
         self.position=[object objectForKey:@"position"]?[object objectForKey:@"position"]:@"";
         self.partNumber=[object objectForKey:@"part_id"]?[object objectForKey:@"part_id"]:@"";
         self.department=[object objectForKey:@"whouse_id"]?[object objectForKey:@"whouse_id"]:@"";
         self.agent=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
         self.urgent=[object objectForKey:@"is_emergency"]?[[object objectForKey:@"is_emergency"] intValue]:0;
+        self.uniq_id=[object objectForKey:@"uniq_id"]?[object objectForKey:@"uniq_id"]:@"";
+        self.xiangCount=1;
     }
     return self;
 }

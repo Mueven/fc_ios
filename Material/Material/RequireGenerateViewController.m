@@ -14,6 +14,7 @@
 #import "RequireXiangDetailViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "NewValidate.h"
+#import "ScanStandard.h"
 
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
@@ -24,7 +25,9 @@
 @property (strong,nonatomic)NSMutableArray *xiangArray;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 @property (strong ,nonatomic)NewValidate *validate;
+@property (strong,nonatomic)NSString *order_source_id;
 @property (nonatomic)int xiangCount;
+@property (strong,nonatomic)ScanStandard *scanStandard;
 - (IBAction)finish:(id)sender;
 - (IBAction)touchScreen:(id)sender;
 @end
@@ -55,8 +58,8 @@
     self.xiangCount=0;
     [self updateCountLabel];
     self.validate=[NewValidate sharedValidate];
-
-    
+    self.order_source_id=[NSString string];
+    self.scanStandard=[ScanStandard sharedScanStandard];
     //experiment
 //    for(int i=0;i<10;i++){
 //        NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"location_id",@"21",@"part_id",@"300",@"quantity", nil];
@@ -89,8 +92,61 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
-     self.firstResponder.text=[data copy];
-     [self textFieldShouldReturn:self.firstResponder];
+    self.firstResponder.text=[data copy];
+    UITextField *targetTextField=self.firstResponder;
+    NSString *regex=[NSString string];
+    if(targetTextField.tag==2){
+        //零件号
+        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"regex_string"];
+        NSString *alertString=@"请扫描零件号";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            [self textFieldShouldReturn:self.firstResponder];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                             target:self
+                                           selector:@selector(dismissAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
+    }
+    else if(targetTextField.tag==3){
+        //数量
+        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"regex_string"];
+        NSString *alertString=@"请扫描数量";
+        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL isMatch  = [pred evaluateWithObject:data];
+        if(isMatch){
+            [self textFieldShouldReturn:self.firstResponder];
+        }
+        else{
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                          message:alertString
+                                                         delegate:self
+                                                cancelButtonTitle:@"确定"
+                                                otherButtonTitles:nil];
+            [alert show];
+            [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                             target:self
+                                           selector:@selector(dismissAlert:)
+                                           userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                            repeats:NO];
+            AudioServicesPlaySystemSound(1051);
+            targetTextField.text=@"";
+            [targetTextField becomeFirstResponder];
+        }
+    }
 }
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -138,6 +194,7 @@
                      else{
                          //加入的第一个零件，初始化对比的对象
                          [self.validate firstSetSource:source];
+                         self.order_source_id=source;
                          [self xiangAdd:xiang];
                      }
                  }
@@ -161,9 +218,9 @@
     [nextText becomeFirstResponder];
     return YES;
 }
+//添加箱
 -(void)xiangAdd:(RequireXiang *)xiang
 {
-    [self.xiangArray addObject:xiang];
     AudioServicesPlaySystemSound(1012);
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
                                                   message:@"添加成功"
@@ -179,9 +236,10 @@
     self.partTextField.text=@"";
     self.quantityTextField.text=@"";
     [self.partTextField becomeFirstResponder];
-    [self.xiangTable reloadData];
-    [self updateAddCount];
+    //合并处理
+    [self xiangMerge:xiang];
 }
+//无法添加箱
 -(void)xiangAddFail
 {
     AudioServicesPlaySystemSound(1051);
@@ -198,6 +256,31 @@
     [alert show];
     self.partTextField.text=@"";
     [self.partTextField becomeFirstResponder];
+}
+//添加箱后的合并
+-(void)xiangMerge:(RequireXiang *)xiang
+{
+    NSString *uniq_id=xiang.uniq_id;
+    BOOL merge=0;
+    for(int i=0;i<self.xiangArray.count;i++){
+        RequireXiang *xiangItem=self.xiangArray[i];
+        if([xiangItem.uniq_id isEqualToString:uniq_id] && !xiangItem.urgent){
+            int origin=[xiangItem.quantity intValue];
+            int new=[xiang.quantity intValue];
+            xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+            xiangItem.xiangCount++;
+            merge=1;
+            break ;
+        }
+    }
+    if(merge){
+        
+    }
+    else{
+        [self.xiangArray addObject:xiang];
+    }
+    [self updateAddCount];
+    [self.xiangTable reloadData];
 }
 -(void)dismissAlert:(NSTimer *)timer
 {
@@ -219,7 +302,7 @@
     RequireXiang *xiang=self.xiangArray[indexPath.row];
     cell.positionTextField.text=xiang.position;
     cell.partNumberTextField.text=xiang.partNumber;
-    cell.quantityTextField.text=xiang.quantity;
+    cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];
     __weak RequireXiangTableViewCell *cellForBlock=cell;
     cell.clickCell=^(){
         if(xiang.urgent){
@@ -236,6 +319,7 @@
             cellForBlock.urgentButton.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1.0];
             [cellForBlock.urgentButton setTitle:@"取消加急" forState:UIControlStateNormal];
         }
+        [self urgentSwitchMerg:xiang];
     };
     if(xiang.urgent){
         //加急状态下
@@ -250,6 +334,39 @@
         [cell.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
     }
     return cell;
+}
+-(void)urgentSwitchMerg:(RequireXiang *)xiang
+{
+    NSString *uniq_id=xiang.uniq_id;
+    if(xiang.urgent==1){
+        //不加急变为加急
+        for(int i=0;i<self.xiangArray.count;i++){
+            RequireXiang *xiangItem=self.xiangArray[i];
+            if([xiangItem.uniq_id isEqualToString:uniq_id] && xiangItem.urgent==1 && xiangItem!=xiang){
+                int origin=[xiangItem.quantity intValue];
+                int new=[xiang.quantity intValue];
+                xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+                xiangItem.xiangCount=xiangItem.xiangCount+xiang.xiangCount;
+                [self.xiangArray removeObjectIdenticalTo:xiang];
+                break ;
+            }
+        }
+    }
+    else{
+        //加急变为不加急
+        for(int i=0;i<self.xiangArray.count;i++){
+            RequireXiang *xiangItem=self.xiangArray[i];
+            if([xiangItem.uniq_id isEqualToString:uniq_id] && xiangItem.urgent==0 && xiangItem!=xiang){
+                int origin=[xiangItem.quantity intValue];
+                int new=[xiang.quantity intValue];
+                xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+                xiangItem.xiangCount++;
+                [self.xiangArray removeObjectIdenticalTo:xiang];
+                break ;
+            }
+        }
+    }
+    [self.xiangTable reloadData];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -318,7 +435,7 @@
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet order_root]
            parameters:@{
-                        @"order":@{},
+                        @"order":@{@"source_id":self.order_source_id},
                         @"order_items":postItems
                         }
               success:^(AFHTTPRequestOperation *operation, id responseObject) {

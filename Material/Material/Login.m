@@ -37,7 +37,6 @@
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     // Do any additional setup after loading the view from its nib.
-
 }
 
 

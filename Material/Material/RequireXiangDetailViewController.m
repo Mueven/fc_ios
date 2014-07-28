@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *department;
 @property (weak, nonatomic) IBOutlet UILabel *position;
 @property (weak, nonatomic) IBOutlet UILabel *agent;
+@property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 - (IBAction)setUrgent:(id)sender;
 @end
 
@@ -45,10 +46,11 @@
     }
     self.partNumber.text=self.xiang.partNumber;
     self.quantity.text=self.xiang.quantity;
-    self.source.text=self.xiang.source;
+    self.source.text=self.xiang.source_name;
     self.department.text=self.xiang.department;
     self.position.text=self.xiang.position;
     self.agent.text=self.xiang.agent;
+    self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.xiang.xiangCount];
     
     self.partNumber.adjustsFontSizeToFitWidth=YES;
     self.quantity.adjustsFontSizeToFitWidth=YES;

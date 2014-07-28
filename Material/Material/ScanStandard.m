@@ -28,7 +28,6 @@
         [manager GET:validateString
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-           
                  NSArray *result=responseObject;
                  if([result count]>0){
                      self.rules=[[NSMutableDictionary alloc] init];
@@ -37,11 +36,10 @@
                          NSString *key=[item objectForKey:@"code"];
                          [self.rules setObject:item forKey:key];
                      }
-
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                 NSLog(@"%@",[error localizedDescription]);
+                 NSLog(@"%@",[error localizedDescription]);
              }
          ];
     }

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>version</key>
-	<string>/api/settings/validate_ios_app_version</string>
+	<string>/api/v1/ios_updates</string>
 	<key>scan_validate</key>
-	<string>/api/v1/regexes/package_label</string>
+	<string>/api/v1/regexes/labels</string>
 	<key>base</key>
 	<string>http://192.168.1.109</string>
 	<key>port</key>
