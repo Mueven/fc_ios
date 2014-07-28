@@ -313,37 +313,32 @@
     }
 }
 
-
--(NSString *)print_stock_tuo:(NSString *)ID
+-(NSString *)base_for_print:(NSString *)key
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
     NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"stock_tuo"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *bind=[printDictionary objectForKey:key];
+    return [base stringByAppendingString:bind];
+}
+
+-(NSString *)print_stock_tuo:(NSString *)ID
+{
+    NSString *joint=[self base_for_print:@"stock_tuo"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_stock_yun:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-     NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"stock_yun"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"stock_yun"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_shop_receive:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"shop_receive"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"shop_receive"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 -(NSString *)print_shop_unreceive:(NSString *)ID
 {
-    NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
-    NSString *base=[self baseURL_print];
-    NSString *bind=[printDictionary objectForKey:@"shop_unreceive"];
-    NSString *joint=[base stringByAppendingString:bind];
+    NSString *joint=[self base_for_print:@"shop_unreceive"];
     return [NSString stringWithFormat:@"%@%@",joint,ID];
 }
 
@@ -368,5 +363,27 @@
 -(NSString *)scan_validate{
     NSString *base=[self baseURL];
     return [base stringByAppendingString:[[self URLDictionary] objectForKey:@"scan_validate"]];
+}
+//order
+-(NSString *)order_root
+{
+    NSString *base=[self baseURL];
+    NSString *order=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"root"];
+    return [base stringByAppendingString:order];
+}
+-(NSString *)order_history
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"history"];
+    return [[self order_root] stringByAppendingString:bind];
+}
+//order item
+-(NSString *)order_item_root{
+    NSString *base=[self baseURL];
+    NSString *order_item=[[[self URLDictionary] objectForKey:@"order_item"] objectForKey:@"root"];
+    return [base stringByAppendingString:order_item];
+}
+-(NSString *)order_item_verify{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"order_item"] objectForKey:@"verify"];
+    return [[self order_item_root] stringByAppendingString:bind];
 }
 @end
