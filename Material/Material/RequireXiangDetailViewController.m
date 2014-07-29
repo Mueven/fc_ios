@@ -45,7 +45,7 @@
         [self.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
     }
     self.partNumber.text=self.xiang.partNumber;
-    self.quantity.text=self.xiang.quantity;
+    self.quantity.text=self.xiang.quantity_int;
     self.source.text=self.xiang.source_name;
     self.department.text=self.xiang.department;
     self.position.text=self.xiang.position;

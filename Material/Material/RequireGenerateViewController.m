@@ -151,9 +151,9 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
-    self.firstResponder=textField;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
+//    self.firstResponder=textField;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -162,7 +162,18 @@
     NSString *partNumber=self.partTextField.text;
     NSString *department=self.departmentTextField.text;
     NSString *quantity=self.quantityTextField.text;
-
+    
+    //after regex quantity
+    int beginQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"prefix_length"] intValue];
+    int lastQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"suffix_length"] intValue];
+    NSString *quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+    //after regex part
+    int beginP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
+    int lastP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
+    NSString *partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+    
+    
+    
     if(partNumber.length>0&&department.length>0&&quantity.length>0){
         //发送请求
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -170,8 +181,8 @@
         [manager POST:[AFNet order_item_verify]
           parameters:@{
                         @"department":department,
-                        @"part_id":partNumber,
-                        @"quantity:":quantity
+                        @"part_id":partNumberPost,
+                        @"quantity":quantityPost
                                }
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
@@ -265,9 +276,9 @@
     for(int i=0;i<self.xiangArray.count;i++){
         RequireXiang *xiangItem=self.xiangArray[i];
         if([xiangItem.uniq_id isEqualToString:uniq_id] && !xiangItem.urgent){
-            int origin=[xiangItem.quantity intValue];
-            int new=[xiang.quantity intValue];
-            xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+            int origin=[xiangItem.quantity_int intValue];
+            int new=[xiang.quantity_int intValue];
+            xiangItem.quantity_int=[NSString stringWithFormat:@"%d",origin+new];
             xiangItem.xiangCount++;
             merge=1;
             break ;
@@ -343,9 +354,9 @@
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiangItem=self.xiangArray[i];
             if([xiangItem.uniq_id isEqualToString:uniq_id] && xiangItem.urgent==1 && xiangItem!=xiang){
-                int origin=[xiangItem.quantity intValue];
-                int new=[xiang.quantity intValue];
-                xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+                int origin=[xiangItem.quantity_int intValue];
+                int new=[xiang.quantity_int intValue];
+                xiangItem.quantity_int=[NSString stringWithFormat:@"%d",origin+new];
                 xiangItem.xiangCount=xiangItem.xiangCount+xiang.xiangCount;
                 [self.xiangArray removeObjectIdenticalTo:xiang];
                 break ;
@@ -357,9 +368,9 @@
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiangItem=self.xiangArray[i];
             if([xiangItem.uniq_id isEqualToString:uniq_id] && xiangItem.urgent==0 && xiangItem!=xiang){
-                int origin=[xiangItem.quantity intValue];
-                int new=[xiang.quantity intValue];
-                xiangItem.quantity=[NSString stringWithFormat:@"%d",origin+new];
+                int origin=[xiangItem.quantity_int intValue];
+                int new=[xiang.quantity_int intValue];
+                xiangItem.quantity_int=[NSString stringWithFormat:@"%d",origin+new];
                 xiangItem.xiangCount++;
                 [self.xiangArray removeObjectIdenticalTo:xiang];
                 break ;
@@ -428,7 +439,7 @@
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiang=self.xiangArray[i];
             NSNumber *emergency=xiang.urgent?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
-            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber,@"part_id",xiang.quantity,@"quantity",emergency,@"is_emergency",nil];
+            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",nil];
             [postItems addObject:dic];
         }
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];

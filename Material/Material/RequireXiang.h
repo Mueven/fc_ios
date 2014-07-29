@@ -12,7 +12,9 @@
 @property(nonatomic,strong)NSString *id;
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *partNumber;
+@property(nonatomic,strong)NSString *partNumber_origin;
 @property(nonatomic,strong)NSString *quantity;
+@property(nonatomic,strong)NSString *quantity_int;
 @property(nonatomic,strong)NSString *source;
 @property(nonatomic,strong)NSString *source_name;
 @property(nonatomic,strong)NSString *department;
