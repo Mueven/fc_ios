@@ -166,11 +166,11 @@
     //after regex quantity
     int beginQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"prefix_length"] intValue];
     int lastQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"suffix_length"] intValue];
-    NSString *quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+    NSString *quantityPost=[[quantity copy] substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
     //after regex part
     int beginP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
     int lastP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-    NSString *partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+    NSString *partNumberPost=[[partNumber copy] substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
     
     
     
@@ -189,7 +189,9 @@
                  if([responseObject[@"result"] integerValue]==1){
                      NSMutableDictionary *content=[responseObject[@"content"] mutableCopy];
                      NSString *source=[content objectForKey:@"source_id"];
+                     [content setObject:partNumber forKey:@"part_id"];
                      [content setObject:quantity forKey:@"quantity"];
+                     NSLog(@"generate object:%@",content);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
                      if(self.xiangArray.count>0){
                          BOOL result=[self.validate sourceValidate:source];
@@ -442,6 +444,7 @@
             NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",nil];
             [postItems addObject:dic];
         }
+        NSLog(@"send dic:%@",postItems);
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet order_root]
@@ -457,6 +460,7 @@
 //                  else{
 //                      [AFNet alert:responseObject[@"content"]];
 //                  }
+                  AudioServicesPlaySystemSound(1012);
                   [self.navigationController popViewControllerAnimated:YES];
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
