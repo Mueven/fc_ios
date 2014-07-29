@@ -40,58 +40,58 @@
     [reachability startNotifier];
     
     //自动更新
-//    @try {
-//        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-//        
-//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        NSLog(@"address:%@",[AFNet version]);
-//        [manager GET:[AFNet version]
-//           parameters:@{@"version":version}
-//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                  UpdatePolicy policy = LATEST;
+    @try {
+        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        NSLog(@"address:%@",[AFNet version]);
+        [manager GET:[AFNet version]
+           parameters:@{@"version":version}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  UpdatePolicy policy = LATEST;
 //                  NSLog(@"update:%@",responseObject);
-//                  if([responseObject[@"result"] integerValue]==1){
-//                        //有更新
-//                      if([responseObject[@"is_force"] integerValue]==1){
-//                          //强制更新
-//                          policy = MUST;
-//                      }
-//                      else{
-//                          //可选更新
-//                          policy = OPTION;
-//                      }
-//                      NSString *title = @"有新版本可以使用";
-//                      NSString *cancelTxt = @"下次再说";
-//                      NSString *otherTxt = @"立刻升级";
-//                      if(policy== OPTION){
-//                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
-//                                                                         message:nil
-//                                                                        delegate:self
-//                                                               cancelButtonTitle:cancelTxt
-//                                                               otherButtonTitles:otherTxt,nil];
-//                          [view show ];
-//                      }
-//                      else if (policy == MUST){
-//                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
-//                                                                         message:@"必须更新版本才能继续使用"
-//                                                                        delegate:self
-//                                                               cancelButtonTitle:cancelTxt
-//                                                               otherButtonTitles:otherTxt, nil];
-//                          [view show ];
-//                      }
-//                  }
-//  
-//              }
-//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-//              }
-//         ];
-//    }
-//    @catch (NSException *exception) {
-//    }
-//    @finally {
-//    }
+                  if([responseObject[@"result"] integerValue]==1){
+                        //有更新
+                      if([responseObject[@"is_force"] integerValue]==1){
+                          //强制更新
+                          policy = MUST;
+                      }
+                      else{
+                          //可选更新
+                          policy = OPTION;
+                      }
+                      NSString *title = @"有新版本可以使用";
+                      NSString *cancelTxt = @"下次再说";
+                      NSString *otherTxt = @"立刻升级";
+                      if(policy== OPTION){
+                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
+                                                                         message:nil
+                                                                        delegate:self
+                                                               cancelButtonTitle:cancelTxt
+                                                               otherButtonTitles:otherTxt,nil];
+                          [view show ];
+                      }
+                      else if (policy == MUST){
+                          UIAlertView *view = [[UIAlertView alloc ]initWithTitle:title
+                                                                         message:@"必须更新版本才能继续使用"
+                                                                        delegate:self
+                                                               cancelButtonTitle:cancelTxt
+                                                               otherButtonTitles:otherTxt, nil];
+                          [view show ];
+                      }
+                  }
+  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
+    }
+    @catch (NSException *exception) {
+    }
+    @finally {
+    }
     
     
     
@@ -99,9 +99,9 @@
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSString *base=[[[AFNetOperate alloc] init] baseURLWithoutPort];
+    NSString *base=@"https://www.cz-tek.com";
     NSString *fileName=@"material";
-    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"itms-services://?action=download-manifest&url=%@/plist/%@.plist",base,fileName]];
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"itms-services://?action=download-manifest&url=%@/%@.plist",base,fileName]];
     if (buttonIndex == 1) {
         [[UIApplication sharedApplication] openURL:url];
     }

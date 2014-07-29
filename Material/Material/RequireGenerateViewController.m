@@ -151,9 +151,9 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
-//    self.firstResponder=textField;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
+    self.firstResponder=textField;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -440,12 +440,13 @@
                         }
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list",@"success":@1}];
-                  }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
-                  }
+//                  if([responseObject[@"result"] integerValue]==1){
+//                      [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list",@"success":@1}];
+//                  }
+//                  else{
+//                      [AFNet alert:responseObject[@"content"]];
+//                  }
+                  [self.navigationController popViewControllerAnimated:YES];
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   [AFNet.activeView stopAnimating];

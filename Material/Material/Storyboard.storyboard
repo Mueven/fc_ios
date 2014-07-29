@@ -2132,7 +2132,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gjo-gk-yYf">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gjo-gk-yYf">
                                 <rect key="frame" x="58" y="481" width="204" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2489,13 +2489,13 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PPk-8F-ZrK"/>
-        <segue reference="aya-mQ-TZi"/>
-        <segue reference="UAK-rn-23P"/>
+        <segue reference="MS0-BJ-3Kj"/>
         <segue reference="Neh-iJ-Fpe"/>
         <segue reference="oOw-in-AQO"/>
         <segue reference="SkA-08-PWt"/>
         <segue reference="FcC-pN-TYA"/>
-        <segue reference="MS0-BJ-3Kj"/>
+        <segue reference="veK-WU-skj"/>
+        <segue reference="PPk-8F-ZrK"/>
+        <segue reference="UAK-rn-23P"/>
     </inferredMetricsTieBreakers>
 </document>
