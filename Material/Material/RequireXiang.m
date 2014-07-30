@@ -54,7 +54,7 @@
         self.agent=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
         self.urgent=[object objectForKey:@"is_emergency"]?[[object objectForKey:@"is_emergency"] intValue]:0;
         self.uniq_id=[object objectForKey:@"uniq_id"]?[object objectForKey:@"uniq_id"]:@"";
-        self.xiangCount=1;
+        self.xiangCount=[object objectForKey:@"box_quantity"]?[[object objectForKey:@"box_quantity"] intValue]:1;;
     }
     return self;
 }
