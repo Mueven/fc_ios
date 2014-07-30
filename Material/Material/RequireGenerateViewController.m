@@ -147,13 +147,16 @@
             [targetTextField becomeFirstResponder];
         }
     }
+    else if(targetTextField.tag==1){
+          [self textFieldShouldReturn:self.firstResponder];
+    }
 }
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
-//    self.firstResponder=textField;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
+    self.firstResponder=textField;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -187,10 +190,12 @@
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
+                     
                      NSMutableDictionary *content=[responseObject[@"content"] mutableCopy];
                      NSString *source=[content objectForKey:@"source_id"];
                      [content setObject:partNumber forKey:@"part_id"];
                      [content setObject:quantity forKey:@"quantity"];
+                     
                      NSLog(@"generate object:%@",content);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
                      if(self.xiangArray.count>0){
@@ -214,6 +219,9 @@
                  else{
                      AudioServicesPlaySystemSound(1051);
                      [AFNet alert:responseObject[@"content"]];
+                     self.partTextField.text=@"";
+                     self.quantityTextField.text=@"";
+                     [self.partTextField becomeFirstResponder];
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -240,7 +248,7 @@
                                                  delegate:self
                                         cancelButtonTitle:@"确定"
                                         otherButtonTitles: nil];
-    [NSTimer scheduledTimerWithTimeInterval:1.5f
+    [NSTimer scheduledTimerWithTimeInterval:0.9f
                                      target:self
                                    selector:@selector(dismissAlert:)
                                    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
@@ -268,6 +276,7 @@
                                     repeats:NO];
     [alert show];
     self.partTextField.text=@"";
+    self.quantityTextField.text=@"";
     [self.partTextField becomeFirstResponder];
 }
 //添加箱后的合并
@@ -313,7 +322,7 @@
 {
     RequireXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     RequireXiang *xiang=self.xiangArray[indexPath.row];
-    cell.positionTextField.text=xiang.position;
+    cell.positionTextField.text=xiang.quantity_int;
     cell.partNumberTextField.text=xiang.partNumber;
     cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];
     __weak RequireXiangTableViewCell *cellForBlock=cell;
@@ -389,10 +398,14 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        RequireXiang *xiang=self.xiangArray[indexPath.row];
+        for(int i=0;i<xiang.xiangCount;i++){
+            [self updateMinusCount];
+        }
         [self.xiangArray removeObjectAtIndex:indexPath.row];
         [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self updateMinusCount];
+
     }
 }
 #pragma mark - Navigation
@@ -441,7 +454,7 @@
         for(int i=0;i<self.xiangArray.count;i++){
             RequireXiang *xiang=self.xiangArray[i];
             NSNumber *emergency=xiang.urgent?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
-            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",nil];
+            NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",[NSString stringWithFormat:@"%d",xiang.xiangCount],@"box_quantity",nil];
             [postItems addObject:dic];
         }
         NSLog(@"send dic:%@",postItems);

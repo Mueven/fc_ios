@@ -44,6 +44,7 @@
         self.urgentButton.backgroundColor=[UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0];
         [self.urgentButton setTitle:@"设为加急" forState:UIControlStateNormal];
     }
+    NSLog(@"detail quantity%@",self.xiang.quantity_int);
     self.partNumber.text=self.xiang.partNumber;
     self.quantity.text=self.xiang.quantity_int;
     self.source.text=self.xiang.source_name;

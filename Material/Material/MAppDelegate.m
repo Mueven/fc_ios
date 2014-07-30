@@ -45,7 +45,8 @@
         
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        NSLog(@"address:%@",[AFNet version]);
+//        NSLog(@"address:%@",[AFNet version]);
+//        @"http://www.cz-tek.com:9000"
         [manager GET:[AFNet version]
            parameters:@{@"version":version}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {

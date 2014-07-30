@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 - (IBAction)print:(id)sender;
 @end
 
@@ -41,6 +42,7 @@
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     self.statusLabel.text=self.status?@"已处理":@"未处理";
+    self.dateLabel.text=self.billDate;
     if(self.status){
         [self.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }
@@ -71,9 +73,9 @@
     RequireXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     RequireXiang *xiang=self.xiangArray[indexPath.row];
 
-    cell.positionTextField.text=xiang.position;
+    cell.positionTextField.text=xiang.quantity_int;
     cell.partNumberTextField.text=xiang.partNumber;
-    cell.quantityTextField.text=xiang.quantity;
+    cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];
     cell.urgentButton.hidden=YES;
     cell.clickCell=^(){};
     if(xiang.urgent){
