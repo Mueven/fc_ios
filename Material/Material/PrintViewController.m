@@ -38,6 +38,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.yunSuccessContentLabel.text=self.successContent?self.successContent:@"";
+    if(self.noBackButton){
+        [self.navigationItem setHidesBackButton:YES];
+    }
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -84,8 +87,14 @@
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
-                     [AFNet alertSuccess:responseObject[@"Content"]];
-                    [self performSegueWithIdentifier:@"finishTuo" sender:self];
+                    [AFNet alertSuccess:responseObject[@"Content"]];
+                     if(!self.noBackButton){
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                     else{
+                          [self performSegueWithIdentifier:@"finishTuo" sender:self];
+                     }
+                   
                     
                  }
                  else{
