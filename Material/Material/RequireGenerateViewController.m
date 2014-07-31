@@ -196,7 +196,7 @@
                      [content setObject:partNumber forKey:@"part_id"];
                      [content setObject:quantity forKey:@"quantity"];
                      
-                     NSLog(@"generate object:%@",content);
+//                     NSLog(@"generate object:%@",content);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
                      if(self.xiangArray.count>0){
                          BOOL result=[self.validate sourceValidate:source];
