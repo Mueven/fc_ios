@@ -24,8 +24,17 @@
     self=[super init];
     if(self){
         self.xiangList=[NSArray array];
-        NSRange dateRange=NSMakeRange(0, 10);
-        self.date=[object objectForKey:@"created_at"]? [[object objectForKey:@"created_at"] substringWithRange:dateRange]:@"";
+        if([object objectForKey:@"created_at"]){
+            NSRange dateRangeBeigin=NSMakeRange(0, 10);
+            NSRange dateRangeEnd=NSMakeRange(11, 5);
+            NSString *date=[object objectForKey:@"created_at"];
+            NSString *begin=[date substringWithRange:dateRangeBeigin];
+            NSString *end=[date substringWithRange:dateRangeEnd];
+            self.date=[NSString stringWithFormat:@"%@ %@",begin,end];
+        }
+        else{
+            self.date=@"";
+        }
         //self.department=[object objectForKey:@"department"]?[object objectForKey:@"department"]:@"";
         self.status=[object objectForKey:@"handled"]?[[object objectForKey:@"handled"] intValue]:0;
         self.id=[object objectForKey:@"id"]?[object objectForKey:@"id"]:@"";

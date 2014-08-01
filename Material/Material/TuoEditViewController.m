@@ -90,7 +90,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField.tag==21){
-        NSString *department=self.department.text;
+        NSString *department=textField.text;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
@@ -111,11 +111,15 @@
                     }
                     else{
                         [AFNet alert:responseObject[@"content"]];
+                        [textField resignFirstResponder];
+                        self.firstResponder=nil;
                     }
                     
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     [AFNet.activeView stopAnimating];
+                    [textField resignFirstResponder];
+                    self.firstResponder=nil;
                 }
          ];
     }
@@ -135,11 +139,15 @@
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
+                     [textField resignFirstResponder];
+                     self.firstResponder=nil;
                  }
                  
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  [AFNet.activeView stopAnimating];
+                 [textField resignFirstResponder];
+                 self.firstResponder=nil;
              }
          ];
     }

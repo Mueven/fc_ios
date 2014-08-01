@@ -205,7 +205,7 @@
         }
         //不发送运单
         else{
-              [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+             
         }
 }
 @end

@@ -51,6 +51,11 @@
         self.partNumber_origin=[self.partNumber substringWithRange:NSMakeRange(beginP, [self.partNumber length]-beginP-lastP)];
         
         self.department=[object objectForKey:@"whouse_id"]?[object objectForKey:@"whouse_id"]:@"";
+        int beginD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
+        int lastD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
+        self.department_origin=[self.department substringWithRange:NSMakeRange(beginD, [self.department length]-beginD-lastD)];
+        
+        
         self.agent=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
         self.urgent=[object objectForKey:@"is_emergency"]?[[object objectForKey:@"is_emergency"] intValue]:0;
         self.uniq_id=[object objectForKey:@"uniq_id"]?[object objectForKey:@"uniq_id"]:@"";

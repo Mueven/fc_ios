@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
-- (IBAction)touchScreen:(id)sender;
+//- (IBAction)touchScreen:(id)sender;
 @end
 
 @implementation TuoScanViewController
@@ -584,7 +584,7 @@
 {
     self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
 }
--(void)touchScreen:(id)sender{
-    
-}
+//-(void)touchScreen:(id)sender{
+//    
+//}
 @end

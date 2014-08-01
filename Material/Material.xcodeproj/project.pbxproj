@@ -57,6 +57,9 @@
 		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
+		B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */; };
+		B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */; };
+		B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE570198B8CAA000FD578 /* RequireCheckBill.m */; };
 		B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F60F194004CC001F01F3 /* Foundation.framework */; };
 		B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F611194004CC001F01F3 /* CoreGraphics.framework */; };
 		B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F613194004CC001F01F3 /* UIKit.framework */; };
@@ -205,6 +208,11 @@
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		B07CE56A198B8890000FD578 /* RequireCheckXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckXiangTableViewCell.h; sourceTree = "<group>"; };
+		B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckXiangTableViewCell.m; sourceTree = "<group>"; };
+		B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckXiangTableViewCell.xib; sourceTree = "<group>"; };
+		B07CE56F198B8CAA000FD578 /* RequireCheckBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckBill.h; sourceTree = "<group>"; };
+		B07CE570198B8CAA000FD578 /* RequireCheckBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckBill.m; sourceTree = "<group>"; };
 		B085F60C194004CC001F01F3 /* 物料管理系统.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "物料管理系统.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B085F611194004CC001F01F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -329,6 +337,8 @@
 				B0619E48197CB318000C1C69 /* RequireBill.m */,
 				B0619E4A197CB35C000C1C69 /* RequireXiang.h */,
 				B0619E4B197CB35C000C1C69 /* RequireXiang.m */,
+				B07CE56F198B8CAA000FD578 /* RequireCheckBill.h */,
+				B07CE570198B8CAA000FD578 /* RequireCheckBill.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -384,6 +394,9 @@
 				B0619E55197CBE17000C1C69 /* RequireXiangTableViewCell.h */,
 				B0619E56197CBE17000C1C69 /* RequireXiangTableViewCell.m */,
 				B0619E57197CBE17000C1C69 /* RequireXiangTableViewCell.xib */,
+				B07CE56A198B8890000FD578 /* RequireCheckXiangTableViewCell.h */,
+				B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */,
+				B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -781,6 +794,7 @@
 				B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */,
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
+				B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
 				B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */,
 				B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */,
@@ -811,6 +825,7 @@
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */,
+				B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */,
 				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
@@ -836,6 +851,7 @@
 				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
 				B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */,
+				B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */,
 				B0DF644519448B67002D044B /* Yun.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,

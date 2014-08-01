@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSString *source;
 @property(nonatomic,strong)NSString *source_name;
 @property(nonatomic,strong)NSString *department;
+@property(nonatomic,strong)NSString *department_origin;
 @property(nonatomic,strong)NSString *agent;
 @property(nonatomic,strong)NSString *uniq_id;
 @property(nonatomic)int xiangCount;

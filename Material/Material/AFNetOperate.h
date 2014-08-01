@@ -64,7 +64,7 @@
 
 -(NSString *)order_root;
 -(NSString *)order_history;
--(NSString *)order_detail;
+-(NSString *)order_check_part;
 
 -(NSString *)order_item_root;
 -(NSString *)order_item_verify;

@@ -60,9 +60,15 @@
         self.name=dictionary[@"id"]?dictionary[@"id"]:@"";
         self.sended=[dictionary[@"state"] intValue]?[dictionary[@"state"] intValue]:0;
         if(dictionary[@"delivery_date"]){
-            NSString *date=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(0, 10)];
-            NSString *time=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(11,5)];
-            self.date=[NSString stringWithFormat:@"%@ %@",date,time];
+            @try {
+                NSString *date=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(0, 10)];
+                NSString *time=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(11,5)];
+                self.date=[NSString stringWithFormat:@"%@ %@",date,time];
+            }
+            @catch (NSException *exception) {
+                self.date=@"";
+            }
+           
         }
         else{
             self.date=@"";

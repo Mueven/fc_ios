@@ -119,7 +119,7 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){
-//                  NSLog(@"%@",responseObject);
+ 
                   if([(NSDictionary *)responseObject[@"content"] count]>0){
                       self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
                       [self generateBelongs];
@@ -183,7 +183,7 @@
          ];
     }
     else{
-        [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+        [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
     

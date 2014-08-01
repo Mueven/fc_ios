@@ -23,6 +23,8 @@
 	</dict>
 	<key>orders</key>
 	<dict>
+		<key>check_part</key>
+		<string>check_part</string>
 		<key>history</key>
 		<string>history</string>
 		<key>root</key>

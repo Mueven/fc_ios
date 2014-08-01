@@ -390,6 +390,11 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"history"];
     return [[self order_root] stringByAppendingString:bind];
 }
+-(NSString *)order_check_part
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"orders"] objectForKey:@"check_part"];
+    return [[self order_root] stringByAppendingString:bind];
+}
 //order item
 -(NSString *)order_item_root{
     NSString *base=[self baseURL];

@@ -112,7 +112,7 @@
 {
     RequireListTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"billCell" forIndexPath:indexPath];
     RequireBill *bill=self.billListArray[indexPath.row];
-    cell.dateLabel.text=bill.id;
+    cell.dateLabel.text=bill.date;
     cell.statusLabel.text=bill.status?@"已处理":@"未处理";
     if(bill.status){
         [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
