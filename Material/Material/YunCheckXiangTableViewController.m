@@ -7,11 +7,11 @@
 //
 
 #import "YunCheckXiangTableViewController.h"
-
+#import "PrintViewController.h"
 #import "Xiang.h"
 #import "ShopXiangTableViewCell.h"
 @interface YunCheckXiangTableViewController ()
-
+- (IBAction)clickPrintTuo:(id)sender;
 @end
 
 @implementation YunCheckXiangTableViewController
@@ -129,5 +129,15 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"printTuo"]){
+        PrintViewController *printViewController = segue.destinationViewController;
+        printViewController.container=[sender objectForKey:@"container"];
+        printViewController.noBackButton=0;
+    }
+}
+- (IBAction)clickPrintTuo:(id)sender {
+   [self performSegueWithIdentifier:@"printTuo" sender:@{@"container":self.tuo}];
+}
 @end

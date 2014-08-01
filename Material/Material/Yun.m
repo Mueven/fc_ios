@@ -59,9 +59,14 @@
         self.remark=dictionary[@"remark"]?dictionary[@"remark"]:@"";
         self.name=dictionary[@"id"]?dictionary[@"id"]:@"";
         self.sended=[dictionary[@"state"] intValue]?[dictionary[@"state"] intValue]:0;
-        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy.MM.dd"];
-        self.date=[formatter stringFromDate:[NSDate date]];
+        if(dictionary[@"delivery_date"]){
+            NSString *date=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(0, 10)];
+            NSString *time=[dictionary[@"delivery_date"] substringWithRange:NSMakeRange(11,5)];
+            self.date=[NSString stringWithFormat:@"%@ %@",date,time];
+        }
+        else{
+            self.date=@"";
+        }
         self.tuoArray=[[NSMutableArray alloc] init];
     }
     return self;
@@ -71,10 +76,11 @@
     self.ID=[yun.ID copy];
     self.remark=[yun.remark copy];
     self.name=[yun.name copy];
+    self.date=[yun.date copy];
     self.sended=yun.sended;
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy.MM.dd"];
-    self.date=[formatter stringFromDate:[NSDate date]];
+//    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"yyyy.MM.dd"];
+//    self.date=[formatter stringFromDate:[NSDate date]];
     return self;
 }
 @end

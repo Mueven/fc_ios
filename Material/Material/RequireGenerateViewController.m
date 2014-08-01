@@ -195,8 +195,8 @@
                      NSString *source=[content objectForKey:@"source_id"];
                      [content setObject:partNumber forKey:@"part_id"];
                      [content setObject:quantity forKey:@"quantity"];
+                     [content removeObjectForKey:@"box_quantity"];
                      
-                     NSLog(@"generate object:%@",content);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
                      if(self.xiangArray.count>0){
                          BOOL result=[self.validate sourceValidate:source];

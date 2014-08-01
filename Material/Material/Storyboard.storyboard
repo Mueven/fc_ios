@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -779,11 +779,20 @@
                             <outlet property="delegate" destination="jLH-DU-Ceg" id="O0x-Ev-64R"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="DdT-Xa-VlB"/>
+                    <navigationItem key="navigationItem" id="DdT-Xa-VlB">
+                        <barButtonItem key="rightBarButtonItem" title="打印拖清单" id="NUI-do-Wli">
+                            <connections>
+                                <action selector="clickPrintTuo:" destination="jLH-DU-Ceg" id="Fnw-An-Is3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="W31-QG-1bE" kind="push" identifier="printTuo" id="Cgx-jM-28f"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G0r-sR-XIW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3388" y="3567"/>
+            <point key="canvasLocation" x="3372" y="3567"/>
         </scene>
         <!--Yun Edit View Controller-->
         <scene sceneID="mYQ-cZ-hfG">
@@ -2504,12 +2513,12 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="MS0-BJ-3Kj"/>
-        <segue reference="PPk-8F-ZrK"/>
-        <segue reference="veK-WU-skj"/>
-        <segue reference="Get-Zr-2fp"/>
         <segue reference="oOw-in-AQO"/>
-        <segue reference="FcC-pN-TYA"/>
         <segue reference="SkA-08-PWt"/>
         <segue reference="Neh-iJ-Fpe"/>
+        <segue reference="Cgx-jM-28f"/>
+        <segue reference="PPk-8F-ZrK"/>
+        <segue reference="Get-Zr-2fp"/>
+        <segue reference="veK-WU-skj"/>
     </inferredMetricsTieBreakers>
 </document>

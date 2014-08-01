@@ -211,6 +211,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if(cell.accessoryType==UITableViewCellAccessoryNone){
+        //手动点击添加
         [manager POST:[AFNet xiang_check]
            parameters:@{@"id":xiang.ID}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -231,6 +232,7 @@
          ];
     }
     else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
+        //手动点击取消
         [manager POST:[AFNet xiang_uncheck]
            parameters:@{@"id":xiang.ID}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
