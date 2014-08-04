@@ -145,7 +145,7 @@
             [alert show];
         }
         else{
-            [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo}];
+            [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
         }
     }
 }
@@ -220,7 +220,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo}];
+    [self performSegueWithIdentifier:@"receiveXiang" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
 }
 
 #pragma textField delegate
@@ -229,6 +229,7 @@
     UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView = dummyView;
 }
+//only for test
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(self.currentModel==1){
@@ -305,6 +306,7 @@
     if([segue.identifier isEqualToString:@"receiveXiang"]){
         ReceiveXiangViewController *receiveXiang=segue.destinationViewController;
         receiveXiang.tuo=[sender objectForKey:@"tuo"];
+        receiveXiang.tuoArray=[sender objectForKey:@"tuoArray"];
     }
     else if([segue.identifier isEqualToString:@"receiveConfirm"]){
         ReceiveConfirmViewController *receiveConfirm=segue.destinationViewController;

@@ -11,4 +11,5 @@
 
 @interface ReceiveXiangViewController : UIViewController
 @property(nonatomic,strong)Tuo *tuo;
+@property(nonatomic,strong)NSArray *tuoArray;
 @end

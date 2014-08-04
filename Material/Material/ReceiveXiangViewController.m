@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title=self.tuo.department;
+    self.navigationItem.title=self.tuo.ID;
     self.scanTextField.delegate=self;
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
@@ -108,12 +108,17 @@
                               [self updateAddCheckedLabel];
                           }
                           else{
-                              [AFNet alert:responseObject[@"content"]];
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [AFNet alert:responseObject[@"content"]];
+                              });
                           }
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                           [AFNet.activeView stopAnimating];
-                          [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                          dispatch_async(dispatch_get_main_queue(), ^{
+                              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];;
+                          });
+                          
                       }
                  ];
             });
@@ -121,15 +126,43 @@
         }
     }
     if(count==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
-                                                       message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",data]
-                                                      delegate:self
-                                             cancelButtonTitle:@"确定"
-                                             otherButtonTitles:nil];
-        AudioServicesPlaySystemSound(1051);
-        [alert show];
-        
+        //判断是不是扫的是另一个托
+        BOOL noXiang=1;
+        for(int i=0;i<self.tuoArray.count;i++){
+            if(self.tuoArray[i]!=self.tuo){
+                if([data isEqualToString:[self.tuoArray[i] ID]]){
+                    noXiang=0;
+                    [self changeToAnotherXiang:self.tuoArray[i]];
+                    break ;
+                }
+            }
+        }
+        if(noXiang){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
+                                                           message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",data]
+                                                          delegate:self
+                                                 cancelButtonTitle:@"确定"
+                                                 otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1051);
+            [alert show];
+        }
     }
+}
+-(void)changeToAnotherXiang:(Tuo *)tuo
+{
+    self.tuo=tuo;
+    self.navigationItem.title=self.tuo.ID;
+    self.xiangCheckedCount=0;
+    for(int i=0;i<self.tuo.xiang.count;i++){
+        Xiang *xiang=self.tuo.xiang[i];
+        if(xiang.checked){
+            self.xiangCheckedCount++;
+        }
+    }
+    self.scanTextField.text=@"";
+    [self.scanTextField becomeFirstResponder];
+    [self updateCheckedLabel];
+    [self.xiangTable reloadData];
 }
 #pragma textField
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -164,7 +197,7 @@
                       [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                   }
              ];
-            break;
+             break;
         }
     }
     if(count==0){
