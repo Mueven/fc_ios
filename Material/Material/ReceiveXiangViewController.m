@@ -126,14 +126,26 @@
         }
     }
     if(count==0){
-        //判断是不是扫的是另一个托
+        //判断是不是扫的是另一个托中的箱
         BOOL noXiang=1;
         for(int i=0;i<self.tuoArray.count;i++){
             if(self.tuoArray[i]!=self.tuo){
-                if([data isEqualToString:[self.tuoArray[i] ID]]){
-                    noXiang=0;
-                    [self changeToAnotherXiang:self.tuoArray[i]];
-                    break ;
+//                if([data isEqualToString:[self.tuoArray[i] ID]]){
+//                    noXiang=0;
+//                    [self changeToAnotherXiang:self.tuoArray[i]];
+//                    break ;
+//                }
+                Tuo *tuoItem=self.tuoArray[i];
+                for(int j=0;j<tuoItem.xiang.count;j++){
+                    Xiang *xiangItem=tuoItem.xiang[j];
+                    if([data isEqualToString:xiangItem.ID]){
+                        noXiang=0;
+                        //切换到另一个拖的模式下
+                        [self changeToAnotherXiang:tuoItem];
+                        //把刚才扫描的那一箱给填上去
+                        [self decoderDataReceived:xiangItem.ID];
+                        break ;
+                    }
                 }
             }
         }
@@ -201,14 +213,39 @@
         }
     }
     if(count==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
-                                                       message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",textField.text]
-                                                      delegate:self
-                                             cancelButtonTitle:@"确定"
-                                             otherButtonTitles:nil];
-        AudioServicesPlaySystemSound(1051);
-        [alert show];
-
+        //判断是不是扫的是另一个托中的箱
+        BOOL noXiang=1;
+        for(int i=0;i<self.tuoArray.count;i++){
+            if(self.tuoArray[i]!=self.tuo){
+                //                if([data isEqualToString:[self.tuoArray[i] ID]]){
+                //                    noXiang=0;
+                //                    [self changeToAnotherXiang:self.tuoArray[i]];
+                //                    break ;
+                //                }
+                Tuo *tuoItem=self.tuoArray[i];
+                for(int j=0;j<tuoItem.xiang.count;j++){
+                    Xiang *xiangItem=tuoItem.xiang[j];
+                    NSLog(@"xiangID:%@",xiangItem.ID);
+                    if([textField.text isEqualToString:xiangItem.ID]){
+                        noXiang=0;
+                        //切换到另一个拖的模式下
+                        [self changeToAnotherXiang:tuoItem];
+                        //把刚才扫描的那一箱给填上去
+                        [self decoderDataReceived:xiangItem.ID];
+                        break ;
+                    }
+                }
+            }
+        }
+        if(noXiang){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
+                                                           message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",textField.text]
+                                                          delegate:self
+                                                 cancelButtonTitle:@"确定"
+                                                 otherButtonTitles:nil];
+            AudioServicesPlaySystemSound(1051);
+            [alert show];
+        }
     }
     
     return YES;
