@@ -228,7 +228,7 @@
     ShopXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
     cell.partNumberLabel.text=xiang.number;
     cell.keyLabel.text=xiang.key;
-    cell.quantityLabel.text=[NSString stringWithFormat:@"Q:%@",xiang.count];
+    cell.quantityLabel.text=[NSString stringWithFormat:@"%@",xiang.count];
     if(xiang.checked){
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
