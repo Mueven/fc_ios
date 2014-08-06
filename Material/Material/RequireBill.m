@@ -28,9 +28,15 @@
             NSRange dateRangeBeigin=NSMakeRange(0, 10);
             NSRange dateRangeEnd=NSMakeRange(11, 5);
             NSString *date=[object objectForKey:@"created_at"];
-            NSString *begin=[date substringWithRange:dateRangeBeigin];
-            NSString *end=[date substringWithRange:dateRangeEnd];
-            self.date=[NSString stringWithFormat:@"%@ %@",begin,end];
+            @try {
+                NSString *begin=[date substringWithRange:dateRangeBeigin];
+                NSString *end=[date substringWithRange:dateRangeEnd];
+                self.date=[NSString stringWithFormat:@"%@ %@",begin,end];
+            }
+            @catch (NSException *exception) {
+                self.date=@"";
+            }
+            
         }
         else{
             self.date=@"";

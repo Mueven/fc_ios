@@ -66,6 +66,9 @@
         self.navigationItem.rightBarButtonItem=NULL;
         self.xiangListLabel.text=@"已绑定箱数:";
     }
+    else if([self.type isEqualToString:@"tuo"]){
+        [self.navigationItem setHidesBackButton:YES];
+    }
     self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
