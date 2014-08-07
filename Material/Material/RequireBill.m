@@ -28,12 +28,12 @@
             NSRange dateRangeBeigin=NSMakeRange(0, 10);
             NSRange dateRangeEnd=NSMakeRange(11, 5);
             NSString *date=[object objectForKey:@"created_at"];
-            @try {
+            if([date substringWithRange:dateRangeBeigin] && [date substringWithRange:dateRangeEnd]){
                 NSString *begin=[date substringWithRange:dateRangeBeigin];
                 NSString *end=[date substringWithRange:dateRangeEnd];
                 self.date=[NSString stringWithFormat:@"%@ %@",begin,end];
             }
-            @catch (NSException *exception) {
+            else{
                 self.date=@"";
             }
             
