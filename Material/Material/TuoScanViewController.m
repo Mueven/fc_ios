@@ -68,6 +68,7 @@
     }
     else if([self.type isEqualToString:@"tuo"]){
         [self.navigationItem setHidesBackButton:YES];
+        self.navigationItem.title=self.tuo.department;
     }
     self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
@@ -251,8 +252,8 @@
                                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                             [AFNet.activeView stopAnimating];
                                             if([responseObject[@"result"] integerValue]==1){
-                                                //                                            self.firstResponder.text=data;
-                                                //                                            [self textFieldShouldReturn:self.firstResponder];
+                                                //self.firstResponder.text=data;
+                                                //[self textFieldShouldReturn:self.firstResponder];
                                             }
                                             else{
                                                 [AFNet alert:responseObject[@"content"]];
@@ -412,17 +413,30 @@
                               self.partNumber.text=@"";
                               self.quatity.text=@"";
                               self.dateTextField.text=@"";
-                              
-                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                    message:@"绑定成功！"
-                                                                   delegate:self
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:0.5f
-                                                               target:self
-                                                             selector:@selector(dissmissAlert:)
-                                                             userInfo:nil
-                                                              repeats:NO];
+                              if(responseObject[@"message"]){
+                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                        message:responseObject[@"message"]
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                                  [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                                   target:self
+                                                                 selector:@selector(dissmissAlert:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+                              }
+                              else{
+                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                        message:@"绑定成功"
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                                  [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                                                   target:self
+                                                                 selector:@selector(dissmissAlert:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+                              }
                               AudioServicesPlaySystemSound(1012);
                               [self.alert show];
                               [self updateAddXiangCount];
