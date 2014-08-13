@@ -402,8 +402,8 @@
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
                           NSLog(@"%@",responseObject);
-                          if([(NSDictionary *)responseObject[@"content"] count]>0){
-                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                          if([(NSDictionary *)responseObject[@"content"][@"package"] count]>0){
+                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"][@"package"]];
                               [self.tuo addXiang:newXiang];
                               [self.xiangTable reloadData];
                               tag=1;
@@ -413,9 +413,9 @@
                               self.partNumber.text=@"";
                               self.quatity.text=@"";
                               self.dateTextField.text=@"";
-                              if(responseObject[@"message"]){
+                              if(responseObject[@"content"][@"message"]){
                                   self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                        message:responseObject[@"message"]
+                                                                        message:responseObject[@"content"][@"message"]
                                                                        delegate:self
                                                               cancelButtonTitle:nil
                                                               otherButtonTitles:nil];
