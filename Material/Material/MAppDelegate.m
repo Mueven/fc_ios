@@ -10,17 +10,23 @@
 #import "Login.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetOperate.h"
+#import "SimplePingHelper.h"
 @interface MAppDelegate()
 @property(nonatomic) BOOL updating;
+@property(nonatomic,strong)NSTimer *watchTimer;
 @end
 
 @implementation MAppDelegate
+SCNetworkConnectionFlags connectionFlags;
+SCNetworkReachabilityRef reachability;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //霍尼韦尔设备
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
+
+     //监测网络情况
     Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
     reachability.reachableBlock = ^(Reachability *reachability) {
         
@@ -34,8 +40,9 @@
                                                 otherButtonTitles:nil];
             AudioServicesPlaySystemSound(1013);
             [alert show];
+//            [self stopPing];
         });
-        
+      
     };
     [reachability startNotifier];
     
@@ -98,6 +105,36 @@
     
     return YES;
 }
+-(void)watchPing
+{
+    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
+                                                         target:self
+                                                       selector:@selector(schedulePing)
+                                                       userInfo:nil
+                                                        repeats:YES];
+
+}
+-(void)stopPing
+{
+    [self.watchTimer invalidate];
+    self.watchTimer=nil;
+}
+-(void)schedulePing
+{
+    NSLog(@"schedulePing");
+    [SimplePingHelper ping:@"192.168.30.138"
+                    target:self
+                       sel:@selector(pingResult:)];
+}
+- (void)pingResult:(NSNumber*)success
+{
+	if (success.boolValue) {
+		NSLog(@"ok");
+	}
+    else {
+		NSLog(@"false");
+	}
+}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *base=@"https://www.cz-tek.com";
@@ -129,6 +166,13 @@
 {
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
+    
+//    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
+//                                                     target:self
+//                                                   selector:@selector(schedulePing)
+//                                                   userInfo:nil
+//                                                    repeats:YES];
+//    [self watchPing];
     
     dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);
     dispatch_sync(observeBattery, ^{

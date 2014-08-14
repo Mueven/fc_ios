@@ -16,6 +16,7 @@
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @end
 
 @implementation PrintViewController
@@ -41,7 +42,8 @@
     if(self.noBackButton){
         [self.navigationItem setHidesBackButton:YES];
     }
-
+    self.printModelLabel.adjustsFontSizeToFitWidth=YES;
+    self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -83,7 +85,7 @@
     if([containerClass isEqualToString:@"Tuo"]){
         //这里掉打印拖的接口
         [manager GET:[AFNet print_stock_tuo:[(Tuo *)self.container ID]]
-          parameters:nil
+          parameters:@{@"printer_name":self.printModelLabel.text}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
@@ -110,7 +112,7 @@
     else if([containerClass isEqualToString:@"Yun"]){
 
         [manager GET:[AFNet print_stock_yun:[(Yun *)self.container ID]]
-          parameters:nil
+          parameters:@{@"printer_name":self.printModelLabel.text}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  
                  [AFNet.activeView stopAnimating];

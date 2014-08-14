@@ -92,7 +92,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet print_stock_tuo:self.tuo.ID]
-      parameters:nil
+      parameters:@{@"printer_name":[AFNet get_current_print_model]}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){

@@ -13,6 +13,8 @@
 - (IBAction)printUncheck:(id)sender;
 - (IBAction)print:(id)sender;
 - (IBAction)finishOver:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
+
 @end
 
 @implementation ReceivePrintViewController
@@ -31,6 +33,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.navigationItem setHidesBackButton:YES];
+    self.printModelLabel.adjustsFontSizeToFitWidth=YES;
+    self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,7 +57,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet print_shop_receive:self.yun.ID]
-      parameters:nil
+      parameters:@{@"printer_name":self.printModelLabel.text}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
@@ -74,7 +78,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet print_shop_unreceive:self.yun.ID]
-      parameters:nil
+      parameters:@{@"printer_name":self.printModelLabel.text}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){

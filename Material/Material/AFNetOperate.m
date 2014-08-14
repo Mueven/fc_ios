@@ -326,7 +326,37 @@
         return [[base stringByAppendingString:port] stringByAppendingString:file];
     }
 }
-
+-(NSString *)print_model_list
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
+    NSString *list=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"model"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        NSString *base=[dictionary objectForKey:@"print_ip"];
+        NSString *port=[dictionary objectForKey:@"print_port"];
+        return [[base stringByAppendingString:port] stringByAppendingString:list];
+    }
+    else{
+        NSString *base=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"base"];
+        NSString *port=[[[self URLDictionary] objectForKey:@"print"] objectForKey:@"port"];
+        return [[base stringByAppendingString:port] stringByAppendingString:list];
+    }
+}
+-(NSString *)get_current_print_model
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        return [dictionary objectForKey:@"print_model"]?[dictionary objectForKey:@"print_model"]:@"";
+    }
+    else{
+        return @"";
+    }
+}
 -(NSString *)base_for_print:(NSString *)key
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
