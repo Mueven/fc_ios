@@ -122,7 +122,7 @@ SCNetworkReachabilityRef reachability;
 -(void)schedulePing
 {
     NSLog(@"schedulePing");
-    [SimplePingHelper ping:@"192.168.30.138"
+    [SimplePingHelper ping:@"192.168.1.101"
                     target:self
                        sel:@selector(pingResult:)];
 }
@@ -167,11 +167,11 @@ SCNetworkReachabilityRef reachability;
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
     
-//    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
-//                                                     target:self
-//                                                   selector:@selector(schedulePing)
-//                                                   userInfo:nil
-//                                                    repeats:YES];
+    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
+                                                     target:self
+                                                   selector:@selector(schedulePing)
+                                                   userInfo:nil
+                                                    repeats:YES];
 //    [self watchPing];
     
     dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);

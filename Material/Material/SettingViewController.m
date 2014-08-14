@@ -46,25 +46,7 @@
     self.typeTextField.inputView=self.typePicker;
 //    self.pickerElements = @[@"text1", @"text2", @"text3", @"text4"];
     
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet print_model_list]
-         parameters:nil
-            success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                [AFNet.activeView stopAnimating];
-                if([responseObject[@"result"] integerValue]==1){
-                    self.pickerElements = responseObject[@"content"];
-                    [self.typePicker reloadAllComponents];
-                }
-                else{
-                    [AFNet alert:responseObject[@"content"]];
-                }
-            }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [AFNet.activeView stopAnimating];
-                [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
-            }
-     ];
+    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -75,6 +57,25 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet print_model_list]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                 self.pickerElements = responseObject[@"content"];
+                 [self.typePicker reloadAllComponents];
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
+         }
+     ];
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
