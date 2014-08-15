@@ -9,11 +9,13 @@
 #import "ReceivePrintViewController.h"
 #import "AFNetOperate.h"
 #import "Yun.h"
-@interface ReceivePrintViewController ()
+@interface ReceivePrintViewController ()<UITextFieldDelegate>
 - (IBAction)printUncheck:(id)sender;
 - (IBAction)print:(id)sender;
 - (IBAction)finishOver:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
+@property (weak, nonatomic) IBOutlet UITextField *yunCopyTextField;
+@property (weak, nonatomic) IBOutlet UITextField *uncheckYunCopyTextField;
 
 @end
 
@@ -35,6 +37,11 @@
     [self.navigationItem setHidesBackButton:YES];
     self.printModelLabel.adjustsFontSizeToFitWidth=YES;
     self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
+    self.yunCopyTextField.delegate=self;
+    self.uncheckYunCopyTextField.delegate=self;
+    AFNetOperate *operate=[[AFNetOperate alloc] init];
+    self.yunCopyTextField.text=[operate get_yun_copy];
+    self.uncheckYunCopyTextField.text=[operate get_yun_uncheck_copy];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,6 +69,7 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
                   [AFNet alertSuccess:responseObject[@"Content"]];
+                 [AFNet set_yun_copy:self.yunCopyTextField.text];
              }
              else{
                  [AFNet alert:responseObject[@"Content"]];
@@ -83,6 +91,7 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
                  [AFNet alertSuccess:responseObject[@"Content"]];
+                 [AFNet set_yun_uncheck_copy:self.uncheckYunCopyTextField.text];
              }
              else{
                  [AFNet alert:responseObject[@"Content"]];

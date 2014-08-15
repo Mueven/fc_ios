@@ -326,6 +326,7 @@
         return [[base stringByAppendingString:port] stringByAppendingString:file];
     }
 }
+
 -(NSString *)print_model_list
 {
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -344,6 +345,7 @@
         return [[base stringByAppendingString:port] stringByAppendingString:list];
     }
 }
+
 -(NSString *)get_current_print_model
 {
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -357,6 +359,70 @@
         return @"";
     }
 }
+-(void)set_tuo_copy:(NSString *)copy
+{
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:copy,@"tuo_copy",nil];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.tuo.archive"];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+}
+-(void)set_yun_copy:(NSString *)copy
+{
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:copy,@"yun_copy",nil];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.yun.archive"];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+}
+-(void)set_yun_uncheck_copy:(NSString *)copy
+{
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:copy,@"yun_uncheck_copy",nil];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.yun.uncheck.archive"];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+}
+-(NSString *)get_tuo_copy
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.tuo.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        return [dictionary objectForKey:@"tuo_copy"]?[dictionary objectForKey:@"tuo_copy"]:@"1";
+    }
+    else{
+        return @"1";
+    }
+}
+-(NSString *)get_yun_copy
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.yun.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        return [dictionary objectForKey:@"yun_copy"]?[dictionary objectForKey:@"yun_copy"]:@"1";
+    }
+    else{
+        return @"1";
+    }
+}
+-(NSString *)get_yun_uncheck_copy
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.yun.uncheck.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        return [dictionary objectForKey:@"yun_uncheck_copy"]?[dictionary objectForKey:@"yun_uncheck_copy"]:@"1";
+    }
+    else{
+        return @"1";
+    }
+}
+
 -(NSString *)base_for_print:(NSString *)key
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];

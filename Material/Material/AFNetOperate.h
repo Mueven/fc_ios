@@ -57,6 +57,12 @@
 -(NSString *)print_shop_unreceive:(NSString *)ID;
 -(NSString *)print_model_list;
 -(NSString *)get_current_print_model;
+-(void)set_tuo_copy:(NSString *)copy;
+-(void)set_yun_copy:(NSString *)copy;
+-(void)set_yun_uncheck_copy:(NSString *)copy;
+-(NSString *)get_tuo_copy;
+-(NSString *)get_yun_copy;
+-(NSString *)get_yun_uncheck_copy;
 
 -(NSString *)scan_validate;
 

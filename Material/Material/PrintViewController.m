@@ -11,12 +11,13 @@
 #import "Tuo.h"
 #import "Yun.h"
 
-@interface PrintViewController ()
+@interface PrintViewController ()<UITextFieldDelegate>
 - (IBAction)unPrint:(id)sender;
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
+@property (weak, nonatomic) IBOutlet UITextField *copyTextField;
 @end
 
 @implementation PrintViewController
@@ -42,6 +43,7 @@
     if(self.noBackButton){
         [self.navigationItem setHidesBackButton:YES];
     }
+    self.copyTextField.delegate=self;
     self.printModelLabel.adjustsFontSizeToFitWidth=YES;
     self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
 }
@@ -51,10 +53,13 @@
     NSString *class=[NSString stringWithFormat:@"%@",[self.container class]];
     if([class isEqualToString:@"Yun"]){
         self.titleLabel.text=@"打印运单？";
+        self.copyTextField.text=[[[AFNetOperate alloc] init] get_yun_copy];
     }
     else if([class isEqualToString:@"Tuo"]){
         self.titleLabel.text=@"打印拖清单？";
+        self.copyTextField.text=[[[AFNetOperate alloc] init] get_tuo_copy];
     }
+    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -96,7 +101,7 @@
                      else{
                           [self performSegueWithIdentifier:@"finishTuo" sender:self];
                      }
-                   
+                     [AFNet set_tuo_copy:self.copyTextField.text];
                     
                  }
                  else{
@@ -119,7 +124,7 @@
                  if([responseObject[@"Code"] integerValue]==1){
                      [AFNet alertSuccess:responseObject[@"Content"]];
                      [self performSegueWithIdentifier:@"finishYun" sender:self];
-                     
+                     [AFNet set_yun_copy:self.copyTextField.text];
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
