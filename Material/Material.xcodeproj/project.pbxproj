@@ -58,6 +58,7 @@
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
 		B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B073F7D3199D9382007011E6 /* PingWatcher.m */; };
+		B073F7D7199DA730007011E6 /* LoginRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B073F7D6199DA730007011E6 /* LoginRoleViewController.m */; };
 		B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */; };
 		B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */; };
 		B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE570198B8CAA000FD578 /* RequireCheckBill.m */; };
@@ -213,6 +214,8 @@
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		B073F7D2199D9382007011E6 /* PingWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingWatcher.h; sourceTree = "<group>"; };
 		B073F7D3199D9382007011E6 /* PingWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingWatcher.m; sourceTree = "<group>"; };
+		B073F7D5199DA730007011E6 /* LoginRoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginRoleViewController.h; sourceTree = "<group>"; };
+		B073F7D6199DA730007011E6 /* LoginRoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginRoleViewController.m; sourceTree = "<group>"; };
 		B07CE56A198B8890000FD578 /* RequireCheckXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckXiangTableViewCell.h; sourceTree = "<group>"; };
 		B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckXiangTableViewCell.m; sourceTree = "<group>"; };
 		B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckXiangTableViewCell.xib; sourceTree = "<group>"; };
@@ -663,6 +666,8 @@
 				B085F6401940071A001F01F3 /* Login.m */,
 				B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */,
 				B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */,
+				B073F7D5199DA730007011E6 /* LoginRoleViewController.h */,
+				B073F7D6199DA730007011E6 /* LoginRoleViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -893,6 +898,7 @@
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */,
+				B073F7D7199DA730007011E6 /* LoginRoleViewController.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */,
 				B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */,

@@ -81,11 +81,32 @@
                         <outlet property="email" destination="XgB-3h-hMO" id="XwO-Id-UcG"/>
                         <outlet property="loginButton" destination="0Q8-ZK-RKS" id="SUd-VT-0Zo"/>
                         <outlet property="password" destination="ocO-9l-iEw" id="uxi-rA-IjB"/>
+                        <segue destination="Vsi-x2-cQ9" kind="push" identifier="chooseRole" id="Pch-zt-PjK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K74-dA-2kc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="561" y="6268"/>
+        </scene>
+        <!--Login Role View Controller - 选择角色-->
+        <scene sceneID="mOb-Lg-tEC">
+            <objects>
+                <viewController id="Vsi-x2-cQ9" customClass="LoginRoleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="O1P-tk-yYk"/>
+                        <viewControllerLayoutGuide type="bottom" id="TB9-4D-O7X"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="t1r-t0-jh8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="选择角色" id="arf-9p-CrY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gDk-tp-Ssz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1092" y="5945"/>
         </scene>
         <!--LoginSETTING View Controller - 端口设置-->
         <scene sceneID="H3u-q6-McN">
@@ -143,7 +164,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kGS-yl-Rmn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1070" y="6268"/>
+            <point key="canvasLocation" x="1102" y="6760"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Ydc-dS-zSu">

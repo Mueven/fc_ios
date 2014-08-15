@@ -10,6 +10,7 @@
 #import "KeychainItemWrapper.h"
 #import "AFNetOperate.h"
 #import "ScanStandard.h"
+#import "LoginRoleViewController.h"
 
 @interface Login ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *email;
@@ -101,7 +102,6 @@
     
     if(email.length>0){
         if(password.length>0){
-//            [self loginSameAction:@"require"];
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet log_in]
@@ -109,17 +109,30 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
-                          if([requestCode isEqualToString:@"300"]){
-                              [self loginSameAction:@"stock"];
+                          if([responseObject[@"content"] count]>1){
+                              NSArray *result=responseObject[@"content"];
+                              [self performSegueWithIdentifier:@"chooseRole" sender:@{@"roleArray":result}];
                           }
-                          else if([requestCode isEqualToString:@"400"]){
-                              [self loginSameAction:@"shop"];
+                          else{
+                              NSString *requestCode=[NSString stringWithFormat:@"%@",[responseObject[@"content"] objectAtIndex:0]];
+                              if([requestCode isEqualToString:@"300"]){
+                                  [self loginSameAction:@"stock"];
+                              }
+                              else if([requestCode isEqualToString:@"400"]){
+                                  [self loginSameAction:@"shop"];
+                              }
+                              else if([requestCode isEqualToString:@"500"]){
+                                  [self loginSameAction:@"require"];
+                              }  
                           }
-                          else if([requestCode isEqualToString:@"500"]){
-                              [self loginSameAction:@"require"];
-                          }
+                          //读取扫面验证规则
                           [ScanStandard sharedScanStandard];
+                          //写入用户信息
+                          NSString *number=self.email.text.length>0?self.email.text:@"default-example";
+                          NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                          NSString *document=[documentDictionary firstObject];
+                          NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
+                          [NSKeyedArchiver archiveRootObject:number toFile:path];
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
@@ -156,12 +169,6 @@
 {
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
     UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
-    //写入用户信息
-    NSString *number=self.email.text.length>0?self.email.text:@"default-example";
-    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *document=[documentDictionary firstObject];
-    NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
-    [NSKeyedArchiver archiveRootObject:number toFile:path];
     
     [self presentViewController:tabbarStock
                        animated:YES
@@ -177,6 +184,17 @@
                          animations:^{
                              self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
                          }];
+    }
+    //experiment
+//    NSArray *result=@[@"300",@"400",@"500"];
+//    [self performSegueWithIdentifier:@"chooseRole" sender:@{@"roleArray":result}];
+    
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"chooseRole"]){
+        LoginRoleViewController *loginRole=segue.destinationViewController;
+        loginRole.roleArray=[sender objectForKey:@"roleArray"];
     }
 }
 @end
