@@ -10,10 +10,9 @@
 #import "Login.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetOperate.h"
-#import "SimplePingHelper.h"
+#import "PingWatcher.h"
 @interface MAppDelegate()
 @property(nonatomic) BOOL updating;
-@property(nonatomic,strong)NSTimer *watchTimer;
 @end
 
 @implementation MAppDelegate
@@ -27,24 +26,23 @@ SCNetworkReachabilityRef reachability;
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
 
      //监测网络情况
-    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-    reachability.reachableBlock = ^(Reachability *reachability) {
-        
-    };
-    reachability.unreachableBlock = ^(Reachability *reachability) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                          message:@"网络连接已断开"
-                                                         delegate:self
-                                                cancelButtonTitle:@"确定"
-                                                otherButtonTitles:nil];
-            AudioServicesPlaySystemSound(1013);
-            [alert show];
-//            [self stopPing];
-        });
-      
-    };
-    [reachability startNotifier];
+//    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+//    reachability.reachableBlock = ^(Reachability *reachability) {
+//        
+//    };
+//    reachability.unreachableBlock = ^(Reachability *reachability) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+//                                                          message:@"网络连接已断开"
+//                                                         delegate:self
+//                                                cancelButtonTitle:@"确定"
+//                                                otherButtonTitles:nil];
+//            AudioServicesPlaySystemSound(1013);
+//            [alert show];
+//        });
+//      
+//    };
+//    [reachability startNotifier];
     
     //自动更新
 //    @try {
@@ -105,36 +103,6 @@ SCNetworkReachabilityRef reachability;
     
     return YES;
 }
--(void)watchPing
-{
-    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
-                                                         target:self
-                                                       selector:@selector(schedulePing)
-                                                       userInfo:nil
-                                                        repeats:YES];
-
-}
--(void)stopPing
-{
-    [self.watchTimer invalidate];
-    self.watchTimer=nil;
-}
--(void)schedulePing
-{
-    NSLog(@"schedulePing");
-    [SimplePingHelper ping:@"192.168.1.101"
-                    target:self
-                       sel:@selector(pingResult:)];
-}
-- (void)pingResult:(NSNumber*)success
-{
-	if (success.boolValue) {
-		NSLog(@"ok");
-	}
-    else {
-		NSLog(@"false");
-	}
-}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *base=@"https://www.cz-tek.com";
@@ -166,14 +134,7 @@ SCNetworkReachabilityRef reachability;
 {
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
-    
-    self.watchTimer=[NSTimer scheduledTimerWithTimeInterval:2.0f
-                                                     target:self
-                                                   selector:@selector(schedulePing)
-                                                   userInfo:nil
-                                                    repeats:YES];
-//    [self watchPing];
-    
+    [[PingWatcher sharedPingWtcher] resumePingWatcher];
     dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);
     dispatch_sync(observeBattery, ^{
         double delayInTime=17.0;
@@ -188,12 +149,8 @@ SCNetworkReachabilityRef reachability;
             
             switch (status) {
                 case BatteryStatus4Of4Bars:
-//                    alert.message=@"40";
-//                    [alert show];
                     break;
                 case BatteryStatus3Of4Bars:
-//                    alert.message=@"30";
-//                    [alert show];
                     break;
                 case BatteryStatus2Of4Bars:
                     alert.message=@"设备电量低，建议使用完后立刻充电";
@@ -211,24 +168,16 @@ SCNetworkReachabilityRef reachability;
                     AudioServicesPlaySystemSound(1013);
                     break;
                 case BatteryStatusPowerSourceConnected:
-//                    alert.message=@"BatteryStatusPowerSourceConnected";
-//                    [alert show];
                     break;
                 case BatteryStatusUndefined:
-//                    alert.message=@"BatteryStatusUndefined";
-//                    [alert show];
                     break;
                 default:
-//                    alert.message=@"default";
-//                    [alert show];
                     break;
             }
             
         });
 
     });
-    
-    
     
 //    [self getStatusOfBattery];
 //    BatteryStatusPowerSourceConnected,        /**< Device is connected to a power source */
@@ -241,6 +190,7 @@ SCNetworkReachabilityRef reachability;
     
     // Restart any tasks that were paused (or not yet started) while  the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
