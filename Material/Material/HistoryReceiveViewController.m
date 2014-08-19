@@ -83,7 +83,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"checkYun"]){
-        NSLog(@"%@ and %@",[sender objectForKey:@"yunArray"],[sender objectForKey:@"date"]);
+//        NSLog(@"%@ and %@",[sender objectForKey:@"yunArray"],[sender objectForKey:@"date"]);
         HistoryYunTableViewController *historyYun=segue.destinationViewController;
         historyYun.yunArray=[sender objectForKey:@"yunArray"];
         historyYun.chooseDate=[sender objectForKey:@"date"];

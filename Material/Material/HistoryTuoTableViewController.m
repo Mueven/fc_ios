@@ -96,11 +96,11 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
                  if([(NSDictionary *)responseObject[@"content"] count]>0){
+
                      NSDictionary *result=responseObject[@"content"];
                      NSArray *xiangList=result[@"packages"];
                      [tuo.xiang removeAllObjects];
                      for(int i=0;i<xiangList.count;i++){
-                         NSLog(@"xiang:%@",xiangList[i]);
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
                          [tuo.xiang addObject:xiang];
                      }

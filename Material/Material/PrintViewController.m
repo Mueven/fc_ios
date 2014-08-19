@@ -18,7 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
-
 @end
 
 @implementation PrintViewController
@@ -94,7 +93,6 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if([containerClass isEqualToString:@"Tuo"]){
         //这里掉打印拖的接口
-//        NSLog(@"%@",[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text]);
         [manager GET:[[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
