@@ -18,6 +18,8 @@
 #import "XiangTableViewCell.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "ScanStandard.h"
+#import "SortArray.h"
+#import "TuoCheckGeneralViewController.h"
 
 
 @interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
@@ -35,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
-
+- (IBAction)checkXiang:(id)sender;
 @end
 
 @implementation TuoScanViewController
@@ -613,9 +615,18 @@
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
     }
+    else if([segue.identifier isEqualToString:@"checkXiang"]){
+        TuoCheckGeneralViewController *tuoCheck=segue.destinationViewController;
+        tuoCheck.xiangArray=[sender objectForKey:@"xiangArray"];
+    }
 }
 - (IBAction)finish:(id)sender {
     [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+}
+
+- (IBAction)checkXiang:(id)sender {
+    NSArray *xiangArray=[SortArray sortByPartNumber:self.tuo.xiang];
+    [self performSegueWithIdentifier:@"checkXiang" sender:@{@"xiangArray":xiangArray}];
 }
 -(void)updateAddXiangCount{
     self.sum_packages_count++;
