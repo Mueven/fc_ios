@@ -134,7 +134,7 @@
     if([segue.identifier isEqualToString:@"printTuo"]){
         PrintViewController *printViewController = segue.destinationViewController;
         printViewController.container=[sender objectForKey:@"container"];
-        printViewController.noBackButton=0;
+        printViewController.noBackButton=@0;
     }
 }
 - (IBAction)clickPrintTuo:(id)sender {

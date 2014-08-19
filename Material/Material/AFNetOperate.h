@@ -51,10 +51,11 @@
 -(NSString *)log_in;
 -(NSString *)log_out;
 
--(NSString *)print_stock_tuo:(NSString *)ID;
--(NSString *)print_stock_yun:(NSString *)ID;
--(NSString *)print_shop_receive:(NSString *)ID;
--(NSString *)print_shop_unreceive:(NSString *)ID;
+
+-(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
+-(NSString *)print_stock_yun:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
+-(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
+-(NSString *)print_shop_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_model_list;
 -(NSString *)get_current_print_model;
 -(void)set_tuo_copy:(NSString *)copy;

@@ -63,8 +63,8 @@
 - (IBAction)print:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet print_shop_receive:self.yun.ID]
-      parameters:@{@"printer_name":self.printModelLabel.text}
+    [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:self.printModelLabel.text copies:self.yunCopyTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+      parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
@@ -85,8 +85,8 @@
 - (IBAction)printUncheck:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet print_shop_unreceive:self.yun.ID]
-      parameters:@{@"printer_name":self.printModelLabel.text}
+    [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:self.printModelLabel.text copies:self.uncheckYunCopyTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+      parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){

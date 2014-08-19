@@ -166,7 +166,7 @@
         PrintViewController *yunPrint=segue.destinationViewController;
         yunPrint.container=[sender objectForKey:@"yun"];
         yunPrint.successContent=[sender objectForKey:@"content"];
-        yunPrint.noBackButton=1;
+        yunPrint.noBackButton=@1;
     }
 }
 

@@ -431,25 +431,53 @@
     return [base stringByAppendingString:bind];
 }
 
--(NSString *)print_stock_tuo:(NSString *)ID
+-(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"stock_tuo"];
-    return [NSString stringWithFormat:@"%@%@",joint,ID];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
 }
--(NSString *)print_stock_yun:(NSString *)ID
+-(NSString *)print_stock_yun:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"stock_yun"];
-    return [NSString stringWithFormat:@"%@%@",joint,ID];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
 }
--(NSString *)print_shop_receive:(NSString *)ID
+-(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"shop_receive"];
-    return [NSString stringWithFormat:@"%@%@",joint,ID];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
 }
--(NSString *)print_shop_unreceive:(NSString *)ID
+-(NSString *)print_shop_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"shop_unreceive"];
-    return [NSString stringWithFormat:@"%@%@",joint,ID];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
 }
 
 //login and logout

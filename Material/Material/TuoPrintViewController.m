@@ -91,8 +91,8 @@
 - (IBAction)confirmPrint:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet print_stock_tuo:self.tuo.ID]
-      parameters:@{@"printer_name":[AFNet get_current_print_model]}
+    [manager GET:[[AFNet print_stock_tuo:self.tuo.ID printer_name:[AFNet get_current_print_model] copies:[AFNet get_tuo_copy]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+      parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){

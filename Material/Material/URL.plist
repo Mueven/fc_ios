@@ -35,7 +35,7 @@
 	<key>print</key>
 	<dict>
 		<key>model</key>
-		<string>/printer/list/</string>
+		<string>/printer/printers</string>
 		<key>shop_unreceive</key>
 		<string>P004/</string>
 		<key>shop_receive</key>

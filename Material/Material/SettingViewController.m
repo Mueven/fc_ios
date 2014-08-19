@@ -63,12 +63,12 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             if([responseObject[@"result"] integerValue]==1){
-                 self.pickerElements = responseObject[@"content"];
+             if([responseObject[@"Code"] integerValue]==1){
+                 self.pickerElements = responseObject[@"Object"];
                  [self.typePicker reloadAllComponents];
              }
              else{
-                 [AFNet alert:responseObject[@"content"]];
+                 [AFNet alert:responseObject[@"Content"]];
              }
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {

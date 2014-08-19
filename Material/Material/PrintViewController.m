@@ -41,7 +41,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.yunSuccessContentLabel.text=self.successContent?self.successContent:@"";
-    if(self.noBackButton){
+    if([self.noBackButton boolValue]){
         [self.navigationItem setHidesBackButton:YES];
     }
     self.pageTextField.delegate=self;
@@ -68,7 +68,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return  YES;
+}
 - (IBAction)unPrint:(id)sender {
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
      if([containerClass isEqualToString:@"Tuo"]){
@@ -90,19 +94,21 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if([containerClass isEqualToString:@"Tuo"]){
         //这里掉打印拖的接口
-        [manager GET:[AFNet print_stock_tuo:[(Tuo *)self.container ID]]
-          parameters:@{@"printer_name":self.printModelLabel.text}
+//        NSLog(@"%@",[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text]);
+        [manager GET:[[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+          parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                     [AFNet alertSuccess:responseObject[@"Content"]];
-                     if(!self.noBackButton){
+                    [AFNet set_tuo_copy:self.pageTextField.text];
+                     if(![self.noBackButton boolValue]){
                          [self.navigationController popViewControllerAnimated:YES];
                      }
                      else{
                           [self performSegueWithIdentifier:@"finishTuo" sender:self];
                      }
-                     [AFNet set_tuo_copy:self.pageTextField.text];
+                    
                     
                  }
                  else{
@@ -116,16 +122,17 @@
          ];
     }
     else if([containerClass isEqualToString:@"Yun"]){
-
-        [manager GET:[AFNet print_stock_yun:[(Yun *)self.container ID]]
+//        NSLog(@"%@",[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text]);
+        [manager GET:[[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
           parameters:@{@"printer_name":self.printModelLabel.text}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
+                    [AFNet set_yun_copy:self.pageTextField.text];
                      [AFNet alertSuccess:responseObject[@"Content"]];
                      [self performSegueWithIdentifier:@"finishYun" sender:self];
-                     [AFNet set_yun_copy:self.pageTextField.text];
+                    
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
