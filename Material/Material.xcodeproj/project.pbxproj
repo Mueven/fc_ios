@@ -36,6 +36,10 @@
 		B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = B04EF2141946E87800A95D7A /* AFNetOperate.m */; };
 		B04EF2171946E89400A95D7A /* URL.plist in Resources */ = {isa = PBXBuildFile; fileRef = B04EF2161946E89400A95D7A /* URL.plist */; };
 		B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */ = {isa = PBXBuildFile; fileRef = B052E9851973B01D009E4D53 /* ScanStandard.m */; };
+		B058550319A2F800000C85E5 /* TuoCheckTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B058550119A2F800000C85E5 /* TuoCheckTableViewCell.m */; };
+		B058550419A2F800000C85E5 /* TuoCheckTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B058550219A2F800000C85E5 /* TuoCheckTableViewCell.xib */; };
+		B058550719A2F832000C85E5 /* TuoCheckGeneralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B058550619A2F832000C85E5 /* TuoCheckGeneralViewController.m */; };
+		B058550A19A2F840000C85E5 /* TuoCheckDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B058550919A2F840000C85E5 /* TuoCheckDetailViewController.m */; };
 		B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = B05FDFAD1985E99500608CBA /* NewValidate.m */; };
 		B061397B194163DF00A0CF62 /* TuoStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397A194163DF00A0CF62 /* TuoStore.m */; };
 		B061397E1941643E00A0CF62 /* Tuo.m in Sources */ = {isa = PBXBuildFile; fileRef = B061397D1941643E00A0CF62 /* Tuo.m */; };
@@ -99,6 +103,7 @@
 		B0DF644819448B75002D044B /* YunStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF644719448B75002D044B /* YunStore.m */; };
 		B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */; };
 		B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */; };
+		B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EDB1DB19A2ECA400917D54 /* SortArray.m */; };
 		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
 		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
 		B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */; };
@@ -171,6 +176,13 @@
 		B04EF2161946E89400A95D7A /* URL.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = URL.plist; sourceTree = "<group>"; };
 		B052E9841973B01D009E4D53 /* ScanStandard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanStandard.h; sourceTree = "<group>"; };
 		B052E9851973B01D009E4D53 /* ScanStandard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanStandard.m; sourceTree = "<group>"; };
+		B058550019A2F800000C85E5 /* TuoCheckTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoCheckTableViewCell.h; sourceTree = "<group>"; };
+		B058550119A2F800000C85E5 /* TuoCheckTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoCheckTableViewCell.m; sourceTree = "<group>"; };
+		B058550219A2F800000C85E5 /* TuoCheckTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuoCheckTableViewCell.xib; sourceTree = "<group>"; };
+		B058550519A2F832000C85E5 /* TuoCheckGeneralViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoCheckGeneralViewController.h; sourceTree = "<group>"; };
+		B058550619A2F832000C85E5 /* TuoCheckGeneralViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoCheckGeneralViewController.m; sourceTree = "<group>"; };
+		B058550819A2F840000C85E5 /* TuoCheckDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoCheckDetailViewController.h; sourceTree = "<group>"; };
+		B058550919A2F840000C85E5 /* TuoCheckDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoCheckDetailViewController.m; sourceTree = "<group>"; };
 		B05EEDD51947FA2A009DDAE9 /* Captuvo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Captuvo.h; sourceTree = "<group>"; };
 		B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		B05FDFAC1985E99500608CBA /* NewValidate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewValidate.h; sourceTree = "<group>"; };
@@ -281,6 +293,8 @@
 		B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivePrintViewController.m; sourceTree = "<group>"; };
 		B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireSettingViewController.h; sourceTree = "<group>"; };
 		B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSettingViewController.m; sourceTree = "<group>"; };
+		B0EDB1DA19A2ECA400917D54 /* SortArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortArray.h; sourceTree = "<group>"; };
+		B0EDB1DB19A2ECA400917D54 /* SortArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortArray.m; sourceTree = "<group>"; };
 		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
 		B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChooseTuoViewController.m; sourceTree = "<group>"; };
 		B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunHaveTuoTableViewController.h; sourceTree = "<group>"; };
@@ -390,6 +404,9 @@
 				B037ECF7194BDC50008C456E /* YunTableViewCell.h */,
 				B037ECF8194BDC50008C456E /* YunTableViewCell.m */,
 				B037ECF9194BDC50008C456E /* YunTableViewCell.xib */,
+				B058550019A2F800000C85E5 /* TuoCheckTableViewCell.h */,
+				B058550119A2F800000C85E5 /* TuoCheckTableViewCell.m */,
+				B058550219A2F800000C85E5 /* TuoCheckTableViewCell.xib */,
 			);
 			name = DELIVERY;
 			sourceTree = "<group>";
@@ -490,6 +507,10 @@
 				B061398F1941BD1300A0CF62 /* TuoScanViewController.m */,
 				B0DF644019446E5B002D044B /* TuoPrintViewController.h */,
 				B0DF644119446E5B002D044B /* TuoPrintViewController.m */,
+				B058550519A2F832000C85E5 /* TuoCheckGeneralViewController.h */,
+				B058550619A2F832000C85E5 /* TuoCheckGeneralViewController.m */,
+				B058550819A2F840000C85E5 /* TuoCheckDetailViewController.h */,
+				B058550919A2F840000C85E5 /* TuoCheckDetailViewController.m */,
 			);
 			name = Tuo;
 			sourceTree = "<group>";
@@ -566,6 +587,8 @@
 		B073F7D1199D9352007011E6 /* DELIVERY */ = {
 			isa = PBXGroup;
 			children = (
+				B0EDB1DA19A2ECA400917D54 /* SortArray.h */,
+				B0EDB1DB19A2ECA400917D54 /* SortArray.m */,
 			);
 			name = DELIVERY;
 			sourceTree = "<group>";
@@ -816,6 +839,7 @@
 				B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */,
 				B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */,
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
+				B058550419A2F800000C85E5 /* TuoCheckTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
 				B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
@@ -852,6 +876,7 @@
 				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */,
+				B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */,
 				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
 				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
@@ -871,6 +896,7 @@
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
 				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
+				B058550719A2F832000C85E5 /* TuoCheckGeneralViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
@@ -887,6 +913,7 @@
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
 				B0DF644819448B75002D044B /* YunStore.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
+				B058550319A2F800000C85E5 /* TuoCheckTableViewCell.m in Sources */,
 				B0643D6A197E041B0036AADA /* RequireHistoryViewController.m in Sources */,
 				B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */,
 				B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */,
@@ -902,6 +929,7 @@
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
+				B058550A19A2F840000C85E5 /* TuoCheckDetailViewController.m in Sources */,
 				B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */,
 				B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */,
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
