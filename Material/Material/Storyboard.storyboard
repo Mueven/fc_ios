@@ -596,6 +596,7 @@
                     <size key="freeformSize" width="320" height="210"/>
                     <connections>
                         <outlet property="copyTextField" destination="cEf-gd-5Rl" id="ufD-4s-NyC"/>
+                        <outlet property="pageTextField" destination="cEf-gd-5Rl" id="esP-KT-dt9"/>
                         <outlet property="printModelLabel" destination="ZVx-Yf-jUO" id="Gig-qK-uNU"/>
                         <outlet property="titleLabel" destination="AnG-N7-TtQ" id="Wde-Nr-C0V"/>
                         <outlet property="yunSuccessContentLabel" destination="HO0-Dd-74Z" id="YuZ-Wn-WIW"/>

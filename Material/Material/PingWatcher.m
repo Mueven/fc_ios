@@ -12,6 +12,7 @@
 @interface PingWatcher()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic,strong)UIAlertView *alert;
+@property(nonatomic,strong)NSString *serverAddress;
 @end
 @implementation PingWatcher
 +(instancetype)sharedPingWtcher
@@ -28,12 +29,24 @@
     self=[super init];
     if(self){
         self.alert=nil;
+        NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *document=[documentDictionary firstObject];
+        NSString *pathServer=[document stringByAppendingPathComponent:@"server.address.archive"];
+        if([NSKeyedUnarchiver unarchiveObjectWithFile:pathServer]){
+            NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:pathServer];
+            self.serverAddress=[dictionary objectForKey:@"ip"];
+        }
+        else{
+            NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"URL" ofType:@"plist"];
+            NSMutableDictionary *URLDictionary=[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+            self.serverAddress=[URLDictionary objectForKey:@"server"];
+        }
     }
     return self;
 }
 -(void)resumePingWatcher
 {
-    self.timer=[NSTimer scheduledTimerWithTimeInterval:2.0f
+    self.timer=[NSTimer scheduledTimerWithTimeInterval:60.0f
                                      target:self
                                    selector:@selector(schedulePing)
                                    userInfo:nil
@@ -46,7 +59,7 @@
 }
 -(void)schedulePing
 {
-    [SimplePingHelper ping:@"121.199.48.53"
+    [SimplePingHelper ping:self.serverAddress
                     target:self
                        sel:@selector(pingResult:)];
 }
@@ -75,5 +88,9 @@
     if(buttonIndex==0){
         self.alert=nil;
     }
+}
+-(void)changeSererAddress:(NSString *)newAddress
+{
+    self.serverAddress=newAddress;
 }
 @end

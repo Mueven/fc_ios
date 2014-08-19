@@ -12,4 +12,5 @@
 +(instancetype)sharedPingWtcher;
 -(void)resumePingWatcher;
 -(void)stopPingWtcher;
+-(void)changeSererAddress:(NSString *)newAddress;
 @end

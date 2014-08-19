@@ -7,6 +7,7 @@
 //
 
 #import "LoginSETTINGViewController.h"
+#import "PingWatcher.h"
 
 @interface LoginSETTINGViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *ipTextField;
@@ -103,6 +104,8 @@
     NSString *pathServer=[document stringByAppendingPathComponent:@"server.address.archive"];
     [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
     [NSKeyedArchiver archiveRootObject:dictionaryServer toFile:pathServer];
+    
+    [[PingWatcher sharedPingWtcher] changeSererAddress:self.serverTextField.text];
     
     [self.ipTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
