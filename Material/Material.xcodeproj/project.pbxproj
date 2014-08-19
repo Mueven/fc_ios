@@ -57,6 +57,7 @@
 		B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B066FE2F194E714F00C0019D /* AudioToolbox.framework */; };
 		B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */; };
 		B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B06E027419403D3D001B7899 /* Storyboard.storyboard */; };
+		B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B073F7D3199D9382007011E6 /* PingWatcher.m */; };
 		B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */; };
 		B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */; };
 		B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */ = {isa = PBXBuildFile; fileRef = B07CE570198B8CAA000FD578 /* RequireCheckBill.m */; };
@@ -80,6 +81,8 @@
 		B085F6571940184E001F01F3 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F6551940184E001F01F3 /* SettingViewController.m */; };
 		B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */; };
 		B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */; };
+		B099FD17199C90A60049586E /* SimplePing.m in Sources */ = {isa = PBXBuildFile; fileRef = B099FD16199C90A60049586E /* SimplePing.m */; };
+		B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B099FD19199C90C30049586E /* SimplePingHelper.m */; };
 		B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B09BF6BC1959508E00FCF00A /* Reachability.m */; };
 		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
 		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
@@ -208,6 +211,8 @@
 		B066FE31194EBDB300C0019D /* LoginSETTINGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSETTINGViewController.h; sourceTree = "<group>"; };
 		B066FE32194EBDB300C0019D /* LoginSETTINGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSETTINGViewController.m; sourceTree = "<group>"; };
 		B06E027419403D3D001B7899 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		B073F7D2199D9382007011E6 /* PingWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingWatcher.h; sourceTree = "<group>"; };
+		B073F7D3199D9382007011E6 /* PingWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingWatcher.m; sourceTree = "<group>"; };
 		B07CE56A198B8890000FD578 /* RequireCheckXiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckXiangTableViewCell.h; sourceTree = "<group>"; };
 		B07CE56B198B8890000FD578 /* RequireCheckXiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckXiangTableViewCell.m; sourceTree = "<group>"; };
 		B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckXiangTableViewCell.xib; sourceTree = "<group>"; };
@@ -243,6 +248,10 @@
 		B08B8F0A1953D39E009739DB /* TuoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoTableViewCell.h; sourceTree = "<group>"; };
 		B08B8F0B1953D39E009739DB /* TuoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoTableViewCell.m; sourceTree = "<group>"; };
 		B08B8F0C1953D39E009739DB /* TuoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TuoTableViewCell.xib; sourceTree = "<group>"; };
+		B099FD15199C90A60049586E /* SimplePing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePing.h; sourceTree = "<group>"; };
+		B099FD16199C90A60049586E /* SimplePing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePing.m; sourceTree = "<group>"; };
+		B099FD18199C90C30049586E /* SimplePingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePingHelper.h; sourceTree = "<group>"; };
+		B099FD19199C90C30049586E /* SimplePingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePingHelper.m; sourceTree = "<group>"; };
 		B09BF6BB1959508E00FCF00A /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B09BF6BC1959508E00FCF00A /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -509,7 +518,10 @@
 		B0619E50197CB610000C1C69 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B073F7D1199D9352007011E6 /* DELIVERY */,
 				B0619E51197CB6D1000C1C69 /* REQUIRE */,
+				B073F7D2199D9382007011E6 /* PingWatcher.h */,
+				B073F7D3199D9382007011E6 /* PingWatcher.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -549,6 +561,13 @@
 				B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */,
 			);
 			name = history;
+			sourceTree = "<group>";
+		};
+		B073F7D1199D9352007011E6 /* DELIVERY */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DELIVERY;
 			sourceTree = "<group>";
 		};
 		B085F603194004CC001F01F3 = {
@@ -651,6 +670,10 @@
 		B085F64419400FA3001F01F3 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B099FD18199C90C30049586E /* SimplePingHelper.h */,
+				B099FD19199C90C30049586E /* SimplePingHelper.m */,
+				B099FD15199C90A60049586E /* SimplePing.h */,
+				B099FD16199C90A60049586E /* SimplePing.m */,
 				B09BF6BB1959508E00FCF00A /* Reachability.h */,
 				B09BF6BC1959508E00FCF00A /* Reachability.m */,
 				B05EEDD51947FA2A009DDAE9 /* Captuvo.h */,
@@ -828,6 +851,7 @@
 				B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */,
 				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
+				B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */,
 				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
 				B0DF643919440033002D044B /* XiangTableViewController.m in Sources */,
@@ -865,6 +889,7 @@
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B0643D6A197E041B0036AADA /* RequireHistoryViewController.m in Sources */,
 				B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */,
+				B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
 				B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */,
@@ -873,6 +898,7 @@
 				B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */,
 				B04EF1D41946888900A95D7A /* ShopTuoTableViewCell.m in Sources */,
 				B04EF1F51946E53600A95D7A /* ShopSettingViewController.m in Sources */,
+				B099FD17199C90A60049586E /* SimplePing.m in Sources */,
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,

@@ -181,15 +181,48 @@
     //after regex partNumber
     int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
     int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-    NSString *partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+    NSString *partNumberPost=[NSString string];
+    @try {
+        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
+            partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+        }
+        else{
+            partNumberPost=@"";
+        }
+    }
+    @catch (NSException *exception) {
+        partNumberPost=@"";
+    }
     //after regex quantity
     int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
     int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-    NSString *quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+    NSString *quantityPost=[NSString string];
+    @try {
+        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
+            quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+        }
+        else{
+            quantityPost=@"";
+        }
+    }
+    @catch (NSException *exception) {
+        quantityPost=@"";
+    }
     //after regex date
     int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
     int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-    NSString *datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
+    NSString *datePost=[NSString string];
+    @try {
+        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
+          datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
+        }
+        else{
+           datePost=@"";  
+        }
+    }
+    @catch (NSException *exception) {
+        datePost=@"";
+    }
     
     
     

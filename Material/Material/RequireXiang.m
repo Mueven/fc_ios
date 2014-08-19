@@ -29,7 +29,13 @@
             //after regex quantity
             int beginQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"prefix_length"] intValue];
             int lastQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"suffix_length"] intValue];
-            self.quantity_int=[self.quantity substringWithRange:NSMakeRange(beginQ, [self.quantity length]-beginQ-lastQ)];
+            if([self.quantity substringWithRange:NSMakeRange(beginQ, [self.quantity length]-beginQ-lastQ)]){
+                self.quantity_int=[self.quantity substringWithRange:NSMakeRange(beginQ, [self.quantity length]-beginQ-lastQ)];
+            }
+            else{
+                self.quantity=@"0";
+                self.quantity_int=@"0";
+            }
         }
         @catch (NSException *exception) {
             self.quantity=@"0";
@@ -48,12 +54,31 @@
         self.partNumber=[object objectForKey:@"part_id"]?[object objectForKey:@"part_id"]:@"";
         int beginP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
         int lastP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-        self.partNumber_origin=[self.partNumber substringWithRange:NSMakeRange(beginP, [self.partNumber length]-beginP-lastP)];
-        
+        @try {
+            if([self.partNumber substringWithRange:NSMakeRange(beginP, [self.partNumber length]-beginP-lastP)]){
+                 self.partNumber_origin=[self.partNumber substringWithRange:NSMakeRange(beginP, [self.partNumber length]-beginP-lastP)];
+            }
+            else{
+               self.partNumber_origin=@"";
+            }
+        }
+        @catch (NSException *exception) {
+            self.partNumber_origin=@"";
+        }
         self.department=[object objectForKey:@"whouse_id"]?[object objectForKey:@"whouse_id"]:@"";
         int beginD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
         int lastD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
-        self.department_origin=[self.department substringWithRange:NSMakeRange(beginD, [self.department length]-beginD-lastD)];
+        @try {
+            if([self.department substringWithRange:NSMakeRange(beginD, [self.department length]-beginD-lastD)]){
+                self.department_origin=[self.department substringWithRange:NSMakeRange(beginD, [self.department length]-beginD-lastD)];
+            }
+            else{
+                self.department_origin=@"";
+            }
+        }
+        @catch (NSException *exception) {
+            self.department_origin=@"";
+        }
         
         
         self.agent=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";

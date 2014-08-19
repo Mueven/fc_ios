@@ -35,7 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
-//- (IBAction)touchScreen:(id)sender;
+
 @end
 
 @implementation TuoScanViewController
@@ -65,6 +65,10 @@
     else if([self.type isEqualToString:@"addXiang"]){
         self.navigationItem.rightBarButtonItem=NULL;
         self.xiangListLabel.text=@"已绑定箱数:";
+    }
+    else if([self.type isEqualToString:@"tuo"]){
+        [self.navigationItem setHidesBackButton:YES];
+        self.navigationItem.title=self.tuo.department;
     }
     self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
@@ -248,8 +252,8 @@
                                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                             [AFNet.activeView stopAnimating];
                                             if([responseObject[@"result"] integerValue]==1){
-                                                //                                            self.firstResponder.text=data;
-                                                //                                            [self textFieldShouldReturn:self.firstResponder];
+                                                //self.firstResponder.text=data;
+                                                //[self textFieldShouldReturn:self.firstResponder];
                                             }
                                             else{
                                                 [AFNet alert:responseObject[@"content"]];
@@ -348,24 +352,41 @@
     if(tag==4){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        NSString *key=self.key.text;
-        NSString *partNumber=self.partNumber.text;
-        NSString *quantity=self.quatity.text;
-        NSString *date=self.dateTextField.text;
+        NSString *key=self.key.text?self.key.text:@"";
+        NSString *partNumber=self.partNumber.text?self.partNumber.text:@"";
+        NSString *quantity=self.quatity.text?self.quatity.text:@"";
+        NSString *date=self.dateTextField.text?self.dateTextField.text:@"";
         
         //after regex partNumber
         int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
         int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-        NSString *partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+        NSString *partNumberPost=[NSString string];
+        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
+             partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+        }
+        else{
+            partNumberPost=@"";
+        }
         //after regex quantity
         int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
         int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-        NSString *quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+        NSString *quantityPost=[NSString string];
+        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
+             quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+        }
+        else{
+            quantityPost=@"";
+        }
         //after regex date
         int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
         int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-        NSString *datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-        
+        NSString *datePost=[NSString string];
+        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
+             datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
+        }
+        else{
+              datePost=@"";
+        }
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
             [manager POST:[AFNet tuo_bundle_add]
@@ -380,8 +401,9 @@
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          if([(NSDictionary *)responseObject[@"content"] count]>0){
-                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                          NSLog(@"%@",responseObject);
+                          if([(NSDictionary *)responseObject[@"content"][@"package"] count]>0){
+                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"][@"package"]];
                               [self.tuo addXiang:newXiang];
                               [self.xiangTable reloadData];
                               tag=1;
@@ -391,17 +413,30 @@
                               self.partNumber.text=@"";
                               self.quatity.text=@"";
                               self.dateTextField.text=@"";
-                              
-                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                    message:@"绑定成功！"
-                                                                   delegate:self
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:1.0f
-                                                               target:self
-                                                             selector:@selector(dissmissAlert:)
-                                                             userInfo:nil
-                                                              repeats:NO];
+                              if(responseObject[@"content"][@"message"]){
+                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                        message:responseObject[@"content"][@"message"]
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                                  [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                                   target:self
+                                                                 selector:@selector(dissmissAlert:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+                              }
+                              else{
+                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                        message:@"绑定成功"
+                                                                       delegate:self
+                                                              cancelButtonTitle:nil
+                                                              otherButtonTitles:nil];
+                                  [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                                                   target:self
+                                                                 selector:@selector(dissmissAlert:)
+                                                                 userInfo:nil
+                                                                  repeats:NO];
+                              }
                               AudioServicesPlaySystemSound(1012);
                               [self.alert show];
                               [self updateAddXiangCount];
@@ -410,6 +445,11 @@
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
+                          self.key.text=@"";
+                          self.partNumber.text=@"";
+                          self.quatity.text=@"";
+                          self.dateTextField.text=@"";
+                          [self.key becomeFirstResponder];
                       }
                       
                   }
@@ -450,7 +490,7 @@
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:1.5f
+                              [NSTimer scheduledTimerWithTimeInterval:0.5f
                                                                target:self
                                                              selector:@selector(dissmissAlert:)
                                                              userInfo:nil
@@ -463,6 +503,11 @@
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
+                          self.key.text=@"";
+                          self.partNumber.text=@"";
+                          self.quatity.text=@"";
+                          self.dateTextField.text=@"";
+                          [self.key becomeFirstResponder];
                       }
                       
                   }
@@ -584,7 +629,5 @@
 {
     self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
 }
-//-(void)touchScreen:(id)sender{
-//    
-//}
+
 @end

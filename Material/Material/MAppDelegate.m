@@ -10,34 +10,39 @@
 #import "Login.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetOperate.h"
+#import "PingWatcher.h"
 @interface MAppDelegate()
 @property(nonatomic) BOOL updating;
 @end
 
 @implementation MAppDelegate
+SCNetworkConnectionFlags connectionFlags;
+SCNetworkReachabilityRef reachability;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //霍尼韦尔设备
     [[Captuvo sharedCaptuvoDevice] setDecoderGoodReadBeeperVolume:BeeperVolumeLow persistSetting:YES];
     [UIDevice currentDevice].batteryMonitoringEnabled = YES;
-    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-    reachability.reachableBlock = ^(Reachability *reachability) {
-        
-    };
-    reachability.unreachableBlock = ^(Reachability *reachability) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                          message:@"网络连接已断开"
-                                                         delegate:self
-                                                cancelButtonTitle:@"确定"
-                                                otherButtonTitles:nil];
-            AudioServicesPlaySystemSound(1013);
-            [alert show];
-        });
-        
-    };
-    [reachability startNotifier];
+
+     //监测网络情况
+//    Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+//    reachability.reachableBlock = ^(Reachability *reachability) {
+//        
+//    };
+//    reachability.unreachableBlock = ^(Reachability *reachability) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+//                                                          message:@"网络连接已断开"
+//                                                         delegate:self
+//                                                cancelButtonTitle:@"确定"
+//                                                otherButtonTitles:nil];
+//            AudioServicesPlaySystemSound(1013);
+//            [alert show];
+//        });
+//      
+//    };
+//    [reachability startNotifier];
     
     //自动更新
 //    @try {
@@ -129,7 +134,7 @@
 {
     [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] enableDecoderPowerUpBeep:YES];
-    
+    [[PingWatcher sharedPingWtcher] resumePingWatcher];
     dispatch_queue_t observeBattery=dispatch_queue_create("com.observe.battery.pptalent", NULL);
     dispatch_sync(observeBattery, ^{
         double delayInTime=17.0;
@@ -144,12 +149,8 @@
             
             switch (status) {
                 case BatteryStatus4Of4Bars:
-//                    alert.message=@"40";
-//                    [alert show];
                     break;
                 case BatteryStatus3Of4Bars:
-//                    alert.message=@"30";
-//                    [alert show];
                     break;
                 case BatteryStatus2Of4Bars:
                     alert.message=@"设备电量低，建议使用完后立刻充电";
@@ -167,24 +168,16 @@
                     AudioServicesPlaySystemSound(1013);
                     break;
                 case BatteryStatusPowerSourceConnected:
-//                    alert.message=@"BatteryStatusPowerSourceConnected";
-//                    [alert show];
                     break;
                 case BatteryStatusUndefined:
-//                    alert.message=@"BatteryStatusUndefined";
-//                    [alert show];
                     break;
                 default:
-//                    alert.message=@"default";
-//                    [alert show];
                     break;
             }
             
         });
 
     });
-    
-    
     
 //    [self getStatusOfBattery];
 //    BatteryStatusPowerSourceConnected,        /**< Device is connected to a power source */
@@ -197,6 +190,7 @@
     
     // Restart any tasks that were paused (or not yet started) while  the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
+
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
