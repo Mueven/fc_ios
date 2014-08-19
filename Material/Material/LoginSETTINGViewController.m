@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *ipTextField;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
 - (IBAction)saveChange:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *serverTextField;
 
 @end
 
@@ -31,6 +32,7 @@
     [super viewDidLoad];
     self.ipTextField.delegate=self;
     self.portTextField.delegate=self;
+    self.serverTextField.delegate=self;
      [[self navigationController] setNavigationBarHidden:NO animated:YES];
     // Do any additional setup after loading the view.
 }
@@ -74,6 +76,17 @@
         self.ipTextField.text=[URLDictionary objectForKey:@"base"];
         self.portTextField.text=[URLDictionary objectForKey:@"port"];
     }
+    
+    NSString *pathServer=[document stringByAppendingPathComponent:@"server.address.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:pathServer]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:pathServer];
+        self.serverTextField.text=[dictionary objectForKey:@"ip"];
+    }
+    else{
+        NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"URL" ofType:@"plist"];
+        NSMutableDictionary *URLDictionary=[[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+        self.serverTextField.text=[URLDictionary objectForKey:@"server"];
+    }
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -83,12 +96,17 @@
 
 - (IBAction)saveChange:(id)sender {
     NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:self.ipTextField.text,@"ip",self.portTextField.text,@"port", nil];
+    NSDictionary *dictionaryServer=[NSDictionary dictionaryWithObjectsAndKeys:self.serverTextField.text,@"ip", nil];
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"ip.address.archive"];
+    NSString *pathServer=[document stringByAppendingPathComponent:@"server.address.archive"];
     [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+    [NSKeyedArchiver archiveRootObject:dictionaryServer toFile:pathServer];
+    
     [self.ipTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
+    [self.serverTextField resignFirstResponder];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end
