@@ -383,6 +383,14 @@
     NSString *path=[document stringByAppendingPathComponent:@"print.copy.yun.uncheck.archive"];
     [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
 }
+-(void)set_transfer_note_copy:(NSString *)copy
+{
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:copy,@"transfer_note_copy",nil];
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.transfer.note.archive"];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+}
 -(NSString *)get_tuo_copy
 {
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -422,7 +430,19 @@
         return @"1";
     }
 }
-
+-(NSString *)get_transfer_note_copy
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *path=[document stringByAppendingPathComponent:@"print.copy.transfer.note.archive"];
+    if([NSKeyedUnarchiver unarchiveObjectWithFile:path]){
+        NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        return [dictionary objectForKey:@"transfer_note_copy"]?[dictionary objectForKey:@"transfer_note_copy"]:@"1";
+    }
+    else{
+        return @"1";
+    }
+}
 -(NSString *)base_for_print:(NSString *)key
 {
     NSDictionary *printDictionary=[[self URLDictionary] objectForKey:@"print"];
@@ -479,7 +499,18 @@
     }
     return [NSString stringWithFormat:@"%@%@",joint,after];
 }
-
+-(NSString *)print_transfer_note:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"transfer_note"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
 //login and logout
 -(NSString *)log_in
 {

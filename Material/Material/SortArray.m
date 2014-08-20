@@ -18,7 +18,6 @@
     NSMutableDictionary *currentItem=[[NSMutableDictionary alloc] init];
     NSMutableArray *tempArray=[[NSMutableArray alloc] init];
     [currentItem setObject:tempArray forKey:@"xiangArray"];
-    
     while(origin.count>0){
         int length=origin.count;
         for(int i=length-1;i>=0;i--){
@@ -45,7 +44,6 @@
             }
         }
     }
- 
     return [newArray copy];
 }
 @end

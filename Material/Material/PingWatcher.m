@@ -13,6 +13,7 @@
 @property(nonatomic,strong)NSTimer *timer;
 @property(nonatomic,strong)UIAlertView *alert;
 @property(nonatomic,strong)NSString *serverAddress;
+@property(nonatomic)int maxCount;
 @end
 @implementation PingWatcher
 +(instancetype)sharedPingWtcher
@@ -46,7 +47,7 @@
 }
 -(void)resumePingWatcher
 {
-    self.timer=[NSTimer scheduledTimerWithTimeInterval:60.0f
+    self.timer=[NSTimer scheduledTimerWithTimeInterval:10.0f
                                      target:self
                                    selector:@selector(schedulePing)
                                    userInfo:nil
@@ -67,12 +68,15 @@
 - (void)pingResult:(NSNumber*)success
 {
 	if (success.boolValue) {
+        self.maxCount=0;
 		if(self.timer){
             self.timer=nil;
         }
 	}
     else {
-        if(!self.alert){
+        NSLog(@"false");
+        self.maxCount++;
+        if(!self.alert && self.maxCount>=3){
             AudioServicesPlaySystemSound(1051);
             self.alert=[[UIAlertView alloc] initWithTitle:@"错误"
                                                   message:@"与服务器的连接已断开"

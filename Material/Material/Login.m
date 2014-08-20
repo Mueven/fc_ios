@@ -101,7 +101,7 @@
     
     if(email.length>0){
         if(password.length>0){
-//            [self loginSameAction:@"require"];
+//            [self loginSameAction:@"shop"];
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet log_in]

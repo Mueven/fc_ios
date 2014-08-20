@@ -16,7 +16,7 @@
 #import "AFNetOperate.h"
 
 
-@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol,UIAlertViewDelegate>
+@interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
@@ -66,16 +66,13 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.scanTextField becomeFirstResponder];
     [self.tuoTable reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
 }
 

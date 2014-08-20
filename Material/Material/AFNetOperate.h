@@ -56,14 +56,18 @@
 -(NSString *)print_stock_yun:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_shop_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
+-(NSString *)print_transfer_note:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
+
 -(NSString *)print_model_list;
 -(NSString *)get_current_print_model;
 -(void)set_tuo_copy:(NSString *)copy;
 -(void)set_yun_copy:(NSString *)copy;
 -(void)set_yun_uncheck_copy:(NSString *)copy;
+-(void)set_transfer_note_copy:(NSString *)copy;
 -(NSString *)get_tuo_copy;
 -(NSString *)get_yun_copy;
 -(NSString *)get_yun_uncheck_copy;
+-(NSString *)get_transfer_note_copy;
 
 -(NSString *)scan_validate;
 
