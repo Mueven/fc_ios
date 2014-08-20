@@ -431,7 +431,7 @@
                               
                               [self.alert show];
                           }
-                          else if([result_code isEqualToString:@"200"]){
+                          else if([result_code isEqualToString:@"101"]){
                               UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
                                                                                     message:@"请确认部门是否正确"
                                                                                    delegate:self
