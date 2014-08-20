@@ -403,47 +403,42 @@
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          NSLog(@"%@",responseObject);
-                          if([(NSDictionary *)responseObject[@"content"][@"package"] count]>0){
-                              Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"][@"package"]];
-                              [self.tuo addXiang:newXiang];
-                              [self.xiangTable reloadData];
-                              tag=1;
-                              UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
-                              [nextText becomeFirstResponder];
-                              self.key.text=@"";
-                              self.partNumber.text=@"";
-                              self.quatity.text=@"";
-                              self.dateTextField.text=@"";
-                              if(responseObject[@"content"][@"message"]){
-                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                        message:responseObject[@"content"][@"message"]
-                                                                       delegate:self
-                                                              cancelButtonTitle:nil
-                                                              otherButtonTitles:nil];
-                                  [NSTimer scheduledTimerWithTimeInterval:1.0f
-                                                                   target:self
-                                                                 selector:@selector(dissmissAlert:)
-                                                                 userInfo:nil
-                                                                  repeats:NO];
-                              }
-                              else{
-                                  self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                        message:@"绑定成功"
-                                                                       delegate:self
-                                                              cancelButtonTitle:nil
-                                                              otherButtonTitles:nil];
-                                  [NSTimer scheduledTimerWithTimeInterval:0.5f
-                                                                   target:self
-                                                                 selector:@selector(dissmissAlert:)
-                                                                 userInfo:nil
-                                                                  repeats:NO];
-                              }
-                              AudioServicesPlaySystemSound(1012);
-                              [self.alert show];
-                              [self updateAddXiangCount];
-                          }
+                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"][@"package"]];
+                          [self.tuo addXiang:newXiang];
+                          [self.xiangTable reloadData];
+                          tag=1;
+                          UITextField *nextText=(UITextField *)[self.view viewWithTag:tag];
+                          [nextText becomeFirstResponder];
+                          self.key.text=@"";
+                          self.partNumber.text=@"";
+                          self.quatity.text=@"";
+                          self.dateTextField.text=@"";
+                          [self updateAddXiangCount];
+                          AudioServicesPlaySystemSound(1012);
                           
+                          NSString *result_code=responseObject[@"result_code"];
+                          if([result_code isEqualToString:@"100"]){
+                              self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                    message:@"绑定成功"
+                                                                   delegate:self
+                                                          cancelButtonTitle:nil
+                                                          otherButtonTitles:nil];
+                              [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                                               target:self
+                                                             selector:@selector(dissmissAlert:)
+                                                             userInfo:nil
+                                                              repeats:NO];
+                              
+                              [self.alert show];
+                          }
+                          else if([result_code isEqualToString:@"200"]){
+                              UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                                                    message:@"请确认部门是否正确"
+                                                                                   delegate:self
+                                                                          cancelButtonTitle:@"确定"
+                                                                          otherButtonTitles:nil];
+                              [positionAlert show];
+                          }
                       }
                       else{
                           [AFNet alert:responseObject[@"content"]];
