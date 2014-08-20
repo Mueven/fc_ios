@@ -576,7 +576,7 @@
                         <viewControllerLayoutGuide type="top" id="FSM-gm-qGl"/>
                         <viewControllerLayoutGuide type="bottom" id="FyX-wW-TK6"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Osa-qI-Obd">
+                    <view key="view" contentMode="scaleToFill" id="Osa-qI-Obd" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -659,10 +659,13 @@
                                 <rect key="frame" x="14" y="212" width="275" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="W31-QG-1bE" eventType="touchUpInside" id="aAe-wM-UEa"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="JFT-JZ-wyA"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -1374,7 +1377,7 @@
                         <viewControllerLayoutGuide type="top" id="siv-JJ-dm2"/>
                         <viewControllerLayoutGuide type="bottom" id="cNh-ML-t1L"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="52e-L7-sNR">
+                    <view key="view" contentMode="scaleToFill" id="52e-L7-sNR" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -1407,7 +1410,7 @@
                                         <rect key="frame" x="15" y="30" width="156" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1441,7 +1444,7 @@
                                         <rect key="frame" x="16" y="34" width="156" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1461,6 +1464,9 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <action selector="clickScreen:" destination="770-tN-fJ3" eventType="touchUpInside" id="44q-kk-pUA"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="VjR-vk-j1q">
                         <barButtonItem key="rightBarButtonItem" title="完成" id="caG-aa-pGc">
@@ -1710,7 +1716,7 @@
                                     <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="DXB-hC-cwV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机端口:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twG-X0-Qh2">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机型号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twG-X0-Qh2">
                                 <rect key="frame" x="53" y="205" width="90" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -1958,7 +1964,7 @@
                         <viewControllerLayoutGuide type="top" id="eBA-24-hp7"/>
                         <viewControllerLayoutGuide type="bottom" id="U0a-nG-bkA"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lct-Ak-cCN">
+                    <view key="view" contentMode="scaleToFill" id="lct-Ak-cCN" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -2083,7 +2089,7 @@
                                 <rect key="frame" x="183" y="403" width="81" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印份数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62J-Es-eWE">
                                 <rect key="frame" x="126" y="410" width="63" height="21"/>
@@ -2094,6 +2100,9 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="clickScreen:" destination="594-FW-mLh" eventType="touchUpInside" id="3e0-fb-3c0"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="打印移库单" id="63X-yp-NXi"/>
                     <connections>

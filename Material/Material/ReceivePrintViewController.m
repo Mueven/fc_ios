@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *yunCopyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *uncheckYunCopyTextField;
+- (IBAction)clickScreen:(id)sender;
 
 @end
 
@@ -111,5 +112,9 @@
         [self.navigationController popViewControllerAnimated:YES];
     }
     
+}
+- (IBAction)clickScreen:(id)sender {
+    [self.yunCopyTextField resignFirstResponder];
+    [self.uncheckYunCopyTextField resignFirstResponder];
 }
 @end

@@ -403,7 +403,8 @@
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"][@"package"]];
+                          
+                          Xiang *newXiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
                           [self.tuo addXiang:newXiang];
                           [self.xiangTable reloadData];
                           tag=1;
@@ -414,10 +415,11 @@
                           self.quatity.text=@"";
                           self.dateTextField.text=@"";
                           [self updateAddXiangCount];
-                          AudioServicesPlaySystemSound(1012);
+                          
                           
                           NSString *result_code=responseObject[@"result_code"];
                           if([result_code isEqualToString:@"100"]){
+                              AudioServicesPlaySystemSound(1012);
                               self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
                                                                     message:@"绑定成功"
                                                                    delegate:self
@@ -432,6 +434,7 @@
                               [self.alert show];
                           }
                           else if([result_code isEqualToString:@"101"]){
+                              AudioServicesPlaySystemSound(1051);
                               UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
                                                                                     message:@"请确认部门是否正确"
                                                                                    delegate:self
@@ -623,6 +626,7 @@
     NSArray *xiangArray=[SortArray sortByPartNumber:self.tuo.xiang];
     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"xiangArray":xiangArray}];
 }
+
 -(void)updateAddXiangCount{
     self.sum_packages_count++;
     [self updateXiangCountLabel];

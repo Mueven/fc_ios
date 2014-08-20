@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *copiesLabel;
 @property (nonatomic,strong)Tuo *tuo;
 - (IBAction)print:(id)sender;
+- (IBAction)clickScreen:(id)sender;
 @end
 
 @implementation ShopVerifyMoveViewController
@@ -99,8 +100,29 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView=dummyView;
+    if(textField==self.tuoTextField){
+        UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView=dummyView;
+    }
+    else{
+        CGRect frame=textField.frame;
+        int offset=frame.origin.y-200;
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, -offset, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
+    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField==self.pagesTextField){
+        NSTimeInterval animationDuration=0.30f;
+        [UIView animateWithDuration:animationDuration
+                         animations:^{
+                             self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+                         }];
+    }
 }
 -(void)deliveryInfo
 {
@@ -153,7 +175,7 @@
     if(buttonIndex==1){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager GET:[AFNet print_transfer_note:self.tuo.ID printer_name:[AFNet get_current_print_model] copies:self.pagesTextField.text]
+        [manager GET:[[AFNet print_transfer_note:self.tuo.ID printer_name:[AFNet get_current_print_model] copies:self.pagesTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      [AFNet.activeView stopAnimating];
@@ -171,5 +193,8 @@
                  }
              ];
     }
+}
+- (IBAction)clickScreen:(id)sender {
+    [self.pagesTextField resignFirstResponder];
 }
 @end

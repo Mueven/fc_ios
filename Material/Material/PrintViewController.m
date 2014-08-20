@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
+- (IBAction)touchScreen:(id)sender;
 @end
 
 @implementation PrintViewController
@@ -143,5 +144,8 @@
              }
          ];
     }
+}
+- (IBAction)touchScreen:(id)sender {
+    [self.pageTextField resignFirstResponder];
 }
 @end

@@ -74,7 +74,6 @@
         }
 	}
     else {
-        NSLog(@"false");
         self.maxCount++;
         if(!self.alert && self.maxCount>=3){
             AudioServicesPlaySystemSound(1051);
