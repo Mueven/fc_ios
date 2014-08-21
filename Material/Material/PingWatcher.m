@@ -78,7 +78,7 @@
         if(!self.alert && self.maxCount>=3){
             AudioServicesPlaySystemSound(1051);
             self.alert=[[UIAlertView alloc] initWithTitle:@"错误"
-                                                  message:@"与服务器的连接已断开"
+                                                  message:@"与同步服务器断开连接"
                                                  delegate:self
                                         cancelButtonTitle:@"确定"
                                         otherButtonTitles:nil];
