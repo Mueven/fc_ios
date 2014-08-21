@@ -2771,6 +2771,7 @@
                     <connections>
                         <segue destination="ZPs-p5-C15" kind="relationship" relationship="viewControllers" id="U8C-rf-Ca2"/>
                         <segue destination="I8p-AO-0Zt" kind="relationship" relationship="viewControllers" id="bEo-GG-boy"/>
+                        <segue destination="IeN-Qn-DOt" kind="relationship" relationship="viewControllers" id="gg5-84-rtv"/>
                         <segue destination="Om7-OR-Xbc" kind="relationship" relationship="viewControllers" id="22h-7x-x8t"/>
                     </connections>
                 </tabBarController>
@@ -2866,7 +2867,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRa-k3-6Fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3027" y="10923"/>
+            <point key="canvasLocation" x="3027" y="11807"/>
         </scene>
         <!--Navigation Controller - 设置-->
         <scene sceneID="vHe-hc-MXd">
@@ -2924,11 +2925,11 @@
             </objects>
             <point key="canvasLocation" x="2496" y="8837"/>
         </scene>
-        <!--Navigation Controller - 查看历史-->
+        <!--Navigation Controller - 历史-->
         <scene sceneID="CxO-qS-wgT">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="I8p-AO-0Zt" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="查看历史" image="require-history" id="1oz-CF-ao1"/>
+                    <tabBarItem key="tabBarItem" title="历史" image="require-history" id="1oz-CF-ao1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ikZ-2P-Pca">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2942,6 +2943,93 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cmN-Oh-pm7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2501" y="10205"/>
+        </scene>
+        <!--Require Trace View Controller - 状态查询-->
+        <scene sceneID="1LG-PW-Ndy">
+            <objects>
+                <viewController id="kCc-Ot-fDb" customClass="RequireTraceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rxp-v3-ink"/>
+                        <viewControllerLayoutGuide type="bottom" id="7vz-oN-LdM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wvo-E6-L3l">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SDh-Nv-RBm">
+                                <rect key="frame" x="46" y="169" width="227" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="库位" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTi-x6-tFy">
+                                <rect key="frame" x="46" y="147" width="95" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6Q-t0-IIY">
+                                <rect key="frame" x="46" y="301" width="227" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="查询">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="check:" destination="kCc-Ot-fDb" eventType="touchUpInside" id="c2r-DF-X1B"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="状态查询" id="c9I-kk-eCg"/>
+                    <connections>
+                        <outlet property="checkButton" destination="A6Q-t0-IIY" id="JI2-9U-JrQ"/>
+                        <outlet property="partTextField" destination="SDh-Nv-RBm" id="ZtZ-9f-EgY"/>
+                        <segue destination="9wb-BO-b2w" kind="push" identifier="checkDetail" id="1S9-v4-4vo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gY9-Ik-3n6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3002" y="11033"/>
+        </scene>
+        <!--Require Trace Detail View Controller-->
+        <scene sceneID="KPY-nJ-4ss">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="9wb-BO-b2w" customClass="RequireTraceDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sHj-lE-Tf8"/>
+                        <viewControllerLayoutGuide type="bottom" id="uMo-nM-Ifu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4vN-lT-yT5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="库位：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFD-bh-1qo">
+                                <rect key="frame" x="31" y="81" width="52" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="96I-vY-ddG">
+                                <rect key="frame" x="0.0" y="115" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JRS-1e-2s4">
+                        <barButtonItem key="rightBarButtonItem" title="完成" id="5KI-FU-fYy"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FV7-Fx-SmE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3452" y="11033"/>
         </scene>
         <!--Navigation Controller - 设置-->
         <scene sceneID="Q1i-ZI-yUj">
@@ -2960,7 +3048,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ik-n9-mp8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2501" y="10923"/>
+            <point key="canvasLocation" x="2501" y="11807"/>
         </scene>
         <!--Navigation Controller - 移库单-->
         <scene sceneID="qnW-6c-nlf">
@@ -2981,10 +3069,30 @@
             </objects>
             <point key="canvasLocation" x="2476" y="7325"/>
         </scene>
+        <!--Navigation Controller - 状态-->
+        <scene sceneID="8Vn-2E-dDZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IeN-Qn-DOt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="状态" image="require-trace" id="3QH-ch-kpW"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HCO-t4-PAZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="kCc-Ot-fDb" kind="relationship" relationship="rootViewController" id="Ufa-zC-Kxf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TyE-ak-sRT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2508" y="11033"/>
+        </scene>
     </scenes>
     <resources>
         <image name="require-generate" width="30" height="30"/>
         <image name="require-history" width="30" height="30"/>
+        <image name="require-trace" width="30" height="30"/>
         <image name="setting-tarbar" width="30" height="30"/>
         <image name="tuo-tarbar" width="30" height="30"/>
         <image name="xiang-tarbar" width="30" height="30"/>

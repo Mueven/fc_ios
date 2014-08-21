@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B001BEFF19A58A88000800AD /* RequireTraceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BEFE19A58A88000800AD /* RequireTraceViewController.m */; };
+		B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */; };
 		B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */; };
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
@@ -122,6 +124,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B001BEFD19A58A88000800AD /* RequireTraceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireTraceViewController.h; sourceTree = "<group>"; };
+		B001BEFE19A58A88000800AD /* RequireTraceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTraceViewController.m; sourceTree = "<group>"; };
+		B001BF0019A58A97000800AD /* RequireTraceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireTraceDetailViewController.h; sourceTree = "<group>"; };
+		B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTraceDetailViewController.m; sourceTree = "<group>"; };
 		B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryListTableViewController.h; sourceTree = "<group>"; };
 		B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryListTableViewController.m; sourceTree = "<group>"; };
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
@@ -337,6 +343,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B001BEFC19A58A67000800AD /* trace */ = {
+			isa = PBXGroup;
+			children = (
+				B001BEFD19A58A88000800AD /* RequireTraceViewController.h */,
+				B001BEFE19A58A88000800AD /* RequireTraceViewController.m */,
+				B001BF0019A58A97000800AD /* RequireTraceDetailViewController.h */,
+				B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */,
+			);
+			name = trace;
+			sourceTree = "<group>";
+		};
 		B0454CC9197600D1001476F4 /* DELIVERY */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +391,7 @@
 			children = (
 				B0643D63197DF3F70036AADA /* list */,
 				B0643D67197E03F30036AADA /* history */,
+				B001BEFC19A58A67000800AD /* trace */,
 				B0E8C6A2197F603500F0A030 /* RequireSettingViewController.h */,
 				B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */,
 			);
@@ -910,6 +928,7 @@
 				B0DF644519448B67002D044B /* Yun.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,
+				B001BEFF19A58A88000800AD /* RequireTraceViewController.m in Sources */,
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
 				B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */,
@@ -934,6 +953,7 @@
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
+				B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */,
 				B058550A19A2F840000C85E5 /* TuoCheckDetailViewController.m in Sources */,
 				B0643D66197DF40D0036AADA /* RequireDetailViewController.m in Sources */,
 				B04EF2121946E60D00A95D7A /* AFURLSessionManager.m in Sources */,
