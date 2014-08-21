@@ -202,7 +202,6 @@
             [AFNet.activeView stopAnimating];
             NSString *address=[AFNet xiang_validate];
             
-            
             dispatch_queue_t validate=dispatch_queue_create("com.validate.pptalent", NULL);
             dispatch_async(validate, ^{
                 NSString *myData=data;
@@ -220,28 +219,41 @@
                                       Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
                                       [self.tuo addXiang:xiang];
                                       [self.xiangTable reloadData];
-                                      if(self.alert){
-                                          [self.alert dismissWithClickedButtonIndex:0 animated:YES];
-                                          self.alert=nil;
-                                      }
-                                      self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                            message:@"绑定成功！"
-                                                                           delegate:self
-                                                                  cancelButtonTitle:nil
-                                                                  otherButtonTitles:nil];
-                                      [NSTimer scheduledTimerWithTimeInterval:1.0f
-                                                                       target:self
-                                                                     selector:@selector(dissmissAlert:)
-                                                                     userInfo:nil
-                                                                      repeats:NO];
-                                      AudioServicesPlaySystemSound(1012);
-                                      [self.alert show];
                                       [self.key becomeFirstResponder];
                                       self.key.text=@"";
                                       self.partNumber.text=@"";
                                       self.quatity.text=@"";
                                       self.dateTextField.text=@"";
                                       [self updateAddXiangCount];
+                                      
+                                      NSString *result_code=responseObject[@"result_code"];
+                                      if([result_code isEqualToString:@"100"]){
+                                          AudioServicesPlaySystemSound(1012);
+                                          if(self.alert){
+                                              [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+                                              self.alert=nil;
+                                          }
+                                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                                message:@"绑定成功！"
+                                                                               delegate:self
+                                                                      cancelButtonTitle:nil
+                                                                      otherButtonTitles:nil];
+                                          [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                                           target:self
+                                                                         selector:@selector(dissmissAlert:)
+                                                                         userInfo:nil
+                                                                          repeats:NO];
+                                          [self.alert show];
+                                      }
+                                      else if([result_code isEqualToString:@"101"]){
+                                          AudioServicesPlaySystemSound(1051);
+                                          UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                                                                message:@"请确认部门是否正确"
+                                                                                               delegate:self
+                                                                                      cancelButtonTitle:@"确定"
+                                                                                      otherButtonTitles:nil];
+                                          [positionAlert show];
+                                      }  
                                   }
                                   
                               }
