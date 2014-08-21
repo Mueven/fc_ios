@@ -10,6 +10,7 @@
 		B001BEFF19A58A88000800AD /* RequireTraceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BEFE19A58A88000800AD /* RequireTraceViewController.m */; };
 		B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */; };
 		B001BF0519A59A90000800AD /* DrawLight.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0419A59A90000800AD /* DrawLight.m */; };
+		B001BF0819A5CF23000800AD /* PrinterSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0719A5CF23000800AD /* PrinterSetting.m */; };
 		B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */; };
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
@@ -131,6 +132,8 @@
 		B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireTraceDetailViewController.m; sourceTree = "<group>"; };
 		B001BF0319A59A90000800AD /* DrawLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawLight.h; sourceTree = "<group>"; };
 		B001BF0419A59A90000800AD /* DrawLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawLight.m; sourceTree = "<group>"; };
+		B001BF0619A5CF23000800AD /* PrinterSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrinterSetting.h; sourceTree = "<group>"; };
+		B001BF0719A5CF23000800AD /* PrinterSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrinterSetting.m; sourceTree = "<group>"; };
 		B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryListTableViewController.h; sourceTree = "<group>"; };
 		B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryListTableViewController.m; sourceTree = "<group>"; };
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
@@ -569,6 +572,8 @@
 				B0619E51197CB6D1000C1C69 /* REQUIRE */,
 				B073F7D2199D9382007011E6 /* PingWatcher.h */,
 				B073F7D3199D9382007011E6 /* PingWatcher.m */,
+				B001BF0619A5CF23000800AD /* PrinterSetting.h */,
+				B001BF0719A5CF23000800AD /* PrinterSetting.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -968,6 +973,7 @@
 				B04EF20E1946E60D00A95D7A /* AFSecurityPolicy.m in Sources */,
 				B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */,
 				B04EF1D819468A9100A95D7A /* ReceiveTuoViewController.m in Sources */,
+				B001BF0819A5CF23000800AD /* PrinterSetting.m in Sources */,
 				B0A2ECE619A4529D00F80F26 /* ShopVerifyMoveViewController.m in Sources */,
 				B085F61C194004CC001F01F3 /* main.m in Sources */,
 			);
@@ -1115,7 +1121,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";

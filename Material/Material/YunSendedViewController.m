@@ -12,12 +12,13 @@
 #import "Xiang.h"
 #import "AFNetOperate.h"
 #import "ShopTuoTableViewCell.h"
+#import "PrinterSetting.h"
 
 @interface YunSendedViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
 - (IBAction)printYun:(id)sender;
-
+@property (strong,nonatomic)PrinterSetting *printSetting;
 @end
 
 @implementation YunSendedViewController
@@ -42,6 +43,7 @@
     self.navigationItem.title=self.yun.name;
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tuoTable registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
+    self.printSetting=[PrinterSetting sharedPrinterSetting];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -132,7 +134,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
    
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[AFNet get_current_print_model] copies:[AFNet get_yun_copy]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P002"] copies:[self.printSetting getPrivateCopy:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
             

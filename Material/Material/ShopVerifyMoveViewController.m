@@ -9,6 +9,7 @@
 #import "ShopVerifyMoveViewController.h"
 #import "AFNetOperate.h"
 #import "Tuo.h"
+#import "PrinterSetting.h"
 
 @interface ShopVerifyMoveViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *tuoTextField;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pagesTextField;
 @property (weak, nonatomic) IBOutlet UILabel *copiesLabel;
+@property (strong,nonatomic)PrinterSetting *printSetting;
 @property (nonatomic,strong)Tuo *tuo;
 - (IBAction)print:(id)sender;
 - (IBAction)clickScreen:(id)sender;
@@ -40,6 +42,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.printSetting=[PrinterSetting sharedPrinterSetting];
     // Do any additional setup after loading the view.
     self.tuoTextField.delegate=self;
     self.pagesTextField.delegate=self;
@@ -55,7 +58,7 @@
     [super viewWillAppear:animated];
     [self.tuoTextField becomeFirstResponder];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    self.pagesTextField.text=[[[AFNetOperate alloc] init] get_transfer_note_copy];
+    self.pagesTextField.text=[self.printSetting getPrivateCopy:@"P007"];
     
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -122,6 +125,9 @@
                          animations:^{
                              self.view.frame=CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
                          }];
+        if(textField.text.length>0){
+            [self.printSetting setPrivateCopy:@"P007" copies:textField.text];
+        }
     }
 }
 -(void)deliveryInfo
@@ -175,13 +181,12 @@
     if(buttonIndex==1){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager GET:[[AFNet print_transfer_note:self.tuo.ID printer_name:[AFNet get_current_print_model] copies:self.pagesTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+        [manager GET:[[AFNet print_transfer_note:self.tuo.ID printer_name:[self.printSetting getPrivatePrinter:@"P007"] copies:[self.printSetting getPrivateCopy:@"P007"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
               parameters:nil
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      [AFNet.activeView stopAnimating];
                      if([responseObject[@"Code"] integerValue]==1){
                          [AFNet alertSuccess:responseObject[@"Content"]];
-                         [AFNet set_transfer_note_copy:self.pagesTextField.text];
                      }
                      else{
                          [AFNet alert:responseObject[@"Content"]];

@@ -9,6 +9,7 @@
 #import "ReceivePrintViewController.h"
 #import "AFNetOperate.h"
 #import "Yun.h"
+#import "PrinterSetting.h"
 @interface ReceivePrintViewController ()<UITextFieldDelegate>
 - (IBAction)printUncheck:(id)sender;
 - (IBAction)print:(id)sender;
@@ -16,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *yunCopyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *uncheckYunCopyTextField;
+@property (strong,nonatomic)PrinterSetting *printSetting;
 - (IBAction)clickScreen:(id)sender;
 
 @end
@@ -34,15 +36,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+        self.printSetting=[PrinterSetting sharedPrinterSetting];
     // Do any additional setup after loading the view.
     [self.navigationItem setHidesBackButton:YES];
     self.printModelLabel.adjustsFontSizeToFitWidth=YES;
-    self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
+    self.printModelLabel.text=[self.printSetting getPrivatePrinter:@"P003"];
     self.yunCopyTextField.delegate=self;
     self.uncheckYunCopyTextField.delegate=self;
-    AFNetOperate *operate=[[AFNetOperate alloc] init];
-    self.yunCopyTextField.text=[operate get_yun_copy];
-    self.uncheckYunCopyTextField.text=[operate get_yun_uncheck_copy];
+
+    self.yunCopyTextField.text=[self.printSetting getPrivateCopy:@"P003"];
+    self.uncheckYunCopyTextField.text=[self.printSetting getPrivateCopy:@"P004"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,7 +53,20 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.text.length>0){
+        if(textField.tag==1){
+            //确认单
+            [self.printSetting setPrivateCopy:@"P003" copies:textField.text];
+        }
+        else if(textField.tag==2){
+            //未确认单
+            [self.printSetting setPrivateCopy:@"P004" copies:textField.text];
+        }
+    }
+    
+}
 /*
 #pragma mark - Navigation
 
@@ -64,13 +80,12 @@
 - (IBAction)print:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:self.printModelLabel.text copies:self.yunCopyTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P003"] copies:[self.printSetting getPrivateCopy:@"P003"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
                   [AFNet alertSuccess:responseObject[@"Content"]];
-                 [AFNet set_yun_copy:self.yunCopyTextField.text];
              }
              else{
                  [AFNet alert:responseObject[@"Content"]];
@@ -86,13 +101,12 @@
 - (IBAction)printUncheck:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:self.printModelLabel.text copies:self.uncheckYunCopyTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P004"] copies:[self.printSetting getPrivateCopy:@"P004"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"Code"] integerValue]==1){
                  [AFNet alertSuccess:responseObject[@"Content"]];
-                 [AFNet set_yun_uncheck_copy:self.uncheckYunCopyTextField.text];
              }
              else{
                  [AFNet alert:responseObject[@"Content"]];

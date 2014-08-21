@@ -59,7 +59,7 @@
 -(NSString *)print_transfer_note:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 
 -(NSString *)print_model_list;
--(NSString *)get_current_print_model;
+-(NSString *)fget_current_print_model;
 -(void)set_tuo_copy:(NSString *)copy;
 -(void)set_yun_copy:(NSString *)copy;
 -(void)set_yun_uncheck_copy:(NSString *)copy;

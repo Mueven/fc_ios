@@ -1406,7 +1406,7 @@
                                             <action selector="print:" destination="770-tN-fJ3" eventType="touchUpInside" id="DN0-mI-beO"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UvU-VR-vtt">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UvU-VR-vtt">
                                         <rect key="frame" x="15" y="30" width="156" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1440,7 +1440,7 @@
                                             <action selector="printUncheck:" destination="770-tN-fJ3" eventType="touchUpInside" id="XMm-ZZ-O15"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhb-P1-Nbl">
+                                    <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xhb-P1-Nbl">
                                         <rect key="frame" x="16" y="34" width="156" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3218,7 +3218,7 @@
         <segue reference="veK-WU-skj"/>
         <segue reference="MS0-BJ-3Kj"/>
         <segue reference="mEd-et-lyR"/>
-        <segue reference="oF3-aI-OCw"/>
+        <segue reference="Cgx-jM-28f"/>
         <segue reference="Neh-iJ-Fpe"/>
         <segue reference="SkA-08-PWt"/>
     </inferredMetricsTieBreakers>

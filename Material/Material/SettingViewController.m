@@ -9,6 +9,7 @@
 #import "SettingViewController.h"
 #import "Login.h"
 #import "AFNetOperate.h"
+#import "PrinterSetting.h"
 
 @interface SettingViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 - (IBAction)logOut:(id)sender;
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (strong , nonatomic) UIPickerView *typePicker;
 @property (strong, nonatomic) NSArray *pickerElements;
+@property (strong,nonatomic)PrinterSetting *printerSetting;
 - (IBAction)saveChange:(id)sender;
 - (IBAction)touchScreen:(id)sender;
 @end
@@ -44,9 +46,9 @@
     self.typePicker.dataSource=self;
     self.typePicker.showsSelectionIndicator = YES;
     self.typeTextField.inputView=self.typePicker;
-//    self.pickerElements = @[@"text1", @"text2", @"text3", @"text4"];
-    
-    
+    self.printerSetting=[PrinterSetting sharedPrinterSetting];
+    self.pickerElements = [self.printerSetting get_all_printer_model];
+    [self.typePicker reloadAllComponents];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -57,25 +59,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet print_model_list]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-             if([responseObject[@"Code"] integerValue]==1){
-                 self.pickerElements = responseObject[@"Object"];
-                 [self.typePicker reloadAllComponents];
-             }
-             else{
-                 [AFNet alert:responseObject[@"Content"]];
-             }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
-         }
-     ];
+    
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
@@ -83,7 +67,6 @@
         NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
         self.addressTextField.text=[dictionary objectForKey:@"print_ip"]?[dictionary objectForKey:@"print_ip"]:@"";
         self.portTextField.text=[dictionary objectForKey:@"print_port"]?[dictionary objectForKey:@"print_port"]:@"";
-        self.typeTextField.text=[dictionary objectForKey:@"print_model"]?[dictionary objectForKey:@"print_model"]:@"";
     }
     else{
         NSString *plistPath=[[NSBundle mainBundle] pathForResource:@"URL" ofType:@"plist"];
@@ -91,8 +74,8 @@
         NSDictionary *printAddress=[URLDictionary objectForKey:@"print"];
         self.addressTextField.text=[printAddress objectForKey:@"base"];
         self.portTextField.text=[printAddress objectForKey:@"port"];
-        self.typeTextField.text=@"";
     }
+    self.typeTextField.text=[self.printerSetting getPrinterModel];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -150,11 +133,14 @@
 }
 
 - (IBAction)saveChange:(id)sender {
-    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:self.addressTextField.text,@"print_ip",self.portTextField.text,@"print_port",self.typeTextField.text,@"print_model",nil];
+    NSDictionary *dictionary=[NSDictionary dictionaryWithObjectsAndKeys:self.addressTextField.text,@"print_ip",self.portTextField.text,@"print_port",nil];
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"print.ip.address.archive"];
     [NSKeyedArchiver archiveRootObject:dictionary toFile:path];
+    if(self.typeTextField.text.length>0){
+        [self.printerSetting setPrinterModel:self.typeTextField.text];
+    }
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
     [self.typeTextField resignFirstResponder];

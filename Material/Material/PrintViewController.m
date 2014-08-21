@@ -10,6 +10,7 @@
 #import "AFNetOperate.h"
 #import "Tuo.h"
 #import "Yun.h"
+#import "PrinterSetting.h"
 
 @interface PrintViewController ()<UITextFieldDelegate>
 - (IBAction)unPrint:(id)sender;
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
+@property (strong,nonatomic) PrinterSetting *printSetting;
 - (IBAction)touchScreen:(id)sender;
 @end
 
@@ -46,7 +48,9 @@
     }
     self.pageTextField.delegate=self;
     self.printModelLabel.adjustsFontSizeToFitWidth=YES;
-    self.printModelLabel.text=[[[AFNetOperate alloc] init] get_current_print_model];
+
+    self.printSetting=[PrinterSetting sharedPrinterSetting];
+        self.printModelLabel.text=[self.printSetting getPrivatePrinter:@"P001"];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -54,11 +58,11 @@
     NSString *class=[NSString stringWithFormat:@"%@",[self.container class]];
     if([class isEqualToString:@"Yun"]){
         self.titleLabel.text=@"打印运单？";
-        self.pageTextField.text=[[[AFNetOperate alloc] init] get_yun_copy];
+        self.pageTextField.text=[self.printSetting getPrivateCopy:@"P002"];
     }
     else if([class isEqualToString:@"Tuo"]){
         self.titleLabel.text=@"打印拖清单？";
-        self.pageTextField.text=[[[AFNetOperate alloc] init] get_tuo_copy];
+        self.pageTextField.text=[self.printSetting getPrivateCopy:@"P001"];
     }
     
 }
@@ -67,7 +71,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.text.length>0){
+        NSString *class=[NSString stringWithFormat:@"%@",[self.container class]];
+        if([class isEqualToString:@"Yun"]){
+            [self.printSetting setPrivateCopy:@"P002" copies:textField.text];
+        }
+        else if([class isEqualToString:@"Tuo"]){
+            [self.printSetting setPrivateCopy:@"P001" copies:textField.text];
+        }
+    }
+    [textField resignFirstResponder];
+}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -94,21 +110,18 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     if([containerClass isEqualToString:@"Tuo"]){
         //这里掉打印拖的接口
-        [manager GET:[[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+        [manager GET:[[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:[self.printSetting getPrivatePrinter:@"P001"] copies:[self.printSetting getPrivateCopy:@"P001"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                     [AFNet alertSuccess:responseObject[@"Content"]];
-                    [AFNet set_tuo_copy:self.pageTextField.text];
                      if(![self.noBackButton boolValue]){
                          [self.navigationController popViewControllerAnimated:YES];
                      }
                      else{
                           [self performSegueWithIdentifier:@"finishTuo" sender:self];
                      }
-                    
-                    
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
@@ -121,14 +134,12 @@
          ];
     }
     else if([containerClass isEqualToString:@"Yun"]){
-//        NSLog(@"%@",[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text]);
-        [manager GET:[[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:self.printModelLabel.text copies:self.pageTextField.text] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-          parameters:@{@"printer_name":self.printModelLabel.text}
+        [manager GET:[[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:[self.printSetting getPrivatePrinter:@"P002"] copies:[self.printSetting getPrivateCopy:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+          parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
-                    [AFNet set_yun_copy:self.pageTextField.text];
                      [AFNet alertSuccess:responseObject[@"Content"]];
                      [self performSegueWithIdentifier:@"finishYun" sender:self];
                     

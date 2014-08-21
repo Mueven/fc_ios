@@ -7,7 +7,7 @@
 //
 
 #import "TuoPrintViewController.h"
-
+#import "PrinterSetting.h"
 #import "Xiang.h"
 #import "XiangTableViewCell.h"
 #import "AFNetOperate.h"
@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *agentLabel;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
+@property (strong,nonatomic) PrinterSetting *printerSetting;
 - (IBAction)confirmPrint:(id)sender;
 
 @end
@@ -39,6 +40,7 @@
     // Do any additional setup after loading the view.
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
+    self.printerSetting=[PrinterSetting sharedPrinterSetting];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -91,7 +93,7 @@
 - (IBAction)confirmPrint:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_stock_tuo:self.tuo.ID printer_name:[AFNet get_current_print_model] copies:[AFNet get_tuo_copy]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    [manager GET:[[AFNet print_stock_tuo:self.tuo.ID printer_name:[self.printerSetting getPrivatePrinter:@"P001"] copies:[self.printerSetting getPrivateCopy:@"P001"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
