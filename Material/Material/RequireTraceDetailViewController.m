@@ -36,6 +36,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    self.dateCurrentLabel.text=[formatter stringFromDate:[NSDate date]];
+    
+    NSDate *lastDate=[[NSDate alloc] initWithTimeInterval:-24*3600 sinceDate:[NSDate date]];
+    self.dateLastLabel.text=[formatter stringFromDate:lastDate];
+}
 -(void)loadView
 {
     [super loadView];
