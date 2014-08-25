@@ -12,6 +12,7 @@
 #import "RequireXiang.h"
 #import "RequireDetailViewController.h"
 #import "AFNetOperate.h"
+#import "LEDcolor.h"
 
 @interface RequireTodayViewController ()<UITableViewDataSource,UITableViewDelegate>
 - (IBAction)requireGenerate:(id)sender;
@@ -39,7 +40,7 @@
     self.billTable.dataSource=self;
     self.billTable.delegate=self;
     self.billListArray=[NSArray array];
-    
+    [LEDcolor sharedLEDColor];
   
         //example
 //        NSMutableArray *billList=[[NSMutableArray alloc] init];
@@ -127,7 +128,6 @@
 {
      RequireBill *bill=self.billListArray[indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    [AFNet.activeView stopAnimating];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet order_root]

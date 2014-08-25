@@ -16,6 +16,17 @@
 	<string>/api/v1/users/login/</string>
 	<key>log_out</key>
 	<string>/api/v1/users/logout/</string>
+	<key>order_led</key>
+	<dict>
+		<key>state_list</key>
+		<string>/led_state_list</string>
+		<key>position_state</key>
+		<string>/position_state</string>
+		<key>reset</key>
+		<string>/reset</string>
+		<key>root</key>
+		<string>/api/v1/leds</string>
+	</dict>
 	<key>order_item</key>
 	<dict>
 		<key>verify</key>

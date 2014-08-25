@@ -7,6 +7,7 @@
 //
 
 #import "DrawLight.h"
+#import "LEDcolor.h"
 @interface DrawLight()
 @property(nonatomic)CGFloat width;
 @property(nonatomic)CGFloat height;
@@ -18,6 +19,7 @@
 @property(nonatomic)CGFloat radius;
 @property(nonatomic,strong)NSString *color;
 @property(nonatomic,strong)NSDictionary *colorRef;
+@property(nonatomic)int state;
 @end
 @implementation DrawLight
 - (id)initWithFrame:(CGRect)frame
@@ -43,7 +45,15 @@
     }
     return self;
 }
-
+-(instancetype)initWithFrame:(CGRect)frame state:(int)state
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.state=state;
+        // Initialization code
+    }
+    return self;
+}
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
@@ -103,10 +113,12 @@
                   endAngle:M_PI
                  clockwise:NO];
     [path addLineToPoint:center];
-    [[self parseColor:self.color] setFill];
+//    [[self parseColor:self.color] setFill];
+    [[[LEDcolor sharedLEDColor] getStateColor:self.state] setFill];
     [path fill];
     path.lineWidth=self.pathWidth;
-    [[self parseColor:self.color] setStroke];
+//    [[self parseColor:self.color] setStroke];
+    [[[LEDcolor sharedLEDColor] getStateColor:self.state] setStroke];
     [path stroke];
     
     CGPoint left=CGPointMake(center.x-self.radius-0.0, center.y);

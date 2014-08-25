@@ -560,4 +560,22 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"order_item"] objectForKey:@"verify"];
     return [[self order_item_root] stringByAppendingString:bind];
 }
+//control led state
+-(NSString *)order_led_root{
+    NSString *base=[self baseURL];
+    NSString *order_led=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"root"];
+    return [base stringByAppendingString:order_led];
+}
+-(NSString *)order_led_reset{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"reset"];
+    return [[self order_led_root] stringByAppendingString:bind];
+}
+-(NSString *)order_led_position_state{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"position_state"];
+    return [[self order_led_root] stringByAppendingString:bind];
+}
+-(NSString *)order_led_state_list{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"state_list"];
+    return [[self order_led_root] stringByAppendingString:bind];
+}
 @end

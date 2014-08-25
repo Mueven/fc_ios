@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 @interface DrawLight : UIView
 -(instancetype)initWithFrame:(CGRect)frame color:(NSString *)color;
+-(instancetype)initWithFrame:(CGRect)frame state:(int)state;
 @end

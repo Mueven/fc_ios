@@ -38,18 +38,18 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {;
                  if([responseObject[@"Code"] integerValue]==1){
-                     NSArray *printerArray=responseObject[@"Object"][@"DefaultPrinters"];
-                     for(int i=0;i<printerArray.count;i++){
-                         NSDictionary *printerItem=printerArray[i];
-                         NSDictionary *item=@{
-                                              @"printer":printerItem[@"Name"],
-                                              @"copy":[NSString stringWithFormat:@"%@",printerItem[@"Copy"]]
-                                              };
-                         [self.printerDictionary setObject:item forKey:printerItem[@"Id"]];
+                     if(responseObject[@"Object"]){
+                         NSArray *printerArray=responseObject[@"Object"][@"DefaultPrinters"];
+                         for(int i=0;i<printerArray.count;i++){
+                             NSDictionary *printerItem=printerArray[i];
+                             NSDictionary *item=@{
+                                                  @"printer":printerItem[@"Name"],
+                                                  @"copy":[NSString stringWithFormat:@"%@",printerItem[@"Copy"]]
+                                                  };
+                             [self.printerDictionary setObject:item forKey:printerItem[@"Id"]];
+                         }
+                         self.printerModelArray=responseObject[@"Object"][@"SystemPrinters"];
                      }
-                     self.printerModelArray=responseObject[@"Object"][@"SystemPrinters"];
-                     NSLog(@"%@",self.printerModelArray);
-                     NSLog(@"%@",self.printerDictionary);
                  }
                  else{
                     

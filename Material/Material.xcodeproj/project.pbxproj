@@ -95,6 +95,8 @@
 		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
 		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
 		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
+		B09ECD7219AAD36500783B6A /* LED.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7119AAD36500783B6A /* LED.m */; };
+		B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7419AAD8C500783B6A /* LEDcolor.m */; };
 		B0A2ECE619A4529D00F80F26 /* ShopVerifyMoveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */; };
 		B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
@@ -283,6 +285,10 @@
 		B09CC8DD1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09CC8DE1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		B09ECD7019AAD36500783B6A /* LED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LED.h; sourceTree = "<group>"; };
+		B09ECD7119AAD36500783B6A /* LED.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LED.m; sourceTree = "<group>"; };
+		B09ECD7319AAD8C500783B6A /* LEDcolor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDcolor.h; sourceTree = "<group>"; };
+		B09ECD7419AAD8C500783B6A /* LEDcolor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDcolor.m; sourceTree = "<group>"; };
 		B0A2ECE419A4529D00F80F26 /* ShopVerifyMoveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopVerifyMoveViewController.h; sourceTree = "<group>"; };
 		B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopVerifyMoveViewController.m; sourceTree = "<group>"; };
 		B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangDetailViewController.h; sourceTree = "<group>"; };
@@ -388,6 +394,8 @@
 				B0619E4B197CB35C000C1C69 /* RequireXiang.m */,
 				B07CE56F198B8CAA000FD578 /* RequireCheckBill.h */,
 				B07CE570198B8CAA000FD578 /* RequireCheckBill.m */,
+				B09ECD7019AAD36500783B6A /* LED.h */,
+				B09ECD7119AAD36500783B6A /* LED.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -583,6 +591,8 @@
 			children = (
 				B05FDFAC1985E99500608CBA /* NewValidate.h */,
 				B05FDFAD1985E99500608CBA /* NewValidate.m */,
+				B09ECD7319AAD8C500783B6A /* LEDcolor.h */,
+				B09ECD7419AAD8C500783B6A /* LEDcolor.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -959,9 +969,11 @@
 				B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */,
 				B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */,
 				B04EF1D41946888900A95D7A /* ShopTuoTableViewCell.m in Sources */,
+				B09ECD7219AAD36500783B6A /* LED.m in Sources */,
 				B04EF1F51946E53600A95D7A /* ShopSettingViewController.m in Sources */,
 				B099FD17199C90A60049586E /* SimplePing.m in Sources */,
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
+				B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
 				B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */,
@@ -1121,7 +1133,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";

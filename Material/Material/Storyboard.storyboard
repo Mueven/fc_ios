@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bRR-Yf-CoJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -2952,25 +2952,25 @@
                         <viewControllerLayoutGuide type="top" id="Rxp-v3-ink"/>
                         <viewControllerLayoutGuide type="bottom" id="7vz-oN-LdM"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wvo-E6-L3l">
+                    <view key="view" contentMode="scaleToFill" id="wvo-E6-L3l" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SDh-Nv-RBm">
-                                <rect key="frame" x="46" y="169" width="227" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="3" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SDh-Nv-RBm">
+                                <rect key="frame" x="46" y="141" width="227" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="库位" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTi-x6-tFy">
-                                <rect key="frame" x="46" y="147" width="95" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="部门" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTi-x6-tFy">
+                                <rect key="frame" x="46" y="119" width="95" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6Q-t0-IIY">
-                                <rect key="frame" x="46" y="301" width="227" height="36"/>
+                                <rect key="frame" x="46" y="314" width="227" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2982,13 +2982,30 @@
                                     <action selector="check:" destination="kCc-Ot-fDb" eventType="touchUpInside" id="c2r-DF-X1B"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="418002580" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CvR-3a-Sxq">
+                                <rect key="frame" x="46" y="211" width="227" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="零件" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uk-QP-YhN">
+                                <rect key="frame" x="46" y="189" width="95" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="touchScreen:" destination="kCc-Ot-fDb" eventType="touchUpInside" id="bC7-FR-Q5L"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="状态查询" id="c9I-kk-eCg"/>
                     <connections>
                         <outlet property="checkButton" destination="A6Q-t0-IIY" id="JI2-9U-JrQ"/>
-                        <outlet property="partTextField" destination="SDh-Nv-RBm" id="ZtZ-9f-EgY"/>
+                        <outlet property="departmentTextField" destination="SDh-Nv-RBm" id="GAq-4I-WM2"/>
+                        <outlet property="partTextField" destination="CvR-3a-Sxq" id="vOe-mp-B0P"/>
                         <segue destination="9wb-BO-b2w" kind="push" identifier="checkDetail" id="1S9-v4-4vo"/>
                     </connections>
                 </viewController>
@@ -3021,7 +3038,7 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sew-ng-nOm">
-                                <rect key="frame" x="68" y="87" width="232" height="21"/>
+                                <rect key="frame" x="68" y="88" width="232" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -3132,6 +3149,7 @@
                         <outlet property="dateLastLabel" destination="MFf-vd-lNP" id="atV-Ch-wwF"/>
                         <outlet property="positionLabel" destination="Sew-ng-nOm" id="a4e-8y-ypJ"/>
                         <outlet property="receiveLabel" destination="E6a-Cz-NP1" id="dZX-Gg-99E"/>
+                        <outlet property="resetButton" destination="jNS-Z0-O0t" id="ylU-1n-Iu3"/>
                         <outlet property="sumLabel" destination="t7w-Yb-n7r" id="DpY-hU-PPO"/>
                         <outlet property="unreceiveLabel" destination="ch8-Xr-eAG" id="sRr-9I-WmT"/>
                     </connections>

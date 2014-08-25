@@ -47,7 +47,7 @@
 }
 -(void)resumePingWatcher
 {
-    self.timer=[NSTimer scheduledTimerWithTimeInterval:10.0f
+    self.timer=[NSTimer scheduledTimerWithTimeInterval:60.0f
                                      target:self
                                    selector:@selector(schedulePing)
                                    userInfo:nil

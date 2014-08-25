@@ -83,9 +83,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    //    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     [self.key becomeFirstResponder];
     [self.xiangTable reloadData];
 }

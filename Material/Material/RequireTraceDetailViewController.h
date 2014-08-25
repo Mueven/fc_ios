@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LED.h"
 @interface RequireTraceDetailViewController : UIViewController
-
+@property(nonatomic,strong)LED *LED;
 @end
