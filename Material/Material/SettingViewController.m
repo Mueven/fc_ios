@@ -47,8 +47,7 @@
     self.typePicker.showsSelectionIndicator = YES;
     self.typeTextField.inputView=self.typePicker;
     self.printerSetting=[PrinterSetting sharedPrinterSetting];
-    self.pickerElements = [self.printerSetting get_all_printer_model];
-    [self.typePicker reloadAllComponents];
+    
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -76,6 +75,8 @@
         self.portTextField.text=[printAddress objectForKey:@"port"];
     }
     self.typeTextField.text=[self.printerSetting getPrinterModel];
+    self.pickerElements = [self.printerSetting get_all_printer_model];
+    [self.typePicker reloadAllComponents];
 }
 - (void)didReceiveMemoryWarning
 {
