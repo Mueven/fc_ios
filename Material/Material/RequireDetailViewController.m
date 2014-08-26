@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 - (IBAction)print:(id)sender;
 @end
 
@@ -42,7 +41,6 @@
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
     self.statusLabel.text=self.status?@"已处理":@"未处理";
-    self.dateLabel.text=self.billDate;
     if(self.status){
         [self.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }

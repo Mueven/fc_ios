@@ -54,6 +54,7 @@
 }
 -(void)decoderDataReceived:(NSString *)data
 {
+    self.firstResponder.text=data;
     if(self.firstResponder.tag==1){
         UITextField *nextTextField=(UITextField *)[self.view viewWithTag:2];
         nextTextField.text=@"";
@@ -113,7 +114,6 @@
                           @"part_id":part
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSLog(@"%@",responseObject);
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
                         LED *led=[[LED alloc] initWithObject:responseObject[@"content"]];
