@@ -60,9 +60,14 @@
 }
 -(void)schedulePing
 {
-    [SimplePingHelper ping:self.serverAddress
-                    target:self
-                       sel:@selector(pingResult:)];
+    if(self.serverAddress.length>0){
+        [SimplePingHelper ping:self.serverAddress
+                        target:self
+                           sel:@selector(pingResult:)];
+    }
+    else{
+        [self stopPingWtcher];
+    }
 }
 
 - (void)pingResult:(NSNumber*)success
