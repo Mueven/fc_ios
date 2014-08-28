@@ -45,4 +45,30 @@
     }
     return self;
 }
+-(NSString *)order_item_part_fix:(NSString *)param
+{
+    int beginSP=[[[self.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
+    int lastSP=[[[self.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
+    NSString *partNumberPost=[NSString string];
+    if([[param copy] substringWithRange:NSMakeRange(beginSP, [param length]-beginSP-lastSP)]){
+        partNumberPost=[[param copy] substringWithRange:NSMakeRange(beginSP, [param length]-beginSP-lastSP)];
+    }
+    else{
+        partNumberPost=@"";
+    }
+    return partNumberPost;
+}
+-(NSString *)order_item_department_fix:(NSString *)param
+{
+    int beginSP=[[[self.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
+    int lastSP=[[[self.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
+    NSString *partNumberPost=[NSString string];
+    if([[param copy] substringWithRange:NSMakeRange(beginSP, [param length]-beginSP-lastSP)]){
+        partNumberPost=[[param copy] substringWithRange:NSMakeRange(beginSP, [param length]-beginSP-lastSP)];
+    }
+    else{
+        partNumberPost=@"";
+    }
+    return partNumberPost;
+}
 @end

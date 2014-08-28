@@ -10,11 +10,13 @@
 #import "AFNetOperate.h"
 #import "LED.h"
 #import "RequireTraceDetailViewController.h"
+#import "ScanStandard.h"
 @interface RequireTraceViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
 @property (weak, nonatomic) IBOutlet UIButton *checkButton;
 @property (strong, nonatomic) UITextField *firstResponder;
+@property (strong,nonatomic)ScanStandard *scanStandard;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)check:(id)sender;
 @end
@@ -36,7 +38,7 @@
     // Do any additional setup after loading the view.
     self.departmentTextField.delegate=self;
     self.partTextField.delegate=self;
-
+    self.scanStandard=[ScanStandard sharedScanStandard];
     self.checkButton.hidden=NO;
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -110,8 +112,8 @@
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager GET:[AFNet order_led_position_state]
              parameters:@{
-                          @"whouse":department,
-                          @"part_id":part
+                          @"whouse":[self.scanStandard order_item_department_fix:department],
+                          @"part_id":[self.scanStandard order_item_part_fix:part]
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
