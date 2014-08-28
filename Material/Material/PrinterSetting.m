@@ -153,4 +153,7 @@
      NSString *update_sign=[NSString stringWithFormat:@"%@_copy_update",name];
     [self saveToArchive:update_sign object:@1];
 }
+-(void)resetPrinterModel{
+    [self saveToArchive:@"printer_update" object:NULL];
+}
 @end

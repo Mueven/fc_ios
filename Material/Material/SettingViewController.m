@@ -21,6 +21,7 @@
 @property (strong,nonatomic)PrinterSetting *printerSetting;
 - (IBAction)saveChange:(id)sender;
 - (IBAction)touchScreen:(id)sender;
+- (IBAction)resetPrint:(id)sender;
 @end
 
 @implementation SettingViewController
@@ -152,5 +153,10 @@
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
     [self.typeTextField resignFirstResponder];
+}
+
+- (IBAction)resetPrint:(id)sender {
+    [self.printerSetting resetPrinterModel];
+    self.typeTextField.text=@"";
 }
 @end

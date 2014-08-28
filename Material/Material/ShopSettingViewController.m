@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
 - (IBAction)saveChange:(id)sender;
 - (IBAction)touchScreen:(id)sender;
+- (IBAction)resetPrint:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (strong , nonatomic) UIPickerView *typePicker;
 @property (strong, nonatomic) NSArray *pickerElements;
@@ -155,5 +156,10 @@
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
     [self.typeTextField resignFirstResponder];
+}
+
+- (IBAction)resetPrint:(id)sender {
+    [self.printerSetting resetPrinterModel];
+    self.typeTextField.text=@"";
 }
 @end

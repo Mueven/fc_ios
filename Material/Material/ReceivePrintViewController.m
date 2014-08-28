@@ -78,6 +78,8 @@
 }
 */
 - (IBAction)print:(id)sender {
+    UITextField *textField=(UITextField *)[self.view viewWithTag:1];
+    [self.printSetting setPrivateCopy:@"P003" copies:textField.text];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P003"] copies:[self.printSetting getPrivateCopy:@"P003"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
@@ -99,6 +101,8 @@
 
 }
 - (IBAction)printUncheck:(id)sender {
+    UITextField *textField=(UITextField *)[self.view viewWithTag:2];
+    [self.printSetting setPrivateCopy:@"P004" copies:textField.text];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P004"] copies:[self.printSetting getPrivateCopy:@"P004"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]

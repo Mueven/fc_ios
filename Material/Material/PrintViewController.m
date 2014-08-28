@@ -108,6 +108,15 @@
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    if(self.pageTextField.text.length>0){
+        NSString *class=[NSString stringWithFormat:@"%@",[self.container class]];
+        if([class isEqualToString:@"Yun"]){
+            [self.printSetting setPrivateCopy:@"P002" copies:self.pageTextField.text];
+        }
+        else if([class isEqualToString:@"Tuo"]){
+            [self.printSetting setPrivateCopy:@"P001" copies:self.pageTextField.text];
+        }
+    }
     if([containerClass isEqualToString:@"Tuo"]){
         //这里掉打印拖的接口
         [manager GET:[[AFNet print_stock_tuo:[(Tuo *)self.container ID] printer_name:[self.printSetting getPrivatePrinter:@"P001"] copies:[self.printSetting getPrivateCopy:@"P001"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]

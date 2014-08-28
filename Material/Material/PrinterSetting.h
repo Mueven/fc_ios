@@ -16,4 +16,5 @@
 -(NSArray *)get_all_printer_model;
 -(NSString *)getPrivateCopy:(NSString *)name;
 -(void)setPrivateCopy:(NSString *)name copies:(NSString *)copies;
+-(void)resetPrinterModel;
 @end
