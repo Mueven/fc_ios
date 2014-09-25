@@ -21,6 +21,12 @@
 @property(nonatomic,strong)NSString *department_origin;
 @property(nonatomic,strong)NSString *agent;
 @property(nonatomic,strong)NSString *uniq_id;
+@property(nonatomic)int handled;
+@property(nonatomic)int is_finished;
+@property(nonatomic)int out_of_stock;
+@property(nonatomic,strong)NSString *handled_text;
+@property(nonatomic,strong)NSString *is_finished_text;
+@property(nonatomic,strong)NSString *out_of_stock_text;
 @property(nonatomic)int xiangCount;
 @property(nonatomic)BOOL urgent;
 -(instancetype)initWithObject:(id)object;

@@ -70,7 +70,10 @@
 {
     RequireXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     RequireXiang *xiang=self.xiangArray[indexPath.row];
-
+    cell.is_finished_label.text=xiang.is_finished_text;
+    if(xiang.out_of_stock==1){
+        cell.out_of_stock_label.text=xiang.out_of_stock_text;
+    }
     cell.positionTextField.text=xiang.quantity_int;
     cell.partNumberTextField.text=xiang.partNumber;
     cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];

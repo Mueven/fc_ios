@@ -426,25 +426,25 @@
 //添加箱后的合并
 -(void)xiangMerge:(RequireXiang *)xiang
 {
-    NSString *uniq_id=xiang.uniq_id;
-    BOOL merge=0;
-    for(int i=0;i<self.xiangArray.count;i++){
-        RequireXiang *xiangItem=self.xiangArray[i];
-        if([xiangItem.uniq_id isEqualToString:uniq_id] && !xiangItem.urgent){
-            int origin=[xiangItem.quantity_int intValue];
-            int new=[xiang.quantity_int intValue];
-            xiangItem.quantity_int=[NSString stringWithFormat:@"%d",origin+new];
-            xiangItem.xiangCount++;
-            merge=1;
-            break ;
-        }
-    }
-    if(merge){
-        
-    }
-    else{
+//    NSString *uniq_id=xiang.uniq_id;
+//    BOOL merge=0;
+//    for(int i=0;i<self.xiangArray.count;i++){
+//        RequireXiang *xiangItem=self.xiangArray[i];
+//        if([xiangItem.uniq_id isEqualToString:uniq_id] && !xiangItem.urgent){
+//            int origin=[xiangItem.quantity_int intValue];
+//            int new=[xiang.quantity_int intValue];
+//            xiangItem.quantity_int=[NSString stringWithFormat:@"%d",origin+new];
+//            xiangItem.xiangCount++;
+//            merge=1;
+//            break ;
+//        }
+//    }
+//    if(merge){
+//        
+//    }
+//    else{
         [self.xiangArray insertObject:xiang atIndex:0];
-    }
+//    }
     [self updateAddCount];
     [self.xiangTable reloadData];
 }
@@ -473,6 +473,10 @@
     if(tableView==self.xiangTable){
         RequireXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
         RequireXiang *xiang=self.xiangArray[indexPath.row];
+        cell.is_finished_label.text=xiang.is_finished_text;
+        if(xiang.out_of_stock==1){
+            cell.out_of_stock_label.text=xiang.out_of_stock_text;
+        }
         cell.positionTextField.text=xiang.quantity_int;
         cell.partNumberTextField.text=xiang.partNumber;
         cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];
@@ -492,7 +496,7 @@
                 cellForBlock.urgentButton.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:67.0/255.0 blue:67.0/255.0 alpha:1.0];
                 [cellForBlock.urgentButton setTitle:@"取消加急" forState:UIControlStateNormal];
             }
-            [self urgentSwitchMerg:xiang];
+//            [self urgentSwitchMerg:xiang];
         };
         if(xiang.urgent){
             //加急状态下

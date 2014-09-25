@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *partNumberTextField;
 @property (weak, nonatomic) IBOutlet UILabel *quantityTextField;
 @property (weak, nonatomic) IBOutlet UILabel *positionTextField;
+@property (weak, nonatomic) IBOutlet UILabel *is_finished_label;
+@property (weak, nonatomic) IBOutlet UILabel *out_of_stock_label;
 @property (weak, nonatomic) IBOutlet UIButton *urgentButton;
 @property (strong , nonatomic) void (^clickCell)();
 - (IBAction)setUrgent:(id)sender;
