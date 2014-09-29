@@ -115,6 +115,12 @@
     RequireBill *bill=self.billListArray[indexPath.row];
     cell.dateLabel.text=bill.date;
     cell.statusLabel.text=bill.status?@"已处理":@"未处理";
+    if(bill.has_out_of_stock==1){
+        cell.out_of_stock_label.text=bill.has_out_of_stock_text;
+    }
+    else{
+        cell.out_of_stock_label.text=@"";
+    }
     if(bill.status){
         [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
     }
@@ -138,7 +144,9 @@
                 NSArray *order_items=(NSArray *)[responseObject[@"content"][@"order"] objectForKey:@"order_items"];
                  NSMutableArray *itemArray=[[NSMutableArray alloc] init];
                  for(int i=0;i<[order_items count];i++){
+                     NSLog(@"require xiang is :%@",order_items[i]);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:order_items[i]];
+                     NSLog(@"xiang department :%@ and origin :%@",xiang.department,xiang.department_origin);
                      [itemArray addObject:xiang];
                  }
                  NSNumber *status=bill.status?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];

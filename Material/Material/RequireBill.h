@@ -15,6 +15,8 @@
 @property(nonatomic,strong)NSString *department;
 @property(nonatomic,strong)NSString *id;
 @property(nonatomic,strong)NSString *user_id;
+@property(nonatomic)int has_out_of_stock;
+@property(nonatomic,strong)NSString *has_out_of_stock_text;
 @property(nonatomic)BOOL status;
 -(instancetype)init;
 -(instancetype)initWithObject:(id)object;

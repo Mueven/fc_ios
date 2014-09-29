@@ -66,6 +66,7 @@
             self.partNumber_origin=@"";
         }
         self.department=[object objectForKey:@"whouse_id"]?[object objectForKey:@"whouse_id"]:@"";
+        
         int beginD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
         int lastD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
         @try {

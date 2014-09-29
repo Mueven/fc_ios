@@ -141,6 +141,7 @@ SCNetworkReachabilityRef reachability;
         dispatch_time_t popTime=dispatch_time(DISPATCH_TIME_NOW, (int64_t)delayInTime *NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^{
             BatteryStatus status=[[Captuvo sharedCaptuvoDevice] getBatteryStatus];
+        
             UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
                                                           message:@""
                                                          delegate:self

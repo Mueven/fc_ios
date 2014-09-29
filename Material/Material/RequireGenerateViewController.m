@@ -477,6 +477,9 @@
         if(xiang.out_of_stock==1){
             cell.out_of_stock_label.text=xiang.out_of_stock_text;
         }
+        else{
+            cell.out_of_stock_label.text=@"";
+        }
         cell.positionTextField.text=xiang.quantity_int;
         cell.partNumberTextField.text=xiang.partNumber;
         cell.quantityTextField.text=[NSString stringWithFormat:@"%d",xiang.xiangCount];

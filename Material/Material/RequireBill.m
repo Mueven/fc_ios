@@ -43,6 +43,8 @@
         }
         //self.department=[object objectForKey:@"department"]?[object objectForKey:@"department"]:@"";
         self.status=[object objectForKey:@"handled"]?[[object objectForKey:@"handled"] intValue]:0;
+        self.has_out_of_stock=[object objectForKey:@"has_out_of_stock"]?[[object objectForKey:@"handled"] intValue]:0;
+        self.has_out_of_stock_text=self.has_out_of_stock==1?@"缺货":@"正常";
         self.id=[object objectForKey:@"id"]?[object objectForKey:@"id"]:@"";
         self.user_id=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
     }
