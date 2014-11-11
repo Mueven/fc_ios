@@ -14,7 +14,7 @@
 		<string>https://github.com/pptalent/fc_ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Material/Material.xcodeproj/project.xcworkspace</string>
+	<string>Material/Material.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>FA0738D122065BCACA2B5BB12E98F1B62CCC578E</key>

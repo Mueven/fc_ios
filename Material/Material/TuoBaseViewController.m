@@ -86,7 +86,6 @@
         tuo.ID=[sender objectForKey:@"ID"];
         scanViewController.tuo=tuo;
         //tuoStore中也要加入
-        
         scanViewController.type=@"tuo";
     }
     
