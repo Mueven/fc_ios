@@ -3024,13 +3024,13 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="MS0-BJ-3Kj"/>
         <segue reference="Kxl-Rh-nWd"/>
         <segue reference="Get-Zr-2fp"/>
         <segue reference="veK-WU-skj"/>
+        <segue reference="MS0-BJ-3Kj"/>
         <segue reference="mEd-et-lyR"/>
         <segue reference="SkA-08-PWt"/>
-        <segue reference="FcC-pN-TYA"/>
         <segue reference="Neh-iJ-Fpe"/>
+        <segue reference="ZfA-pO-UHe"/>
     </inferredMetricsTieBreakers>
 </document>
