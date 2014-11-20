@@ -9,7 +9,7 @@
 	<key>scan_validate</key>
 	<string>/api/v1/regexes/labels</string>
 	<key>base</key>
-	<string>http://192.168.1.109</string>
+	<string>http://192.168.0.112</string>
 	<key>port</key>
 	<string>:3000</string>
 	<key>log_in</key>

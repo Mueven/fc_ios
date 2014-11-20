@@ -10,13 +10,19 @@
 #import "AFNetOperate.h"
 #import "Yun.h"
 #import "HistoryYunTableViewController.h"
+#import "TuoList.h"
+#import "XiangList.h"
 
 @interface HistoryReceiveViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property(nonatomic,strong)NSString *postDate;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)checkYun:(id)sender;
-
+- (IBAction)checkTuo:(id)sender;
+- (IBAction)checkXiang:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *yunButton;
+@property (weak, nonatomic) IBOutlet UIButton *tuoButton;
+@property (weak, nonatomic) IBOutlet UIButton *xiangButton;
 @end
 
 @implementation HistoryReceiveViewController
@@ -43,6 +49,9 @@
     datePicker.datePickerMode=UIDatePickerModeDate;
     [self.dateTextField setInputView:datePicker];
     self.postDate=[[NSString alloc] init];
+    self.yunButton.hidden=YES;
+    self.tuoButton.hidden=YES;
+    self.xiangButton.hidden=YES;
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -71,6 +80,7 @@
         textField.text=[formatter stringFromDate:[NSDate date]];
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
         self.postDate=[formatter stringFromDate:[NSDate date]];
+ 
     }
     
 }
@@ -88,12 +98,25 @@
         historyYun.yunArray=[sender objectForKey:@"yunArray"];
         historyYun.chooseDate=[sender objectForKey:@"date"];
     }
+    else if([segue.identifier isEqualToString:@"tuoList"]){
+        TuoList *tuoList=segue.destinationViewController;
+        tuoList.tuoArray=[sender objectForKey:@"tuoArray"];
+    }
+    else if([segue.identifier isEqualToString:@"xiangList"]){
+        XiangList *xiangList=segue.destinationViewController;
+        xiangList.xiangArray=[sender objectForKey:@"xiangArray"];
+    }
 }
 
 
 - (IBAction)touchScreen:(id)sender {
     if([self.dateTextField isFirstResponder]){
         [self.dateTextField resignFirstResponder];
+        if(self.dateTextField.text.length>0){
+            self.yunButton.hidden=NO;
+            self.tuoButton.hidden=NO;
+            self.xiangButton.hidden=NO;
+        }
     }
 
 }
@@ -139,5 +162,11 @@
     }
     
     
+}
+
+- (IBAction)checkTuo:(id)sender {
+}
+
+- (IBAction)checkXiang:(id)sender {
 }
 @end

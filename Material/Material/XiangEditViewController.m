@@ -9,6 +9,7 @@
 #import "XiangEditViewController.h"
 #import "AFNetOperate.h"
 #import "ScanStandard.h"
+#import "XiangSendViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 @interface XiangEditViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 
@@ -19,6 +20,7 @@
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (strong,nonatomic)ScanStandard *scanStandard;
 - (IBAction)finishEdit:(id)sender;
+- (IBAction)sendXiang:(id)sender;
 @end
 
 @implementation XiangEditViewController
@@ -255,5 +257,15 @@
              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
          }
      ];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"sendXiang"]){
+        XiangSendViewController *sendVC=[segue destinationViewController];
+        sendVC.xiang=[sender objectForKey:@"xiang"];
+    }
+}
+- (IBAction)sendXiang:(id)sender {
+    [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
 }
 @end

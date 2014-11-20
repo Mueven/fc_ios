@@ -22,10 +22,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
 //@property (strong,nonatomic) UIAlertView *printAlert;
 @property (weak, nonatomic) IBOutlet UILabel *scanLabel;
-
+@property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (nonatomic)int currentModel;
 //1是运单状态，0是拖状态
 //- (IBAction)fake:(id)sender;
+- (IBAction)confirm:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end
 
 @implementation ReceiveTuoViewController
@@ -150,12 +153,14 @@
 {
     self.currentModel=0;
     self.navigationItem.title=self.yun.name;
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确认收货"
-                                                                            style:UIBarButtonItemStyleBordered target:self
-                                                                           action:@selector(receive)];
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"放弃收货"
-                                                                            style:UIBarButtonItemStyleBordered target:self
-                                                                           action:@selector(unReceive)];
+    self.confirmButton.hidden=NO;
+    self.cancelButton.hidden=NO;
+//    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"确认收货"
+//                                                                            style:UIBarButtonItemStyleBordered target:self
+//                                                                           action:@selector(receive)];
+//    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"放弃收货"
+//                                                                            style:UIBarButtonItemStyleBordered target:self
+//                                                                           action:@selector(unReceive)];
     self.scanLabel.text=@"扫描托清单号";
     self.countLabel.text=[NSString stringWithFormat:@"包含拖：%d",(int)[self.yun.tuoArray count]];
     self.tuoTable.hidden=NO;
@@ -165,9 +170,11 @@
 -(void)yunModel
 {
     self.currentModel=1;
-    self.navigationItem.title=@"收货";
-    self.navigationItem.rightBarButtonItem=NULL;
-    self.navigationItem.leftBarButtonItem=NULL;
+    self.navigationItem.title=@"接收运单";
+//    self.navigationItem.rightBarButtonItem=NULL;
+//    self.navigationItem.leftBarButtonItem=NULL;
+    self.confirmButton.hidden=YES;
+    self.cancelButton.hidden=YES;
     self.scanLabel.text=@"扫描运单号";
     self.countLabel.text=@"";
     self.tuoTable.hidden=YES;
@@ -324,4 +331,11 @@
 }
 
 
+- (IBAction)confirm:(id)sender {
+    [self receive];
+}
+
+- (IBAction)cancel:(id)sender {
+    [self unReceive];
+}
 @end

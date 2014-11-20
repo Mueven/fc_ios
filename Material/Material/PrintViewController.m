@@ -146,7 +146,6 @@
         [manager GET:[[AFNet print_stock_yun:[(Yun *)self.container ID] printer_name:[self.printSetting getPrivatePrinter:@"P002"] copies:[self.printSetting getPrivateCopy:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                      [AFNet alertSuccess:responseObject[@"Content"]];

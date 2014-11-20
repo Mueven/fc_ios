@@ -14,6 +14,7 @@
 #import "XiangTableViewCell.h"
 #import "TuoPrintViewController.h"
 #import "AFNetOperate.h"
+#import "TuoSendViewController.h"
 
 @interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *department;
@@ -22,6 +23,7 @@
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
+- (IBAction)sendTuo:(id)sender;
 @end
 
 @implementation TuoEditViewController
@@ -253,9 +255,16 @@
         TuoPrintViewController *tuoPrint=segue.destinationViewController;
         tuoPrint.tuo=self.tuo;
     }
+    else if([segue.identifier isEqualToString:@"sendTuo"]){
+        TuoSendViewController  *sendVC=segue.destinationViewController;
+        sendVC.tuo=self.tuo;
+    }
 }
 -(void)updateXiangCountLabel
 {
     self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
+}
+- (IBAction)sendTuo:(id)sender {
+    [self performSegueWithIdentifier:@"sendTuo" sender:self.tuo];
 }
 @end

@@ -101,6 +101,12 @@
 		B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
+		B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */; };
+		B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */; };
+		B0D555CC1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555CB1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m */; };
+		B0D555CF1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555CE1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.m */; };
+		B0D555D21A1DE14700659D6D /* TuoList.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555D11A1DE14700659D6D /* TuoList.m */; };
+		B0D555D51A1DE15500659D6D /* XiangList.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555D41A1DE15500659D6D /* XiangList.m */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
 		B0DF643919440033002D044B /* XiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643819440033002D044B /* XiangTableViewController.m */; };
 		B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643B19440FCA002D044B /* XiangEditViewController.m */; };
@@ -245,7 +251,7 @@
 		B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckXiangTableViewCell.xib; sourceTree = "<group>"; };
 		B07CE56F198B8CAA000FD578 /* RequireCheckBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckBill.h; sourceTree = "<group>"; };
 		B07CE570198B8CAA000FD578 /* RequireCheckBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckBill.m; sourceTree = "<group>"; };
-		B085F60C194004CC001F01F3 /* 物料管理系统.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "物料管理系统.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B085F60C194004CC001F01F3 /* WMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F60F194004CC001F01F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B085F611194004CC001F01F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B085F613194004CC001F01F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -296,6 +302,18 @@
 		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
 		B0BE292E1949921900061E67 /* XiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewCell.m; sourceTree = "<group>"; };
 		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
+		B0D555C11A1D9FDF00659D6D /* XiangSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangSendViewController.h; sourceTree = "<group>"; };
+		B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangSendViewController.m; sourceTree = "<group>"; };
+		B0D555C41A1DA24E00659D6D /* TuoSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoSendViewController.h; sourceTree = "<group>"; };
+		B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoSendViewController.m; sourceTree = "<group>"; };
+		B0D555CA1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveSingleTuoViewController.h; sourceTree = "<group>"; };
+		B0D555CB1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveSingleTuoViewController.m; sourceTree = "<group>"; };
+		B0D555CD1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveSingleXiangViewController.h; sourceTree = "<group>"; };
+		B0D555CE1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveSingleXiangViewController.m; sourceTree = "<group>"; };
+		B0D555D01A1DE14700659D6D /* TuoList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoList.h; sourceTree = "<group>"; };
+		B0D555D11A1DE14700659D6D /* TuoList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoList.m; sourceTree = "<group>"; };
+		B0D555D31A1DE15500659D6D /* XiangList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangList.h; sourceTree = "<group>"; };
+		B0D555D41A1DE15500659D6D /* XiangList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangList.m; sourceTree = "<group>"; };
 		B0DF64331943E1D1002D044B /* PrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintViewController.h; sourceTree = "<group>"; };
 		B0DF64341943E1D1002D044B /* PrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintViewController.m; sourceTree = "<group>"; };
 		B0DF643719440033002D044B /* XiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewController.h; sourceTree = "<group>"; };
@@ -475,6 +493,10 @@
 				B04EF1DA19469CBA00A95D7A /* ReceiveXiangViewController.m */,
 				B0E1D4F01952CD3500105D4D /* ReceivePrintViewController.h */,
 				B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */,
+				B0D555CD1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.h */,
+				B0D555CE1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.m */,
+				B0D555CA1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.h */,
+				B0D555CB1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m */,
 			);
 			name = Receive;
 			sourceTree = "<group>";
@@ -490,6 +512,10 @@
 				B04EF1EE1946DE1C00A95D7A /* HistoryTuoTableViewController.m */,
 				B04EF1F01946DE2900A95D7A /* HistoryXiangTableViewController.h */,
 				B04EF1F11946DE2900A95D7A /* HistoryXiangTableViewController.m */,
+				B0D555D01A1DE14700659D6D /* TuoList.h */,
+				B0D555D11A1DE14700659D6D /* TuoList.m */,
+				B0D555D31A1DE15500659D6D /* XiangList.h */,
+				B0D555D41A1DE15500659D6D /* XiangList.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -548,6 +574,8 @@
 				B058550619A2F832000C85E5 /* TuoCheckGeneralViewController.m */,
 				B058550819A2F840000C85E5 /* TuoCheckDetailViewController.h */,
 				B058550919A2F840000C85E5 /* TuoCheckDetailViewController.m */,
+				B0D555C41A1DA24E00659D6D /* TuoSendViewController.h */,
+				B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */,
 			);
 			name = Tuo;
 			sourceTree = "<group>";
@@ -647,7 +675,7 @@
 		B085F60D194004CC001F01F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B085F60C194004CC001F01F3 /* 物料管理系统.app */,
+				B085F60C194004CC001F01F3 /* WMS.app */,
 				B085F627194004CC001F01F3 /* MaterialTests.xctest */,
 			);
 			name = Products;
@@ -764,6 +792,8 @@
 				B0DF643819440033002D044B /* XiangTableViewController.m */,
 				B0DF643A19440FCA002D044B /* XiangEditViewController.h */,
 				B0DF643B19440FCA002D044B /* XiangEditViewController.m */,
+				B0D555C11A1D9FDF00659D6D /* XiangSendViewController.h */,
+				B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */,
 			);
 			name = Xiang;
 			sourceTree = "<group>";
@@ -812,7 +842,7 @@
 			);
 			name = Material;
 			productName = Material;
-			productReference = B085F60C194004CC001F01F3 /* 物料管理系统.app */;
+			productReference = B085F60C194004CC001F01F3 /* WMS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B085F626194004CC001F01F3 /* MaterialTests */ = {
@@ -951,6 +981,7 @@
 				B04EF20F1946E60D00A95D7A /* AFURLConnectionOperation.m in Sources */,
 				B001BEFF19A58A88000800AD /* RequireTraceViewController.m in Sources */,
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
+				B0D555CC1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
 				B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
@@ -963,7 +994,9 @@
 				B08B8F0D1953D39E009739DB /* TuoTableViewCell.m in Sources */,
 				B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
+				B0D555CF1A1DAC6F00659D6D /* ReceiveSingleXiangViewController.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
+				B0D555D21A1DE14700659D6D /* TuoList.m in Sources */,
 				B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */,
@@ -971,9 +1004,12 @@
 				B04EF1D41946888900A95D7A /* ShopTuoTableViewCell.m in Sources */,
 				B09ECD7219AAD36500783B6A /* LED.m in Sources */,
 				B04EF1F51946E53600A95D7A /* ShopSettingViewController.m in Sources */,
+				B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */,
 				B099FD17199C90A60049586E /* SimplePing.m in Sources */,
+				B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */,
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
 				B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */,
+				B0D555D51A1DE15500659D6D /* XiangList.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,
 				B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */,
@@ -1119,7 +1155,7 @@
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_NAME = "物料管理系统";
+				PRODUCT_NAME = WMS;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1145,7 +1181,7 @@
 					/Users/wayne/Desktop/CaptuvoSDK/SDK/Samples/SDKTestSample/SDKTest,
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_NAME = "物料管理系统";
+				PRODUCT_NAME = WMS;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
