@@ -537,7 +537,6 @@
 -(void)dissmissAlert:(NSTimer *)timer
 {
     if(self.alert){
-        
         [self.alert dismissWithClickedButtonIndex:0 animated:YES];
         self.alert=nil;
     }
