@@ -82,7 +82,7 @@
                  if([(NSDictionary *)responseObject[@"content"] count]>0){
                      bool judge=1;
                      for(int i=0;i<self.yun.tuoArray.count;i++){
-                         NSString *idItem=[self.yun.tuoArray[i] ID];
+                         NSString *idItem=[self.yun.tuoArray[i] container_id];
                          if([idItem isEqualToString:data]){
                              judge=0;
                              break;
@@ -121,7 +121,7 @@
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
      cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];

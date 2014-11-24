@@ -56,8 +56,9 @@
     if(self){
 
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
+        self.container_id=dictionary[@"container_id"]?dictionary[@"container_id"]:@"";
         self.remark=dictionary[@"remark"]?dictionary[@"remark"]:@"";
-        self.name=dictionary[@"id"]?dictionary[@"id"]:@"";
+        self.name=dictionary[@"container_id"]?dictionary[@"container_id"]:@"";
         self.sended=[dictionary[@"state"] intValue]?[dictionary[@"state"] intValue]:0;
         if(dictionary[@"delivery_date"]){
             @try {
@@ -86,6 +87,7 @@
 -(instancetype)copyMe:(Yun *)yun
 {
     self.ID=[yun.ID copy];
+    self.container_id=[yun.container_id copy];
     self.remark=[yun.remark copy];
     self.name=[yun.name copy];
     self.date=[yun.date copy];

@@ -11,6 +11,7 @@
 
 @interface Tuo : NSObject
 @property(nonatomic,strong)NSString *ID;
+@property(nonatomic,strong)NSString *container_id;
 @property(nonatomic,strong) NSString *department;
 @property(nonatomic,strong) NSString *agent;
 @property(nonatomic,strong) NSString *date;

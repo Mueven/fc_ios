@@ -50,7 +50,7 @@
 {
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     Tuo *tuo=[self.tuoArray objectAtIndex:indexPath.row];
-    cell.nameLabel.text=tuo.ID;
+    cell.nameLabel.text=tuo.container_id;
     cell.dateLabel.text=tuo.department;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
     if(tuo.accepted_packages==tuo.sum_packages){

@@ -141,7 +141,7 @@
 {
     Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
     cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];

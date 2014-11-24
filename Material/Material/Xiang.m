@@ -40,9 +40,10 @@
     self=[super init];
     if(self){
         self.ID=object[@"id"]?object[@"id"]:@"";
+        self.container_id=object[@"container_id"]?object[@"container_id"]:@"";
         self.number=object[@"part_id"]?object[@"part_id"]:@"";
         self.count=object[@"quantity_str"]?object[@"quantity_str"]:@"";
-        self.key=object[@"id"]?object[@"id"]:@"";
+        self.key=object[@"container_id"]?object[@"container_id"]:@"";
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";
         self.date=object[@"check_in_time"]?object[@"check_in_time"]:@"";
@@ -53,6 +54,7 @@
 -(instancetype)copyMe:(Xiang *)xiang
 {
     self.ID=[xiang.ID copy];
+    self.container_id=[xiang.container_id copy];
     self.number=[xiang.number copy];
     self.count=[xiang.count copy];
     self.key=[xiang.key copy];

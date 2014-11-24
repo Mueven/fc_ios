@@ -10,6 +10,7 @@
 
 @interface Xiang : NSObject
 @property(nonatomic,strong)NSString *ID;
+@property(nonatomic,strong)NSString *container_id;
 @property(nonatomic,strong)NSString *number;
 @property(nonatomic,strong)NSString *key;
 @property(nonatomic,strong)NSString *count;

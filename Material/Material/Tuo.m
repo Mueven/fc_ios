@@ -53,6 +53,7 @@
     self=[super init];
     if(self){
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
+        self.container_id=dictionary[@"container_id"]?dictionary[@"container_id"]:@"";
         self.department=dictionary[@"whouse_id"]?dictionary[@"whouse_id"]:@"";
         self.agent=dictionary[@"stocker_id"]?dictionary[@"stocker_id"]:@"";
 //        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
@@ -68,6 +69,7 @@
 -(instancetype)copyMe:(Tuo *)tuo
 {
     self.ID=[tuo.ID copy];
+    self.container_id=[tuo.container_id copy];
     self.department=[tuo.department copy];
     self.agent=[tuo.agent copy];
     self.date=[tuo.date copy];

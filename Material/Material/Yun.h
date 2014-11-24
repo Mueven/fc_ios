@@ -10,6 +10,7 @@
 
 @interface Yun : NSObject
 @property(nonatomic,strong)NSString *ID;
+@property(nonatomic,strong)NSString *container_id;
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *date;
 @property(nonatomic,strong)NSString *remark;

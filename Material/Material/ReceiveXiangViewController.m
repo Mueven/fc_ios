@@ -36,7 +36,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.navigationItem.title=self.tuo.ID;
+    self.navigationItem.title=self.tuo.container_id;
     self.scanTextField.delegate=self;
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
@@ -90,7 +90,7 @@
     NSMutableArray *xiangArray=self.tuo.xiang;
     int count=0;
     for(int i=0;i<xiangArray.count;i++){
-        if([data isEqualToString:[xiangArray[i] ID]]){
+        if([data isEqualToString:[xiangArray[i] container_id]]){
             count++;
             dispatch_queue_t check_queue=dispatch_queue_create("com.check.pptalent", NULL);
             dispatch_async(check_queue, ^{
@@ -138,12 +138,12 @@
                 Tuo *tuoItem=self.tuoArray[i];
                 for(int j=0;j<tuoItem.xiang.count;j++){
                     Xiang *xiangItem=tuoItem.xiang[j];
-                    if([data isEqualToString:xiangItem.ID]){
+                    if([data isEqualToString:xiangItem.container_id]){
                         noXiang=0;
                         //切换到另一个拖的模式下
                         [self changeToAnotherXiang:tuoItem];
                         //把刚才扫描的那一箱给填上去
-                        [self decoderDataReceived:xiangItem.ID];
+                        [self decoderDataReceived:xiangItem.container_id];
                         break ;
                     }
                 }
@@ -163,7 +163,7 @@
 -(void)changeToAnotherXiang:(Tuo *)tuo
 {
     self.tuo=tuo;
-    self.navigationItem.title=self.tuo.ID;
+    self.navigationItem.title=self.tuo.container_id;
     self.xiangCheckedCount=0;
     for(int i=0;i<self.tuo.xiang.count;i++){
         Xiang *xiang=self.tuo.xiang[i];
@@ -187,7 +187,7 @@
     NSMutableArray *xiangArray=self.tuo.xiang;
     int count=0;
     for(int i=0;i<xiangArray.count;i++){
-        if([textField.text isEqualToString:[xiangArray[i] ID]]){
+        if([textField.text isEqualToString:[xiangArray[i] container_id]]){
             count++;
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -225,13 +225,13 @@
                 Tuo *tuoItem=self.tuoArray[i];
                 for(int j=0;j<tuoItem.xiang.count;j++){
                     Xiang *xiangItem=tuoItem.xiang[j];
-                    NSLog(@"xiangID:%@",xiangItem.ID);
-                    if([textField.text isEqualToString:xiangItem.ID]){
+                    
+                    if([textField.text isEqualToString:xiangItem.container_id]){
                         noXiang=0;
                         //切换到另一个拖的模式下
                         [self changeToAnotherXiang:tuoItem];
                         //把刚才扫描的那一箱给填上去
-                        [self decoderDataReceived:xiangItem.ID];
+                        [self decoderDataReceived:xiangItem.container_id];
                         break ;
                     }
                 }

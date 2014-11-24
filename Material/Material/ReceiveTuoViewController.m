@@ -129,7 +129,7 @@
         Tuo *tuo;
         NSArray *tuoArray=[self.yun.tuoArray copy];
         for(int i=0;i<tuoArray.count;i++){
-            if([tuoID isEqualToString:[tuoArray[i] ID]]){
+            if([tuoID isEqualToString:[tuoArray[i] container_id]]){
                 tuo=tuoArray[i];
                 count++;
                 break;
@@ -201,7 +201,7 @@
 {
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    cell.nameLabel.text=tuo.ID;
+    cell.nameLabel.text=tuo.container_id;
     cell.dateLabel.text=tuo.department;
     NSMutableArray *array=tuo.xiang;
     int count=(int)[array count];

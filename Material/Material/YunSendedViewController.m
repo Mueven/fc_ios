@@ -67,7 +67,7 @@
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.nameLabel.text=tuo.ID;
+    cell.nameLabel.text=tuo.container_id;
     cell.dateLabel.text=tuo.date;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
     if(tuo.accepted_packages==tuo.sum_packages){
