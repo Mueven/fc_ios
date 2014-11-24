@@ -598,7 +598,16 @@
 {
     //    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"fromTuo" sender:@{@"xiang":xiang}];
+    if([self.type isEqualToString:@"xiang"]){
+       [self performSegueWithIdentifier:@"fromTuo" sender:@{
+                                                            @"xiang":xiang,
+                                                            @"xiangIndex":[NSNumber numberWithInteger:indexPath.row]
+                                                            }
+        ];
+    }
+    else{
+       [self performSegueWithIdentifier:@"fromTuo" sender:@{@"xiang":xiang}];
+    }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -620,6 +629,11 @@
     else if([segue.identifier isEqualToString:@"fromTuo"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
+        if([self.type isEqualToString:@"xiang"]){
+            xiangEdit.enableSend=YES;
+            xiangEdit.xiangArray=self.tuo.xiang;
+            xiangEdit.xiangIndex=[[sender objectForKey:@"xiangIndex"] intValue];
+        }
     }
     else if([segue.identifier isEqualToString:@"checkXiang"]){
         TuoCheckGeneralViewController *tuoCheck=segue.destinationViewController;

@@ -73,6 +73,27 @@
 //{
 //    self.alert=nil;
 //}
+#pragma keyarchive relative method
+-(void)setKeyArchive:(NSString *)path keyArray:(NSArray *)keyArray objectArray:(NSArray *)objectArray
+{
+    NSMutableDictionary *dictionary=[NSMutableDictionary dictionary];
+    for(int i=0;i<keyArray.count;i++){
+        [dictionary setObject:objectArray[i] forKey:keyArray[i]];
+    }
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *archivePath=[document stringByAppendingPathComponent:path];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:archivePath];
+}
+-(id)getKeyArchive:(NSString *)path key:(NSString *)key
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *pathArchive=[document stringByAppendingPathComponent:path];
+    NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:pathArchive];
+    id object=[dictionary objectForKey:key];
+    return object;
+}
 #pragma url method
 -(NSMutableDictionary *)URLDictionary
 {

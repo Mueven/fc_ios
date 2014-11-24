@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (strong,nonatomic)ScanStandard *scanStandard;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (nonatomic) int *dirty;
 - (IBAction)finishEdit:(id)sender;
 - (IBAction)sendXiang:(id)sender;
 @end
@@ -41,15 +43,17 @@
     self.partNumber.delegate=self;
     self.quantity.delegate=self;
     self.dateTextField.delegate=self;
-    
     self.keyLabel.text=self.xiang.key;
     self.partNumber.text=self.xiang.number;
     self.quantity.text=self.xiang.count;
     self.dateTextField.text=self.xiang.date;
-    
     self.keyLabel.adjustsFontSizeToFitWidth=YES;
+    self.dirty=0;
     // Do any additional setup after loading the view.
      self.scanStandard=[ScanStandard sharedScanStandard];
+    if(self.enableSend){
+        self.sendButton.hidden=NO;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -73,6 +77,7 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
+    self.dirty++;
     UITextField *targetTextField=self.firstResponder;
     NSString *regex=[NSString string];
     if(self.firstResponder.tag==4){
@@ -226,8 +231,7 @@
         datePost=@"";
     }
     
-    
-    
+ 
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager PUT:[AFNet xiang_index]
@@ -258,14 +262,105 @@
          }
      ];
 }
+- (IBAction)sendXiang:(id)sender {
+    if(self.dirty==0){
+       [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
+    }
+    else{
+        NSString *partNumber=self.partNumber.text;
+        NSString *quantity=self.quantity.text;
+        NSString *date=self.dateTextField.text;
+        
+        //after regex partNumber
+        int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
+        int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
+        NSString *partNumberPost=[NSString string];
+        @try {
+            if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
+                partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
+            }
+            else{
+                partNumberPost=@"";
+            }
+        }
+        @catch (NSException *exception) {
+            partNumberPost=@"";
+        }
+        //after regex quantity
+        int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
+        int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
+        NSString *quantityPost=[NSString string];
+        @try {
+            if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
+                quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
+            }
+            else{
+                quantityPost=@"";
+            }
+        }
+        @catch (NSException *exception) {
+            quantityPost=@"";
+        }
+        //after regex date
+        int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
+        int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
+        NSString *datePost=[NSString string];
+        @try {
+            if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
+                datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
+            }
+            else{
+                datePost=@"";
+            }
+        }
+        @catch (NSException *exception) {
+            datePost=@"";
+        }
+        
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet xiang_index]
+          parameters:@{@"package":@{
+                               @"id":self.xiang.ID,
+                               @"part_id":partNumberPost,
+                               @"quantity_str":quantityPost,
+                               @"check_in_time":datePost
+                               }}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSDictionary *dic=responseObject[@"content"];
+                     self.xiang.date=[dic objectForKey:@"check_in_time"];
+                     self.xiang.number=[dic objectForKey:@"part_id"];
+                     self.xiang.count=[dic objectForKey:@"quantity_str"];
+                     self.xiang.position=[dic objectForKey:@"position_nr"];
+                     self.dirty=0;
+                    [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+ 
+    }
+    
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"sendXiang"]){
         XiangSendViewController *sendVC=[segue destinationViewController];
         sendVC.xiang=[sender objectForKey:@"xiang"];
+        if(self.xiangArray){
+            sendVC.xiangArray=self.xiangArray;
+            sendVC.xiangIndex=self.xiangIndex;
+        }
     }
-}
-- (IBAction)sendXiang:(id)sender {
-    [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
 }
 @end

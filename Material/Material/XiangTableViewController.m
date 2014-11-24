@@ -171,6 +171,7 @@
     else if([segue.identifier isEqualToString:@"fromXiang"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
+        xiangEdit.enableSend=YES;
     }
 }
 

@@ -106,6 +106,9 @@
 		B09ECD7219AAD36500783B6A /* LED.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7119AAD36500783B6A /* LED.m */; };
 		B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7419AAD8C500783B6A /* LEDcolor.m */; };
 		B0A2ECE619A4529D00F80F26 /* ShopVerifyMoveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */; };
+		B0B3040C1A23005200D8CF8E /* SettingAddressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B3040B1A23005200D8CF8E /* SettingAddressTableViewController.m */; };
+		B0B3040F1A23057600D8CF8E /* DefaultAddressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */; };
+		B0B304121A23138500D8CF8E /* SendAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B304111A23138500D8CF8E /* SendAddress.m */; };
 		B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
@@ -320,6 +323,12 @@
 		B09ECD7419AAD8C500783B6A /* LEDcolor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LEDcolor.m; sourceTree = "<group>"; };
 		B0A2ECE419A4529D00F80F26 /* ShopVerifyMoveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopVerifyMoveViewController.h; sourceTree = "<group>"; };
 		B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopVerifyMoveViewController.m; sourceTree = "<group>"; };
+		B0B3040A1A23005200D8CF8E /* SettingAddressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAddressTableViewController.h; sourceTree = "<group>"; };
+		B0B3040B1A23005200D8CF8E /* SettingAddressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAddressTableViewController.m; sourceTree = "<group>"; };
+		B0B3040D1A23057600D8CF8E /* DefaultAddressTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultAddressTableViewController.h; sourceTree = "<group>"; };
+		B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultAddressTableViewController.m; sourceTree = "<group>"; };
+		B0B304101A23138500D8CF8E /* SendAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAddress.h; sourceTree = "<group>"; };
+		B0B304111A23138500D8CF8E /* SendAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAddress.m; sourceTree = "<group>"; };
 		B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangDetailViewController.h; sourceTree = "<group>"; };
 		B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiangDetailViewController.m; sourceTree = "<group>"; };
 		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
@@ -459,6 +468,8 @@
 				B06139801941680C00A0CF62 /* Xiang.m */,
 				B0613985194173B600A0CF62 /* XiangStore.h */,
 				B0613986194173B600A0CF62 /* XiangStore.m */,
+				B0B304101A23138500D8CF8E /* SendAddress.h */,
+				B0B304111A23138500D8CF8E /* SendAddress.m */,
 			);
 			name = DELIVERY;
 			sourceTree = "<group>";
@@ -870,6 +881,10 @@
 				B0DF64341943E1D1002D044B /* PrintViewController.m */,
 				B085F6541940184E001F01F3 /* SettingViewController.h */,
 				B085F6551940184E001F01F3 /* SettingViewController.m */,
+				B0B3040A1A23005200D8CF8E /* SettingAddressTableViewController.h */,
+				B0B3040B1A23005200D8CF8E /* SettingAddressTableViewController.m */,
+				B0B3040D1A23057600D8CF8E /* DefaultAddressTableViewController.h */,
+				B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */,
 			);
 			name = STOCK;
 			sourceTree = "<group>";
@@ -1028,6 +1043,7 @@
 				B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */,
 				B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
+				B0B3040F1A23057600D8CF8E /* DefaultAddressTableViewController.m in Sources */,
 				B04244D31A1EF41A00AAFD24 /* ProductSettingViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */,
@@ -1048,11 +1064,13 @@
 				B04EF1EC1946DE1000A95D7A /* HistoryYunTableViewController.m in Sources */,
 				B0D555CC1A1DAC5A00659D6D /* ReceiveSingleTuoViewController.m in Sources */,
 				B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */,
+				B0B3040C1A23005200D8CF8E /* SettingAddressTableViewController.m in Sources */,
 				B0619E5C197CC8EB000C1C69 /* RequireTodayViewController.m in Sources */,
 				B0DF643F1944588B002D044B /* TuoEditViewController.m in Sources */,
 				B052E9861973B01D009E4D53 /* ScanStandard.m in Sources */,
 				B04EF1E81946B41300A95D7A /* HistoryReceiveViewController.m in Sources */,
 				B0DF644819448B75002D044B /* YunStore.m in Sources */,
+				B0B304121A23138500D8CF8E /* SendAddress.m in Sources */,
 				B085F6421940071A001F01F3 /* Login.m in Sources */,
 				B04244DE1A1F288C00AAFD24 /* ProductReceiveXiangViewController.m in Sources */,
 				B058550319A2F800000C85E5 /* TuoCheckTableViewCell.m in Sources */,

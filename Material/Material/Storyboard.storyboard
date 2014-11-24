@@ -255,8 +255,8 @@
                                 <color key="textColor" red="0.16608362669999999" green="0.58597735969999998" blue="0.38058867439999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCZ-sW-duo">
-                                <rect key="frame" x="42" y="424" width="218" height="46"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qCZ-sW-duo">
+                                <rect key="frame" x="51" y="424" width="218" height="37"/>
                                 <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="发送箱">
@@ -264,6 +264,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="finishEdit:" destination="3Vh-Uj-d9G" eventType="touchUpInside" id="a3F-eO-OCe"/>
                                     <action selector="sendXiang:" destination="3Vh-Uj-d9G" eventType="touchUpInside" id="o8w-vE-MrL"/>
                                 </connections>
                             </button>
@@ -282,7 +283,8 @@
                         <outlet property="keyLabel" destination="DYL-Mp-qMs" id="CQm-y7-eLj"/>
                         <outlet property="partNumber" destination="bMp-RF-oTV" id="WTG-vS-feh"/>
                         <outlet property="quantity" destination="bhZ-zD-GnL" id="qM9-l5-rrk"/>
-                        <segue destination="Awj-vQ-PdY" kind="push" id="AAE-XB-yHX"/>
+                        <outlet property="sendButton" destination="qCZ-sW-duo" id="6Bu-iD-4m8"/>
+                        <segue destination="Awj-vQ-PdY" kind="push" identifier="sendXiang" id="AAE-XB-yHX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlO-Rz-Ezr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -300,13 +302,119 @@
                     <view key="view" contentMode="scaleToFill" id="zFo-bF-BZ9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="唯一码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-p4-XV2">
+                                <rect key="frame" x="44" y="91" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="slC-4b-8KD">
+                                <rect key="frame" x="44" y="109" width="231" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="零件号：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saA-dH-h7v">
+                                <rect key="frame" x="44" y="142" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Daj-Vi-1KR">
+                                <rect key="frame" x="44" y="161" width="231" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="数量：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5bG-Ib-rpc">
+                                <rect key="frame" x="44" y="195" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lxd-YT-lkb">
+                                <rect key="frame" x="44" y="214" width="231" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="日期：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmN-V2-9za">
+                                <rect key="frame" x="45" y="251" width="62" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDS-dk-VnC">
+                                <rect key="frame" x="45" y="270" width="231" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7Y-UF-Uuy">
+                                <rect key="frame" x="51" y="425" width="218" height="35"/>
+                                <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="确认发送">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirm:" destination="Awj-vQ-PdY" eventType="touchUpInside" id="b7M-gh-GgM"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="收货地址：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnd-Sk-fFe">
+                                <rect key="frame" x="45" y="312" width="75" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DgG-aD-mCb">
+                                <rect key="frame" x="45" y="335" width="231" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dU0-eL-OKH">
+                                <rect key="frame" x="209" y="307" width="67" height="24"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="更改">
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeAddress:" destination="Awj-vQ-PdY" eventType="touchUpInside" id="XVG-AZ-Qda"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="90B-eX-Hff">
+                                <rect key="frame" x="51" y="490" width="218" height="35"/>
+                                <color key="backgroundColor" red="0.97084263390000003" green="0.3670137342" blue="0.39047720740000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="放弃">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancel:" destination="Awj-vQ-PdY" eventType="touchUpInside" id="Tmg-VM-dmJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb"/>
+                    <connections>
+                        <outlet property="dateLabel" destination="lDS-dk-VnC" id="mME-Of-ocz"/>
+                        <outlet property="defaultAddressLabel" destination="DgG-aD-mCb" id="LIS-IN-VhI"/>
+                        <outlet property="keyLabel" destination="slC-4b-8KD" id="4zb-xB-8FI"/>
+                        <outlet property="partNumberLabel" destination="Daj-Vi-1KR" id="Uji-6g-t1W"/>
+                        <outlet property="quantityLabel" destination="Lxd-YT-lkb" id="oSA-gS-Gcz"/>
+                        <segue destination="pgx-Ya-0DP" kind="push" id="LQX-vG-s1M"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kqQ-QX-eW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4889" y="730"/>
+            <point key="canvasLocation" x="5061" y="730"/>
         </scene>
         <!--已有托清单-->
         <scene sceneID="2QD-I4-Nlu">
@@ -503,7 +611,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pp6-4B-Uwg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3905" y="1485"/>
+            <point key="canvasLocation" x="3893" y="1475"/>
         </scene>
         <!--Tuo Check General View Controller-->
         <scene sceneID="GVY-G2-IiI">
@@ -666,6 +774,25 @@
             </objects>
             <point key="canvasLocation" x="5061" y="1501"/>
         </scene>
+        <!--Default Address Table View Controller-->
+        <scene sceneID="wJb-qS-WX6">
+            <objects>
+                <viewController id="pgx-Ya-0DP" customClass="DefaultAddressTableViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xOI-Hz-bHa"/>
+                        <viewControllerLayoutGuide type="bottom" id="92I-gQ-JUF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tbo-8q-cfd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="rBO-tc-Vnf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="smO-Jh-RKv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6077" y="1602"/>
+        </scene>
         <!--设置-->
         <scene sceneID="wzg-7P-S2h">
             <objects>
@@ -679,7 +806,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="imF-w6-Ng6">
-                                <rect key="frame" x="52" y="421" width="216" height="31"/>
+                                <rect key="frame" x="52" y="423" width="216" height="31"/>
                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -711,8 +838,31 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
                             </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机型号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxj-4C-8MO">
+                                <rect key="frame" x="52" y="213" width="90" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcA-a6-Frd">
+                                <rect key="frame" x="51" y="235" width="217" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfn-GD-uod">
+                                <rect key="frame" x="166" y="204" width="100" height="27"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="重置打印机型号">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetPrint:" destination="FJr-dh-3oV" eventType="touchUpInside" id="FbN-1Z-QR6"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Yl-nr-zPs">
-                                <rect key="frame" x="52" y="370" width="217" height="30"/>
+                                <rect key="frame" x="52" y="286" width="217" height="30"/>
                                 <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -726,45 +876,45 @@
                                     <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="gji-4V-Ukc"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机型号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxj-4C-8MO">
-                                <rect key="frame" x="52" y="209" width="90" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcA-a6-Frd">
-                                <rect key="frame" x="51" y="231" width="217" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" returnKeyType="done"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rfn-GD-uod">
-                                <rect key="frame" x="52" y="266" width="216" height="30"/>
-                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="重置打印机型号">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="resetPrint:" destination="FJr-dh-3oV" eventType="touchUpInside" id="FbN-1Z-QR6"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
                             <action selector="touchScreen:" destination="FJr-dh-3oV" eventType="touchUpInside" id="Km9-b7-Fuh"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="设置" id="B3X-cw-UTQ"/>
+                    <navigationItem key="navigationItem" title="设置" id="B3X-cw-UTQ">
+                        <barButtonItem key="rightBarButtonItem" title="收货地址" id="RGi-H0-bo0"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="addressTextField" destination="iGd-jd-tFW" id="Wgm-94-FPb"/>
                         <outlet property="portTextField" destination="eML-9b-zhp" id="t4b-Vu-TAu"/>
                         <outlet property="typeTextField" destination="tcA-a6-Frd" id="2SK-3H-dgD"/>
+                        <segue destination="1gm-S5-5cV" kind="push" id="8iR-xX-EB7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x2C-l3-LqM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2995" y="4271"/>
+        </scene>
+        <!--默认收货地址-->
+        <scene sceneID="xQW-qv-6Yo">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="1gm-S5-5cV" customClass="SettingAddressTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="V8b-X1-vKK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="1gm-S5-5cV" id="odP-jb-3aw"/>
+                            <outlet property="delegate" destination="1gm-S5-5cV" id="cTy-Cf-UgO"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="默认收货地址" id="Vka-qq-fJj"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AwO-rP-FBf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3393" y="4268"/>
         </scene>
         <!--托清单-->
         <scene sceneID="mFV-ef-ChJ">
@@ -1104,7 +1254,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wnv-Ev-tHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="HcB-P7-E3x" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3877" y="2862"/>
+            <point key="canvasLocation" x="3883" y="2862"/>
         </scene>
         <!--已有托清单-->
         <scene sceneID="bPg-zn-JL4">
@@ -1674,19 +1824,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXG-pW-D0e">
-                                <rect key="frame" x="52" y="393" width="217" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="退出账户">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Evq-SI-Vnw"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机地址:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZmE-XV-eGs">
                                 <rect key="frame" x="53" y="84" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -1708,7 +1845,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EGZ-Bt-ulp">
-                                <rect key="frame" x="53" y="348" width="217" height="30"/>
+                                <rect key="frame" x="52" y="293" width="217" height="30"/>
                                 <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1722,19 +1859,19 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="打印机型号:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twG-X0-Qh2">
-                                <rect key="frame" x="53" y="215" width="90" height="21"/>
+                                <rect key="frame" x="53" y="223" width="90" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNQ-bd-V3y">
-                                <rect key="frame" x="52" y="237" width="217" height="30"/>
+                                <rect key="frame" x="52" y="245" width="217" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXW-4O-P0W">
-                                <rect key="frame" x="52" y="271" width="217" height="30"/>
+                                <rect key="frame" x="168" y="211" width="101" height="29"/>
                                 <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="重置打印机型号">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1742,6 +1879,19 @@
                                 </state>
                                 <connections>
                                     <action selector="resetPrint:" destination="U8G-v2-gz0" eventType="touchUpInside" id="4kG-pR-1qm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXG-pW-D0e">
+                                <rect key="frame" x="52" y="421" width="217" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="退出账户">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Evq-SI-Vnw"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1761,24 +1911,24 @@
             </objects>
             <point key="canvasLocation" x="3022" y="10077"/>
         </scene>
-        <!--发送拖-->
-        <scene sceneID="m3q-cv-cav">
+        <!--Tuo Send View Controller-->
+        <scene sceneID="Pzi-qz-WdE">
             <objects>
-                <viewController id="xrF-jG-Hhg" customClass="TuoSendViewController" sceneMemberID="viewController">
+                <viewController id="gnP-jb-iCa" customClass="TuoSendViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="L8a-hu-xQ6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Edo-Xd-yd9"/>
+                        <viewControllerLayoutGuide type="top" id="71e-Xn-3bg"/>
+                        <viewControllerLayoutGuide type="bottom" id="F6I-UP-RD9"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Wo6-bU-DBD">
+                    <view key="view" contentMode="scaleToFill" id="aab-Iy-BmY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="发送拖" id="8Pj-ra-x7A"/>
+                    <navigationItem key="navigationItem" id="8hs-w1-N8w"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eGe-jQ-syR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ele-Ve-KWf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2951" y="2220"/>
+            <point key="canvasLocation" x="2939" y="2202"/>
         </scene>
         <!--Tuo Edit View Controller-->
         <scene sceneID="u5E-xb-CgW">
@@ -1815,8 +1965,8 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NPD-hc-6b6">
-                                <rect key="frame" x="19" y="174" width="280" height="30"/>
-                                <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="170" y="140" width="129" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="添加箱">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1826,53 +1976,59 @@
                                     <segue destination="Zq0-sm-J8a" kind="push" identifier="addXiang" id="oOw-in-AQO"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0LY-v1-Ch3">
-                                <rect key="frame" x="0.0" y="218" width="320" height="350"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sao-gz-ZyH">
-                                <rect key="frame" x="0.0" y="161" width="320" height="1"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="所含箱数：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llR-gu-vLY">
-                                <rect key="frame" x="19" y="136" width="70" height="21"/>
+                                <rect key="frame" x="19" y="152" width="70" height="21"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="21" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlc-ux-gwk">
-                                <rect key="frame" x="89" y="136" width="210" height="21"/>
+                                <rect key="frame" x="89" y="152" width="73" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vxr-Dl-TSh">
+                                <rect key="frame" x="35" y="507" width="248" height="40"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="发送">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0LY-v1-Ch3">
+                                <rect key="frame" x="0.0" y="181" width="320" height="304"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="27F-vu-LYs">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                </view>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Mqq-GB-ZlH">
-                        <barButtonItem key="leftBarButtonItem" title="发送" id="s5Y-S0-KJJ">
-                            <connections>
-                                <action selector="sendTuo:" destination="4nD-R8-BuM" id="MI3-Ye-UgA"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="打印" id="jMt-xU-KmC">
                             <connections>
                                 <segue destination="6dN-Vc-dLZ" kind="push" identifier="tuoPrint" id="zbU-eV-TLK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="agent" destination="VB2-nF-Jwi" id="pU0-ru-ChD"/>
                         <outlet property="department" destination="XUr-CH-lHV" id="QIf-3C-3Lz"/>
                         <outlet property="xiangCountLabel" destination="hlc-ux-gwk" id="Ia8-fc-Frm"/>
                         <outlet property="xiangTable" destination="0LY-v1-Ch3" id="aMd-C9-ciJ"/>
                         <segue destination="3Vh-Uj-d9G" kind="push" identifier="xiangEdit" id="SyV-YF-bxb"/>
-                        <segue destination="xrF-jG-Hhg" kind="push" identifier="tuoSend" id="Pcj-sn-mW3"/>
+                        <segue destination="gnP-jb-iCa" kind="push" id="krC-Na-iTn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c1a-wf-xPe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3368" y="2220"/>
+            <point key="canvasLocation" x="3392" y="2202"/>
         </scene>
         <!--打印托清单-->
         <scene sceneID="uxz-Kf-Yln">
@@ -1925,7 +2081,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVc-aT-0np" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="C1M-4n-Ssg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3883" y="2220"/>
+            <point key="canvasLocation" x="3898" y="2202"/>
         </scene>
         <!--包装箱-->
         <scene sceneID="9Ah-jl-QC5">
@@ -3749,9 +3905,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="SyV-YF-bxb"/>
         <segue reference="Neh-iJ-Fpe"/>
         <segue reference="oOw-in-AQO"/>
-        <segue reference="SyV-YF-bxb"/>
         <segue reference="FcC-pN-TYA"/>
         <segue reference="J4j-Eu-SHD"/>
         <segue reference="MS0-BJ-3Kj"/>
