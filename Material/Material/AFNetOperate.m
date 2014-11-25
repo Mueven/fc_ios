@@ -599,4 +599,9 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"state_list"];
     return [[self order_led_root] stringByAppendingString:bind];
 }
+-(NSString *)send_address{
+    NSString *base=[self baseURL];
+    NSString *send_address=[[self URLDictionary] objectForKey:@"send_address"];
+    return [base stringByAppendingString:send_address];
+}
 @end

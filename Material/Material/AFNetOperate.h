@@ -53,7 +53,6 @@
 -(NSString *)log_in;
 -(NSString *)log_out;
 
-
 -(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_stock_yun:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
@@ -73,9 +72,7 @@
 
 -(NSString *)scan_validate;
 
-
 -(NSString *)version;
-
 
 -(NSString *)order_root;
 -(NSString *)order_history;
@@ -89,4 +86,6 @@
 -(NSString *)order_led_reset;
 -(NSString *)order_led_position_state;
 -(NSString *)order_led_state_list;
+
+-(NSString *)send_address;
 @end

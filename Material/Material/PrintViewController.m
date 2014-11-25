@@ -11,9 +11,9 @@
 #import "Tuo.h"
 #import "Yun.h"
 #import "PrinterSetting.h"
+#import "TuoSendViewController.h"
 
 @interface PrintViewController ()<UITextFieldDelegate>
-- (IBAction)unPrint:(id)sender;
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
@@ -21,6 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
 @property (strong,nonatomic) PrinterSetting *printSetting;
 - (IBAction)touchScreen:(id)sender;
+- (IBAction)finish:(id)sender;
+- (IBAction)sendTuo:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @end
 
 @implementation PrintViewController
@@ -48,9 +51,11 @@
     }
     self.pageTextField.delegate=self;
     self.printModelLabel.adjustsFontSizeToFitWidth=YES;
-
     self.printSetting=[PrinterSetting sharedPrinterSetting];
-        self.printModelLabel.text=[self.printSetting getPrivatePrinter:@"P001"];
+    self.printModelLabel.text=[self.printSetting getPrivatePrinter:@"P001"];
+    if(self.enableSend){
+        self.sendButton.hidden=NO;
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -89,15 +94,15 @@
     [textField resignFirstResponder];
     return  YES;
 }
-- (IBAction)unPrint:(id)sender {
-    NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
-     if([containerClass isEqualToString:@"Tuo"]){
-         [self performSegueWithIdentifier:@"finishTuo" sender:self];
-     }
-     else if([containerClass isEqualToString:@"Yun"]){
-         [self performSegueWithIdentifier:@"finishYun" sender:self];
-     }
-}
+//- (IBAction)unPrint:(id)sender {
+//    NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
+//     if([containerClass isEqualToString:@"Tuo"]){
+//         [self performSegueWithIdentifier:@"finishTuo" sender:self];
+//     }
+//     else if([containerClass isEqualToString:@"Yun"]){
+//         [self performSegueWithIdentifier:@"finishYun" sender:self];
+//     }
+//}
 
 - (IBAction)print:(id)sender {
      [self sameFinishAction];
@@ -125,12 +130,12 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                     [AFNet alertSuccess:responseObject[@"Content"]];
-                     if(![self.noBackButton boolValue]){
-                         [self.navigationController popViewControllerAnimated:YES];
-                     }
-                     else{
-                          [self performSegueWithIdentifier:@"finishTuo" sender:self];
-                     }
+//                     if(![self.noBackButton boolValue]){
+//                         [self.navigationController popViewControllerAnimated:YES];
+//                     }
+//                     else{
+//                          [self performSegueWithIdentifier:@"finishTuo" sender:self];
+//                     }
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
@@ -149,7 +154,7 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                      [AFNet alertSuccess:responseObject[@"Content"]];
-                     [self performSegueWithIdentifier:@"finishYun" sender:self];
+//                     [self performSegueWithIdentifier:@"finishYun" sender:self];
                     
                  }
                  else{
@@ -166,5 +171,31 @@
 }
 - (IBAction)touchScreen:(id)sender {
     [self.pageTextField resignFirstResponder];
+}
+
+- (IBAction)finish:(id)sender {
+    NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
+    if([containerClass isEqualToString:@"Tuo"]){
+        if(![self.noBackButton boolValue]){
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            [self performSegueWithIdentifier:@"finishTuo" sender:self];
+        }
+    }
+    else if([containerClass isEqualToString:@"Yun"]){
+        [self performSegueWithIdentifier:@"finishYun" sender:self];
+    }
+}
+
+- (IBAction)sendTuo:(id)sender {
+    [self performSegueWithIdentifier:@"sendTuo" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"sendTuo"]){
+        TuoSendViewController *sendVC=segue.destinationViewController;
+        sendVC.tuo=self.container;
+    }
 }
 @end

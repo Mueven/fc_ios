@@ -8,6 +8,7 @@
 
 #import "SendAddress.h"
 #import "AFNetOperate.h"
+
 @implementation SendAddress
 +(instancetype)sharedSendAddress
 {
@@ -23,11 +24,30 @@
     self=[super init];
     if(self){
         //从网络上取下默认地址和地址列表
+        self.addresses=[[NSMutableArray alloc] init];
+        self.defaultAddress=[[SendAddressItem alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+        [manager GET:[[[AFNetOperate alloc] init] send_address]
+          parameters:nil
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSArray *result=responseObject;
+                 for(int i=0;i<result.count;i++){
+                     SendAddressItem *item=[[SendAddressItem alloc] initWithObject:(NSDictionary *)result[i]];
+                     [self.addresses addObject:item];
+                     if(item.is_default){
+                         self.defaultAddress.name=item.name;
+                         self.defaultAddress.id=item.id;
+                         self.defaultAddress.is_default=item.is_default;
+                     }
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"%@",[error localizedDescription]);
+             }
+         ];
+
     }
     return self;
 }
--(void)updateAddress:(NSString *)address
-{
-    self.defaultAddress=address;
-}
+
 @end

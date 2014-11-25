@@ -13,7 +13,6 @@
 #import "AFNetOperate.h"
 #import "Xiang.h"
 #import "TuoTableViewCell.h"
-
 @interface TuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
 @end

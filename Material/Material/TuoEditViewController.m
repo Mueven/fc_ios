@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)sendTuo:(id)sender;
+
 @end
 
 @implementation TuoEditViewController
@@ -57,7 +58,6 @@
     self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -255,7 +255,7 @@
         TuoPrintViewController *tuoPrint=segue.destinationViewController;
         tuoPrint.tuo=self.tuo;
     }
-    else if([segue.identifier isEqualToString:@"sendTuo"]){
+    else if([segue.identifier isEqualToString:@"send"]){
         TuoSendViewController  *sendVC=segue.destinationViewController;
         sendVC.tuo=self.tuo;
     }
@@ -264,7 +264,8 @@
 {
     self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
 }
+
 - (IBAction)sendTuo:(id)sender {
-    [self performSegueWithIdentifier:@"sendTuo" sender:self.tuo];
+    [self performSegueWithIdentifier:@"send" sender:self];
 }
 @end

@@ -625,6 +625,7 @@
         PrintViewController *printViewController = segue.destinationViewController;
         printViewController.container=[sender objectForKey:@"container"];
         printViewController.noBackButton=@1;
+        printViewController.enableSend=YES;
     }
     else if([segue.identifier isEqualToString:@"fromTuo"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;

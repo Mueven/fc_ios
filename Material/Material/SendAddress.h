@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "SendAddressItem.h"
 @interface SendAddress : NSObject
-@property(nonatomic,strong)NSString *defaultAddress;
-@property(nonatomic,strong)NSArray *addresses;
+@property(nonatomic,strong)SendAddressItem *defaultAddress;
+@property(nonatomic,strong)NSMutableArray *addresses;
 +(instancetype)sharedSendAddress;
--(void)updateAddress:(NSString *)address;
 @end

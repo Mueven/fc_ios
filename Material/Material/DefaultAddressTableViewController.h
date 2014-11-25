@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SendAddressItem.h"
 @interface DefaultAddressTableViewController : UITableViewController
-
+@property(nonatomic,strong)SendAddressItem *myAddress;
 @end

@@ -10,4 +10,5 @@
 #import "Tuo.h"
 @interface TuoSendViewController : UIViewController
 @property(nonatomic,strong)Tuo *tuo;
+@property(nonatomic)BOOL wetherJumpBack;
 @end

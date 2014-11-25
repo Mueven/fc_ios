@@ -128,6 +128,7 @@
 		B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */; };
 		B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */; };
 		B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EDB1DB19A2ECA400917D54 /* SortArray.m */; };
+		B0FA0A191A2464F400E9E536 /* SendAddressItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FA0A181A2464F400E9E536 /* SendAddressItem.m */; };
 		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
 		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
 		B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96E194555FE008E4B72 /* YunInfoViewController.m */; };
@@ -366,6 +367,8 @@
 		B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSettingViewController.m; sourceTree = "<group>"; };
 		B0EDB1DA19A2ECA400917D54 /* SortArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortArray.h; sourceTree = "<group>"; };
 		B0EDB1DB19A2ECA400917D54 /* SortArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortArray.m; sourceTree = "<group>"; };
+		B0FA0A171A2464F400E9E536 /* SendAddressItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAddressItem.h; sourceTree = "<group>"; };
+		B0FA0A181A2464F400E9E536 /* SendAddressItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAddressItem.m; sourceTree = "<group>"; };
 		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
 		B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunChooseTuoViewController.m; sourceTree = "<group>"; };
 		B0FDC96A19453EF7008E4B72 /* YunHaveTuoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunHaveTuoTableViewController.h; sourceTree = "<group>"; };
@@ -470,6 +473,8 @@
 				B0613986194173B600A0CF62 /* XiangStore.m */,
 				B0B304101A23138500D8CF8E /* SendAddress.h */,
 				B0B304111A23138500D8CF8E /* SendAddress.m */,
+				B0FA0A171A2464F400E9E536 /* SendAddressItem.h */,
+				B0FA0A181A2464F400E9E536 /* SendAddressItem.m */,
 			);
 			name = DELIVERY;
 			sourceTree = "<group>";
@@ -1026,6 +1031,7 @@
 				B07CE56D198B8890000FD578 /* RequireCheckXiangTableViewCell.m in Sources */,
 				B0643D62197DEF6F0036AADA /* RequirePrintViewController.m in Sources */,
 				B001BF0519A59A90000800AD /* DrawLight.m in Sources */,
+				B0FA0A191A2464F400E9E536 /* SendAddressItem.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */,
 				B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */,
