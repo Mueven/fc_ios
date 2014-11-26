@@ -36,6 +36,12 @@
     self.quantityLabel.adjustsFontSizeToFitWidth=YES;
     self.dateLabel.adjustsFontSizeToFitWidth=YES;
     self.myAddress=[[SendAddress sharedSendAddress] defaultAddress];
+    self.defaultAddressLabel.adjustsFontSizeToFitWidth=YES;
+    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     self.defaultAddressLabel.text=self.myAddress.name;
 }
 - (IBAction)changeAddress:(id)sender {

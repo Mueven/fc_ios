@@ -135,6 +135,7 @@
         PrintViewController *printViewController = segue.destinationViewController;
         printViewController.container=[sender objectForKey:@"container"];
         printViewController.noBackButton=@0;
+        printViewController.enableSend=NO;
     }
 }
 - (IBAction)clickPrintTuo:(id)sender {

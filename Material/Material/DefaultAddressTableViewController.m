@@ -62,7 +62,9 @@
     UITableViewCell *cell=(UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     if(cell.accessoryType==UITableViewCellAccessoryNone){
         SendAddressItem *addressItem=self.sendAddress.addresses[indexPath.row];
-        self.myAddress=addressItem;
+        self.myAddress.name=addressItem.name;
+        self.myAddress.id=addressItem.id;
+        self.myAddress.is_default=addressItem.is_default;
         [self.tableView reloadData];
     }
 

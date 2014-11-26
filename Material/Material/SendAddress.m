@@ -40,6 +40,11 @@
                          self.defaultAddress.is_default=item.is_default;
                      }
                  }
+                 if(!self.defaultAddress.name){
+                     self.defaultAddress.name=@"";
+                     self.defaultAddress.id=@"";
+                     self.defaultAddress.is_default=NO;
+                 }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  NSLog(@"%@",[error localizedDescription]);

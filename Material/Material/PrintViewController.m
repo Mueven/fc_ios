@@ -12,17 +12,19 @@
 #import "Yun.h"
 #import "PrinterSetting.h"
 #import "TuoSendViewController.h"
+#import "YunSendViewController.h"
 
 @interface PrintViewController ()<UITextFieldDelegate>
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
+@property (strong, nonatomic) NSString *yunSuccessContent;
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
 @property (strong,nonatomic) PrinterSetting *printSetting;
 - (IBAction)touchScreen:(id)sender;
+- (IBAction)send:(id)sender;
 - (IBAction)finish:(id)sender;
-- (IBAction)sendTuo:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @end
 
@@ -45,7 +47,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.yunSuccessContentLabel.text=self.successContent?self.successContent:@"";
     if([self.noBackButton boolValue]){
         [self.navigationItem setHidesBackButton:YES];
     }
@@ -56,6 +57,7 @@
     if(self.enableSend){
         self.sendButton.hidden=NO;
     }
+    self.yunSuccessContent=[NSString string];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -69,7 +71,7 @@
         self.titleLabel.text=@"打印拖清单？";
         self.pageTextField.text=[self.printSetting getPrivateCopy:@"P001"];
     }
-    
+    self.yunSuccessContentLabel.text=self.yunSuccessContent.length>0?self.yunSuccessContent:@"";
 }
 - (void)didReceiveMemoryWarning
 {
@@ -130,12 +132,6 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                     [AFNet alertSuccess:responseObject[@"Content"]];
-//                     if(![self.noBackButton boolValue]){
-//                         [self.navigationController popViewControllerAnimated:YES];
-//                     }
-//                     else{
-//                          [self performSegueWithIdentifier:@"finishTuo" sender:self];
-//                     }
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
@@ -154,8 +150,6 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"Code"] integerValue]==1){
                      [AFNet alertSuccess:responseObject[@"Content"]];
-//                     [self performSegueWithIdentifier:@"finishYun" sender:self];
-                    
                  }
                  else{
                      [AFNet alert:responseObject[@"Content"]];
@@ -173,6 +167,17 @@
     [self.pageTextField resignFirstResponder];
 }
 
+- (IBAction)send:(id)sender {
+    NSString *container=[NSString stringWithFormat:@"%@",[self.container class]];
+    if([container isEqualToString:@"Tuo"]){
+        [self performSegueWithIdentifier:@"sendTuo" sender:self];
+    }
+    else if([container isEqualToString:@"Yun"]){
+        [self performSegueWithIdentifier:@"sendYun" sender:self];
+    }
+}
+
+
 - (IBAction)finish:(id)sender {
     NSString *containerClass=[NSString stringWithFormat:@"%@",[self.container class]];
     if([containerClass isEqualToString:@"Tuo"]){
@@ -184,18 +189,24 @@
         }
     }
     else if([containerClass isEqualToString:@"Yun"]){
-        [self performSegueWithIdentifier:@"finishYun" sender:self];
+        if(![self.noBackButton boolValue]){
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else{
+            [self performSegueWithIdentifier:@"finishYun" sender:self];
+        }
     }
-}
-
-- (IBAction)sendTuo:(id)sender {
-    [self performSegueWithIdentifier:@"sendTuo" sender:self];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"sendTuo"]){
         TuoSendViewController *sendVC=segue.destinationViewController;
         sendVC.tuo=self.container;
+    }
+    else if ([segue.identifier isEqualToString:@"sendYun"]){
+        YunSendViewController *yunVC=segue.destinationViewController;
+        yunVC.yun=self.container;
+        yunVC.successContent=self.yunSuccessContent;
     }
 }
 @end

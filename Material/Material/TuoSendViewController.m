@@ -34,7 +34,12 @@
     self.agentLabel.text=self.tuo.agent;
     SendAddress *sendAddress=[SendAddress sharedSendAddress];
     self.myAddress=sendAddress.defaultAddress;
-    self.addressLabel.text=self.myAddress.name;
+    self.addressLabel.adjustsFontSizeToFitWidth=YES;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+        self.addressLabel.text=self.myAddress.name;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

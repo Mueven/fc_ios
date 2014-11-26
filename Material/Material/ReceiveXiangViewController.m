@@ -7,337 +7,66 @@
 //
 
 #import "ReceiveXiangViewController.h"
-#import "Xiang.h"
-#import "ShopXiangTableViewCell.h"
-#import "AFNetOperate.h"
-#import <AudioToolbox/AudioToolbox.h>
-
-@interface ReceiveXiangViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,CaptuvoEventsProtocol>
-@property (weak, nonatomic) IBOutlet UITextField *scanTextField;
-@property (weak, nonatomic) IBOutlet UITableView *xiangTable;
-@property (weak, nonatomic) IBOutlet UILabel *countLabel;
-@property (nonatomic) int xiangCheckedCount;
-- (IBAction)finish:(id)sender;
+@interface ReceiveXiangViewController ()<UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *keyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *quantityLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+- (IBAction)confirm:(id)sender;
+- (IBAction)cancel:(id)sender;
 
 @end
 
 @implementation ReceiveXiangViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
+-(void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.navigationItem.title=self.tuo.container_id;
-    self.scanTextField.delegate=self;
-    self.xiangTable.delegate=self;
-    self.xiangTable.dataSource=self;
-    [self.scanTextField becomeFirstResponder];
-    UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
-    [self.xiangTable registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
-    self.xiangCheckedCount=0;
-    for(int i=0;i<self.tuo.xiang.count;i++){
-        Xiang *xiang=self.tuo.xiang[i];
-        if(xiang.checked){
-            self.xiangCheckedCount++;
-        }
-    }
-    [self updateCheckedLabel];
-}
--(void)updateCheckedLabel{
-    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
-    self.countLabel.text=count;
-}
--(void)updateAddCheckedLabel{
-    self.xiangCheckedCount++;
-    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
-    self.countLabel.text=count;
-}
--(void)updateMinusCheckedLabel{
-    self.xiangCheckedCount--;
-    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
-    self.countLabel.text=count;
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
-    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-#pragma captuvo delegate
--(void)decoderDataReceived:(NSString *)data
-{
-    NSMutableArray *xiangArray=self.tuo.xiang;
-    int count=0;
-    for(int i=0;i<xiangArray.count;i++){
-        if([data isEqualToString:[xiangArray[i] container_id]]){
-            count++;
-            dispatch_queue_t check_queue=dispatch_queue_create("com.check.pptalent", NULL);
-            dispatch_async(check_queue, ^{
-                NSString *myData=data;
-                AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-                AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-                [AFNet.activeView stopAnimating];
-                [manager POST:[AFNet xiang_check]
-                   parameters:@{@"id":myData}
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          [AFNet.activeView stopAnimating];
-                          if([responseObject[@"result"] integerValue]==1){
-                              [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
-                              [self.xiangTable reloadData];
-                              [self updateAddCheckedLabel];
-                          }
-                          else{
-                              dispatch_async(dispatch_get_main_queue(), ^{
-                                  [AFNet alert:responseObject[@"content"]];
-                              });
-                          }
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          [AFNet.activeView stopAnimating];
-                          dispatch_async(dispatch_get_main_queue(), ^{
-                              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];;
-                          });
-                          
-                      }
-                 ];
-            });
-            break;
-        }
-    }
-    if(count==0){
-        //判断是不是扫的是另一个托中的箱
-        BOOL noXiang=1;
-        for(int i=0;i<self.tuoArray.count;i++){
-            if(self.tuoArray[i]!=self.tuo){
-//                if([data isEqualToString:[self.tuoArray[i] ID]]){
-//                    noXiang=0;
-//                    [self changeToAnotherXiang:self.tuoArray[i]];
-//                    break ;
-//                }
-                Tuo *tuoItem=self.tuoArray[i];
-                for(int j=0;j<tuoItem.xiang.count;j++){
-                    Xiang *xiangItem=tuoItem.xiang[j];
-                    if([data isEqualToString:xiangItem.container_id]){
-                        noXiang=0;
-                        //切换到另一个拖的模式下
-                        [self changeToAnotherXiang:tuoItem];
-                        //把刚才扫描的那一箱给填上去
-                        [self decoderDataReceived:xiangItem.container_id];
-                        break ;
-                    }
-                }
-            }
-        }
-        if(noXiang){
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
-                                                           message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",data]
-                                                          delegate:self
-                                                 cancelButtonTitle:@"确定"
-                                                 otherButtonTitles:nil];
-            AudioServicesPlaySystemSound(1051);
-            [alert show];
-        }
-    }
-}
--(void)changeToAnotherXiang:(Tuo *)tuo
-{
-    self.tuo=tuo;
-    self.navigationItem.title=self.tuo.container_id;
-    self.xiangCheckedCount=0;
-    for(int i=0;i<self.tuo.xiang.count;i++){
-        Xiang *xiang=self.tuo.xiang[i];
-        if(xiang.checked){
-            self.xiangCheckedCount++;
-        }
-    }
-    self.scanTextField.text=@"";
-    [self.scanTextField becomeFirstResponder];
-    [self updateCheckedLabel];
-    [self.xiangTable reloadData];
-}
-#pragma textField
--(void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView=dummyView;
-}
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    NSMutableArray *xiangArray=self.tuo.xiang;
-    int count=0;
-    for(int i=0;i<xiangArray.count;i++){
-        if([textField.text isEqualToString:[xiangArray[i] container_id]]){
-            count++;
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager POST:[AFNet xiang_check]
-               parameters:@{@"id":textField.text}
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [AFNet.activeView stopAnimating];
-                      if([responseObject[@"result"] integerValue]==1){
-                          [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
-                          [self.xiangTable reloadData];
-                          [self updateAddCheckedLabel];
-                      }
-                      else{
-                          [AFNet alert:responseObject[@"content"]];
-                      }
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      [AFNet.activeView stopAnimating];
-                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                  }
-             ];
-             break;
-        }
-    }
-    if(count==0){
-        //判断是不是扫的是另一个托中的箱
-        BOOL noXiang=1;
-        for(int i=0;i<self.tuoArray.count;i++){
-            if(self.tuoArray[i]!=self.tuo){
-                //                if([data isEqualToString:[self.tuoArray[i] ID]]){
-                //                    noXiang=0;
-                //                    [self changeToAnotherXiang:self.tuoArray[i]];
-                //                    break ;
-                //                }
-                Tuo *tuoItem=self.tuoArray[i];
-                for(int j=0;j<tuoItem.xiang.count;j++){
-                    Xiang *xiangItem=tuoItem.xiang[j];
-                    
-                    if([textField.text isEqualToString:xiangItem.container_id]){
-                        noXiang=0;
-                        //切换到另一个拖的模式下
-                        [self changeToAnotherXiang:tuoItem];
-                        //把刚才扫描的那一箱给填上去
-                        [self decoderDataReceived:xiangItem.container_id];
-                        break ;
-                    }
-                }
-            }
-        }
-        if(noXiang){
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该箱"
-                                                           message:[NSString stringWithFormat:@"未在该拖清单中发现托箱%@",textField.text]
-                                                          delegate:self
-                                                 cancelButtonTitle:@"确定"
-                                                 otherButtonTitles:nil];
-            AudioServicesPlaySystemSound(1051);
-            [alert show];
-        }
-    }
+    self.keyLabel.adjustsFontSizeToFitWidth=YES;
+    self.partNumberLabel.adjustsFontSizeToFitWidth=YES;
+    self.quantityLabel.adjustsFontSizeToFitWidth=YES;
+    self.dateLabel.adjustsFontSizeToFitWidth=YES;
     
-    return YES;
-}
-#pragma table delegate
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.tuo.xiang count];
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
-    ShopXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
-    cell.partNumberLabel.text=xiang.number;
-    cell.keyLabel.text=xiang.key;
-    cell.quantityLabel.text=[NSString stringWithFormat:@"%@",xiang.count];
-    if(xiang.checked){
-        cell.accessoryType=UITableViewCellAccessoryCheckmark;
-    }
-    else{
-        cell.accessoryType=UITableViewCellAccessoryNone;
-    }
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
-    ShopXiangTableViewCell *cell=(ShopXiangTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    if(cell.accessoryType==UITableViewCellAccessoryNone){
-        //手动点击添加
-        [manager POST:[AFNet xiang_check]
-           parameters:@{@"id":xiang.ID}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      cell.accessoryType=UITableViewCellAccessoryCheckmark;
-                      xiang.checked=YES;
-                      [self updateAddCheckedLabel];
-                  }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
-                  }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-              }
-         ];
-    }
-    else if(cell.accessoryType==UITableViewCellAccessoryCheckmark){
-        //手动点击取消
-        [manager POST:[AFNet xiang_uncheck]
-           parameters:@{@"id":xiang.ID}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      cell.accessoryType=UITableViewCellAccessoryNone;
-                      xiang.checked=NO;
-                      [self updateMinusCheckedLabel];
-                  }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
-                  }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-              }
-         ];   
-        
-    }
+    self.keyLabel.text=self.xiang.key;
+    self.partNumberLabel.text=self.xiang.number;
+    self.quantityLabel.text=self.xiang.count;
+    self.dateLabel.text=self.xiang.date;
+
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)confirm:(id)sender {
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"确认收货？"
+                                                 delegate:self
+                                        cancelButtonTitle:@"取消"
+                                        otherButtonTitles:@"确定", nil];
+    [alert show];
 }
-*/
 
-- (IBAction)finish:(id)sender {
+- (IBAction)cancel:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//        [manager POST:[AFNet yun_confirm_receive]
+//           parameters:@{@"id":self.yun.ID}
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  [AFNet.activeView stopAnimating];
+//                  if([responseObject[@"result"] integerValue]==1){
+//                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"type":@"receive"}];
+//                  }
+//                  else{
+//                      [AFNet alert:responseObject[@"content"]];
+//                  }
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  [AFNet.activeView stopAnimating];
+//                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//              }
+//         ];
+    }
 }
 @end
