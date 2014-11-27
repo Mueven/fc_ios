@@ -14,8 +14,6 @@
 #import "AFNetOperate.h"
 #import "ReceivePrintViewController.h"
 @interface HistoryTuoTableViewController ()
-- (IBAction)printYun:(id)sender;
-
 @end
 
 @implementation HistoryTuoTableViewController
@@ -38,7 +36,13 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.navigationItem.title=self.yun.name;
+    self.navigationItem.title=self.vc_title;
+    if(self.yun){
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"打印"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(print)];
+    }
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tableView registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
 }
@@ -64,14 +68,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.yun.tuoArray count];
+    return [self.tuoArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
+    Tuo *tuo=[self.tuoArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=tuo.container_id;
     cell.dateLabel.text=tuo.department;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
@@ -87,7 +91,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
+    Tuo *tuo=[self.tuoArray objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet tuo_single]
@@ -96,7 +100,7 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
                  if([(NSDictionary *)responseObject[@"content"] count]>0){
-                     NSLog(@"%@",responseObject);
+                   
                      NSDictionary *result=responseObject[@"content"];
                      NSArray *xiangList=result[@"packages"];
                      [tuo.xiang removeAllObjects];
@@ -104,7 +108,11 @@
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
                          [tuo.xiang addObject:xiang];
                      }
-                     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"tuo":tuo}];
+                     [self performSegueWithIdentifier:@"checkXiang" sender:@{
+                                                                             @"tuo":tuo,
+                                                                             @"xiangArray":tuo.xiang,
+                                                                             @"title":tuo.container_id
+                                                                             }];
                  }
                  
              }
@@ -119,43 +127,10 @@
          }
      ];
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)print
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    [self performSegueWithIdentifier:@"printYun" sender:self];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
@@ -168,16 +143,14 @@
     if([segue.identifier isEqualToString:@"checkXiang"]){
         HistoryXiangTableViewController *historyXiang=segue.destinationViewController;
         historyXiang.tuo=[sender objectForKey:@"tuo"];
+        historyXiang.xiangArray=[sender objectForKey:@"xiangArray"];
+        historyXiang.vc_title=[sender objectForKey:@"title"];
     }
     else if([segue.identifier isEqualToString:@"printYun"]){
         ReceivePrintViewController *print=segue.destinationViewController;
-        print.yun=self.yun;
-        print.type=@"history";
+        print.container=self.yun;
+        print.type=@"history_yun";
     }
 }
 
-
-- (IBAction)printYun:(id)sender {
-    [self performSegueWithIdentifier:@"printYun" sender:self];
-}
 @end

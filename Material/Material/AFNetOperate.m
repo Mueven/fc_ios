@@ -175,9 +175,19 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"uncheck"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_received
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"received"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_edit:(NSString *)id{
     NSString *xiangRoot=[self xiang_index];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
+}
+-(NSString *)xiang_confirm_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"confirm_receive"];
+    return [[self xiang_index] stringByAppendingString:bind];
 }
 -(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view
 {
@@ -228,6 +238,16 @@
 }
 -(NSString *)tuo_remove_xiang{
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"remove_xiang"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_received
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"received"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_confirm_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"confirm_receive"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
 -(NSString *)tuo_edit:(NSString *)id{

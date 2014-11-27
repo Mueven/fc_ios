@@ -11,6 +11,8 @@
 		B001BF0219A58A97000800AD /* RequireTraceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0119A58A97000800AD /* RequireTraceDetailViewController.m */; };
 		B001BF0519A59A90000800AD /* DrawLight.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0419A59A90000800AD /* DrawLight.m */; };
 		B001BF0819A5CF23000800AD /* PrinterSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0719A5CF23000800AD /* PrinterSetting.m */; };
+		B00EA1371A26F65700D95594 /* HistoryChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EA1361A26F65700D95594 /* HistoryChooseViewController.m */; };
+		B00EA13A1A272A1700D95594 /* HistoryXiangItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EA1391A272A1700D95594 /* HistoryXiangItemViewController.m */; };
 		B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */; };
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
@@ -116,8 +118,6 @@
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
 		B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */; };
 		B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */; };
-		B0D555D21A1DE14700659D6D /* TuoList.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555D11A1DE14700659D6D /* TuoList.m */; };
-		B0D555D51A1DE15500659D6D /* XiangList.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555D41A1DE15500659D6D /* XiangList.m */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
 		B0DF643919440033002D044B /* XiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643819440033002D044B /* XiangTableViewController.m */; };
 		B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF643B19440FCA002D044B /* XiangEditViewController.m */; };
@@ -154,6 +154,10 @@
 		B001BF0419A59A90000800AD /* DrawLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawLight.m; sourceTree = "<group>"; };
 		B001BF0619A5CF23000800AD /* PrinterSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrinterSetting.h; sourceTree = "<group>"; };
 		B001BF0719A5CF23000800AD /* PrinterSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrinterSetting.m; sourceTree = "<group>"; };
+		B00EA1351A26F65700D95594 /* HistoryChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryChooseViewController.h; sourceTree = "<group>"; };
+		B00EA1361A26F65700D95594 /* HistoryChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryChooseViewController.m; sourceTree = "<group>"; };
+		B00EA1381A272A1700D95594 /* HistoryXiangItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryXiangItemViewController.h; sourceTree = "<group>"; };
+		B00EA1391A272A1700D95594 /* HistoryXiangItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryXiangItemViewController.m; sourceTree = "<group>"; };
 		B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryListTableViewController.h; sourceTree = "<group>"; };
 		B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryListTableViewController.m; sourceTree = "<group>"; };
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
@@ -343,10 +347,6 @@
 		B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangSendViewController.m; sourceTree = "<group>"; };
 		B0D555C41A1DA24E00659D6D /* TuoSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoSendViewController.h; sourceTree = "<group>"; };
 		B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoSendViewController.m; sourceTree = "<group>"; };
-		B0D555D01A1DE14700659D6D /* TuoList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoList.h; sourceTree = "<group>"; };
-		B0D555D11A1DE14700659D6D /* TuoList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TuoList.m; sourceTree = "<group>"; };
-		B0D555D31A1DE15500659D6D /* XiangList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangList.h; sourceTree = "<group>"; };
-		B0D555D41A1DE15500659D6D /* XiangList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangList.m; sourceTree = "<group>"; };
 		B0DF64331943E1D1002D044B /* PrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrintViewController.h; sourceTree = "<group>"; };
 		B0DF64341943E1D1002D044B /* PrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrintViewController.m; sourceTree = "<group>"; };
 		B0DF643719440033002D044B /* XiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewController.h; sourceTree = "<group>"; };
@@ -580,16 +580,16 @@
 			children = (
 				B04EF1E61946B41300A95D7A /* HistoryReceiveViewController.h */,
 				B04EF1E71946B41300A95D7A /* HistoryReceiveViewController.m */,
+				B00EA1351A26F65700D95594 /* HistoryChooseViewController.h */,
+				B00EA1361A26F65700D95594 /* HistoryChooseViewController.m */,
 				B04EF1EA1946DE1000A95D7A /* HistoryYunTableViewController.h */,
 				B04EF1EB1946DE1000A95D7A /* HistoryYunTableViewController.m */,
 				B04EF1ED1946DE1C00A95D7A /* HistoryTuoTableViewController.h */,
 				B04EF1EE1946DE1C00A95D7A /* HistoryTuoTableViewController.m */,
 				B04EF1F01946DE2900A95D7A /* HistoryXiangTableViewController.h */,
 				B04EF1F11946DE2900A95D7A /* HistoryXiangTableViewController.m */,
-				B0D555D01A1DE14700659D6D /* TuoList.h */,
-				B0D555D11A1DE14700659D6D /* TuoList.m */,
-				B0D555D31A1DE15500659D6D /* XiangList.h */,
-				B0D555D41A1DE15500659D6D /* XiangList.m */,
+				B00EA1381A272A1700D95594 /* HistoryXiangItemViewController.h */,
+				B00EA1391A272A1700D95594 /* HistoryXiangItemViewController.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -1056,6 +1056,7 @@
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
 				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
+				B00EA13A1A272A1700D95594 /* HistoryXiangItemViewController.m in Sources */,
 				B058550719A2F832000C85E5 /* TuoCheckGeneralViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B06CD6E41A25663900DF4D16 /* YunSendViewController.m in Sources */,
@@ -1085,7 +1086,6 @@
 				B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */,
 				B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */,
 				B06139901941BD1300A0CF62 /* TuoScanViewController.m in Sources */,
-				B0D555D21A1DE14700659D6D /* TuoList.m in Sources */,
 				B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */,
 				B085F6571940184E001F01F3 /* SettingViewController.m in Sources */,
 				B04EF1EF1946DE1C00A95D7A /* HistoryTuoTableViewController.m in Sources */,
@@ -1098,8 +1098,8 @@
 				B06CD6E71A25A78400DF4D16 /* ReceiveViewController.m in Sources */,
 				B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */,
 				B04EF2101946E60D00A95D7A /* AFURLRequestSerialization.m in Sources */,
+				B00EA1371A26F65700D95594 /* HistoryChooseViewController.m in Sources */,
 				B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */,
-				B0D555D51A1DE15500659D6D /* XiangList.m in Sources */,
 				B085F64C1940119E001F01F3 /* TuoTableViewController.m in Sources */,
 				B04244D71A1F0E7F00AAFD24 /* ProductCheckViewController.m in Sources */,
 				B04EF20B1946E60D00A95D7A /* AFHTTPRequestOperationManager.m in Sources */,

@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Yun;
 @interface ReceivePrintViewController : UIViewController
-@property(nonatomic,strong)Yun *yun;
 @property(nonatomic,strong)id container;
 @property(nonatomic,strong)NSString *type;
-@property(nonatomic)BOOL wetherBackToRoot;
+@property(nonatomic)BOOL disableBack;
 @end

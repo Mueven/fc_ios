@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 @interface HistoryYunTableViewController : UITableViewController
 @property(nonatomic,strong)NSMutableArray *yunArray;
-@property(nonatomic,strong)NSString *chooseDate;
+@property(nonatomic,strong)NSString *vc_title;
 @end

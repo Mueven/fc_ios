@@ -29,6 +29,8 @@
 -(NSString *)xiang_validate;
 -(NSString *)xiang_check;
 -(NSString *)xiang_uncheck;
+-(NSString *)xiang_confirm_receive;
+-(NSString *)xiang_received;
 
 -(NSString *)tuo_index;
 -(NSString *)tuo_root;
@@ -37,6 +39,8 @@
 -(NSString *)tuo_bundle_add;
 -(NSString *)tuo_key_for_bundle;
 -(NSString *)tuo_remove_xiang;
+-(NSString *)tuo_confirm_receive;
+-(NSString *)tuo_received;
 
 -(NSString *)yun_index;
 -(NSString *)yun_root;

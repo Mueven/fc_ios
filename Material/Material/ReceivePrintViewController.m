@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *uncheckYunCopyTextField;
 @property (strong,nonatomic)PrinterSetting *printSetting;
 - (IBAction)clickScreen:(id)sender;
-
 @end
 
 @implementation ReceivePrintViewController
@@ -43,9 +42,11 @@
     self.printModelLabel.text=[self.printSetting getPrivatePrinter:@"P003"];
     self.yunCopyTextField.delegate=self;
     self.uncheckYunCopyTextField.delegate=self;
-
     self.yunCopyTextField.text=[self.printSetting getPrivateCopy:@"P003"];
     self.uncheckYunCopyTextField.text=[self.printSetting getPrivateCopy:@"P004"];
+    if(self.disableBack){
+        [self.navigationItem setHidesBackButton:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,49 +79,49 @@
 }
 */
 - (IBAction)print:(id)sender {
-    UITextField *textField=(UITextField *)[self.view viewWithTag:1];
-    [self.printSetting setPrivateCopy:@"P003" copies:textField.text];
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P003"] copies:[self.printSetting getPrivateCopy:@"P003"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-             if([responseObject[@"Code"] integerValue]==1){
-                  [AFNet alertSuccess:responseObject[@"Content"]];
-             }
-             else{
-                 [AFNet alert:responseObject[@"Content"]];
-             }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-         }
-     ];
+//    UITextField *textField=(UITextField *)[self.view viewWithTag:1];
+//    [self.printSetting setPrivateCopy:@"P003" copies:textField.text];
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [manager GET:[[AFNet print_shop_receive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P003"] copies:[self.printSetting getPrivateCopy:@"P003"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             [AFNet.activeView stopAnimating];
+//             if([responseObject[@"Code"] integerValue]==1){
+//                  [AFNet alertSuccess:responseObject[@"Content"]];
+//             }
+//             else{
+//                 [AFNet alert:responseObject[@"Content"]];
+//             }
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             [AFNet.activeView stopAnimating];
+//             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//         }
+//     ];
 
 }
 - (IBAction)printUncheck:(id)sender {
-    UITextField *textField=(UITextField *)[self.view viewWithTag:2];
-    [self.printSetting setPrivateCopy:@"P004" copies:textField.text];
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P004"] copies:[self.printSetting getPrivateCopy:@"P004"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-             if([responseObject[@"Code"] integerValue]==1){
-                 [AFNet alertSuccess:responseObject[@"Content"]];
-             }
-             else{
-                 [AFNet alert:responseObject[@"Content"]];
-             }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-         }
-     ];
+//    UITextField *textField=(UITextField *)[self.view viewWithTag:2];
+//    [self.printSetting setPrivateCopy:@"P004" copies:textField.text];
+//    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//    [manager GET:[[AFNet print_shop_unreceive:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P004"] copies:[self.printSetting getPrivateCopy:@"P004"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+//      parameters:nil
+//         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//             [AFNet.activeView stopAnimating];
+//             if([responseObject[@"Code"] integerValue]==1){
+//                 [AFNet alertSuccess:responseObject[@"Content"]];
+//             }
+//             else{
+//                 [AFNet alert:responseObject[@"Content"]];
+//             }
+//         }
+//         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//             [AFNet.activeView stopAnimating];
+//             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//         }
+//     ];
 }
 - (IBAction)finishOver:(id)sender {
     if([self.type isEqualToString:@"receive"]){

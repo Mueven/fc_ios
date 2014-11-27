@@ -91,6 +91,10 @@
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>received</key>
+		<string>received/</string>
+		<key>confirm_receive</key>
+		<string>confirm_receive</string>
 		<key>reject</key>
 		<string>rejected/</string>
 		<key>receive</key>
@@ -110,6 +114,10 @@
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>received</key>
+		<string>received/</string>
+		<key>confirm_receive</key>
+		<string>confirm_receive</string>
 		<key>validate_quantity</key>
 		<string>validate_quantity/</string>
 		<key>uncheck</key>

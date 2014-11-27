@@ -14,6 +14,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetOperate.h"
 #import "ReceiveTuoViewController.h"
+#import "ReceivePrintViewController.h"
 @interface ReceiveYunViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
@@ -50,7 +51,7 @@
         all_checked+=tuoItem.accepted_packages;
         all_packages+=tuoItem.sum_packages;
     }
-    self.countLabel.text=[NSString stringWithFormat:@"%d / %d",all_checked,all_packages];
+    self.countLabel.text=[NSString stringWithFormat:@"%ld / %ld",(long)all_checked,(long)all_packages];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -139,6 +140,12 @@
         vc.enableConfirm=NO;
         vc.enableCancel=NO;
     }
+    else if([segue.identifier isEqualToString:@"print"]){
+        ReceivePrintViewController *vc=segue.destinationViewController;
+        vc.container=self.yun;
+        vc.type=@"yun";
+        vc.disableBack=YES;
+    }
 }
 -(void)confirm:(id)sender
 {
@@ -152,24 +159,24 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==1){
-        //        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        //        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        //        [manager POST:[AFNet yun_confirm_receive]
-        //           parameters:@{@"id":self.yun.ID}
-        //              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //                  [AFNet.activeView stopAnimating];
-        //                  if([responseObject[@"result"] integerValue]==1){
-        //                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"type":@"receive"}];
-        //                  }
-        //                  else{
-        //                      [AFNet alert:responseObject[@"content"]];
-        //                  }
-        //              }
-        //              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                  [AFNet.activeView stopAnimating];
-        //                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-        //              }
-        //         ];
+                AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                [manager POST:[AFNet yun_confirm_receive]
+                   parameters:@{@"id":self.yun.ID}
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          [AFNet.activeView stopAnimating];
+                          if([responseObject[@"result"] integerValue]==1){
+                              [self performSegueWithIdentifier:@"print" sender:self];
+                          }
+                          else{
+                              [AFNet alert:responseObject[@"content"]];
+                          }
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          [AFNet.activeView stopAnimating];
+                          [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                      }
+                 ];
     }
 }
 -(void)cancel:(id)sender

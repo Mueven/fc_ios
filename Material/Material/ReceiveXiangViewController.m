@@ -7,6 +7,8 @@
 //
 
 #import "ReceiveXiangViewController.h"
+#import "AFNetOperate.h"
+#import "ReceivePrintViewController.h"
 @interface ReceiveXiangViewController ()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
@@ -49,24 +51,33 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==1){
-//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//        [manager POST:[AFNet yun_confirm_receive]
-//           parameters:@{@"id":self.yun.ID}
-//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                  [AFNet.activeView stopAnimating];
-//                  if([responseObject[@"result"] integerValue]==1){
-//                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"type":@"receive"}];
-//                  }
-//                  else{
-//                      [AFNet alert:responseObject[@"content"]];
-//                  }
-//              }
-//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  [AFNet.activeView stopAnimating];
-//                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-//              }
-//         ];
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet xiang_confirm_receive]
+           parameters:@{@"id":self.xiang.ID}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      [self performSegueWithIdentifier:@"print" sender:self];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+              }
+         ];
+    }
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"print"]){
+        ReceivePrintViewController *vc=segue.destinationViewController;
+        vc.container=self.xiang;
+        vc.type=@"xiang";
+        vc.disableBack=YES;
     }
 }
 @end

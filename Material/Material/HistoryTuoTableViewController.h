@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Yun.h"
-
+@class Yun;
 @interface HistoryTuoTableViewController : UITableViewController
-@property (nonatomic,strong)Yun *yun;
+@property(nonatomic,strong)NSArray *tuoArray;
+@property(nonatomic,strong)NSString *vc_title;
+@property(nonatomic,strong)Yun *yun;
 @end

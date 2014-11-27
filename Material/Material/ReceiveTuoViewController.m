@@ -11,7 +11,7 @@
 #import "ShopXiangTableViewCell.h"
 #import "AFNetOperate.h"
 #import <AudioToolbox/AudioToolbox.h>
-
+#import "ReceivePrintViewController.h"
 
 @interface ReceiveTuoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
@@ -61,17 +61,17 @@
     }
 }
 -(void)updateCheckedLabel{
-    NSString *count=[NSString stringWithFormat:@"%d / %d",self.xiangCheckedCount,self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
     self.countLabel.text=count;
 }
 -(void)updateAddCheckedLabel{
     self.xiangCheckedCount++;
-    NSString *count=[NSString stringWithFormat:@"%d / %d",self.xiangCheckedCount,self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
     self.countLabel.text=count;
 }
 -(void)updateMinusCheckedLabel{
     self.xiangCheckedCount--;
-    NSString *count=[NSString stringWithFormat:@"%d / %d",self.xiangCheckedCount,self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
     self.countLabel.text=count;
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -349,27 +349,36 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==1){
-        //        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        //        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        //        [manager POST:[AFNet yun_confirm_receive]
-        //           parameters:@{@"id":self.yun.ID}
-        //              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //                  [AFNet.activeView stopAnimating];
-        //                  if([responseObject[@"result"] integerValue]==1){
-        //                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"type":@"receive"}];
-        //                  }
-        //                  else{
-        //                      [AFNet alert:responseObject[@"content"]];
-        //                  }
-        //              }
-        //              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                  [AFNet.activeView stopAnimating];
-        //                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-        //              }
-        //         ];
+                AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                [manager POST:[AFNet tuo_confirm_receive]
+                   parameters:@{@"id":self.tuo.ID}
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          [AFNet.activeView stopAnimating];
+                          if([responseObject[@"result"] integerValue]==1){
+                              [self performSegueWithIdentifier:@"print" sender:self];
+                          }
+                          else{
+                              [AFNet alert:responseObject[@"content"]];
+                          }
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          [AFNet.activeView stopAnimating];
+                          [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                      }
+                 ];
     }
 }
 - (IBAction)cancel:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"print"]){
+        ReceivePrintViewController *vc=segue.destinationViewController;
+        vc.container=self.tuo;
+        vc.type=@"tuo";
+        vc.disableBack=YES;
+    }
 }
 @end
