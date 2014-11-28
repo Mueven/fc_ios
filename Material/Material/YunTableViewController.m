@@ -47,7 +47,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -56,15 +55,16 @@
     YunStore *yunStore=[[YunStore alloc] init];
     yunStore.yunArray=[[NSMutableArray alloc] init];
      [self.tableView reloadData];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *questDate=[formatter stringFromDate:[NSDate date]];
+
     
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet yun_root]
-      parameters:@{@"delivery_date":questDate}
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
 //             NSLog(@"%@",responseObject);
@@ -221,7 +221,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        int row=indexPath.row;
+        NSInteger row=indexPath.row;
         Yun *yunRetain=[[[Yun alloc] init] copyMe:[self.yunStore.yunArray objectAtIndex:row]];
       
             dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);

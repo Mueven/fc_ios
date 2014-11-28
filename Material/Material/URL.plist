@@ -69,48 +69,48 @@
 	<key>yun</key>
 	<dict>
 		<key>confirm_receive</key>
-		<string>confirm_receive</string>
+		<string>/confirm_receive</string>
 		<key>received</key>
-		<string>received/</string>
+		<string>/received</string>
 		<key>receive</key>
-		<string>receive/</string>
+		<string>/receive</string>
 		<key>send</key>
-		<string>send</string>
+		<string>/send</string>
 		<key>single</key>
-		<string>detail/</string>
+		<string>/detail</string>
 		<key>add_tuo</key>
-		<string>add_forklift/</string>
+		<string>/add_forklift</string>
 		<key>remove_tuo</key>
-		<string>remove_forklift/</string>
+		<string>/remove_forklift</string>
 		<key>add_tuo_by_scan</key>
-		<string>check_forklift/</string>
+		<string>/check_forklift</string>
 		<key>index</key>
-		<string>list/</string>
+		<string>/get_by_time_and_state</string>
 		<key>root</key>
-		<string>/api/v1/deliveries/</string>
+		<string>/api/v1/deliveries</string>
 	</dict>
 	<key>tuo</key>
 	<dict>
 		<key>received</key>
-		<string>received/</string>
+		<string>/received</string>
 		<key>confirm_receive</key>
-		<string>confirm_receive</string>
+		<string>/confirm_receive</string>
 		<key>reject</key>
-		<string>rejected/</string>
+		<string>/rejected</string>
 		<key>receive</key>
-		<string>receive/</string>
+		<string>/receive</string>
 		<key>remove_xiang</key>
-		<string>remove_package/</string>
+		<string>/remove_package</string>
 		<key>key_for_bundle</key>
-		<string>check_package/</string>
+		<string>/check_package</string>
 		<key>bundle_add</key>
-		<string>add_package/</string>
+		<string>/add_package</string>
 		<key>single</key>
-		<string>detail/</string>
+		<string>/detail</string>
 		<key>index</key>
-		<string>binds/</string>
+		<string>/get_by_time_and_state</string>
 		<key>root</key>
-		<string>/api/v1/forklifts/</string>
+		<string>/api/v1/forklifts</string>
 	</dict>
 	<key>xiang</key>
 	<dict>

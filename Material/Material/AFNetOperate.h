@@ -14,9 +14,6 @@
 -(AFHTTPRequestOperationManager *)generateManager:(UIView *)view;
 -(void)alert:(NSString *)string;
 -(void)alertSuccess:(NSString *)string;
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view;
--(void)getTuos:(NSMutableArray *)tuoArray view:(UITableView *)view;
--(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view;
 -(void)setKeyArchive:(NSString *)path keyArray:(NSArray *)keyArray objectArray:(NSArray *)objectArray;
 -(id)getKeyArchive:(NSString *)path key:(NSString *)key;
 //get URL

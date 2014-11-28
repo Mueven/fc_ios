@@ -87,7 +87,6 @@
     if(editingStyle==UITableViewCellEditingStyleDelete){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//        NSLog(@"address:%@  id:%@",[AFNet yun_remove_tuo],tuoChosen.ID);
         [manager DELETE:[AFNet yun_remove_tuo]
            parameters:@{@"forklift_id":tuoChosen.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {

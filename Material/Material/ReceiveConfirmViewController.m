@@ -82,7 +82,7 @@
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"printYun"]){
         ReceivePrintViewController *receivePrint=segue.destinationViewController;
-        receivePrint.yun=[sender objectForKey:@"yun"];
+        receivePrint.container=[sender objectForKey:@"yun"];
         receivePrint.type=[sender objectForKey:@"type"];
     }
 }

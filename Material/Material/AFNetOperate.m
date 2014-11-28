@@ -189,27 +189,6 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"confirm_receive"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view
-{
-    [self.activeView stopAnimating];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self xiang_root]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *xiangArrayResult=responseObject;
-             for(int i=0;i<xiangArrayResult.count;i++){
-                 Xiang *xiang=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
-                 [xiangArray addObject:xiang];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-             [self alert:@"something wrong"];
-         }
-    ];
-}
 //resource Tuo
 -(NSString *)tuo_index
 {
@@ -254,25 +233,7 @@
     NSString *tuoRoot=[self tuo_root];
     return [NSString stringWithFormat:@"%@%@",tuoRoot,id];
 }
--(void)getTuos:(NSMutableArray *)tuoArray view:(UITableView *)view{
-    [self.activeView stopAnimating];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self tuo_root]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-             for(int i=0;i<[resultArray count];i++){
-                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
-                 [tuoArray addObject:tuo];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-         }
-     ];
-}
+
 //resource Yun
 -(NSString *)yun_index
 {
@@ -324,28 +285,6 @@
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"received"];
     return [[self yun_index] stringByAppendingString:bind];
-}
--(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
-    [self.activeView stopAnimating];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *questDate=[formatter stringFromDate:[NSDate date]];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self yun_root]
-      parameters:@{@"delivery_date":questDate}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-             for(int i=0;i<[resultArray count];i++){
-                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
-                 [yunArray addObject:yun];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-         }
-     ];
 }
 
 //打印

@@ -31,25 +31,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UINib *nib=[UINib nibWithNibName:@"TuoTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"tuoCell"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
     [super viewWillAppear:animated];
-
     //得到数据
     [self selfState];
 }
@@ -68,11 +60,24 @@
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
     [self.tableView reloadData];
+    
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+    [components setDay:([components day] - 7)];
+    NSDate *thisWeek  = [cal dateFromComponents:components];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    NSString *beginDate=[formatter stringFromDate:thisWeek];
+    NSString *endDate=[formatter stringFromDate:[NSDate date]];
+    
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              NSArray *resultArray=responseObject;

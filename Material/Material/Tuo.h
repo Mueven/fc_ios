@@ -16,6 +16,7 @@
 @property(nonatomic,strong) NSString *agent;
 @property(nonatomic,strong) NSString *date;
 @property(nonatomic,strong) NSMutableArray *xiang;
+@property(nonatomic,strong) NSString *user_id;
 @property(nonatomic)int accepted_packages;
 @property(nonatomic)int sum_packages;
 
