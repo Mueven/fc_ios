@@ -13,12 +13,13 @@
 		B001BF0819A5CF23000800AD /* PrinterSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = B001BF0719A5CF23000800AD /* PrinterSetting.m */; };
 		B00EA1371A26F65700D95594 /* HistoryChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EA1361A26F65700D95594 /* HistoryChooseViewController.m */; };
 		B00EA13A1A272A1700D95594 /* HistoryXiangItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B00EA1391A272A1700D95594 /* HistoryXiangItemViewController.m */; };
+		B01011BA1A2ABA0D00F1E6EB /* StoragesMoveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01011B91A2ABA0D00F1E6EB /* StoragesMoveViewController.m */; };
+		B01011BD1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01011BC1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m */; };
 		B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */; };
 		B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B037ECF8194BDC50008C456E /* YunTableViewCell.m */; };
 		B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B037ECF9194BDC50008C456E /* YunTableViewCell.xib */; };
 		B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D524B194D412300696E4E /* YunSendedViewController.m */; };
 		B03D524F194D458D00696E4E /* YunCheckXiangTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D524E194D458D00696E4E /* YunCheckXiangTableViewController.m */; };
-		B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */; };
 		B04244D01A1EDEEC00AAFD24 /* RoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04244CF1A1EDEEC00AAFD24 /* RoleViewController.m */; };
 		B04244D31A1EF41A00AAFD24 /* ProductSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04244D21A1EF41A00AAFD24 /* ProductSettingViewController.m */; };
 		B04244D71A1F0E7F00AAFD24 /* ProductCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B04244D61A1F0E7F00AAFD24 /* ProductCheckViewController.m */; };
@@ -158,6 +159,10 @@
 		B00EA1361A26F65700D95594 /* HistoryChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryChooseViewController.m; sourceTree = "<group>"; };
 		B00EA1381A272A1700D95594 /* HistoryXiangItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryXiangItemViewController.h; sourceTree = "<group>"; };
 		B00EA1391A272A1700D95594 /* HistoryXiangItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryXiangItemViewController.m; sourceTree = "<group>"; };
+		B01011B81A2ABA0D00F1E6EB /* StoragesMoveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoragesMoveViewController.h; sourceTree = "<group>"; };
+		B01011B91A2ABA0D00F1E6EB /* StoragesMoveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoragesMoveViewController.m; sourceTree = "<group>"; };
+		B01011BB1A2AC7A800F1E6EB /* SettingRemarkTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingRemarkTableViewController.h; sourceTree = "<group>"; };
+		B01011BC1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingRemarkTableViewController.m; sourceTree = "<group>"; };
 		B0275FD6197E443A00E579C5 /* RequireHistoryListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireHistoryListTableViewController.h; sourceTree = "<group>"; };
 		B0275FD7197E443A00E579C5 /* RequireHistoryListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireHistoryListTableViewController.m; sourceTree = "<group>"; };
 		B037ECF7194BDC50008C456E /* YunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunTableViewCell.h; sourceTree = "<group>"; };
@@ -167,8 +172,6 @@
 		B03D524B194D412300696E4E /* YunSendedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunSendedViewController.m; sourceTree = "<group>"; };
 		B03D524D194D458D00696E4E /* YunCheckXiangTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunCheckXiangTableViewController.h; sourceTree = "<group>"; };
 		B03D524E194D458D00696E4E /* YunCheckXiangTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YunCheckXiangTableViewController.m; sourceTree = "<group>"; };
-		B03D5250194DBEA400696E4E /* ReceiveConfirmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiveConfirmViewController.h; sourceTree = "<group>"; };
-		B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiveConfirmViewController.m; sourceTree = "<group>"; };
 		B04244CE1A1EDEEC00AAFD24 /* RoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoleViewController.h; sourceTree = "<group>"; };
 		B04244CF1A1EDEEC00AAFD24 /* RoleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoleViewController.m; sourceTree = "<group>"; };
 		B04244D11A1EF41A00AAFD24 /* ProductSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductSettingViewController.h; sourceTree = "<group>"; };
@@ -569,8 +572,8 @@
 				B04EF1D719468A9100A95D7A /* ReceiveTuoViewController.m */,
 				B07292161A25AE4C009483D8 /* ReceiveYunViewController.h */,
 				B07292171A25AE4C009483D8 /* ReceiveYunViewController.m */,
-				B03D5250194DBEA400696E4E /* ReceiveConfirmViewController.h */,
-				B03D5251194DBEA400696E4E /* ReceiveConfirmViewController.m */,
+				B0E1D4F01952CD3500105D4D /* ReceivePrintViewController.h */,
+				B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */,
 			);
 			name = Receive;
 			sourceTree = "<group>";
@@ -625,8 +628,6 @@
 			children = (
 				B0454CCA19760121001476F4 /* REQUIRE */,
 				B0454CC9197600D1001476F4 /* DELIVERY */,
-				B052E9841973B01D009E4D53 /* ScanStandard.h */,
-				B052E9851973B01D009E4D53 /* ScanStandard.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -682,6 +683,8 @@
 			children = (
 				B073F7D1199D9352007011E6 /* DELIVERY */,
 				B0619E51197CB6D1000C1C69 /* REQUIRE */,
+				B052E9841973B01D009E4D53 /* ScanStandard.h */,
+				B052E9851973B01D009E4D53 /* ScanStandard.m */,
 				B073F7D2199D9382007011E6 /* PingWatcher.h */,
 				B073F7D3199D9382007011E6 /* PingWatcher.m */,
 				B001BF0619A5CF23000800AD /* PrinterSetting.h */,
@@ -886,6 +889,8 @@
 				B0DF64341943E1D1002D044B /* PrintViewController.m */,
 				B085F6541940184E001F01F3 /* SettingViewController.h */,
 				B085F6551940184E001F01F3 /* SettingViewController.m */,
+				B01011BB1A2AC7A800F1E6EB /* SettingRemarkTableViewController.h */,
+				B01011BC1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m */,
 				B0B3040D1A23057600D8CF8E /* DefaultAddressTableViewController.h */,
 				B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */,
 			);
@@ -896,13 +901,13 @@
 			isa = PBXGroup;
 			children = (
 				B04EF1E11946B1CC00A95D7A /* Receive */,
+				B01011B81A2ABA0D00F1E6EB /* StoragesMoveViewController.h */,
+				B01011B91A2ABA0D00F1E6EB /* StoragesMoveViewController.m */,
 				B04EF1E91946BDA900A95D7A /* History */,
 				B0A2ECE419A4529D00F80F26 /* ShopVerifyMoveViewController.h */,
 				B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */,
 				B04EF1F31946E53600A95D7A /* ShopSettingViewController.h */,
 				B04EF1F41946E53600A95D7A /* ShopSettingViewController.m */,
-				B0E1D4F01952CD3500105D4D /* ReceivePrintViewController.h */,
-				B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */,
 			);
 			name = SHOP;
 			sourceTree = "<group>";
@@ -1023,6 +1028,7 @@
 				B04EF20A1946E60D00A95D7A /* AFHTTPRequestOperation.m in Sources */,
 				B04EF20D1946E60D00A95D7A /* AFNetworkReachabilityManager.m in Sources */,
 				B04EF20C1946E60D00A95D7A /* AFHTTPSessionManager.m in Sources */,
+				B01011BD1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m in Sources */,
 				B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */,
 				B04EF1DB19469CBA00A95D7A /* ReceiveXiangViewController.m in Sources */,
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
@@ -1034,6 +1040,7 @@
 				B0FA0A191A2464F400E9E536 /* SendAddressItem.m in Sources */,
 				B061397E1941643E00A0CF62 /* Tuo.m in Sources */,
 				B073F7D4199D9382007011E6 /* PingWatcher.m in Sources */,
+				B01011BA1A2ABA0D00F1E6EB /* StoragesMoveViewController.m in Sources */,
 				B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */,
 				B0619E49197CB318000C1C69 /* RequireBill.m in Sources */,
 				B061397B194163DF00A0CF62 /* TuoStore.m in Sources */,
@@ -1060,7 +1067,6 @@
 				B058550719A2F832000C85E5 /* TuoCheckGeneralViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B06CD6E41A25663900DF4D16 /* YunSendViewController.m in Sources */,
-				B03D5252194DBEA400696E4E /* ReceiveConfirmViewController.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
 				B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */,
 				B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */,

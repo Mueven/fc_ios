@@ -33,7 +33,7 @@
 //            Tuo *tuo=[[Tuo alloc] initExample];
 //            [self.listArray addObject:tuo];
 //        }
-        [[[AFNetOperate alloc] init] getTuos:self.listArray view:view];
+//        [[[AFNetOperate alloc] init] getTuos:self.listArray view:view];
     }
     return self;
 }

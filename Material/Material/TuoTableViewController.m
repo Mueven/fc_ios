@@ -61,15 +61,6 @@
     tuoStore.listArray=[[NSMutableArray alloc] init];
     [self.tableView reloadData];
     
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
-    [components setDay:([components day] - 7)];
-    NSDate *thisWeek  = [cal dateFromComponents:components];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *beginDate=[formatter stringFromDate:thisWeek];
-    NSString *endDate=[formatter stringFromDate:[NSDate date]];
-    
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
@@ -109,7 +100,11 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
-      parameters:@{@"all":@YES}
+      parameters:@{
+                   @"all":@YES,
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              NSArray *resultArray=responseObject;
@@ -219,14 +214,13 @@
     Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet tuo_single]
+    [manager GET:[AFNet tuo_packages]
       parameters:@{@"id":tuo.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 if([(NSDictionary *)responseObject[@"content"] count]>0){
-                     NSDictionary *result=responseObject[@"content"];
-                     NSArray *xiangList=result[@"packages"];
+                 if([(NSArray *)responseObject[@"content"] count]>0){
+                     NSArray *xiangList=responseObject[@"content"];
                      for(int i=0;i<xiangList.count;i++){
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
                          [tuo.xiang addObject:xiang];

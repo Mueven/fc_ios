@@ -67,7 +67,6 @@
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-//             NSLog(@"%@",responseObject);
               if([responseObject[@"result"] integerValue]==1){
                   NSArray *resultArray=responseObject[@"content"];
                   for(int i=0;i<[resultArray count];i++){
@@ -155,13 +154,7 @@
                     if([responseObject[@"result"] integerValue]==1){
                         if([(NSDictionary *)responseObject[@"content"] count]>0){
                             yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                            NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                            [yun.tuoArray removeAllObjects];
-                            for(int i=0;i<tuoArray.count;i++){
-                                Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                                [yun.tuoArray addObject:tuoItem];
-                            }
-                            [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+                            [self getTuoListThenSegue:@"check" yun:yun];
                         }
                     }
                     else{
@@ -185,7 +178,66 @@
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
                          yun.name=[responseObject[@"content"] objectForKey:@"id"];
-                         NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                         [self getTuoListThenSegue:@"edit" yun:yun];
+                     }
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+    }
+}
+
+-(void)getTuoListThenSegue:(NSString *)purpose yun:(Yun *)yun{
+    if([purpose isEqualToString:@"check"]){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet yun_folklifts]
+          parameters:@{@"id":yun.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [AFNet.activeView stopAnimating];
+                 });
+                 if([responseObject[@"result"] integerValue]==1){
+                     if([(NSArray *)responseObject[@"content"] count]>0){
+                         NSArray *tuoArray=responseObject[@"content"];
+                         [yun.tuoArray removeAllObjects];
+                         for(int i=0;i<tuoArray.count;i++){
+                             Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                             [yun.tuoArray addObject:tuoItem];
+                         }
+                         [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+                     }
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+    }
+    else if([purpose isEqualToString:@"edit"]){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet yun_folklifts]
+          parameters:@{@"id":yun.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [AFNet.activeView stopAnimating];
+                 });
+                 if([responseObject[@"result"] integerValue]==1){
+                     if([(NSArray *)responseObject[@"content"] count]>0){
+                         NSArray *tuoArray=responseObject[@"content"];
                          [yun.tuoArray removeAllObjects];
                          for(int i=0;i<tuoArray.count;i++){
                              Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
@@ -206,15 +258,6 @@
          ];
     }
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
 
 // Override to support editing the table view.

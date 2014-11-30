@@ -9,8 +9,6 @@
 #import "ReceiveYunViewController.h"
 #import "ShopTuoTableViewCell.h"
 #import "Tuo.h"
-#import "ReceiveXiangViewController.h"
-#import "ReceiveConfirmViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetOperate.h"
 #import "ReceiveTuoViewController.h"

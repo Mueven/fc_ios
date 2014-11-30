@@ -206,6 +206,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"single"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
+-(NSString *)tuo_packages{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"packages"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
 -(NSString *)tuo_bundle_add
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"bundle_add"];
@@ -267,6 +271,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"send"];
     return [[self yun_index] stringByAppendingString:bind];
 }
+-(NSString *)yun_folklifts{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"forklifts"];
+    return [[self yun_index] stringByAppendingString:bind];
+}
 -(NSString *)yun_edit:(NSString *)id{
     NSString *yunRoot=[self yun_root];
     return [NSString stringWithFormat:@"%@%@",yunRoot,id];
@@ -286,7 +294,18 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"received"];
     return [[self yun_index] stringByAppendingString:bind];
 }
-
+//库
+-(NSString *)storages_index
+{
+    NSString *base=[self baseURL];
+    NSString *storages=[[[self URLDictionary] objectForKey:@"storages"] objectForKey:@"index"];
+    return [base stringByAppendingString:storages];
+}
+-(NSString *)storages_move_store
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"storages"] objectForKey:@"move_store"];
+    return [[self storages_index] stringByAppendingString:bind];
+}
 //打印
 -(NSString *)baseURL_print
 {

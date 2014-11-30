@@ -71,17 +71,35 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     NSString *receive_parameters=[NSString string];
     if([type isEqualToString:@"yun"]){
-        receive_parameters=[AFNet yun_received];
+        receive_parameters=[AFNet yun_root];
     }
     else if([type isEqualToString:@"tuo"]){
-        receive_parameters=[AFNet tuo_received];
+        receive_parameters=[AFNet tuo_root];
     }
     else if([type isEqualToString:@"xiang"]){
-        receive_parameters=[AFNet xiang_received];
+        receive_parameters=[AFNet xiang_root];
     }
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit |           NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
+    [components setHour:0];
+    [components setSecond:0];
+    [components setMinute:0];
+    NSDate *begin  = [cal dateFromComponents:components];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    NSString *beginDate=[formatter stringFromDate:begin];
+    [components setHour:24];
+    NSDate *end  = [cal dateFromComponents:components];
+    NSString *endDate=[formatter stringFromDate:end];
+
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:receive_parameters
-      parameters:@{@"receive_date":self.date_for_post}
+      parameters:@{
+                   @"start_time":beginDate,
+                   @"end_time":endDate,
+                   @"state":@[@1,@2,@3,@4],
+                   @"type":@1
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){

@@ -69,8 +69,17 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"yunCell" forIndexPath:indexPath];
     Yun *yun=[self.yunArray objectAtIndex:indexPath.row];
     cell.textLabel.text=yun.name;
+    cell.detailTextLabel.text=yun.state_display;
+    if(yun.state==1 || yun.state ==2){
+        [cell.detailTextLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(yun.state==3){
+        [cell.detailTextLabel setTextColor:[UIColor greenColor]];
+    }
+    else if(yun.state==4){
+        [cell.detailTextLabel setTextColor:[UIColor redColor]];
+    }
     // Configure the cell...
-    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,13 +87,13 @@
     Yun *yun=[self.yunArray objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet yun_single]
+    [manager GET:[AFNet yun_folklifts]
       parameters:@{@"id":yun.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 if([(NSDictionary *)responseObject[@"content"] count]>0){
-                     NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
+                 if([(NSArray *)responseObject[@"content"] count]>0){
+                     NSArray *tuoArray=responseObject[@"content"];
                      [yun.tuoArray removeAllObjects];
                      for(int i=0;i<tuoArray.count;i++){
                          Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];

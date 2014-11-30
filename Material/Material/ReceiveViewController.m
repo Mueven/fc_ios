@@ -46,6 +46,7 @@
 -(void)decoderDataReceived:(NSString *)data
 {
     self.scanTextField.text=data;
+    //扫描到对应的号码时应该去触发receive
 }
 
 #pragma mark - Navigation

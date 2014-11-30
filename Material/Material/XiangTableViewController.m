@@ -79,7 +79,10 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              
@@ -110,7 +113,11 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
-      parameters:@{@"all":@YES}
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0,
+                   @"all":@YES
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              

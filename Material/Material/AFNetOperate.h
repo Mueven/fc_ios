@@ -38,6 +38,7 @@
 -(NSString *)tuo_remove_xiang;
 -(NSString *)tuo_confirm_receive;
 -(NSString *)tuo_received;
+-(NSString *)tuo_packages;
 
 -(NSString *)yun_index;
 -(NSString *)yun_root;
@@ -50,6 +51,9 @@
 -(NSString *)yun_receive;
 -(NSString *)yun_received;
 -(NSString *)yun_confirm_receive;
+-(NSString *)yun_folklifts;
+
+-(NSString *)storages_move_store;
 
 -(NSString *)log_in;
 -(NSString *)log_out;

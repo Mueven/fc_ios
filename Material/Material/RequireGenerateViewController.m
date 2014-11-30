@@ -118,10 +118,8 @@
     NSString *regex=[NSString string];
     if(targetTextField.tag==2 || targetTextField.tag==5){
         //零件号
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -144,10 +142,8 @@
     }
     else if(targetTextField.tag==3){
         //数量
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -170,10 +166,8 @@
     }
     else if(targetTextField.tag==1 || targetTextField.tag==4){
         //部门
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描部门";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  =  [self.scanStandard checkDepartment:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -214,35 +208,11 @@
         
         if(partNumber.length>0&&department.length>0&&quantity.length>0){
             //after regex quantity
-            int beginQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"prefix_length"] intValue];
-            int lastQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"suffix_length"] intValue];
-            NSString *quantityPost=[NSString string];
-            if([[quantity copy] substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-                quantityPost=[[quantity copy] substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-            }
-            else{
-                quantityPost=@"";
-            }
+            NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
             //after regex part
-            int beginP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
-            int lastP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-            NSString *partNumberPost=[NSString string];
-            if([[partNumber copy] substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-                 partNumberPost=[[partNumber copy] substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-            }
-            else{
-                partNumberPost=@"";
-            }
+            NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
             //after regex part
-            int beginD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
-            int lastD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
-            NSString *departmentPost=[NSString string];
-            if([[department copy] substringWithRange:NSMakeRange(beginD, [department length]-beginD-lastD)]){
-                departmentPost=[[department copy] substringWithRange:NSMakeRange(beginD, [department length]-beginD-lastD)];
-            }
-            else{
-                departmentPost=@"";
-            }
+            NSString *departmentPost=[self.scanStandard filterDepartment:department];
             //发送请求
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -312,25 +282,9 @@
         
         if(partNumber.length>0&&department.length>0){
             //after regex part
-            int beginSP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
-            int lastSP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-            NSString *partNumberPost=[NSString string];
-            if([[partNumber copy] substringWithRange:NSMakeRange(beginSP, [partNumber length]-beginSP-lastSP)]){
-                partNumberPost=[[partNumber copy] substringWithRange:NSMakeRange(beginSP, [partNumber length]-beginSP-lastSP)];
-            }
-            else{
-                 partNumberPost=@"";
-            }
+            NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
             //after regex part
-            int beginSD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
-            int lastSD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
-            NSString *departmentPost=[NSString string];
-            if([[department copy] substringWithRange:NSMakeRange(beginSD, [department length]-beginSD-lastSD)]){
-                departmentPost=[[department copy] substringWithRange:NSMakeRange(beginSD, [department length]-beginSD-lastSD)];
-            }
-            else{
-                departmentPost=@"";
-            }
+            NSString *departmentPost=[self.scanStandard filterDepartment:department];
             //发送请求
          
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];

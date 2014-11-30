@@ -82,10 +82,8 @@
     NSString *regex=[NSString string];
     if(self.firstResponder.tag==4){
          //date
-        regex=[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描日期";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkDate:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -110,10 +108,8 @@
     }
     else if(self.firstResponder.tag==2){
         //part number
-        regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -137,10 +133,8 @@
     }
     else{
          //count
-        regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -186,61 +180,25 @@
     NSString *date=self.dateTextField.text;
     
     //after regex partNumber
-    int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
-    int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-    NSString *partNumberPost=[NSString string];
-    @try {
-        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-            partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-        }
-        else{
-            partNumberPost=@"";
-        }
-    }
-    @catch (NSException *exception) {
-        partNumberPost=@"";
-    }
+    NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
     //after regex quantity
-    int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
-    int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-    NSString *quantityPost=[NSString string];
-    @try {
-        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-            quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-        }
-        else{
-            quantityPost=@"";
-        }
-    }
-    @catch (NSException *exception) {
-        quantityPost=@"";
-    }
+    NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
     //after regex date
-    int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
-    int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-    NSString *datePost=[NSString string];
-    @try {
-        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
-          datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-        }
-        else{
-           datePost=@"";  
-        }
-    }
-    @catch (NSException *exception) {
-        datePost=@"";
-    }
+    NSString *datePost=[self.scanStandard filterDate:date];
     
  
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager PUT:[AFNet xiang_index]
-      parameters:@{@"package":@{
+      parameters:@{
                            @"id":self.xiang.ID,
                            @"part_id":partNumberPost,
-                           @"quantity_str":quantityPost,
-                           @"check_in_time":datePost
-                           }}
+                           @"quantity":quantityPost,
+                           @"custom_fifo_time":datePost,
+                           @"part_id_display":partNumber,
+                           @"quantity_display":quantity,
+                           @"fifo_time_display":date
+                           }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
             
@@ -272,51 +230,11 @@
         NSString *date=self.dateTextField.text;
         
         //after regex partNumber
-        int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
-        int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-        NSString *partNumberPost=[NSString string];
-        @try {
-            if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-                partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-            }
-            else{
-                partNumberPost=@"";
-            }
-        }
-        @catch (NSException *exception) {
-            partNumberPost=@"";
-        }
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
         //after regex quantity
-        int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
-        int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-        NSString *quantityPost=[NSString string];
-        @try {
-            if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-                quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-            }
-            else{
-                quantityPost=@"";
-            }
-        }
-        @catch (NSException *exception) {
-            quantityPost=@"";
-        }
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
         //after regex date
-        int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
-        int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-        NSString *datePost=[NSString string];
-        @try {
-            if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
-                datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-            }
-            else{
-                datePost=@"";
-            }
-        }
-        @catch (NSException *exception) {
-            datePost=@"";
-        }
-        
+        NSString *datePost=[self.scanStandard filterDate:date];
         
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -324,8 +242,11 @@
           parameters:@{@"package":@{
                                @"id":self.xiang.ID,
                                @"part_id":partNumberPost,
-                               @"quantity_str":quantityPost,
-                               @"check_in_time":datePost
+                               @"quantity":quantityPost,
+                               @"custom_fifo_time":datePost,
+                               @"part_id_display":partNumber,
+                               @"quantity_display":quantity,
+                               @"fifo_time_display":date
                                }}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];

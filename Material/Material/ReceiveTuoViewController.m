@@ -182,6 +182,7 @@
     UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView=dummyView;
 }
+// for test via keyboard
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     NSMutableArray *xiangArray=self.tuo.xiang;

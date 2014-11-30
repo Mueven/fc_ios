@@ -14,13 +14,13 @@
 - (IBAction)logout:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *addressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
-- (IBAction)saveChange:(id)sender;
-- (IBAction)touchScreen:(id)sender;
-- (IBAction)resetPrint:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (strong , nonatomic) UIPickerView *typePicker;
 @property (strong, nonatomic) NSArray *pickerElements;
 @property (strong,nonatomic)PrinterSetting *printerSetting;
+- (IBAction)saveChange:(id)sender;
+- (IBAction)touchScreen:(id)sender;
+- (IBAction)resetPrint:(id)sender;
 @end
 
 @implementation ShopSettingViewController

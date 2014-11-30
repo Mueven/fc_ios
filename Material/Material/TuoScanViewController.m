@@ -77,7 +77,7 @@
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     self.alert=nil;
     self.scanStandard=[ScanStandard sharedScanStandard];
-    self.sum_packages_count=[self.tuo.xiang count];
+    self.sum_packages_count= [self.tuo.xiang count];
     [self updateXiangCountLabel];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -104,13 +104,10 @@
 -(void)decoderDataReceived:(NSString *)data{
     self.firstResponder.text=[data copy];
     UITextField *targetTextField=self.firstResponder;
-    NSString *regex=[NSString string];
     if(targetTextField.tag==4 ){
         //date
-        regex=[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描日期";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkDate:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -133,10 +130,8 @@
     }
     else if(targetTextField.tag==2){
         //part number
-        regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -159,10 +154,8 @@
     }
     else if(targetTextField.tag==3){
         //count
-        regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -186,10 +179,8 @@
     }
     else{
         //唯一码
-        regex=[[self.scanStandard.rules objectForKey:@"UNIQ"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描唯一码";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkKey:data];
         if(isMatch){
             
             [self textFieldShouldReturn:self.firstResponder];
@@ -198,14 +189,13 @@
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [AFNet.activeView stopAnimating];
             NSString *address=[AFNet xiang_validate];
-            
             dispatch_queue_t validate=dispatch_queue_create("com.validate.pptalent", NULL);
             dispatch_async(validate, ^{
                 NSString *myData=data;
                 if(self.tuo.ID.length>0 && targetTextField.tag==1){
                     [manager POST:[AFNet tuo_key_for_bundle]
                        parameters:@{
-                                    @"forklift_id":self.tuo.ID,
+                                    @"id":self.tuo.ID,
                                     @"package_id":myData
                                     }
                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -367,46 +357,24 @@
         NSString *partNumber=self.partNumber.text?self.partNumber.text:@"";
         NSString *quantity=self.quatity.text?self.quatity.text:@"";
         NSString *date=self.dateTextField.text?self.dateTextField.text:@"";
-        
         //after regex partNumber
-        int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
-        int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-        NSString *partNumberPost=[NSString string];
-        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-             partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-        }
-        else{
-            partNumberPost=@"";
-        }
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
         //after regex quantity
-        int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
-        int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-        NSString *quantityPost=[NSString string];
-        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-             quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-        }
-        else{
-            quantityPost=@"";
-        }
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
         //after regex date
-        int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
-        int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-        NSString *datePost=[NSString string];
-        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
-             datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-        }
-        else{
-              datePost=@"";
-        }
+        NSString *datePost=[self.scanStandard filterDate:date];
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
             [manager POST:[AFNet tuo_bundle_add]
                parameters:@{
-                            @"forklift_id":self.tuo.ID,
+                            @"id":self.tuo.ID,
                             @"package_id":key,
                             @"part_id":partNumberPost,
-                            @"quantity_str":quantityPost,
-                            @"check_in_time":datePost
+                            @"quantity":quantityPost,
+                            @"custom_fifo_time":datePost,
+                            @"part_id_display":partNumber,
+                            @"quantity_display":quantity,
+                            @"fifo_time_display":date
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       //箱绑定成功了
@@ -472,12 +440,15 @@
             //箱绑定下的绑定
             [manager POST:[AFNet xiang_index]
                parameters:@{
-                            @"package":@{
                                     @"id":key,
                                     @"part_id":partNumberPost,
-                                    @"quantity_str":quantityPost,
-                                    @"check_in_time":datePost
-                                    }
+                                    @"quantity":quantityPost,
+                                    @"custom_fifo_time":datePost,
+                                    @"part_id_display":partNumber,
+                                    @"quantity_display":quantity,
+                                    @"fifo_time_display":date
+                                    
+                                    
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -571,7 +542,6 @@
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager DELETE:[AFNet tuo_remove_xiang]
              parameters:@{
-                          @"forklift_id":self.tuo.ID,
                           @"package_id":[[self.tuo.xiang objectAtIndex:indexPath.row] ID]
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {

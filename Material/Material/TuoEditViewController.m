@@ -96,7 +96,7 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
-          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"whouse_id":department}}
+          parameters:@{@"id":self.tuo.ID,@"whouse_id":department}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
@@ -130,7 +130,7 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
-          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"stocker_id":agent}}
+          parameters:@{@"id":self.tuo.ID,@"stocker_id":agent}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
@@ -205,7 +205,6 @@
                 });
                 [manager DELETE:[AFNet tuo_remove_xiang]
                      parameters:@{
-                                  @"forklift_id":self.tuo.ID,
                                   @"package_id":xiangReserve.ID
                                   }
                         success:^(AFHTTPRequestOperation *operation, id responseObject) {

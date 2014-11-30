@@ -28,13 +28,15 @@
     self.keyLabel.text=self.xiang.key;
     self.partNumberLabel.text=self.xiang.number;
     self.quantityLabel.text=self.xiang.count;
-    if(self.xiang.checked){
-         [self.stateLabel setTextColor:[UIColor colorWithRed:68.0/255.0 green:178.0/255.0 blue:29.0/255.0 alpha:1.0]];
-        self.stateLabel.text=@"已接收";
+    self.stateLabel.text=self.xiang.state_display;
+    if(self.xiang.state==1 || self.xiang.state==2){
+        [self.stateLabel setTextColor:[UIColor blueColor]];
     }
-    else{
+    else if(self.xiang.state==3){
+        [self.stateLabel setTextColor:[UIColor greenColor]];
+    }
+    else if(self.xiang.state==4){
         [self.stateLabel setTextColor:[UIColor redColor]];
-        self.stateLabel.text=@"未接收";
     }
 }
 

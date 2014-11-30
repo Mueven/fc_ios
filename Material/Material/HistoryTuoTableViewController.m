@@ -94,15 +94,12 @@
     Tuo *tuo=[self.tuoArray objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet tuo_single]
+    [manager GET:[AFNet tuo_packages]
       parameters:@{@"id":tuo.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 if([(NSDictionary *)responseObject[@"content"] count]>0){
-                   
-                     NSDictionary *result=responseObject[@"content"];
-                     NSArray *xiangList=result[@"packages"];
+                 if([(NSArray *)responseObject[@"content"] count]>0){
+                     NSArray *xiangList=responseObject[@"content"];
                      [tuo.xiang removeAllObjects];
                      for(int i=0;i<xiangList.count;i++){
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
@@ -114,7 +111,6 @@
                                                                              @"title":tuo.container_id
                                                                              }];
                  }
-                 
              }
              else{
                  [AFNet alert:responseObject[@"content"]];
@@ -122,7 +118,6 @@
              
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
              [AFNet alert:@"something wrong"];
          }
      ];
