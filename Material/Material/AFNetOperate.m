@@ -34,8 +34,18 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     return manager;
 }
--(void)alert:(NSString *)string
+-(void)alert:(id)content
 {
+    NSString *string=[NSString string];
+    NSString *class=[NSString stringWithFormat:@"%@",[content class]];
+    if([class isEqualToString:@"__NSCFString"]){
+        string=content;
+    }
+    else if([class isEqualToString:@"__NSCFArray"]){
+        for(int i=0;i<[(NSArray *)content count];i++){
+            string=[string stringByAppendingString:[NSString stringWithFormat:@" %@",content[i]]];
+        }
+    }
     self.alert = [[UIAlertView alloc]initWithTitle:@""
                                                   message:string
                                                  delegate:self
@@ -175,6 +185,16 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"uncheck"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_send
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"send"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
+-(NSString *)xiang_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"receive"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_received
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"received"];
@@ -231,6 +251,15 @@
 -(NSString *)tuo_confirm_receive
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"confirm_receive"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_receive{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"receive"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_send
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"send"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
 -(NSString *)tuo_edit:(NSString *)id{
@@ -580,6 +609,11 @@
 -(NSString *)send_address{
     NSString *base=[self baseURL];
     NSString *send_address=[[self URLDictionary] objectForKey:@"send_address"];
+    return [base stringByAppendingString:send_address];
+}
+-(NSString *)movables{
+    NSString *base=[self baseURL];
+    NSString *send_address=[[self URLDictionary] objectForKey:@"movables"];
     return [base stringByAppendingString:send_address];
 }
 @end

@@ -12,6 +12,7 @@
 #import "SendAddress.h"
 #import "SendAddressItem.h"
 #import "DefaultAddressTableViewController.h"
+#import "AFNetOperate.h"
 @interface TuoSendViewController()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (weak, nonatomic) IBOutlet UILabel *agentLabel;
@@ -69,12 +70,28 @@
 }
 
 - (IBAction)confirm:(id)sender {
-    if(self.wetherJumpBack){
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(self.navigationController.viewControllers.count - 3)] animated:YES];
-    }
-    else{
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager POST:[AFNet tuo_send]
+      parameters:@{
+                   @"id":self.tuo.ID,
+                   @"destination_id":self.myAddress.id
+                   }
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             [AFNet.activeView stopAnimating];
+             if(self.wetherJumpBack){
+                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(self.navigationController.viewControllers.count - 3)] animated:YES];
+             }
+             else{
+                 [self.navigationController popViewControllerAnimated:YES];
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [AFNet.activeView stopAnimating];
+             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+         }
+     ];
 }
 
 - (IBAction)cancel:(id)sender {

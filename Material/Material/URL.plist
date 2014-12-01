@@ -18,6 +18,8 @@
 	<string>/api/v1/users/logout/</string>
 	<key>send_address</key>
 	<string>/api/v1/locations/get_all</string>
+	<key>movables</key>
+	<string>/api/v1/movables/get_type</string>
 	<key>order_led</key>
 	<dict>
 		<key>state_list</key>
@@ -100,6 +102,8 @@
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>send</key>
+		<string>/send</string>
 		<key>packages</key>
 		<string>/packages</string>
 		<key>received</key>
@@ -125,6 +129,10 @@
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>receive</key>
+		<string>/receive</string>
+		<key>send</key>
+		<string>/send</string>
 		<key>received</key>
 		<string>/received</string>
 		<key>confirm_receive</key>

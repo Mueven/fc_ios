@@ -42,7 +42,7 @@
         self.ID=object[@"id"]?object[@"id"]:@"";
         self.container_id=object[@"container_id"]?object[@"container_id"]:@"";
         self.number=object[@"part_id_display"]?object[@"part_id_display"]:@"";
-        self.count=object[@"quantity_display"]?object[@"quantity_display"]:@"";
+        self.count=object[@"quantity"]?[NSString stringWithFormat:@"%@",object[@"quantity"]]:@"";
         self.key=object[@"container_id"]?object[@"container_id"]:@"";
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";

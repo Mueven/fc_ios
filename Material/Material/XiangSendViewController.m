@@ -10,6 +10,7 @@
 #import "SendAddressItem.h"
 #import "SendAddress.h"
 #import "DefaultAddressTableViewController.h"
+#import "AFNetOperate.h"
 @interface XiangSendViewController()
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
@@ -42,18 +43,35 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.defaultAddressLabel.text=self.myAddress.name;
+    //self.defaultAddressLabel.text=self.myAddress.name;
 }
 - (IBAction)changeAddress:(id)sender {
     [self performSegueWithIdentifier:@"changeAddress" sender:self];
 }
 
 - (IBAction)confirm:(id)sender {
-    if(self.xiangArray){
-        [self.xiangArray removeObjectAtIndex:self.xiangIndex];
-    }
-    [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [AFNet.activeView stopAnimating];
+    [manager POST:[AFNet xiang_send]
+       parameters:@{
+                    @"id":self.xiang.ID,
+                    @"destination_id":self.myAddress.id
+                    }
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [AFNet.activeView stopAnimating];
+              if(self.xiangArray){
+                  [self.xiangArray removeObjectAtIndex:self.xiangIndex];
+              }
+              [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
 
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+          }
+     ];
+    
 }
 
 - (IBAction)cancel:(id)sender {

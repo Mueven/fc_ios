@@ -256,6 +256,7 @@
     }
     else if([segue.identifier isEqualToString:@"send"]){
         TuoSendViewController  *sendVC=segue.destinationViewController;
+        sendVC.wetherJumpBack=YES;
         sendVC.tuo=self.tuo;
     }
 }

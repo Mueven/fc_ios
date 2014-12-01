@@ -85,7 +85,6 @@
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             
              NSArray *xiangArrayResult=responseObject;
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];

@@ -79,7 +79,6 @@
 -(void)decoderDataReceived:(NSString *)data{
     self.dirty++;
     UITextField *targetTextField=self.firstResponder;
-    NSString *regex=[NSString string];
     if(self.firstResponder.tag==4){
          //date
         NSString *alertString=@"请扫描日期";
@@ -175,54 +174,63 @@
 }
 
 - (IBAction)finishEdit:(id)sender {
-    NSString *partNumber=self.partNumber.text;
-    NSString *quantity=self.quantity.text;
-    NSString *date=self.dateTextField.text;
-    
-    //after regex partNumber
-    NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
-    //after regex quantity
-    NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
-    //after regex date
-    NSString *datePost=[self.scanStandard filterDate:date];
-    
- 
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager PUT:[AFNet xiang_index]
-      parameters:@{
-                           @"id":self.xiang.ID,
-                           @"part_id":partNumberPost,
-                           @"quantity":quantityPost,
-                           @"custom_fifo_time":datePost,
-                           @"part_id_display":partNumber,
-                           @"quantity_display":quantity,
-                           @"fifo_time_display":date
-                           }
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-            
-             if([responseObject[@"result"] integerValue]==1){
-                 NSDictionary *dic=responseObject[@"content"];
-                 self.xiang.date=[dic objectForKey:@"check_in_time"];
-                 self.xiang.number=[dic objectForKey:@"part_id"];
-                 self.xiang.count=[dic objectForKey:@"quantity_str"];
-                 self.xiang.position=[dic objectForKey:@"position_nr"];
-                 [self.navigationController popViewControllerAnimated:YES];
+    if(self.dirty==0){
+              [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        NSString *partNumber=self.partNumber.text;
+        NSString *quantity=self.quantity.text;
+        NSString *date=self.dateTextField.text;
+        
+        //after regex partNumber
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
+        //after regex quantity
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
+        //after regex date
+        NSString *datePost=[self.scanStandard filterDate:date];
+        
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet xiang_index]
+          parameters:@{@"package":@{
+                               @"id":self.xiang.ID,
+                               @"part_id":partNumberPost,
+                               @"quantity":quantityPost,
+                               @"custom_fifo_time":datePost,
+                               @"part_id_display":partNumber,
+                               @"quantity_display":quantity,
+                               @"fifo_time_display":date
+                               }
+                       }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSDictionary *dic=responseObject[@"content"];
+                     self.xiang.date=[dic objectForKey:@"fifo_time_display"];
+                     self.xiang.number=[dic objectForKey:@"part_id_display"];
+                     self.xiang.count=[dic objectForKey:@"quantity"];
+                     self.xiang.position=[dic objectForKey:@"position_nr"];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
              }
-             else{
-                 [AFNet alert:responseObject[@"content"]];
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-         }
-     ];
+         ];
+    }
+  
 }
+
 - (IBAction)sendXiang:(id)sender {
     if(self.dirty==0){
-       [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
+        NSLog(@"here");
+        [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];
     }
     else{
         NSString *partNumber=self.partNumber.text;
@@ -253,12 +261,12 @@
                  
                  if([responseObject[@"result"] integerValue]==1){
                      NSDictionary *dic=responseObject[@"content"];
-                     self.xiang.date=[dic objectForKey:@"check_in_time"];
-                     self.xiang.number=[dic objectForKey:@"part_id"];
-                     self.xiang.count=[dic objectForKey:@"quantity_str"];
+                     self.xiang.date=[dic objectForKey:@"fifo_time_display"];
+                     self.xiang.number=[dic objectForKey:@"part_id_display"];
+                     self.xiang.count=[dic objectForKey:@"quantity"];
                      self.xiang.position=[dic objectForKey:@"position_nr"];
                      self.dirty=0;
-                    [self performSegueWithIdentifier:@"sendXiang" sender:@{@"xiang":self.xiang}];
+                     [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
@@ -269,13 +277,14 @@
                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
          ];
- 
+        
     }
-    
+
 }
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if([segue.identifier isEqualToString:@"sendXiang"]){
+    if([segue.identifier isEqualToString:@"send"]){
         XiangSendViewController *sendVC=[segue destinationViewController];
         sendVC.xiang=[sender objectForKey:@"xiang"];
         if(self.xiangArray){

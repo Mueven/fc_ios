@@ -12,7 +12,7 @@
 @property(strong,nonatomic)UIActivityIndicatorView *activeView;
 //method
 -(AFHTTPRequestOperationManager *)generateManager:(UIView *)view;
--(void)alert:(NSString *)string;
+-(void)alert:(id)content;
 -(void)alertSuccess:(NSString *)string;
 -(void)setKeyArchive:(NSString *)path keyArray:(NSArray *)keyArray objectArray:(NSArray *)objectArray;
 -(id)getKeyArchive:(NSString *)path key:(NSString *)key;
@@ -28,6 +28,8 @@
 -(NSString *)xiang_uncheck;
 -(NSString *)xiang_confirm_receive;
 -(NSString *)xiang_received;
+-(NSString *)xiang_send;
+-(NSString *)xiang_receive;
 
 -(NSString *)tuo_index;
 -(NSString *)tuo_root;
@@ -39,6 +41,9 @@
 -(NSString *)tuo_confirm_receive;
 -(NSString *)tuo_received;
 -(NSString *)tuo_packages;
+-(NSString *)tuo_send;
+-(NSString *)tuo_receive;
+ 
 
 -(NSString *)yun_index;
 -(NSString *)yun_root;
@@ -93,4 +98,6 @@
 -(NSString *)order_led_state_list;
 
 -(NSString *)send_address;
+
+-(NSString *)movables;
 @end

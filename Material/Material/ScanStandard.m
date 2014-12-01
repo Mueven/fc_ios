@@ -34,19 +34,13 @@
     if(self){
         self.regexDictionary=[NSMutableDictionary dictionary];
         self.localRules=@{
-                          @"material":@{
+                          @"100":@{
                                     @"QUANTITY":@"quantity",
                                     @"PART":@"partNumber",
                                     @"DATE":@"date",
                                     @"UNIQ":@"key"
                                   },
-                          @"product":@{
-                                    @"PART":@"partNumber",
-                                    @"QUANTITY":@"quantity",
-                                    @"DATE":@"date",
-                                    @"UNIQ":@"key"
-                                  },
-                          @"require":@{
+                          @"200":@{
                                     @"ORDERITEM_QTY":@"quantity",
                                     @"ORDERITEM_PART":@"partNumber",
                                     @"ORDERITEM_DEPARTMENT":@"department"
@@ -63,7 +57,7 @@
                      if([operate getKeyArchive:@"com.brilliantech.rules.remark" key:@"id"]){
                          NSString *id=[operate getKeyArchive:@"com.brilliantech.rules.remark" key:@"id"];
                          NSString *type=[operate getKeyArchive:@"com.brilliantech.rules.remark" key:@"type"];
-                         [self searchMyRules:id type:type originArray:responseObject[@"content"]];
+                         [self searchMyRules:id type:type originArray:responseObject];
                      }
                  }
              }
@@ -80,11 +74,12 @@
     for(int i=0;i<originArray.count;i++){
         if([originArray[i][@"id"] isEqualToString:id]){
             regexArray=[originArray[i][@"regexes"] copy];
-            return;
+            break;
         }
     }
     if(regexArray.count>0){
         NSDictionary *rules=self.localRules[type];
+        [self.regexDictionary removeAllObjects];
         for(int j=0;j<regexArray.count;j++){
             NSString *key=regexArray[j][@"code"];
             [self.regexDictionary setObject:regexArray[j] forKey:rules[key]];

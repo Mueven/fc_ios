@@ -46,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *thisXiangTable;
 @property (strong,nonatomic) NSMutableArray *thisXiangArray;
 //- (IBAction)touchScreen:(id)sender;
+- (IBAction)clickScreen:(id)sender;
 @end
 
 @implementation RequireGenerateViewController
@@ -192,8 +193,10 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
+    if(textField.tag!=5){
+        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView = dummyView;
+    }
     self.firstResponder=textField;
 }
 
@@ -700,4 +703,8 @@
 //- (IBAction)touchScreen:(id)sender {
 //    [self.firstResponder resignFirstResponder];
 //}
+- (IBAction)clickScreen:(id)sender {
+    [self.firstResponder resignFirstResponder];
+    self.firstResponder=nil;
+}
 @end

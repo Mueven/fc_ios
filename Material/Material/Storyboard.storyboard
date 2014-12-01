@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bRR-Yf-CoJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bRR-Yf-CoJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -273,8 +273,7 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="finishEdit:" destination="3Vh-Uj-d9G" eventType="touchUpInside" id="a3F-eO-OCe"/>
-                                    <action selector="sendXiang:" destination="3Vh-Uj-d9G" eventType="touchUpInside" id="o8w-vE-MrL"/>
+                                    <action selector="sendXiang:" destination="3Vh-Uj-d9G" eventType="touchUpInside" id="cHU-YX-bDt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -293,7 +292,7 @@
                         <outlet property="partNumber" destination="bMp-RF-oTV" id="WTG-vS-feh"/>
                         <outlet property="quantity" destination="bhZ-zD-GnL" id="qM9-l5-rrk"/>
                         <outlet property="sendButton" destination="qCZ-sW-duo" id="6Bu-iD-4m8"/>
-                        <segue destination="Awj-vQ-PdY" kind="push" identifier="sendXiang" id="AAE-XB-yHX"/>
+                        <segue destination="Awj-vQ-PdY" kind="push" identifier="send" id="z8u-Zo-vWe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlO-Rz-Ezr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -432,7 +431,7 @@
                         <outlet property="keyLabel" destination="slC-4b-8KD" id="4zb-xB-8FI"/>
                         <outlet property="partNumberLabel" destination="Daj-Vi-1KR" id="Uji-6g-t1W"/>
                         <outlet property="quantityLabel" destination="Lxd-YT-lkb" id="oSA-gS-Gcz"/>
-                        <segue destination="auM-tp-hPM" kind="push" identifier="chooseAddress" id="7b0-8i-w2b"/>
+                        <segue destination="auM-tp-hPM" kind="push" identifier="changeAddress" id="7b0-8i-w2b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kqQ-QX-eW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -525,7 +524,7 @@
         <scene sceneID="ebG-fU-fzu">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="Zq0-sm-J8a" customClass="TuoScanViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="SNs-PE-WvS">
+                    <view key="view" contentMode="scaleToFill" id="SNs-PE-WvS" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -536,7 +535,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="wSx-JG-qqv">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="WI50141125019" borderStyle="roundedRect" minimumFontSize="17" id="wSx-JG-qqv">
                                 <rect key="frame" x="51" y="90" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -549,7 +548,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="ubO-6f-NLx">
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="P414370340" borderStyle="roundedRect" minimumFontSize="17" id="ubO-6f-NLx">
                                 <rect key="frame" x="51" y="141" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -562,7 +561,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bMD-qt-0Ne">
+                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Q500" borderStyle="roundedRect" minimumFontSize="17" id="bMD-qt-0Ne">
                                 <rect key="frame" x="51" y="189" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -592,7 +591,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="BKC-GV-hew">
+                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="W 29.11.14" borderStyle="roundedRect" minimumFontSize="17" id="BKC-GV-hew">
                                 <rect key="frame" x="51" y="240" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -620,6 +619,9 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="clickScreen:" destination="Zq0-sm-J8a" eventType="touchUpInside" id="yA3-47-Up6"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="扫描货物" id="3FT-2O-7PF">
                         <barButtonItem key="rightBarButtonItem" title="完成" id="QTS-tX-nXq">
@@ -2370,19 +2372,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备货人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kow-3P-rrU">
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="备货人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kow-3P-rrU">
                                 <rect key="frame" x="179" y="77" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="VB2-nF-Jwi">
-                                <rect key="frame" x="178" y="98" width="121" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="NPD-hc-6b6">
                                 <rect key="frame" x="170" y="140" width="129" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -2433,6 +2429,12 @@
                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </view>
                             </tableView>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="VB2-nF-Jwi">
+                                <rect key="frame" x="178" y="98" width="121" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -2562,7 +2564,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qQ7-dp-HYZ">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qQ7-dp-HYZ">
                                 <rect key="frame" x="95" y="378" width="131" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button">
@@ -2936,7 +2938,7 @@
         <scene sceneID="DNj-Ov-iML">
             <objects>
                 <viewController hidesBottomBarWhenPushed="YES" id="d9m-In-y9s" customClass="RequireGenerateViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="U52-Iw-M8D">
+                    <view key="view" contentMode="scaleToFill" id="U52-Iw-M8D" customClass="UIControl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -3115,6 +3117,9 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <connections>
+                            <action selector="clickScreen:" destination="d9m-In-y9s" eventType="touchUpInside" id="x0C-JV-m8H"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="生成需求" id="9Ys-4d-eOG">
                         <barButtonItem key="leftBarButtonItem" title="返回" id="cPx-eH-7ZD">
@@ -3544,8 +3549,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="KDG-0P-cLV">
+                                <rect key="frame" x="52" y="173" width="217" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.25870028410000001" green="0.472406143" blue="0.81305803570000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="设置标签规范">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="IHL-za-2Df" kind="push" id="JxF-bk-G9X"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Fx8-0P-a6F">
-                                <rect key="frame" x="52" y="246" width="217" height="40"/>
+                                <rect key="frame" x="52" y="314" width="217" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3567,6 +3586,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VRa-k3-6Fc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3015" y="13411"/>
+        </scene>
+        <!--设置标签规范-->
+        <scene sceneID="ekZ-4g-3Qo">
+            <objects>
+                <tableViewController id="IHL-za-2Df" customClass="SettingRemarkTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hu0-LJ-EfX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ybg-TL-7Ek" style="IBUITableViewCellStyleDefault" id="dy5-lS-j9m">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dy5-lS-j9m" id="swN-XN-rft">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ybg-TL-7Ek">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="IHL-za-2Df" id="51A-Yy-JXO"/>
+                            <outlet property="delegate" destination="IHL-za-2Df" id="XNp-02-eGu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="设置标签规范" id="DTU-EG-F2Z"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZE3-yW-nIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3439" y="13411"/>
         </scene>
         <!--设置-->
         <scene sceneID="vHe-hc-MXd">
@@ -4373,16 +4427,16 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="oOw-in-AQO"/>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="oF3-aI-OCw"/>
-        <segue reference="Dng-DQ-LOk"/>
-        <segue reference="SkA-08-PWt"/>
-        <segue reference="7b0-8i-w2b"/>
         <segue reference="yJ1-Ae-Eed"/>
+        <segue reference="SyV-YF-bxb"/>
+        <segue reference="oOw-in-AQO"/>
+        <segue reference="7b0-8i-w2b"/>
+        <segue reference="FcC-pN-TYA"/>
+        <segue reference="hQ5-Fe-tiF"/>
+        <segue reference="Neh-iJ-Fpe"/>
         <segue reference="Kxl-Rh-nWd"/>
-        <segue reference="UAK-rn-23P"/>
         <segue reference="aya-mQ-TZi"/>
+        <segue reference="UAK-rn-23P"/>
         <segue reference="U3W-2k-BOU"/>
         <segue reference="zbp-Dd-2O5"/>
         <segue reference="tP9-hz-80H"/>

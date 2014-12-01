@@ -38,6 +38,7 @@
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
 - (IBAction)checkXiang:(id)sender;
+- (IBAction)clickScreen:(id)sender;
 @end
 
 @implementation TuoScanViewController
@@ -340,9 +341,9 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
-    self.firstResponder=textField;
+//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView = dummyView;
+//    self.firstResponder=textField;
 }
 
 
@@ -438,8 +439,9 @@
         }
         else{
             //箱绑定下的绑定
+ 
             [manager POST:[AFNet xiang_index]
-               parameters:@{
+               parameters:@{@"package":@{
                                     @"id":key,
                                     @"part_id":partNumberPost,
                                     @"quantity":quantityPost,
@@ -447,8 +449,7 @@
                                     @"part_id_display":partNumber,
                                     @"quantity_display":quantity,
                                     @"fifo_time_display":date
-                                    
-                                    
+                                    }    
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -464,13 +465,12 @@
                               self.partNumber.text=@"";
                               self.quatity.text=@"";
                               self.dateTextField.text=@"";
-                              
                               self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
                                                                     message:@"绑定成功！"
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:0.5f
+                              [NSTimer scheduledTimerWithTimeInterval:0.9f
                                                                target:self
                                                              selector:@selector(dissmissAlert:)
                                                              userInfo:nil
@@ -618,6 +618,10 @@
 - (IBAction)checkXiang:(id)sender {
     NSArray *xiangArray=[SortArray sortByPartNumber:self.tuo.xiang];
     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"xiangArray":xiangArray}];
+}
+
+- (IBAction)clickScreen:(id)sender {
+    [self.dateTextField resignFirstResponder];
 }
 
 -(void)updateAddXiangCount{

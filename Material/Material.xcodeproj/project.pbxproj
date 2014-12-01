@@ -784,6 +784,8 @@
 				B06139751941573B00A0CF62 /* Model */,
 				B0619E50197CB610000C1C69 /* Service */,
 				B085F63E194006EE001F01F3 /* Controller */,
+				B01011BB1A2AC7A800F1E6EB /* SettingRemarkTableViewController.h */,
+				B01011BC1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m */,
 				B085F61E194004CC001F01F3 /* MAppDelegate.h */,
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
 				B04EF2131946E87800A95D7A /* AFNetOperate.h */,
@@ -889,8 +891,6 @@
 				B0DF64341943E1D1002D044B /* PrintViewController.m */,
 				B085F6541940184E001F01F3 /* SettingViewController.h */,
 				B085F6551940184E001F01F3 /* SettingViewController.m */,
-				B01011BB1A2AC7A800F1E6EB /* SettingRemarkTableViewController.h */,
-				B01011BC1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m */,
 				B0B3040D1A23057600D8CF8E /* DefaultAddressTableViewController.h */,
 				B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */,
 			);
