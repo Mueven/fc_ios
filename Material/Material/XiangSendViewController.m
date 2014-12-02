@@ -11,6 +11,7 @@
 #import "SendAddress.h"
 #import "DefaultAddressTableViewController.h"
 #import "AFNetOperate.h"
+#import <AudioToolbox/AudioToolbox.h>
 @interface XiangSendViewController()
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
@@ -21,7 +22,6 @@
 - (IBAction)changeAddress:(id)sender;
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
-
 
 @end
 @implementation XiangSendViewController
@@ -59,6 +59,7 @@
                     @"destination_id":self.myAddress.id
                     }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               AudioServicesPlaySystemSound(1012);
               [AFNet.activeView stopAnimating];
               if(self.xiangArray){
                   [self.xiangArray removeObjectAtIndex:self.xiangIndex];

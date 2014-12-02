@@ -62,7 +62,7 @@
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet yun_root]
       parameters:@{
-                   @"state":@[@0],
+                   @"state":@[@0,@1,@2,@3,@4],
                    @"type":@0
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -117,23 +117,18 @@
     Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=yun.name;
     cell.dateLabel.text=yun.date;
-    if(yun.sended==0){
-        cell.statusLabel.text=@"未发送";
+    cell.statusLabel.text=yun.state_display;
+    if(yun.state==0){
         [cell.statusLabel setTextColor:[UIColor redColor]];
-        
     }
-    else if(yun.sended==1){
-        cell.statusLabel.text=@"在途";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
+    else if(yun.state==1 || yun.state==2){
+        [cell.statusLabel setTextColor:[UIColor  blueColor]];
     }
-    else if(yun.sended==2){
-        cell.statusLabel.text=@"到达";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
-        
+    else if(yun.state==3){
+        [cell.statusLabel setTextColor:[UIColor  greenColor]];
     }
-    else if(yun.sended==3){
-        cell.statusLabel.text=@"已接收";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
+    else if(yun.state==4){
+        [cell.statusLabel setTextColor:[UIColor  yellowColor]];
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -177,7 +172,7 @@
                  if([responseObject[@"result"] integerValue]==1){
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                         yun.name=[responseObject[@"content"] objectForKey:@"id"];
+                         yun.name=[responseObject[@"content"] objectForKey:@"container_id"];
                          [self getTuoListThenSegue:@"edit" yun:yun];
                      }
                  }

@@ -14,4 +14,5 @@
 @property(nonatomic,strong)NSArray *tuoArray;
 @property(nonatomic)BOOL enableConfirm;
 @property(nonatomic)BOOL enableCancel;
+@property(nonatomic)BOOL enableBack;
 @end

@@ -341,9 +341,9 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView = dummyView;
-//    self.firstResponder=textField;
+    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView = dummyView;
+    self.firstResponder=textField;
 }
 
 

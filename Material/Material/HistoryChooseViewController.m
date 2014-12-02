@@ -91,7 +91,6 @@
     [components setHour:24];
     NSDate *end  = [cal dateFromComponents:components];
     NSString *endDate=[formatter stringFromDate:end];
-
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:receive_parameters
       parameters:@{
@@ -103,6 +102,7 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
+             
                  NSMutableArray *listElements=[[NSMutableArray alloc] init];
                  NSArray *result=responseObject[@"content"];
                  if([type isEqualToString:@"yun"]){

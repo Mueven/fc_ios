@@ -71,8 +71,7 @@
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-          
+             NSArray *resultArray=responseObject[@"content"];
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -107,7 +106,7 @@
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
+             NSArray *resultArray=responseObject[@"content"];
            
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];

@@ -60,7 +60,10 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager POST:[AFNet yun_send]
-       parameters:@{@"id":self.yun.ID}
+       parameters:@{
+                    @"id":self.yun.ID,
+                    @"destination_id":self.myAddress.id
+                    }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){

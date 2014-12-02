@@ -45,10 +45,13 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet tuo_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
+             NSArray *resultArray=responseObject[@"content"];
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];

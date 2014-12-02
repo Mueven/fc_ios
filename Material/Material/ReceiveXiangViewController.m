@@ -32,7 +32,7 @@
     self.partNumberLabel.text=self.xiang.number;
     self.quantityLabel.text=self.xiang.count;
     self.dateLabel.text=self.xiang.date;
-
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (IBAction)confirm:(id)sender {

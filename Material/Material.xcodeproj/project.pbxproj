@@ -89,7 +89,6 @@
 		B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B085F618194004CC001F01F3 /* InfoPlist.strings */; };
 		B085F61C194004CC001F01F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F61B194004CC001F01F3 /* main.m */; };
 		B085F620194004CC001F01F3 /* MAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B085F61F194004CC001F01F3 /* MAppDelegate.m */; };
-		B085F622194004CC001F01F3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B085F621194004CC001F01F3 /* Images.xcassets */; };
 		B085F629194004CC001F01F3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F628194004CC001F01F3 /* XCTest.framework */; };
 		B085F62A194004CC001F01F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F60F194004CC001F01F3 /* Foundation.framework */; };
 		B085F62B194004CC001F01F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B085F613194004CC001F01F3 /* UIKit.framework */; };
@@ -115,6 +114,7 @@
 		B0B3040F1A23057600D8CF8E /* DefaultAddressTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B3040E1A23057600D8CF8E /* DefaultAddressTableViewController.m */; };
 		B0B304121A23138500D8CF8E /* SendAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B304111A23138500D8CF8E /* SendAddress.m */; };
 		B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */; };
+		B0BB1D8C1A2DBB5E0036AF61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BB1D8B1A2DBB5E0036AF61 /* Images.xcassets */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
 		B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */; };
@@ -301,7 +301,6 @@
 		B085F61D194004CC001F01F3 /* Material-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Material-Prefix.pch"; sourceTree = "<group>"; };
 		B085F61E194004CC001F01F3 /* MAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MAppDelegate.h; sourceTree = "<group>"; };
 		B085F61F194004CC001F01F3 /* MAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAppDelegate.m; sourceTree = "<group>"; };
-		B085F621194004CC001F01F3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B085F627194004CC001F01F3 /* MaterialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MaterialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B085F628194004CC001F01F3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B085F630194004CC001F01F3 /* MaterialTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaterialTests-Info.plist"; sourceTree = "<group>"; };
@@ -343,6 +342,7 @@
 		B0B304111A23138500D8CF8E /* SendAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAddress.m; sourceTree = "<group>"; };
 		B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireXiangDetailViewController.h; sourceTree = "<group>"; };
 		B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireXiangDetailViewController.m; sourceTree = "<group>"; };
+		B0BB1D8B1A2DBB5E0036AF61 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
 		B0BE292E1949921900061E67 /* XiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewCell.m; sourceTree = "<group>"; };
 		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
@@ -790,7 +790,7 @@
 				B085F61F194004CC001F01F3 /* MAppDelegate.m */,
 				B04EF2131946E87800A95D7A /* AFNetOperate.h */,
 				B04EF2141946E87800A95D7A /* AFNetOperate.m */,
-				B085F621194004CC001F01F3 /* Images.xcassets */,
+				B0BB1D8B1A2DBB5E0036AF61 /* Images.xcassets */,
 				B085F616194004CC001F01F3 /* Supporting Files */,
 				B06E027419403D3D001B7899 /* Storyboard.storyboard */,
 			);
@@ -994,7 +994,6 @@
 			files = (
 				B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */,
 				B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */,
-				B085F622194004CC001F01F3 /* Images.xcassets in Resources */,
 				B04EF2171946E89400A95D7A /* URL.plist in Resources */,
 				B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */,
 				B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */,
@@ -1002,6 +1001,7 @@
 				B058550419A2F800000C85E5 /* TuoCheckTableViewCell.xib in Resources */,
 				B04EF1D51946888900A95D7A /* ShopTuoTableViewCell.xib in Resources */,
 				B04244E71A1F3ABA00AAFD24 /* ProductXiangTableViewCell.xib in Resources */,
+				B0BB1D8C1A2DBB5E0036AF61 /* Images.xcassets in Resources */,
 				B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
 				B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */,

@@ -178,7 +178,7 @@
         <scene sceneID="mP2-FX-zyz">
             <objects>
                 <tableViewController id="OlX-Od-rDc" customClass="XiangTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="10" sectionFooterHeight="10" id="Tco-cB-GfG">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="10" sectionFooterHeight="10" id="Tco-cB-GfG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -535,7 +535,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="WI50141125019" borderStyle="roundedRect" minimumFontSize="17" id="wSx-JG-qqv">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="wSx-JG-qqv">
                                 <rect key="frame" x="51" y="90" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -548,7 +548,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="P414370340" borderStyle="roundedRect" minimumFontSize="17" id="ubO-6f-NLx">
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="ubO-6f-NLx">
                                 <rect key="frame" x="51" y="141" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -561,17 +561,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Q500" borderStyle="roundedRect" minimumFontSize="17" id="bMD-qt-0Ne">
+                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="bMD-qt-0Ne">
                                 <rect key="frame" x="51" y="189" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" id="nJf-go-bfc">
-                                <rect key="frame" x="0.0" y="324" width="320" height="244"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <view contentMode="scaleToFill" id="EY4-FG-JKg">
                                 <rect key="frame" x="0.0" y="324" width="320" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -591,7 +586,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="W 29.11.14" borderStyle="roundedRect" minimumFontSize="17" id="BKC-GV-hew">
+                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="BKC-GV-hew">
                                 <rect key="frame" x="51" y="240" width="218" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -617,6 +612,16 @@
                                     <action selector="checkXiang:" destination="Zq0-sm-J8a" eventType="touchUpInside" id="gjQ-51-eGd"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="LkU-Co-UVK">
+                                <rect key="frame" x="0.0" y="510" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="nJf-go-bfc">
+                                <rect key="frame" x="0.0" y="324" width="320" height="186"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -681,7 +686,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" id="Lwo-5w-WeA">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="Lwo-5w-WeA">
                                 <rect key="frame" x="0.0" y="8" width="320" height="560"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1101,7 +1106,7 @@
         <scene sceneID="iUA-1H-TKP">
             <objects>
                 <tableViewController id="jLH-DU-Ceg" customClass="YunCheckXiangTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="tqH-VR-vzL">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="tqH-VR-vzL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1521,6 +1526,11 @@
                                 <color key="textColor" red="0.26510686770000003" green="0.45393018460000001" blue="0.84185666449999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="0ml-Ko-nV6">
+                                <rect key="frame" x="5" y="425" width="315" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1559,7 +1569,6 @@
                                 </state>
                                 <connections>
                                     <action selector="confirm:" destination="nio-Rf-31p" eventType="touchUpInside" id="DbT-VL-koz"/>
-                                    <action selector="receive:" destination="nio-Rf-31p" eventType="touchUpInside" id="dOO-5Z-u3y"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="唯一码：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="p2L-EO-6Dv">
@@ -1641,7 +1650,7 @@
                         <outlet property="keyLabel" destination="6WC-6b-hbz" id="NR5-ly-3OC"/>
                         <outlet property="partNumberLabel" destination="Rbx-he-0gl" id="9cD-dv-7pO"/>
                         <outlet property="quantityLabel" destination="PGF-TG-X3X" id="vVq-20-lFH"/>
-                        <segue destination="770-tN-fJ3" kind="push" id="z0b-gw-Ccg"/>
+                        <segue destination="770-tN-fJ3" kind="push" identifier="print" id="z0b-gw-Ccg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MIj-RF-YHa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1942,7 +1951,6 @@
                     <navigationItem key="navigationItem" id="vlk-7p-Ekh"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="xiangClick" destination="j18-Nc-FIy" id="Eoq-uB-Lsy"/>
                         <segue destination="tyh-UH-ebK" kind="push" identifier="yun" id="3nl-XH-NXE"/>
                         <segue destination="fRa-Tx-5rH" kind="push" identifier="tuo" id="joq-VG-3De"/>
                         <segue destination="CJg-nd-Jwa" kind="push" identifier="xiang" id="222-NY-YhT"/>
@@ -2120,7 +2128,7 @@
                         <outlet property="partNumberLabel" destination="j7o-TW-6AL" id="XBU-pJ-meC"/>
                         <outlet property="quantityLabel" destination="Tbt-Se-eRM" id="J6O-QL-T0s"/>
                         <outlet property="stateLabel" destination="EZR-Yi-Irr" id="DLW-AC-YSR"/>
-                        <segue destination="770-tN-fJ3" kind="push" id="lZj-nQ-7qy"/>
+                        <segue destination="770-tN-fJ3" kind="push" identifier="printXiang" id="lZj-nQ-7qy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U7H-Xp-h1i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2240,7 +2248,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="GBS-Zn-GzJ">
-                                <rect key="frame" x="51" y="438" width="218" height="36"/>
+                                <rect key="frame" x="51" y="459" width="218" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.34018288000000002" green="0.73630819520000002" blue="0.37557483359999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2267,7 +2275,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IGb-0l-E9b">
-                                <rect key="frame" x="51" y="503" width="218" height="35"/>
+                                <rect key="frame" x="51" y="513" width="218" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.97084263390000003" green="0.3670137342" blue="0.39047720740000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2300,8 +2308,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" id="MNm-f6-Ncp">
-                                <rect key="frame" x="0.0" y="256" width="320" height="152"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="MNm-f6-Ncp">
+                                <rect key="frame" x="0.0" y="256" width="320" height="186"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -2335,6 +2343,16 @@
                                     <action selector="changeAddress:" destination="gnP-jb-iCa" eventType="touchUpInside" id="p7F-Dz-7Ml"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" id="TG6-RO-JHx">
+                                <rect key="frame" x="0.0" y="254" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="low-12-rKd">
+                                <rect key="frame" x="0.0" y="442" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2419,8 +2437,24 @@
                                     <action selector="sendTuo:" destination="4nD-R8-BuM" eventType="touchUpInside" id="Phi-b0-6zZ"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" id="0LY-v1-Ch3">
-                                <rect key="frame" x="0.0" y="181" width="320" height="304"/>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="VB2-nF-Jwi">
+                                <rect key="frame" x="178" y="98" width="121" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <view contentMode="scaleToFill" id="bW1-iz-p3H">
+                                <rect key="frame" x="0.0" y="187" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="i30-H3-5hO">
+                                <rect key="frame" x="0.0" y="467" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="0LY-v1-Ch3">
+                                <rect key="frame" x="0.0" y="188" width="320" height="279"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="27F-vu-LYs">
@@ -2429,12 +2463,6 @@
                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </view>
                             </tableView>
-                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" tag="22" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="VB2-nF-Jwi">
-                                <rect key="frame" x="178" y="98" width="121" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -2480,16 +2508,16 @@
                                 <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="22" sectionFooterHeight="22" id="O8Y-dU-Cnb">
-                                <rect key="frame" x="0.0" y="148" width="320" height="420"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <view contentMode="scaleToFill" id="TcZ-fJ-KQK">
                                 <rect key="frame" x="0.0" y="131" width="320" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="93" sectionHeaderHeight="22" sectionFooterHeight="22" id="O8Y-dU-Cnb">
+                                <rect key="frame" x="0.0" y="132" width="320" height="372"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -2550,7 +2578,7 @@
             </objects>
             <point key="canvasLocation" x="2465" y="5646"/>
         </scene>
-        <!--Receive View Controller-->
+        <!--收货-->
         <scene sceneID="djc-Cg-bHv">
             <objects>
                 <viewController id="xRh-Uq-hUj" customClass="ReceiveViewController" sceneMemberID="viewController">
@@ -2584,7 +2612,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GRW-hA-kDj"/>
+                    <navigationItem key="navigationItem" title="收货" id="GRW-hA-kDj"/>
                     <connections>
                         <outlet property="scanTextField" destination="UHG-A0-Br3" id="4fB-hN-vxV"/>
                         <segue destination="SlF-7X-mtn" kind="push" identifier="receiveYun" id="Ybn-cx-CzR"/>
@@ -2675,11 +2703,9 @@
                     <navigationItem key="navigationItem" title="接收拖" id="L8S-qB-Y61"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="cancelButton" destination="XVT-3N-5kJ" id="Yuy-5F-dVN"/>
-                        <outlet property="confirm" destination="JqA-qi-BFx" id="XRT-uA-d0l"/>
-                        <outlet property="confirmButton" destination="JqA-qi-BFx" id="al3-7g-bJP"/>
+                        <outlet property="cancelButton" destination="XVT-3N-5kJ" id="CQH-tg-eCD"/>
+                        <outlet property="confirmButton" destination="JqA-qi-BFx" id="7T3-V1-DKf"/>
                         <outlet property="countLabel" destination="rsu-Bz-zJc" id="5A3-Q3-5cZ"/>
-                        <outlet property="enableButton" destination="XVT-3N-5kJ" id="uWW-Ew-Nbk"/>
                         <outlet property="scanTextField" destination="Ddq-g9-3gd" id="iMM-bN-2Di"/>
                         <outlet property="xiangTable" destination="fHF-TI-dSh" id="nI7-KH-aO6"/>
                         <segue destination="770-tN-fJ3" kind="push" identifier="print" id="fTA-Xe-KDm"/>
@@ -4230,7 +4256,7 @@
         <scene sceneID="qnW-6c-nlf">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OhD-mD-1hB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="移库单" image="require-generate" id="qUG-Jq-aaH"/>
+                    <tabBarItem key="tabBarItem" title="移库单" image="moveStock-tarbar" id="qUG-Jq-aaH"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bol-Aa-6ey">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4393,7 +4419,7 @@
         <scene sceneID="Pam-bM-Fsl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fUf-8Y-5Xp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="托盘入库" id="73o-31-Vih"/>
+                    <tabBarItem key="tabBarItem" title="托盘入库" image="tuopan-tarbar" id="73o-31-Vih"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SA4-qk-BHg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -4408,16 +4434,31 @@
             </objects>
             <point key="canvasLocation" x="2474" y="6626"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ifH-Wc-1tW">
+            <objects>
+                <viewController id="s1f-wx-GG8" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TNk-3v-Bl0">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sah-Ui-Tdm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
     </scenes>
     <resources>
         <image name="check" width="30" height="30"/>
         <image name="find" width="30" height="30"/>
         <image name="move" width="30" height="30"/>
+        <image name="moveStock-tarbar" width="30" height="30"/>
         <image name="require-generate" width="30" height="30"/>
         <image name="require-history" width="30" height="30"/>
         <image name="require-trace" width="30" height="30"/>
         <image name="setting-tarbar" width="30" height="30"/>
         <image name="tuo-tarbar" width="30" height="30"/>
+        <image name="tuopan-tarbar" width="30" height="30"/>
         <image name="xiang-tarbar" width="30" height="30"/>
         <image name="yun-tarbar" width="30" height="30"/>
     </resources>
@@ -4428,18 +4469,18 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="yJ1-Ae-Eed"/>
-        <segue reference="SyV-YF-bxb"/>
-        <segue reference="oOw-in-AQO"/>
-        <segue reference="7b0-8i-w2b"/>
-        <segue reference="FcC-pN-TYA"/>
-        <segue reference="hQ5-Fe-tiF"/>
+        <segue reference="8RY-QF-ZAw"/>
+        <segue reference="4Mm-GY-xPO"/>
+        <segue reference="Cgx-jM-28f"/>
         <segue reference="Neh-iJ-Fpe"/>
+        <segue reference="Dng-DQ-LOk"/>
+        <segue reference="2nV-DT-24h"/>
+        <segue reference="UAK-rn-23P"/>
         <segue reference="Kxl-Rh-nWd"/>
         <segue reference="aya-mQ-TZi"/>
-        <segue reference="UAK-rn-23P"/>
-        <segue reference="U3W-2k-BOU"/>
-        <segue reference="zbp-Dd-2O5"/>
         <segue reference="tP9-hz-80H"/>
-        <segue reference="z0b-gw-Ccg"/>
+        <segue reference="joq-VG-3De"/>
+        <segue reference="MS0-BJ-3Kj"/>
+        <segue reference="zbp-Dd-2O5"/>
     </inferredMetricsTieBreakers>
 </document>

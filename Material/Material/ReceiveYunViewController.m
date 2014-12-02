@@ -13,6 +13,7 @@
 #import "AFNetOperate.h"
 #import "ReceiveTuoViewController.h"
 #import "ReceivePrintViewController.h"
+#import "Xiang.h"
 @interface ReceiveYunViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *tuoTable;
@@ -34,7 +35,7 @@
     self.tuoTable.dataSource=self;
     UINib *itemCell=[UINib nibWithNibName:@"ShopTuoTableViewCell"  bundle:nil];
     [self.tuoTable registerNib:itemCell  forCellReuseIdentifier:@"tuoCell"];
-    
+    [self.navigationItem setHidesBackButton:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -118,7 +119,33 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"checkTuo" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager GET:[AFNet tuo_packages]
+      parameters:@{@"id":tuo.ID}
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [AFNet.activeView stopAnimating];
+             if([responseObject[@"result"] integerValue]==1){
+                     NSArray *xiangList=responseObject[@"content"];
+                     [tuo.xiang removeAllObjects];
+                     for(int i=0;i<xiangList.count;i++){
+                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                         [tuo.xiang addObject:xiang];
+                     }
+                     [self performSegueWithIdentifier:@"checkTuo" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
+                 
+             }
+             else{
+                 [AFNet alert:responseObject[@"content"]];
+             }
+             
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+             [AFNet alert:@"something wrong"];
+         }
+     ];
+
 }
 
 #pragma textField delegate
@@ -137,6 +164,9 @@
         ReceiveTuoViewController *vc=segue.destinationViewController;
         vc.enableConfirm=NO;
         vc.enableCancel=NO;
+        vc.tuo=[sender objectForKey:@"tuo"];
+        vc.tuoArray=[sender objectForKey:@"tuoArray"];
+        vc.enableBack=YES;
     }
     else if([segue.identifier isEqualToString:@"print"]){
         ReceivePrintViewController *vc=segue.destinationViewController;

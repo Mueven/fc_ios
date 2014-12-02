@@ -61,6 +61,7 @@
         self.accepted_packages=dictionary[@"accepted_packages"]?[dictionary[@"accepted_packages"] intValue]:0;
         self.sum_packages=dictionary[@"sum_packages"]?[dictionary[@"sum_packages"] intValue]:0;
         self.user_id=dictionary[@"user_id"]?dictionary[@"user_id"]:@"";
+        self.xiang=[NSMutableArray array];
     }
     return self;
 }

@@ -51,7 +51,7 @@
 {
     [super viewWillAppear:animated];
     self.navigationItem.title=self.yun.name;
-//    self.name.text=self.yun.name;
+
     self.remark.text=self.yun.remark;
     [self.tuoTable reloadData];
 }

@@ -85,7 +85,7 @@
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *xiangArrayResult=responseObject;
+             NSArray *xiangArrayResult=responseObject[@"content"];
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
                  [xiangStore.xiangArray addObject:xiangItem];
@@ -120,7 +120,7 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              
-             NSArray *xiangArrayResult=responseObject;
+             NSArray *xiangArrayResult=responseObject[@"content"];
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
                  [xiangStore.xiangArray addObject:xiangItem];

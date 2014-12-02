@@ -59,6 +59,9 @@
     if(self.enableCancel){
         self.cancelButton.hidden=NO;
     }
+    if(!self.enableBack){
+       [self.navigationItem setHidesBackButton:YES];
+    }
 }
 -(void)updateCheckedLabel{
     NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
@@ -68,11 +71,13 @@
     self.xiangCheckedCount++;
     NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
     self.countLabel.text=count;
+    self.tuo.accepted_packages++;
 }
 -(void)updateMinusCheckedLabel{
     self.xiangCheckedCount--;
     NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
     self.countLabel.text=count;
+    self.tuo.accepted_packages--;
 }
 -(void)viewWillAppear:(BOOL)animated
 {

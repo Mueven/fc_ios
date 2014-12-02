@@ -60,6 +60,7 @@
         //2:到达
         //3:已接受
         //4:被拒收
+ 
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
         self.container_id=dictionary[@"container_id"]?dictionary[@"container_id"]:@"";
         self.remark=dictionary[@"remark"]?dictionary[@"remark"]:@"";
