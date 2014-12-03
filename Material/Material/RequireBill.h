@@ -18,6 +18,7 @@
 @property(nonatomic)int has_out_of_stock;
 @property(nonatomic,strong)NSString *has_out_of_stock_text;
 @property(nonatomic)BOOL status;
+@property(nonatomic,strong)NSString *remark;
 -(instancetype)init;
 -(instancetype)initWithObject:(id)object;
 @end

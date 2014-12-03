@@ -45,7 +45,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *thisXiangCountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *thisXiangTable;
 @property (strong,nonatomic) NSMutableArray *thisXiangArray;
-//- (IBAction)touchScreen:(id)sender;
+@property (strong,nonatomic) NSMutableDictionary *isExistDictionary;
 - (IBAction)clickScreen:(id)sender;
 @end
 
@@ -89,6 +89,7 @@
     //second view init
     self.thisXiangArray=[NSMutableArray array];
     self.thisXiangCountLabel.adjustsFontSizeToFitWidth=YES;
+    self.isExistDictionary=[NSMutableDictionary dictionary];
 }
 
 - (void)didReceiveMemoryWarning
@@ -237,6 +238,13 @@
                           [content removeObjectForKey:@"box_quantity"];
                           
                           RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
+                          //to check whether the part is existed
+                          if([responseObject[@"error_code"] intValue]==10000){
+                              [xiang setIsExisted:NO];
+                          }
+                          else{
+                              [xiang setIsExisted:YES];
+                          }
                           if(self.xiangArray.count>0){
                               BOOL result=[self.validate sourceValidate:source];
                               if(result){
@@ -360,6 +368,10 @@
     [self.partTextField becomeFirstResponder];
     //合并处理
     [self xiangMerge:xiang];
+    //检查 isExist
+    if(!xiang.isExisted){
+        [self.isExistDictionary setObject:xiang forKey:xiang.id];
+    }
 }
 //无法添加箱
 -(void)xiangAddFail
@@ -539,6 +551,9 @@
             [self updateMinusCount];
         }
         [self.xiangArray removeObjectAtIndex:indexPath.row];
+        if(!xiang.isExisted){
+            [self.isExistDictionary removeObjectForKey:xiang.id];
+        }
         [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
@@ -608,13 +623,22 @@
                 NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department_origin,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",[NSString stringWithFormat:@"%d",xiang.xiangCount],@"box_quantity",nil];
                 [postItems addObject:dic];
             }
- 
+            NSMutableArray *isExistedArray=[[NSMutableArray alloc] init];
+                id keys=[self.isExistDictionary allKeys];
+                for(int i;i<self.isExistDictionary.count;i++){
+                    id key=[keys objectAtIndex:i];
+                    RequireXiang *xiangItem=[self.isExistDictionary objectForKey:key];
+                    NSNumber *emergency=xiangItem.urgent?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
+                    NSMutableDictionary *dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:xiangItem.department_origin,@"department",xiangItem.partNumber_origin,@"part_id",xiangItem.quantity_int,@"quantity",emergency,@"is_emergency",nil];
+                    [isExistedArray addObject:dic];
+            }
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet order_root]
                parameters:@{
                             @"order":@{@"source_id":self.order_source_id},
-                            @"order_items":postItems
+                            @"order_items":postItems,
+                            @"no_part_items":isExistedArray
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -700,11 +724,9 @@
         [self.secondDepartmentTextField becomeFirstResponder];
     }
 }
-//- (IBAction)touchScreen:(id)sender {
-//    [self.firstResponder resignFirstResponder];
-//}
+
 - (IBAction)clickScreen:(id)sender {
-    [self.firstResponder resignFirstResponder];
-    self.firstResponder=nil;
+//    [self.firstResponder resignFirstResponder];
+//    self.firstResponder=nil;
 }
 @end

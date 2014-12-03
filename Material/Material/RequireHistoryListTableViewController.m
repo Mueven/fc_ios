@@ -100,7 +100,13 @@
                      [itemArray addObject:xiang];
                  }
                  NSNumber *status=bill.status?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
-                 [self performSegueWithIdentifier:@"historyXiang" sender:@{@"billName":bill.date,@"status":status,@"xiangArray":itemArray}];
+                 [self performSegueWithIdentifier:@"historyXiang" sender:@{
+                                                                        @"billName":bill.date,
+                                                                        @"status":status,
+                                                                        @"xiangArray":itemArray,
+                                                                        @"remark":bill.remark
+                                                                        }
+                 ];
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

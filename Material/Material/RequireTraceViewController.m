@@ -44,7 +44,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.departmentTextField becomeFirstResponder];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
 }
 -(void)viewWillDisappear:(BOOL)animated

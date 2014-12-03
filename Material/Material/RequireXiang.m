@@ -61,6 +61,7 @@
         self.handled_text=self.handled==0?@"尚未处理":@"处理完成";
         self.is_finished_text=self.is_finished==0?@"尚未备货":@"完成备货";
         self.out_of_stock_text=self.out_of_stock==0?@"正常":@"缺货";
+        self.isExisted=self.isExisted==0?NO:YES;
     }
     return self;
 }

@@ -29,5 +29,6 @@
 @property(nonatomic,strong)NSString *out_of_stock_text;
 @property(nonatomic)int xiangCount;
 @property(nonatomic)BOOL urgent;
+@property(nonatomic)BOOL isExisted;
 -(instancetype)initWithObject:(id)object;
 @end
