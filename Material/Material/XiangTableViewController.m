@@ -80,7 +80,7 @@
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
       parameters:@{
-                   @"state":@[@0],
+                   @"state":@[@0,@1,@2,@3,@4],
                    @"type":@0
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -113,7 +113,7 @@
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
       parameters:@{
-                   @"state":@[@0],
+                   @"state":@[@0,@1,@2,@3,@4],
                    @"type":@0,
                    @"all":@YES
                    }

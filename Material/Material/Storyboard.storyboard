@@ -425,6 +425,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dateLabel" destination="lDS-dk-VnC" id="mME-Of-ocz"/>
                         <outlet property="defaultAddressLabel" destination="DgG-aD-mCb" id="LIS-IN-VhI"/>
@@ -4485,19 +4486,19 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yJ1-Ae-Eed"/>
-        <segue reference="8RY-QF-ZAw"/>
-        <segue reference="4Mm-GY-xPO"/>
-        <segue reference="Cgx-jM-28f"/>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="Dng-DQ-LOk"/>
-        <segue reference="2nV-DT-24h"/>
-        <segue reference="UAK-rn-23P"/>
         <segue reference="Kxl-Rh-nWd"/>
         <segue reference="aya-mQ-TZi"/>
+        <segue reference="UAK-rn-23P"/>
+        <segue reference="8RY-QF-ZAw"/>
+        <segue reference="4Mm-GY-xPO"/>
+        <segue reference="7b0-8i-w2b"/>
+        <segue reference="Cgx-jM-28f"/>
+        <segue reference="hQ5-Fe-tiF"/>
+        <segue reference="Neh-iJ-Fpe"/>
         <segue reference="tP9-hz-80H"/>
         <segue reference="joq-VG-3De"/>
-        <segue reference="MS0-BJ-3Kj"/>
         <segue reference="zbp-Dd-2O5"/>
+        <segue reference="MS0-BJ-3Kj"/>
+        <segue reference="yJ1-Ae-Eed"/>
     </inferredMetricsTieBreakers>
 </document>

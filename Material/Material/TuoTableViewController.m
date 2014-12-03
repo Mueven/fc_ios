@@ -66,7 +66,7 @@
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
       parameters:@{
-                   @"state":@[@0],
+                   @"state":@[@0,@1,@2,@3,@4],
                    @"type":@0
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -101,7 +101,7 @@
     [manager GET:[AFNet tuo_root]
       parameters:@{
                    @"all":@YES,
-                   @"state":@[@0],
+                   @"state":@[@0,@1,@2,@3,@4],
                    @"type":@0
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
