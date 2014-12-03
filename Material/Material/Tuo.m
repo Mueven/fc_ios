@@ -61,6 +61,8 @@
         self.accepted_packages=dictionary[@"accepted_packages"]?[dictionary[@"accepted_packages"] intValue]:0;
         self.sum_packages=dictionary[@"sum_packages"]?[dictionary[@"sum_packages"] intValue]:0;
         self.user_id=dictionary[@"user_id"]?dictionary[@"user_id"]:@"";
+        self.state=dictionary[@"state"]?[dictionary[@"state"] intValue]:0;
+        self.state_display=dictionary[@"state_display"]?dictionary[@"state_display"]:@"";
         self.xiang=[NSMutableArray array];
     }
     return self;
@@ -74,6 +76,8 @@
     self.date=[tuo.date copy];
     self.accepted_packages=tuo.accepted_packages;
     self.sum_packages=tuo.sum_packages;
+    self.state=tuo.state;
+    self.state_display=tuo.state_display;
     self.user_id=tuo.user_id;
     return self;
 }

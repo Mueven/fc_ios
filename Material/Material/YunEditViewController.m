@@ -79,6 +79,19 @@
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
      cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
+    cell.stateLabel.text=tuo.state_display;
+    if(tuo.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(tuo.state==1 || tuo.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(tuo.state==3){
+        [cell.stateLabel setTextColor:[UIColor greenColor]];
+    }
+    else if(tuo.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

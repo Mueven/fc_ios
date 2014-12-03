@@ -17,6 +17,7 @@
     self.departmentLabel.adjustsFontSizeToFitWidth=YES;
     self.agentLabel.adjustsFontSizeToFitWidth=YES;
     self.sumPackageLabel.adjustsFontSizeToFitWidth=YES;
+    self.stateLabel.adjustsFontSizeToFitWidth=YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

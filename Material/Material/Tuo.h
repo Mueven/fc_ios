@@ -19,7 +19,8 @@
 @property(nonatomic,strong) NSString *user_id;
 @property(nonatomic)int accepted_packages;
 @property(nonatomic)int sum_packages;
-
+@property(nonatomic)int state;
+@property(nonatomic,strong)NSString *state_display;
 -(instancetype)initExample;
 -(instancetype)initWith:(NSString *)ID department:(NSString *)department agent:(NSString *)agent;
 -(instancetype)initWithObject:(NSDictionary *)dictionary;
