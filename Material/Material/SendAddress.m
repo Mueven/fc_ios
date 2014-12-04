@@ -34,7 +34,8 @@
                  for(int i=0;i<result.count;i++){
                      SendAddressItem *item=[[SendAddressItem alloc] initWithObject:(NSDictionary *)result[i]];
                      [self.addresses addObject:item];
-                     if(item.is_default){
+                     if(item.is_default==1){
+                         
                          self.defaultAddress.name=item.name;
                          self.defaultAddress.id=item.id;
                          self.defaultAddress.is_default=item.is_default;
@@ -43,7 +44,7 @@
                  if(!self.defaultAddress.name){
                      self.defaultAddress.name=@"";
                      self.defaultAddress.id=@"";
-                     self.defaultAddress.is_default=NO;
+                     self.defaultAddress.is_default=0;
                  }
              }
              failure:^(AFHTTPRequestOperation *operation, NSError *error) {

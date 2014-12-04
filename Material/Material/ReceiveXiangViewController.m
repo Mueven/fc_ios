@@ -14,9 +14,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *quantityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (nonatomic)BOOL *isReject;
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
-
+- (IBAction)reject:(id)sender;
 @end
 
 @implementation ReceiveXiangViewController
@@ -27,7 +28,6 @@
     self.partNumberLabel.adjustsFontSizeToFitWidth=YES;
     self.quantityLabel.adjustsFontSizeToFitWidth=YES;
     self.dateLabel.adjustsFontSizeToFitWidth=YES;
-    
     self.keyLabel.text=self.xiang.key;
     self.partNumberLabel.text=self.xiang.number;
     self.quantityLabel.text=self.xiang.count;
@@ -36,6 +36,7 @@
 }
 
 - (IBAction)confirm:(id)sender {
+    self.isReject=NO;
     UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
                                                   message:@"确认收货？"
                                                  delegate:self
@@ -48,27 +49,58 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)reject:(id)sender {
+    self.isReject=YES;
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"拒绝收货？"
+                                                 delegate:self
+                                        cancelButtonTitle:@"取消"
+                                        otherButtonTitles:@"确定", nil];
+    [alert show];
+}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex==1){
+    if(buttonIndex==1 ){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet xiang_confirm_receive]
-           parameters:@{@"id":self.xiang.ID}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      [self performSegueWithIdentifier:@"print" sender:self];
+        if(self.isReject){
+            [manager POST:[AFNet xiang_reject]
+               parameters:@{@"id":self.xiang.ID}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          [self.navigationController popViewControllerAnimated:YES];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
                   }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                   }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-              }
-         ];
+             ];
+        }
+        else {
+            [manager POST:[AFNet xiang_confirm_receive]
+               parameters:@{@"id":self.xiang.ID}
+                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                      [AFNet.activeView stopAnimating];
+                      if([responseObject[@"result"] integerValue]==1){
+                          [self performSegueWithIdentifier:@"print" sender:self];
+                      }
+                      else{
+                          [AFNet alert:responseObject[@"content"]];
+                      }
+                  }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                      [AFNet.activeView stopAnimating];
+                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+                  }
+             ];
+        }
+
     }
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

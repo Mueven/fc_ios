@@ -30,6 +30,7 @@
 -(NSString *)xiang_received;
 -(NSString *)xiang_send;
 -(NSString *)xiang_receive;
+-(NSString *)xiang_reject;
 
 -(NSString *)tuo_index;
 -(NSString *)tuo_root;
@@ -100,4 +101,6 @@
 -(NSString *)send_address;
 
 -(NSString *)movables;
+
+-(NSString *)locations_warehosues;
 @end

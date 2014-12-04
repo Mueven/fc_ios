@@ -43,6 +43,7 @@
         self.container_id=object[@"container_id"]?object[@"container_id"]:@"";
         self.number=object[@"part_id_display"]?object[@"part_id_display"]:@"";
         self.count=object[@"quantity"]?[NSString stringWithFormat:@"%@",object[@"quantity"]]:@"";
+        self.quantity_display=object[@"quantity_display"]?object[@"quantity_display"]:@"";
         self.key=object[@"container_id"]?object[@"container_id"]:@"";
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";
@@ -65,6 +66,8 @@
     self.remark=[xiang.remark copy];
     self.date=[xiang.date copy];
     self.checked=xiang.checked?YES:NO;
+    self.state=xiang.state;
+    self.state_display=[xiang.state_display copy];
     return self;
 }
 @end

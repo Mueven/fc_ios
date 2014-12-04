@@ -107,7 +107,7 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              NSArray *resultArray=responseObject[@"content"];
-           
+  
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -231,14 +231,14 @@
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 if([(NSArray *)responseObject[@"content"] count]>0){
+                 
                      NSArray *xiangList=responseObject[@"content"];
                      for(int i=0;i<xiangList.count;i++){
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
                          [tuo.xiang addObject:xiang];
                      }
                      [self performSegueWithIdentifier:@"tuoEdit" sender:@{@"tuo":tuo}];
-                 }
+                  
              }
              else{
                  [AFNet alert:responseObject[@"content"]];

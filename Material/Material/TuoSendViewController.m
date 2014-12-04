@@ -86,21 +86,29 @@
 - (IBAction)confirm:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [AFNet.activeView stopAnimating];
+
     [manager POST:[AFNet tuo_send]
       parameters:@{
                    @"id":self.tuo.ID,
                    @"destination_id":self.myAddress.id
                    }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              AudioServicesPlaySystemSound(1012);
              [AFNet.activeView stopAnimating];
-             if(self.wetherJumpBack){
-                 [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(self.navigationController.viewControllers.count - 3)] animated:YES];
+             if([responseObject[@"result"] integerValue]==1){
+                 AudioServicesPlaySystemSound(1012);
+                 [AFNet.activeView stopAnimating];
+                 if(self.wetherJumpBack){
+                     [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:(self.navigationController.viewControllers.count - 3)] animated:YES];
+                 }
+                 else{
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
              }
-             else{
-                 [self.navigationController popViewControllerAnimated:YES];
+             else {
+                   [AFNet alert: responseObject[@"content"]];
+                
              }
+
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [AFNet.activeView stopAnimating];

@@ -11,6 +11,6 @@
 @interface SendAddressItem : NSObject
 @property(nonatomic,strong)NSString *name;
 @property(nonatomic,strong)NSString *id;
-@property(nonatomic)BOOL is_default;
+@property(nonatomic)int is_default;
 -(instancetype)initWithObject:(NSDictionary *)object;
 @end

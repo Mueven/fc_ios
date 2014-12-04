@@ -14,6 +14,7 @@
 @property(nonatomic,strong)NSString *number;
 @property(nonatomic,strong)NSString *key;
 @property(nonatomic,strong)NSString *count;
+@property(nonatomic,strong)NSString *quantity_display;
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *remark;
 @property(nonatomic,strong)NSString *date;

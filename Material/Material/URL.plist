@@ -20,6 +20,8 @@
 	<string>/api/v1/locations/get_all</string>
 	<key>movables</key>
 	<string>/api/v1/movables/get_type</string>
+	<key>locations_warehosues</key>
+	<string>/api/v1/locations/warehouses</string>
 	<key>order_led</key>
 	<dict>
 		<key>state_list</key>
@@ -129,6 +131,8 @@
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>reject</key>
+		<string>/reject</string>
 		<key>receive</key>
 		<string>/receive</string>
 		<key>send</key>

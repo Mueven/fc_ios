@@ -28,6 +28,7 @@
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    self.scanTextField.text=@"";
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

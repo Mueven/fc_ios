@@ -195,6 +195,11 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"receive"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_reject
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"reject"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_received
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"received"];
@@ -615,5 +620,10 @@
     NSString *base=[self baseURL];
     NSString *send_address=[[self URLDictionary] objectForKey:@"movables"];
     return [base stringByAppendingString:send_address];
+}
+-(NSString *)locations_warehosues{
+    NSString *base=[self baseURL];
+    NSString *locations_warehosues=[[self URLDictionary] objectForKey:@"locations_warehosues"];
+    return [base stringByAppendingString:locations_warehosues];
 }
 @end

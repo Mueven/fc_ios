@@ -108,6 +108,7 @@
 		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
 		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
 		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
+		B09E4CD01A303C7C0041083D /* XiangChooseDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09E4CCF1A303C7C0041083D /* XiangChooseDepartmentViewController.m */; };
 		B09ECD7219AAD36500783B6A /* LED.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7119AAD36500783B6A /* LED.m */; };
 		B09ECD7519AAD8C500783B6A /* LEDcolor.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7419AAD8C500783B6A /* LEDcolor.m */; };
 		B0A2ECE619A4529D00F80F26 /* ShopVerifyMoveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A2ECE519A4529D00F80F26 /* ShopVerifyMoveViewController.m */; };
@@ -330,6 +331,8 @@
 		B09CC8DD1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09CC8DE1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
+		B09E4CCE1A303C7C0041083D /* XiangChooseDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangChooseDepartmentViewController.h; sourceTree = "<group>"; };
+		B09E4CCF1A303C7C0041083D /* XiangChooseDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangChooseDepartmentViewController.m; sourceTree = "<group>"; };
 		B09ECD7019AAD36500783B6A /* LED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LED.h; sourceTree = "<group>"; };
 		B09ECD7119AAD36500783B6A /* LED.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LED.m; sourceTree = "<group>"; };
 		B09ECD7319AAD8C500783B6A /* LEDcolor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LEDcolor.h; sourceTree = "<group>"; };
@@ -877,6 +880,8 @@
 				B0DF643B19440FCA002D044B /* XiangEditViewController.m */,
 				B0D555C11A1D9FDF00659D6D /* XiangSendViewController.h */,
 				B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */,
+				B09E4CCE1A303C7C0041083D /* XiangChooseDepartmentViewController.h */,
+				B09E4CCF1A303C7C0041083D /* XiangChooseDepartmentViewController.m */,
 			);
 			name = Xiang;
 			sourceTree = "<group>";
@@ -1031,6 +1036,7 @@
 				B01011BD1A2AC7A800F1E6EB /* SettingRemarkTableViewController.m in Sources */,
 				B066FE33194EBDB300C0019D /* LoginSETTINGViewController.m in Sources */,
 				B04EF1DB19469CBA00A95D7A /* ReceiveXiangViewController.m in Sources */,
+				B09E4CD01A303C7C0041083D /* XiangChooseDepartmentViewController.m in Sources */,
 				B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */,
 				B0FDC96F194555FE008E4B72 /* YunInfoViewController.m in Sources */,
 				B04EF2151946E87800A95D7A /* AFNetOperate.m in Sources */,

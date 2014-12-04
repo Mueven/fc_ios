@@ -39,13 +39,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.partNumber.delegate=self;
     self.quantity.delegate=self;
     self.dateTextField.delegate=self;
     self.keyLabel.text=self.xiang.key;
     self.partNumber.text=self.xiang.number;
-    self.quantity.text=self.xiang.count;
+    self.quantity.text=self.xiang.quantity_display;
     self.dateTextField.text=self.xiang.date;
     self.keyLabel.adjustsFontSizeToFitWidth=YES;
     self.dirty=0;
