@@ -64,11 +64,9 @@
     [super viewWillAppear:animated];
     NSString *class=[NSString stringWithFormat:@"%@",[self.container class]];
     if([class isEqualToString:@"Yun"]){
-        self.titleLabel.text=@"打印运单？";
         self.pageTextField.text=[self.printSetting getPrivateCopy:@"P002"];
     }
-    else if([class isEqualToString:@"Tuo"]){
-        self.titleLabel.text=@"打印拖清单？";
+    else if([class isEqualToString:@"Tuo"] ){
         self.pageTextField.text=[self.printSetting getPrivateCopy:@"P001"];
     }
     self.yunSuccessContentLabel.text=self.yunSuccessContent.length>0?self.yunSuccessContent:@"";

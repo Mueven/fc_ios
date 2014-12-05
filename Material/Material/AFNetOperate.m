@@ -483,7 +483,18 @@
     NSString *bind=[printDictionary objectForKey:key];
     return [base stringByAppendingString:bind];
 }
-
+-(NSString *)print_stock_xiang:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"stock_xiang"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
 -(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"stock_tuo"];

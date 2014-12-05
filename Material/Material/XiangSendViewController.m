@@ -13,6 +13,7 @@
 #import "AFNetOperate.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "XiangChooseDepartmentViewController.h"
+#import "PrintViewController.h"
 @interface XiangSendViewController()
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
@@ -26,6 +27,7 @@
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)chooseDepartment:(id)sender;
+- (IBAction)printClick:(id)sender;
 @end
 @implementation XiangSendViewController
 -(void)viewDidLoad
@@ -117,6 +119,10 @@
           }
      ];
 }
+
+- (IBAction)printClick:(id)sender {
+    [self performSegueWithIdentifier:@"print" sender:self];
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"changeAddress"]){
@@ -127,6 +133,10 @@
         XiangChooseDepartmentViewController *vc=segue.destinationViewController;
         vc.departmentReceive=self.departmentReceive;
         vc.departmentArray=[sender objectForKey:@"departmentArray"];
+    }
+    else if([segue.identifier isEqualToString:@"print"]){
+        PrintViewController *vc=segue.destinationViewController;
+        vc.container=self.xiang;
     }
 }
 @end

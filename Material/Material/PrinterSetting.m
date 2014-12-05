@@ -38,6 +38,7 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {;
                  if([responseObject[@"Code"] integerValue]==1){
+                   
                      if(responseObject[@"Object"]){
                          NSArray *printerArray=responseObject[@"Object"][@"DefaultPrinters"];
                          for(int i=0;i<printerArray.count;i++){
@@ -49,6 +50,7 @@
                              [self.printerDictionary setObject:item forKey:printerItem[@"Id"]];
                          }
                          self.printerModelArray=responseObject[@"Object"][@"SystemPrinters"];
+ 
                      }
                  }
                  else{
@@ -116,6 +118,7 @@
     NSString *model=[self dissolveArchive:@"printer_model" alternative:@""];
     return model;
 }
+//每一个端口，例如P001都会有一个默认的打印机对应，这样只是为了防止没有设置打印机时去取自己默认的打印机
 -(NSString *)getPrivatePrinter:(NSString *)name
 {
     if([self isSavedKey:@"printer_update"]){
@@ -125,6 +128,7 @@
         return self.printerDictionary[name][@"printer"]?self.printerDictionary[name][@"printer"]:@"";
     }
 }
+//在设置界面设置打印机型号，单独的ITOUCH全局使用这个打印机
 -(void)setPrinterModel:(NSString *)model{
     [self saveToArchive:@"printer_model" object:model];
     [self saveToArchive:@"printer_update" object:@1];

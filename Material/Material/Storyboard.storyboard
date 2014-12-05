@@ -451,7 +451,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb"/>
+                    <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb">
+                        <barButtonItem key="rightBarButtonItem" title="打印" id="qe4-rB-1sC">
+                            <connections>
+                                <action selector="printClick:" destination="Awj-vQ-PdY" id="sNQ-29-lxU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dateLabel" destination="lDS-dk-VnC" id="mME-Of-ocz"/>
@@ -462,6 +468,7 @@
                         <outlet property="quantityLabel" destination="Lxd-YT-lkb" id="oSA-gS-Gcz"/>
                         <segue destination="auM-tp-hPM" kind="push" identifier="changeAddress" id="7b0-8i-w2b"/>
                         <segue destination="v8a-iV-zYf" kind="push" identifier="chooseDepartment" id="vXE-kp-Se8"/>
+                        <segue destination="W31-QG-1bE" kind="push" identifier="print" id="GAe-Se-hn7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kqQ-QX-eW2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2635,7 +2642,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVc-aT-0np" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="C1M-4n-Ssg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3898" y="2202"/>
+            <point key="canvasLocation" x="3893" y="2180"/>
         </scene>
         <!--包装箱-->
         <scene sceneID="9Ah-jl-QC5">
@@ -4548,19 +4555,6 @@
             </objects>
             <point key="canvasLocation" x="2474" y="6626"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ifH-Wc-1tW">
-            <objects>
-                <viewController id="s1f-wx-GG8" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="TNk-3v-Bl0">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Sah-Ui-Tdm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <resources>
         <image name="check" width="30" height="30"/>
@@ -4582,19 +4576,19 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yJ1-Ae-Eed"/>
-        <segue reference="8RY-QF-ZAw"/>
-        <segue reference="SkA-08-PWt"/>
-        <segue reference="FcC-pN-TYA"/>
-        <segue reference="7b0-8i-w2b"/>
-        <segue reference="hQ5-Fe-tiF"/>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="Kxl-Rh-nWd"/>
-        <segue reference="UAK-rn-23P"/>
-        <segue reference="aya-mQ-TZi"/>
+        <segue reference="tP9-hz-80H"/>
         <segue reference="z0b-gw-Ccg"/>
         <segue reference="joq-VG-3De"/>
         <segue reference="zbp-Dd-2O5"/>
-        <segue reference="tP9-hz-80H"/>
+        <segue reference="Neh-iJ-Fpe"/>
+        <segue reference="SyV-YF-bxb"/>
+        <segue reference="oOw-in-AQO"/>
+        <segue reference="7b0-8i-w2b"/>
+        <segue reference="GAe-Se-hn7"/>
+        <segue reference="hQ5-Fe-tiF"/>
+        <segue reference="UAK-rn-23P"/>
+        <segue reference="aya-mQ-TZi"/>
+        <segue reference="Kxl-Rh-nWd"/>
+        <segue reference="yJ1-Ae-Eed"/>
     </inferredMetricsTieBreakers>
 </document>

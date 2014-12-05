@@ -63,6 +63,8 @@
 		<string>P002/</string>
 		<key>stock_tuo</key>
 		<string>P001/</string>
+		<key>stock_xiang</key>
+		<string>P005/</string>
 		<key>file</key>
 		<string>/printer/print/</string>
 		<key>port</key>

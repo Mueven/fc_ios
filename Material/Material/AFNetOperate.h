@@ -63,7 +63,8 @@
 
 -(NSString *)log_in;
 -(NSString *)log_out;
-
+//PRINT
+-(NSString *)print_stock_xiang:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_stock_yun:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
 -(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies;
