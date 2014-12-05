@@ -132,7 +132,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
    
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P002"] copies:[self.printSetting getPrivateCopy:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+     [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[self.printSetting getPrinterModelWithAlternative:@"P002"] copies:[self.printSetting getCopy:@"stock" type:@"yun" alternative:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
             

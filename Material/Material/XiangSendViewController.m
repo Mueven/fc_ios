@@ -14,7 +14,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "XiangChooseDepartmentViewController.h"
 #import "PrintViewController.h"
-@interface XiangSendViewController()
+@interface XiangSendViewController()<UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *partNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *quantityLabel;
@@ -73,7 +73,13 @@
                       if(self.xiangArray){
                           [self.xiangArray removeObjectAtIndex:self.xiangIndex];
                       }
-                      [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+                      UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                                    message:@"是否打印"
+                                                                   delegate:self
+                                                          cancelButtonTitle:@"否"
+                                                          otherButtonTitles:@"是", nil];
+                      [alert show];
+                    
                   }
                   else {
                       [AFNet alert: responseObject[@"content"]];
@@ -94,13 +100,19 @@
                                             otherButtonTitles: nil];
         [alert show];
     }
-    
 }
-
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+        [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@1}];
+    }
+    else {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+    }
+}
 - (IBAction)cancel:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 - (IBAction)chooseDepartment:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -121,7 +133,7 @@
 }
 
 - (IBAction)printClick:(id)sender {
-    [self performSegueWithIdentifier:@"print" sender:self];
+    [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@0}];
 }
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -137,6 +149,8 @@
     else if([segue.identifier isEqualToString:@"print"]){
         PrintViewController *vc=segue.destinationViewController;
         vc.container=self.xiang;
+        vc.noBackButton=[sender objectForKey:@"noBackButton"];
+        vc.enableSend=NO;
     }
 }
 @end

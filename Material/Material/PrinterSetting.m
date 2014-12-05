@@ -38,7 +38,6 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, id responseObject) {;
                  if([responseObject[@"Code"] integerValue]==1){
-                   
                      if(responseObject[@"Object"]){
                          NSArray *printerArray=responseObject[@"Object"][@"DefaultPrinters"];
                          for(int i=0;i<printerArray.count;i++){
@@ -159,5 +158,37 @@
 }
 -(void)resetPrinterModel{
     [self saveToArchive:@"printer_update" object:NULL];
+}
+#pragma method about get/set copy and printer
+//same function with getPrivatePrinter , just a proper demonstration
+-(NSString *)getPrinterModelWithAlternative:(NSString *)name
+{
+    if([self isSavedKey:@"printer_update"]){
+        return [self getPrinterModel];
+    }
+    else{
+        return self.printerDictionary[name][@"printer"]?self.printerDictionary[name][@"printer"]:@"";
+    }
+}
+//positionName like stoke or shop,dealType like xiang/tuo/yun
+-(void)setCopy:(NSString *)positionName type:(NSString *)dealType copies:(NSString *)copies
+{
+    NSString *copy_sign=[NSString stringWithFormat:@"%@_%@",positionName,dealType];
+    [self saveToArchive:copy_sign object:copies];
+    NSString *update_sign=[NSString stringWithFormat:@"%@_%@_copy_update",positionName,dealType];
+    [self saveToArchive:update_sign object:@1];
+}
+//alternative use for the situation that u get the copy quantity from default instead setting
+-(NSString *)getCopy:(NSString *)positionName type:(NSString *)dealType alternative:(NSString *)PName
+{
+    NSString *update_sign=[NSString stringWithFormat:@"%@_%@_copy_update",positionName,dealType];
+    NSString *alternative=self.printerDictionary[PName][@"copy"]?self.printerDictionary[PName][@"copy"]:@"1";
+    if([self isSavedKey:update_sign]){
+        NSString *copy_sign=[NSString stringWithFormat:@"%@_%@",positionName,dealType];
+        return [self dissolveArchive:copy_sign alternative:alternative];
+    }
+    else{
+        return alternative;
+    }
 }
 @end
