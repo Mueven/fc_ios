@@ -11,6 +11,7 @@
 #import "SendAddressItem.h"
 #import "DefaultAddressTableViewController.h"
 #import "AFNetOperate.h"
+#import <AudioToolbox/AudioToolbox.h>
 @interface YunSendViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tuoCountLabel;
@@ -67,6 +68,7 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){
+                     AudioServicesPlaySystemSound(1012);
                   self.successContent=responseObject[@"content"];
                   [self.navigationController popViewControllerAnimated:YES];
               }
