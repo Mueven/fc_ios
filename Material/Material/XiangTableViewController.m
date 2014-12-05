@@ -241,6 +241,15 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Xiang *xiang=[self.xiangStore.xiangArray objectAtIndex:indexPath.row];
+    if(xiang.state==0){
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
 
 @end
