@@ -198,7 +198,7 @@
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet xiang_check]
-               parameters:@{@"id":textField.text}
+               parameters:@{@"id":[xiangArray[i] ID]}
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
