@@ -27,7 +27,7 @@
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)chooseDepartment:(id)sender;
-- (IBAction)printClick:(id)sender;
+//- (IBAction)printClick:(id)sender;
 @end
 @implementation XiangSendViewController
 -(void)viewDidLoad
@@ -132,9 +132,9 @@
      ];
 }
 
-- (IBAction)printClick:(id)sender {
-    [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@0}];
-}
+//- (IBAction)printClick:(id)sender {
+//    [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@0}];
+//}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"changeAddress"]){

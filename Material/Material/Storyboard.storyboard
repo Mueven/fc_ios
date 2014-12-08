@@ -451,13 +451,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb">
-                        <barButtonItem key="rightBarButtonItem" title="打印" id="qe4-rB-1sC">
-                            <connections>
-                                <action selector="printClick:" destination="Awj-vQ-PdY" id="sNQ-29-lxU"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="发送箱" id="w78-44-YNb"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dateLabel" destination="lDS-dk-VnC" id="mME-Of-ocz"/>
@@ -1645,7 +1639,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUe-xj-hbx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3931" y="6465"/>
+            <point key="canvasLocation" x="3445" y="6353"/>
         </scene>
         <!--接收箱-->
         <scene sceneID="EhM-J6-fAq">
@@ -4580,9 +4574,9 @@
         <segue reference="SkA-08-PWt"/>
         <segue reference="oOw-in-AQO"/>
         <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="oF3-aI-OCw"/>
+        <segue reference="7b0-8i-w2b"/>
+        <segue reference="GAe-Se-hn7"/>
         <segue reference="hQ5-Fe-tiF"/>
-        <segue reference="hy6-vM-msP"/>
         <segue reference="yJ1-Ae-Eed"/>
         <segue reference="UAK-rn-23P"/>
         <segue reference="aya-mQ-TZi"/>
@@ -4590,6 +4584,6 @@
         <segue reference="joq-VG-3De"/>
         <segue reference="zbp-Dd-2O5"/>
         <segue reference="tP9-hz-80H"/>
-        <segue reference="z0b-gw-Ccg"/>
+        <segue reference="fTA-Xe-KDm"/>
     </inferredMetricsTieBreakers>
 </document>

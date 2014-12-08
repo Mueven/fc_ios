@@ -223,11 +223,6 @@
         BOOL noXiang=1;
         for(int i=0;i<self.tuoArray.count;i++){
             if(self.tuoArray[i]!=self.tuo){
-                //                if([data isEqualToString:[self.tuoArray[i] ID]]){
-                //                    noXiang=0;
-                //                    [self changeToAnotherXiang:self.tuoArray[i]];
-                //                    break ;
-                //                }
                 Tuo *tuoItem=self.tuoArray[i];
                 for(int j=0;j<tuoItem.xiang.count;j++){
                     Xiang *xiangItem=tuoItem.xiang[j];

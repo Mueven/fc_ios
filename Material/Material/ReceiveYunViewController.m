@@ -85,7 +85,32 @@
             [alert show];
         }
         else{
-            [self performSegueWithIdentifier:@"checkTuo" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
+            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+            [manager GET:[AFNet tuo_packages]
+              parameters:@{@"id":tuo.ID}
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     [AFNet.activeView stopAnimating];
+                     if([responseObject[@"result"] integerValue]==1){
+                         NSArray *xiangList=responseObject[@"content"];
+                         [tuo.xiang removeAllObjects];
+                         for(int i=0;i<xiangList.count;i++){
+                             Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                             [tuo.xiang addObject:xiang];
+                         }
+                         [self performSegueWithIdentifier:@"checkTuo" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
+                         
+                     }
+                     else{
+                         [AFNet alert:responseObject[@"content"]];
+                     }
+                     
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     [AFNet.activeView stopAnimating];
+                     [AFNet alert:@"something wrong"];
+                 }
+             ];
         }
 }
 
@@ -154,7 +179,60 @@
     UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
     textField.inputView = dummyView;
 }
-
+//only for test
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    int count=0;
+    NSString *tuoID=textField.text;
+    Tuo *tuo;
+    NSArray *tuoArray=[self.yun.tuoArray copy];
+    for(int i=0;i<tuoArray.count;i++){
+        if([tuoID isEqualToString:[tuoArray[i] container_id]]){
+            tuo=tuoArray[i];
+            count++;
+            break;
+        }
+    }
+    if(count==0){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"没有找到该拖"
+                                                       message:[NSString stringWithFormat:@"未在该运单中发现托清单%@",tuoID]
+                                                      delegate:self
+                                             cancelButtonTitle:@"确定"
+                                             otherButtonTitles:nil];
+        AudioServicesPlaySystemSound(1051);
+        [alert show];
+    }
+    else{
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet tuo_packages]
+          parameters:@{@"id":tuo.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSArray *xiangList=responseObject[@"content"];
+                     [tuo.xiang removeAllObjects];
+                     for(int i=0;i<xiangList.count;i++){
+                         Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
+                         [tuo.xiang addObject:xiang];
+                     }
+                      [self performSegueWithIdentifier:@"checkTuo" sender:@{@"tuo":tuo,@"tuoArray":[self.yun.tuoArray copy]}];
+                     
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:@"something wrong"];
+             }
+         ];
+       
+    }
+    return YES;
+}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
