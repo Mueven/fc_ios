@@ -13,4 +13,5 @@
 @property(nonatomic,strong)Tuo *tuo;
 @property(nonatomic,strong)NSString *type;
 @property(nonatomic)BOOL hideCheckButton;
+@property(nonatomic)BOOL enablePop;
 @end

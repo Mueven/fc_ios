@@ -69,8 +69,6 @@
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
@@ -262,6 +260,7 @@
         TuoScanViewController *scanView=segue.destinationViewController;
         scanView.type=@"addXiang";
         scanView.tuo=self.tuo;
+        scanView.enablePop=YES;
     }
     else if([segue.identifier isEqualToString:@"tuoPrint"]){
         TuoPrintViewController *tuoPrint=segue.destinationViewController;

@@ -81,6 +81,16 @@
     self.scanStandard=[ScanStandard sharedScanStandard];
     self.sum_packages_count= [self.tuo.xiang count];
     [self updateXiangCountLabel];
+    if(self.enablePop){
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"完成"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(popout)];
+    }
+}
+-(void)popout
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -643,10 +653,12 @@
 -(void)updateAddXiangCount{
     self.sum_packages_count++;
     [self updateXiangCountLabel];
+    self.tuo.sum_packages++;
 }
 -(void)updateMinusXiangCount{
     self.sum_packages_count--;
     [self updateXiangCountLabel];
+    self.tuo.sum_packages--;
 }
 -(void)updateXiangCountLabel
 {

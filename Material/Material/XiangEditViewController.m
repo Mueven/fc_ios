@@ -169,6 +169,9 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
+    self.firstResponder=nil;
+    self.dirty=1;
     return YES;
 }
 
@@ -209,7 +212,8 @@
                      NSDictionary *dic=responseObject[@"content"];
                      self.xiang.date=[dic objectForKey:@"fifo_time_display"];
                      self.xiang.number=[dic objectForKey:@"part_id_display"];
-                     self.xiang.count=[dic objectForKey:@"quantity"];
+                     self.xiang.count=[NSString stringWithFormat:@"%@",[dic objectForKey:@"quantity"]];
+                     self.xiang.quantity_display=[dic objectForKey:@"quantity_display"];
                      self.xiang.position=[dic objectForKey:@"position_nr"];
                      [self.navigationController popViewControllerAnimated:YES];
                  }
@@ -262,7 +266,7 @@
                      NSDictionary *dic=responseObject[@"content"];
                      self.xiang.date=[dic objectForKey:@"fifo_time_display"];
                      self.xiang.number=[dic objectForKey:@"part_id_display"];
-                     self.xiang.count=[dic objectForKey:@"quantity"];
+                     self.xiang.count=[NSString stringWithFormat:@"%@",[dic objectForKey:@"quantity"]];
                      self.xiang.position=[dic objectForKey:@"position_nr"];
                      self.dirty=0;
                      [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];

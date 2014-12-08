@@ -58,30 +58,40 @@
 }
 
 - (IBAction)confirm:(id)sender {
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager POST:[AFNet yun_send]
-       parameters:@{
-                    @"id":self.yun.ID,
-                    @"destination_id":self.myAddress.id
-                    }
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [AFNet.activeView stopAnimating];
-              if([responseObject[@"result"] integerValue]==1){
-                     AudioServicesPlaySystemSound(1012);
-                  self.successContent=responseObject[@"content"];
-                  [self.navigationController popViewControllerAnimated:YES];
+    if(self.yun.tuoArray.count>0){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager POST:[AFNet yun_send]
+           parameters:@{
+                        @"id":self.yun.ID,
+                        @"destination_id":self.myAddress.id
+                        }
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  [AFNet.activeView stopAnimating];
+                  if([responseObject[@"result"] integerValue]==1){
+                      AudioServicesPlaySystemSound(1012);
+                      self.successContent=responseObject[@"content"];
+                      [self.navigationController popViewControllerAnimated:YES];
+                  }
+                  else{
+                      [AFNet alert:responseObject[@"content"]];
+                  }
+                  
               }
-              else{
-                  [AFNet alert:responseObject[@"content"]];
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  [AFNet.activeView stopAnimating];
+                  [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
               }
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [AFNet.activeView stopAnimating];
-              [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
-          }
-     ];
+         ];
+    }
+    else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                      message:@"不能发送空运单"
+                                                     delegate:self
+                                            cancelButtonTitle:@"确定"
+                                            otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 - (IBAction)cancel:(id)sender {

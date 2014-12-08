@@ -143,9 +143,8 @@
         [manager GET:[AFNet yun_single]
           parameters:@{@"id":yun.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [AFNet.activeView stopAnimating];
-                    });
+                    [AFNet.activeView stopAnimating];
+                    
                     if([responseObject[@"result"] integerValue]==1){
                         if([(NSDictionary *)responseObject[@"content"] count]>0){
                             yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
@@ -169,6 +168,7 @@
           parameters:@{@"id":yun.ID}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
+             
                  if([responseObject[@"result"] integerValue]==1){
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
@@ -231,7 +231,7 @@
                      [AFNet.activeView stopAnimating];
                  });
                  if([responseObject[@"result"] integerValue]==1){
-                     if([(NSArray *)responseObject[@"content"] count]>0){
+                    
                          NSArray *tuoArray=responseObject[@"content"];
                          [yun.tuoArray removeAllObjects];
                          for(int i=0;i<tuoArray.count;i++){
@@ -239,7 +239,7 @@
                              [yun.tuoArray addObject:tuoItem];
                          }
                          [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
-                     }
+                      
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];
