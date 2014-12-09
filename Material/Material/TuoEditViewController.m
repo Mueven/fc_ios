@@ -90,6 +90,7 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+//    self.decodeContainer=textField.text;
     if(textField.tag==21){
         NSString *department=self.decodeContainer;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -102,6 +103,7 @@
                            }
                        }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                     NSLog(@"reselt:%@",responseObject[@"result"]);
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
                         self.tuo.department=department;
@@ -123,7 +125,9 @@
                     }
                     
                 }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                {
+                    NSLog(@"error:%@",[error localizedDescription]);
                     [AFNet.activeView stopAnimating];
                     [textField resignFirstResponder];
                     self.firstResponder=nil;
@@ -140,6 +144,7 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
                      self.tuo.agent=agent;
+                     self.agent.text=agent;
                      textField.text=self.decodeContainer;
                      [textField resignFirstResponder];
                       self.firstResponder=nil;
@@ -214,6 +219,7 @@
             [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
             self.sum_packages_count--;
+            self.tuo.sum_packages--;
             [self updateXiangCountLabel];
             dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
             dispatch_async(deleteRow, ^{
@@ -235,6 +241,7 @@
                                 [AFNet alert:responseObject[@"content"]];
                                 [self.tuo.xiang addObject:xiangReserve];
                                 self.sum_packages_count++;
+                                self.tuo.sum_packages++;
                                 [self updateXiangCountLabel];
                                 [self.xiangTable reloadData];
                             }
@@ -243,6 +250,7 @@
                             [AFNet.activeView stopAnimating];
                             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                             self.sum_packages_count++;
+                            self.tuo.sum_packages++;
                             [self updateXiangCountLabel];
                             [self.tuo.xiang addObject:xiangReserve];
                             [self.xiangTable reloadData];

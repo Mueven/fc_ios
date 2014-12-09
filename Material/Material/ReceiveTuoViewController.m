@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *scanTextField;
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (nonatomic) int xiangCheckedCount;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
@@ -41,6 +42,8 @@
     self.scanTextField.delegate=self;
     self.xiangTable.delegate=self;
     self.xiangTable.dataSource=self;
+    self.countLabel.adjustsFontSizeToFitWidth=YES;
+    self.amountLabel.adjustsFontSizeToFitWidth=YES;
     [self.scanTextField becomeFirstResponder];
     UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
@@ -64,18 +67,24 @@
     }
 }
 -(void)updateCheckedLabel{
-    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    NSString *amount=[NSString stringWithFormat:@"%lu",(unsigned long)self.tuo.xiang.count];
+    self.amountLabel.text=amount;
     self.countLabel.text=count;
 }
 -(void)updateAddCheckedLabel{
     self.xiangCheckedCount++;
-    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    NSString *amount=[NSString stringWithFormat:@"%lu",(unsigned long)self.tuo.xiang.count];
+    self.amountLabel.text=amount;
     self.countLabel.text=count;
     self.tuo.accepted_packages++;
 }
 -(void)updateMinusCheckedLabel{
     self.xiangCheckedCount--;
-    NSString *count=[NSString stringWithFormat:@"%d / %lu",self.xiangCheckedCount,(unsigned long)self.tuo.xiang.count];
+    NSString *count=[NSString stringWithFormat:@"%d",self.xiangCheckedCount];
+    NSString *amount=[NSString stringWithFormat:@"%lu",(unsigned long)self.tuo.xiang.count];
+    self.amountLabel.text=amount;
     self.countLabel.text=count;
     self.tuo.accepted_packages--;
 }
@@ -104,32 +113,36 @@
             count++;
             dispatch_queue_t check_queue=dispatch_queue_create("com.check.pptalent", NULL);
             dispatch_async(check_queue, ^{
-                AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-                AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-                [AFNet.activeView stopAnimating];
-                [manager POST:[AFNet xiang_check]
-                   parameters:@{@"id":[xiangArray[i] ID]}
-                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                          [AFNet.activeView stopAnimating];
-                          if([responseObject[@"result"] integerValue]==1){
-                              [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
-                              [self.xiangTable reloadData];
-                              [self updateAddCheckedLabel];
+                
+                if(![[self.tuo.xiang objectAtIndex:i] checked]){
+                    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+                    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+                    [AFNet.activeView stopAnimating];
+                    [manager POST:[AFNet xiang_check]
+                       parameters:@{@"id":[xiangArray[i] ID]}
+                          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                              [AFNet.activeView stopAnimating];
+                              if([responseObject[@"result"] integerValue]==1 ){
+                                  [[self.tuo.xiang objectAtIndex:i] setChecked:YES];
+                                  [self.xiangTable reloadData];
+                                  [self updateAddCheckedLabel];
+                              }
+                              else{
+                                  dispatch_async(dispatch_get_main_queue(), ^{
+                                      [AFNet alert:responseObject[@"content"]];
+                                  });
+                              }
                           }
-                          else{
+                          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [AFNet.activeView stopAnimating];
                               dispatch_async(dispatch_get_main_queue(), ^{
-                                  [AFNet alert:responseObject[@"content"]];
+                                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];;
                               });
+                              
                           }
-                      }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          [AFNet.activeView stopAnimating];
-                          dispatch_async(dispatch_get_main_queue(), ^{
-                              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];;
-                          });
-                          
-                      }
-                 ];
+                     ];
+                }
+                
             });
             break;
         }
