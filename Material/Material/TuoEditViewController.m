@@ -83,8 +83,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//    textField.inputView=dummyView;
+    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+    textField.inputView=dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
