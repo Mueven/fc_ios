@@ -104,12 +104,11 @@
             count++;
             dispatch_queue_t check_queue=dispatch_queue_create("com.check.pptalent", NULL);
             dispatch_async(check_queue, ^{
-                NSString *myData=data;
                 AFNetOperate *AFNet=[[AFNetOperate alloc] init];
                 AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
                 [AFNet.activeView stopAnimating];
                 [manager POST:[AFNet xiang_check]
-                   parameters:@{@"id":myData}
+                   parameters:@{@"id":[xiangArray[i] ID]}
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           [AFNet.activeView stopAnimating];
                           if([responseObject[@"result"] integerValue]==1){

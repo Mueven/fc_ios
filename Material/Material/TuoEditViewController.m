@@ -83,8 +83,8 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView=dummyView;
+//    UIView *dummyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//    textField.inputView=dummyView;
     self.firstResponder=textField;
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -94,7 +94,12 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
-          parameters:@{@"id":self.tuo.ID,@"whouse_id":department}
+          parameters:@{
+                       @"forklift":@{
+                               @"id":self.tuo.ID,
+                               @"whouse_id":department
+                           }
+                       }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
