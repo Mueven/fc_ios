@@ -49,6 +49,7 @@
 }
 -(void)decoderDataReceived:(NSString *)data
 {
+    self.scanTextField.text=data;
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager POST:[AFNet storages_move_store]
@@ -57,12 +58,17 @@
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
                  AudioServicesPlaySystemSound(1012);
-                 self.scanTextField.text=data;
-                 self.resultTextview.text=responseObject[@"content"]; 
+                 self.scanTextField.text=@"";
+                 NSString *result=[NSString stringWithFormat:@"%@: %@",data,responseObject[@"content"]];
+                 self.resultTextview.text=result;
+                 [self.resultTextview setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
              }
              else{
                  AudioServicesPlaySystemSound(1051);
-                 self.resultTextview.text=responseObject[@"content"];
+                   self.scanTextField.text=@"";
+                 NSString *result=[NSString stringWithFormat:@"%@: %@",data,responseObject[@"content"]];
+                 self.resultTextview.text=result;
+                 [self.resultTextview setTextColor:[UIColor orangeColor]];
              }
              
          }
