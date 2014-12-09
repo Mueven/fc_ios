@@ -23,6 +23,7 @@
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
+@property (nonatomic,strong)NSString *decodeContainer;
 - (IBAction)sendTuo:(id)sender;
 
 @end
@@ -78,7 +79,7 @@
 
 -(void)decoderDataReceived:(NSString *)data
 {
-    self.firstResponder.text=data;
+    self.decodeContainer=data;
     [self textFieldShouldReturn:self.firstResponder];
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -90,7 +91,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     if(textField.tag==21){
-        NSString *department=textField.text;
+        NSString *department=self.decodeContainer;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
@@ -110,6 +111,7 @@
                             Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
                             [self.tuo.xiang addObject:xiangItem];
                         }
+                        textField.text=self.decodeContainer;
                         [textField resignFirstResponder];
                         self.firstResponder=nil;
                         [self.xiangTable reloadData];
@@ -129,7 +131,7 @@
          ];
     }
     else if(textField.tag==22){
-        NSString *agent=self.agent.text;
+        NSString *agent=self.decodeContainer;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
@@ -138,6 +140,7 @@
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
                      self.tuo.agent=agent;
+                     textField.text=self.decodeContainer;
                      [textField resignFirstResponder];
                       self.firstResponder=nil;
                 
