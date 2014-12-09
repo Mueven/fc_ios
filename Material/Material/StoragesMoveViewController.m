@@ -26,7 +26,17 @@
     self.resultTextview.delegate=self;
     [self.scanTextField becomeFirstResponder];
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+  
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
