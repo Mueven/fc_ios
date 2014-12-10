@@ -10,7 +10,7 @@
 #import "Login.h"
 #import "AFNetOperate.h"
 #import "PrinterSetting.h"
-
+#import <AudioToolbox/AudioToolbox.h>
 @interface SettingViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 - (IBAction)logOut:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *addressTextField;
@@ -146,9 +146,24 @@
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
     [self.typeTextField resignFirstResponder];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    AudioServicesPlaySystemSound(1012);
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"设置成功"
+                                                 delegate:self
+                                        cancelButtonTitle:@"确定"
+                                        otherButtonTitles:nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(dismissAlert:)
+                                   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                    repeats:NO];
+    [alert show];
 }
-
+-(void)dismissAlert:(NSTimer *)timer
+{
+    UIAlertView *alert=[[timer userInfo] objectForKey:@"alert"];
+    [alert dismissWithClickedButtonIndex:0 animated:YES];
+}
 - (IBAction)touchScreen:(id)sender {
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];

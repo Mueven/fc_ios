@@ -33,7 +33,7 @@
         [self.stateLabel setTextColor:[UIColor blueColor]];
     }
     else if(self.xiang.state==3){
-        [self.stateLabel setTextColor:[UIColor greenColor]];
+        [self.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
     }
     else if(self.xiang.state==4){
         [self.stateLabel setTextColor:[UIColor redColor]];

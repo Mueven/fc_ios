@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
 @property (strong,nonatomic)SendAddressItem *myAddress;
 @property (strong,nonatomic)NSMutableDictionary *departmentReceive;
+@property (strong,nonatomic)UIAlertView *wrongDepartAlert;
 - (IBAction)changeAddress:(id)sender;
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
@@ -57,40 +58,17 @@
 
 - (IBAction)confirm:(id)sender {
     if(self.departmentReceive[@"id"]){
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet xiang_send]
-           parameters:@{
-                        @"id":self.xiang.ID,
-                        @"destination_id":self.myAddress.id,
-                        @"whouse_id":self.departmentReceive[@"id"]
-                        }
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      AudioServicesPlaySystemSound(1012);
-                      [AFNet.activeView stopAnimating];
-                      if(self.xiangArray){
-                          [self.xiangArray removeObjectAtIndex:self.xiangIndex];
-                      }
-                      UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                                    message:@"是否打印"
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"否"
-                                                          otherButtonTitles:@"是", nil];
-                      [alert show];
-                    
-                  }
-                  else {
-                      [AFNet alert: responseObject[@"content"]];
-                      
-                  }
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-              }
-         ];
+        if([self.xiang.position isEqualToString:self.myAddress.name]){
+            self.wrongDepartAlert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                             message:@"箱所属部门与发送部门不一致"
+                                                            delegate:self
+                                                   cancelButtonTitle:@"不发送"
+                                                   otherButtonTitles:@"继续发送", nil];
+            [self.wrongDepartAlert show];
+        }
+        else{
+            [self sendBox];
+        }
     }
     else {
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
@@ -101,13 +79,61 @@
         [alert show];
     }
 }
+-(void)sendBox
+{
+    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    [manager POST:[AFNet xiang_send]
+       parameters:@{
+                    @"id":self.xiang.ID,
+                    @"destination_id":self.myAddress.id,
+                    @"whouse_id":self.departmentReceive[@"id"]
+                    }
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              [AFNet.activeView stopAnimating];
+              if([responseObject[@"result"] integerValue]==1){
+                  AudioServicesPlaySystemSound(1012);
+                  [AFNet.activeView stopAnimating];
+                  if(self.xiangArray){
+                      [self.xiangArray removeObjectAtIndex:self.xiangIndex];
+                  }
+                  
+                  UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                                message:@"是否打印"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"否"
+                                                      otherButtonTitles:@"是", nil];
+                  [alert show];
+                  
+              }
+              else {
+                  [AFNet alert: responseObject[@"content"]];
+                  
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [AFNet.activeView stopAnimating];
+              [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+          }
+     ];
+}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex==1){
-        [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@1}];
+        if(self.wrongDepartAlert==alertView){
+            [self sendBox];
+        }
+        else{
+            [self performSegueWithIdentifier:@"print" sender:@{@"noBackButton":@1}];
+        }
     }
     else {
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+        if(self.wrongDepartAlert==alertView){
+            
+        }
+        else{
+            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:([self.navigationController.viewControllers count] -3)] animated:YES];
+        }
     }
 }
 - (IBAction)cancel:(id)sender {

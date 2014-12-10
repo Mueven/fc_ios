@@ -22,7 +22,7 @@
 #import "TuoCheckGeneralViewController.h"
 
 
-@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
+@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *key;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
 @property (weak, nonatomic) IBOutlet UITextField *quatity;
@@ -551,7 +551,7 @@
         [cell.stateLabel setTextColor:[UIColor blueColor]];
     }
     else if(xiang.state==3){
-        [cell.stateLabel setTextColor:[UIColor greenColor]];
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
     }
     else if(xiang.state==4){
         [cell.stateLabel setTextColor:[UIColor orangeColor]];
@@ -638,9 +638,25 @@
     }
 }
 - (IBAction)finish:(id)sender {
-    [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    if(self.tuo.xiang.count==0){
+       UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                     message:@"没有绑定任何箱，需要继续吗？"
+                                                    delegate:self
+                                           cancelButtonTitle:@"不继续"
+                                           otherButtonTitles:@"继续操作", nil];
+        [alert show];
+    }
+    else{
+      [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    }
+    
 }
-
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+         [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    }
+}
 - (IBAction)checkXiang:(id)sender {
     NSArray *xiangArray=[SortArray sortByPartNumber:self.tuo.xiang];
     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"xiangArray":xiangArray}];

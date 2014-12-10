@@ -74,7 +74,7 @@
         [cell.detailTextLabel setTextColor:[UIColor blueColor]];
     }
     else if(yun.state==3){
-        [cell.detailTextLabel setTextColor:[UIColor greenColor]];
+        [cell.detailTextLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
     }
     else if(yun.state==4){
         [cell.detailTextLabel setTextColor:[UIColor redColor]];

@@ -718,7 +718,7 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="扫描货物" id="3FT-2O-7PF">
-                        <barButtonItem key="rightBarButtonItem" title="完成" id="QTS-tX-nXq">
+                        <barButtonItem key="rightBarButtonItem" title="下一步" id="QTS-tX-nXq">
                             <connections>
                                 <action selector="finish:" destination="Zq0-sm-J8a" id="lai-19-Gwi"/>
                             </connections>
@@ -1004,8 +1004,6 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="Z5L-ZJ-cuv"/>
-                                    <action selector="saveChange:" destination="FJr-dh-3oV" eventType="touchUpInside" id="N8C-5v-gXv"/>
                                     <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="gji-4V-Ukc"/>
                                 </connections>
                             </button>
@@ -2287,7 +2285,6 @@
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="logout:" destination="U8G-v2-gz0" eventType="touchUpInside" id="WWL-0b-E7r"/>
                                     <action selector="saveChange:" destination="U8G-v2-gz0" eventType="touchUpInside" id="DXB-hC-cwV"/>
                                 </connections>
                             </button>
@@ -4585,19 +4582,19 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yJ1-Ae-Eed"/>
+        <segue reference="Neh-iJ-Fpe"/>
         <segue reference="Dng-DQ-LOk"/>
         <segue reference="oOw-in-AQO"/>
-        <segue reference="SyV-YF-bxb"/>
+        <segue reference="SkA-08-PWt"/>
+        <segue reference="FcC-pN-TYA"/>
         <segue reference="7b0-8i-w2b"/>
-        <segue reference="GAe-Se-hn7"/>
-        <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="aya-mQ-TZi"/>
+        <segue reference="yJ1-Ae-Eed"/>
+        <segue reference="joq-VG-3De"/>
+        <segue reference="Hyz-uv-cpc"/>
+        <segue reference="Xpt-zp-Oio"/>
+        <segue reference="zbp-Dd-2O5"/>
         <segue reference="Kxl-Rh-nWd"/>
         <segue reference="UAK-rn-23P"/>
-        <segue reference="joq-VG-3De"/>
-        <segue reference="zbp-Dd-2O5"/>
-        <segue reference="Xpt-zp-Oio"/>
-        <segue reference="Hyz-uv-cpc"/>
+        <segue reference="aya-mQ-TZi"/>
     </inferredMetricsTieBreakers>
 </document>
