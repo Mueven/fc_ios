@@ -118,6 +118,7 @@
 		B0BB1D8C1A2DBB5E0036AF61 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0BB1D8B1A2DBB5E0036AF61 /* Images.xcassets */; };
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
+		B0C75C261A3AC6B800F8A0FF /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C75C251A3AC6B800F8A0FF /* UserPreference.m */; };
 		B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */; };
 		B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
@@ -349,6 +350,8 @@
 		B0BE292D1949921900061E67 /* XiangTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangTableViewCell.h; sourceTree = "<group>"; };
 		B0BE292E1949921900061E67 /* XiangTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangTableViewCell.m; sourceTree = "<group>"; };
 		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
+		B0C75C241A3AC6B800F8A0FF /* UserPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreference.h; sourceTree = "<group>"; };
+		B0C75C251A3AC6B800F8A0FF /* UserPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreference.m; sourceTree = "<group>"; };
 		B0D555C11A1D9FDF00659D6D /* XiangSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangSendViewController.h; sourceTree = "<group>"; };
 		B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangSendViewController.m; sourceTree = "<group>"; };
 		B0D555C41A1DA24E00659D6D /* TuoSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoSendViewController.h; sourceTree = "<group>"; };
@@ -692,6 +695,8 @@
 				B073F7D3199D9382007011E6 /* PingWatcher.m */,
 				B001BF0619A5CF23000800AD /* PrinterSetting.h */,
 				B001BF0719A5CF23000800AD /* PrinterSetting.m */,
+				B0C75C241A3AC6B800F8A0FF /* UserPreference.h */,
+				B0C75C251A3AC6B800F8A0FF /* UserPreference.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1062,6 +1067,7 @@
 				B0275FD8197E443A00E579C5 /* RequireHistoryListTableViewController.m in Sources */,
 				B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */,
 				B085F6531940183D001F01F3 /* YunTableViewController.m in Sources */,
+				B0C75C261A3AC6B800F8A0FF /* UserPreference.m in Sources */,
 				B0B3040F1A23057600D8CF8E /* DefaultAddressTableViewController.m in Sources */,
 				B04244D31A1EF41A00AAFD24 /* ProductSettingViewController.m in Sources */,
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
