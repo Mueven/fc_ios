@@ -602,6 +602,7 @@
                     <connections>
                         <outlet property="agent" destination="KQn-RF-Rm4" id="VgR-dg-Tb5"/>
                         <outlet property="department" destination="53v-1h-kQn" id="EeK-oQ-RWD"/>
+                        <outlet property="departmentLabel" destination="0yr-HT-TV0" id="77H-rE-sg1"/>
                         <segue destination="Zq0-sm-J8a" kind="push" identifier="tuoBaseToScan" id="mEd-et-lyR"/>
                     </connections>
                 </viewController>

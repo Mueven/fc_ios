@@ -7,9 +7,8 @@
 //
 
 #import "TuoScanViewController.h"
-//#import "XiangStore.h"
 #import "TuoStore.h"
-
+#import "UserPreference.h"
 #import "Xiang.h"
 #import "PrintViewController.h"
 #import "Tuo.h"
@@ -21,7 +20,6 @@
 #import "SortArray.h"
 #import "TuoCheckGeneralViewController.h"
 
-
 @interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *key;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
@@ -32,8 +30,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong,nonatomic)UIAlertView *alert;
 @property (strong,nonatomic)ScanStandard *scanStandard;
-//@property (strong, nonatomic) XiangStore *xiangStore;
-//@property (strong,nonatomic) NSArray *validateAddress;
+@property (strong,nonatomic)UserPreference *userPref;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
@@ -87,6 +84,7 @@
                                                                                target:self
                                                                                action:@selector(popout)];
     }
+    self.userPref=[UserPreference sharedUserPreference];
 }
 -(void)popout
 {
@@ -213,17 +211,27 @@
                               [AFNet.activeView stopAnimating];
                               if([responseObject[@"result"] integerValue]==1){
                                   
-                                  
                               }
                               else{
+                                  NSDictionary *dic=[NSDictionary dictionary];
+                                  if([self.userPref.location_id isEqualToString:@"FG"]){
+                                      dic=@{
+                                            @"id":self.tuo.ID,
+                                            @"package_id":myData,
+                                            @"check_whouse":@0
+                                            };
+                                  }
+                                  else{
+                                      dic=@{
+                                            @"id":self.tuo.ID,
+                                            @"package_id":myData
+                                            };
+                                  }
                                   AFNetOperate *AFNet=[[AFNetOperate alloc] init];
                                   AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
                                   [AFNet.activeView stopAnimating];
                                   [manager POST:[AFNet tuo_key_for_bundle]
-                                     parameters:@{
-                                                  @"id":self.tuo.ID,
-                                                  @"package_id":myData
-                                                  }
+                                     parameters:dic
                                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                             if([responseObject[@"result"] integerValue]==1){
                                                 //如果已经绑定了就直接添加
@@ -377,19 +385,36 @@
         NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
         //after regex date
         NSString *datePost=[self.scanStandard filterDate:date];
+        NSDictionary *parameters=[NSDictionary dictionary];
+        if([self.userPref.location_id isEqualToString:@"FG"]){
+            parameters=@{
+                         @"id":self.tuo.ID,
+                         @"package_id":key,
+                         @"part_id":partNumberPost,
+                         @"quantity":quantityPost,
+                         @"custom_fifo_time":datePost,
+                         @"part_id_display":partNumber,
+                         @"quantity_display":quantity,
+                         @"fifo_time_display":date,
+                         @"check_whouse":@0
+                         };
+        }
+        else{
+            parameters=@{
+                         @"id":self.tuo.ID,
+                         @"package_id":key,
+                         @"part_id":partNumberPost,
+                         @"quantity":quantityPost,
+                         @"custom_fifo_time":datePost,
+                         @"part_id_display":partNumber,
+                         @"quantity_display":quantity,
+                         @"fifo_time_display":date
+                         };
+        }
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
             [manager POST:[AFNet tuo_bundle_add]
-               parameters:@{
-                            @"id":self.tuo.ID,
-                            @"package_id":key,
-                            @"part_id":partNumberPost,
-                            @"quantity":quantityPost,
-                            @"custom_fifo_time":datePost,
-                            @"part_id_display":partNumber,
-                            @"quantity_display":quantity,
-                            @"fifo_time_display":date
-                            }
+               parameters: parameters
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];

@@ -8,8 +8,20 @@
 
 #import "UserPreference.h"
 #import "AFNetOperate.h"
+// role:
+// 100: 管理员
+// 200: 经理
+// 300: 发货员
+// 400: 收货员
+// 500: 要货员
+// location:
+// FG 成品仓库
+// l001 原材料
+// l002 外库
+// l003 工厂仓库
 @interface UserPreference()
 @end
+
 @implementation UserPreference
 +(instancetype)generateUserPreference:(id)object
 {
@@ -28,22 +40,5 @@
     });
     return userPreference;
 }
--(instancetype)initPrivate
-{
-    self=[super init];
-    if(self){
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
-        [manager GET:nil
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {;
- 
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
-             }
-         ];
-    }
-    return  self;
-}
+
 @end
