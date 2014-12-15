@@ -385,34 +385,37 @@
         NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
         //after regex date
         NSString *datePost=[self.scanStandard filterDate:date];
-        NSDictionary *parameters=[NSDictionary dictionary];
-        if([self.userPref.location_id isEqualToString:@"FG"]){
-            parameters=@{
-                         @"id":self.tuo.ID,
-                         @"package_id":key,
-                         @"part_id":partNumberPost,
-                         @"quantity":quantityPost,
-                         @"custom_fifo_time":datePost,
-                         @"part_id_display":partNumber,
-                         @"quantity_display":quantity,
-                         @"fifo_time_display":date,
-                         @"check_whouse":@0
-                         };
-        }
-        else{
-            parameters=@{
-                         @"id":self.tuo.ID,
-                         @"package_id":key,
-                         @"part_id":partNumberPost,
-                         @"quantity":quantityPost,
-                         @"custom_fifo_time":datePost,
-                         @"part_id_display":partNumber,
-                         @"quantity_display":quantity,
-                         @"fifo_time_display":date
-                         };
-        }
+
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
+            NSDictionary *parameters=[NSDictionary dictionary];
+            if([self.userPref.location_id isEqualToString:@"FG"]){
+                parameters=@{
+                             @"id":self.tuo.ID,
+                             @"package_id":key,
+                             @"part_id":partNumberPost,
+                             @"quantity":quantityPost,
+                             @"custom_fifo_time":datePost,
+                             @"part_id_display":partNumber,
+                             @"quantity_display":quantity,
+                             @"fifo_time_display":date,
+                             @"check_whouse":@0,
+                             };
+            }
+            else{
+            parameters=@{
+                         @"id":self.tuo.ID,
+                          @"package_id":key,
+                          @"part_id":partNumberPost,
+                          @"quantity":quantityPost,
+                             @"custom_fifo_time":datePost,
+                             @"part_id_display":partNumber,
+                             @"quantity_display":quantity,
+                             @"fifo_time_display":date,
+
+                         };
+
+            }
             [manager POST:[AFNet tuo_bundle_add]
                parameters: parameters
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
