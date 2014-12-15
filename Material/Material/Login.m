@@ -12,7 +12,7 @@
 #import "ScanStandard.h"
 #import "PrinterSetting.h"
 #import "SendAddress.h"
-
+#import "UserPreference.h"
 @interface Login ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
@@ -113,7 +113,7 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
+                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"][@"role_id"]];
                           if([requestCode isEqualToString:@"300"]){
                               [SendAddress sharedSendAddress];
                               [self loginSameAction:@"stock"];
@@ -124,6 +124,7 @@
                           else if([requestCode isEqualToString:@"500"]){
                               [self loginSameAction:@"require"];
                           }
+                          [UserPreference generateUserPreference:responseObject[@"content"]];
                           [ScanStandard sharedScanStandard];
                       }
                       else{

@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface UserPreference : NSObject
-@property(nonatomic,strong)NSString *type;
-+(instancetype)userPreferenceShared;
-
+@property(nonatomic,strong)NSString *location_id;
+@property(nonatomic,strong)NSString *location_name;
+@property(nonatomic,strong)NSString *role_id;
++(instancetype)sharedUserPreference;
++(instancetype)generateUserPreference:(id)object;
 @end

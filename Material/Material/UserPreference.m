@@ -11,12 +11,20 @@
 @interface UserPreference()
 @end
 @implementation UserPreference
-+(instancetype)userPreferenceShared
++(instancetype)generateUserPreference:(id)object
+{
+    UserPreference *userPref=[UserPreference sharedUserPreference];
+    userPref.role_id=object[@"role_id"]?[NSString stringWithFormat:@"%@",object[@"role_id"]]:@"";
+    userPref.location_id=object[@"location_id"]?object[@"location_id"]:@"";
+    userPref.location_name=object[@"location_name"]?object[@"location_name"]:@"";
+    return userPref;
+}
++(instancetype)sharedUserPreference
 {
     static UserPreference *userPreference;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken,^{
-        userPreference=[[UserPreference alloc] initPrivate];
+        userPreference=[[UserPreference alloc] init];
     });
     return userPreference;
 }
