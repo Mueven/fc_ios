@@ -92,6 +92,7 @@
     else if(tuo.state==4){
         [cell.stateLabel setTextColor:[UIColor orangeColor]];
     }
+    cell.accessoryType=UITableViewCellAccessoryNone;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

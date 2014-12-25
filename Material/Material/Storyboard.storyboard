@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bRR-Yf-CoJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="bRR-Yf-CoJ">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Login-->
@@ -4585,17 +4585,17 @@
     <inferredMetricsTieBreakers>
         <segue reference="yJ1-Ae-Eed"/>
         <segue reference="Xpt-zp-Oio"/>
-        <segue reference="Hyz-uv-cpc"/>
         <segue reference="joq-VG-3De"/>
         <segue reference="zbp-Dd-2O5"/>
-        <segue reference="SkA-08-PWt"/>
-        <segue reference="mEd-et-lyR"/>
+        <segue reference="Hyz-uv-cpc"/>
+        <segue reference="oF3-aI-OCw"/>
         <segue reference="Neh-iJ-Fpe"/>
-        <segue reference="Dng-DQ-LOk"/>
-        <segue reference="FcC-pN-TYA"/>
+        <segue reference="mEd-et-lyR"/>
+        <segue reference="SkA-08-PWt"/>
         <segue reference="7b0-8i-w2b"/>
+        <segue reference="Dng-DQ-LOk"/>
         <segue reference="Kxl-Rh-nWd"/>
-        <segue reference="UAK-rn-23P"/>
         <segue reference="aya-mQ-TZi"/>
+        <segue reference="UAK-rn-23P"/>
     </inferredMetricsTieBreakers>
 </document>
