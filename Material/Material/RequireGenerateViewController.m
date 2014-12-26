@@ -196,10 +196,10 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-//    if(textField.tag!=5){
-//        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-//        textField.inputView = dummyView;
-//    }
+    if(textField.tag!=5){
+        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+        textField.inputView = dummyView;
+    }
     self.firstResponder=textField;
 }
 

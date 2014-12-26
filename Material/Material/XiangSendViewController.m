@@ -58,7 +58,7 @@
 
 - (IBAction)confirm:(id)sender {
     if(self.departmentReceive[@"id"]){
-        if([self.xiang.position isEqualToString:self.myAddress.name]){
+        if(![self.xiang.position isEqualToString:self.departmentReceive[@"name"]]){
             self.wrongDepartAlert=[[UIAlertView alloc] initWithTitle:@"警告"
                                                              message:@"箱所属部门与发送部门不一致"
                                                             delegate:self
