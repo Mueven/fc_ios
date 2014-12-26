@@ -42,18 +42,6 @@
     self.billListArray=[NSArray array];
     [LEDcolor sharedLEDColor];
   
-        //example
-//        NSMutableArray *billList=[[NSMutableArray alloc] init];
-//        for(int i=0;i<5;i++){
-//            NSDictionary *dic=@{@"date":[NSString stringWithFormat:@"2014-08-0%d 18:00",i],
-//                                @"department":@"MB",
-//                                @"status":@"在途"};
-//            RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
-//            [billList addObject:bill];
-//            self.billListArray=[billList copy];
-//            
-//        }
-//       [self.billTable reloadData];
     
 }
 

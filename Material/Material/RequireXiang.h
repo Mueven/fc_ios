@@ -31,4 +31,5 @@
 @property(nonatomic)BOOL urgent;
 @property(nonatomic)BOOL isExisted;
 -(instancetype)initWithObject:(id)object;
+-(instancetype)copyMe:(RequireXiang *)xiang;
 @end

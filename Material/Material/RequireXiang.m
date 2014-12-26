@@ -65,4 +65,29 @@
     }
     return self;
 }
+-(instancetype)copyMe:(RequireXiang *)xiang
+{
+    self.id=[xiang.id copy];
+    self.position=[xiang.position copy];
+    self.partNumber=[xiang.partNumber copy];
+    self.partNumber_origin=[xiang.partNumber_origin copy];
+    self.quantity=[xiang.quantity copy];
+    self.quantity_int=[xiang.quantity_int copy];
+    self.source=[xiang.source copy];
+    self.source_name=[xiang.source_name copy];
+    self.department=[xiang.department copy];
+    self.department_origin=[xiang.department_origin copy];
+    self.agent=[xiang.agent copy];
+    self.uniq_id=[xiang.uniq_id copy];
+    self.handled_text=[xiang.handled_text copy];
+    self.is_finished_text=[xiang.is_finished_text copy];
+    self.out_of_stock_text=[xiang.out_of_stock_text copy];
+    self.handled=xiang.handled;
+    self.is_finished=xiang.is_finished;
+    self.out_of_stock=xiang.out_of_stock;
+    self.xiangCount=xiang.xiangCount;
+    self.urgent=xiang.urgent;
+    self.isExisted=xiang.isExisted;
+    return self;
+}
 @end

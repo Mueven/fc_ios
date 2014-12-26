@@ -17,7 +17,8 @@
 #import "RequireCheckXiangTableViewCell.h"
 #import "RequireCheckBill.h"
 #import "ScanStandard.h"
-
+#import "RequireSort.h"
+#import "RequireCheckGeneralTableViewController.h"
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -47,6 +48,7 @@
 @property (strong,nonatomic) NSMutableArray *thisXiangArray;
 @property (strong,nonatomic) NSMutableDictionary *isExistDictionary;
 - (IBAction)clickScreen:(id)sender;
+- (IBAction)check:(id)sender;
 @end
 
 @implementation RequireGenerateViewController
@@ -194,10 +196,10 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(textField.tag!=5){
-        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        textField.inputView = dummyView;
-    }
+//    if(textField.tag!=5){
+//        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+//        textField.inputView = dummyView;
+//    }
     self.firstResponder=textField;
 }
 
@@ -570,23 +572,6 @@
 }
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if([segue.identifier isEqualToString:@"printFormGenerate"]){
-        RequirePrintViewController *print=segue.destinationViewController;
-        print.type=[sender objectForKey:@"type"];
-        print.success=[[sender objectForKey:@"success"] integerValue];
-    }
-    else if([segue.identifier isEqualToString:@"xiangDetail"]){
-        RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
-        xiangDetail.xiang=[sender objectForKey:@"xiang"];
-    }
-}
-
-
 - (IBAction)finish:(id)sender {
 //    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
     if(self.xiangArray.count>0){
@@ -728,5 +713,28 @@
 - (IBAction)clickScreen:(id)sender {
 //    [self.firstResponder resignFirstResponder];
 //    self.firstResponder=nil;
+}
+
+- (IBAction)check:(id)sender {
+    NSArray *xiangArray=[RequireSort sortByPartNumber:[self.xiangArray copy]];
+    [self performSegueWithIdentifier:@"check" sender:@{@"xiangArray":xiangArray}];
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"printFormGenerate"]){
+        RequirePrintViewController *print=segue.destinationViewController;
+        print.type=[sender objectForKey:@"type"];
+        print.success=[[sender objectForKey:@"success"] integerValue];
+    }
+    else if([segue.identifier isEqualToString:@"xiangDetail"]){
+        RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
+        xiangDetail.xiang=[sender objectForKey:@"xiang"];
+    }
+    else if([segue.identifier isEqualToString:@"check"]){
+        RequireCheckGeneralTableViewController *vc=segue.destinationViewController;
+        vc.xiangArray=[sender objectForKey:@"xiangArray"];
+    }
 }
 @end

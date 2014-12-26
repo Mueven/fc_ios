@@ -119,6 +119,13 @@
 		B0BE29301949921900061E67 /* XiangTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BE292E1949921900061E67 /* XiangTableViewCell.m */; };
 		B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BE292F1949921900061E67 /* XiangTableViewCell.xib */; };
 		B0C75C261A3AC6B800F8A0FF /* UserPreference.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C75C251A3AC6B800F8A0FF /* UserPreference.m */; };
+		B0CC6AE01A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CC6ADF1A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.m */; };
+		B0CC6AE31A4CFBD10047FF7F /* RequireCheckDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CC6AE21A4CFBD10047FF7F /* RequireCheckDetailTableViewController.m */; };
+		B0CC6AE61A4D08440047FF7F /* RequireSort.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CC6AE51A4D08440047FF7F /* RequireSort.m */; };
+		B0CC6AEA1A4D12020047FF7F /* RequireCheckGeneralTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CC6AE81A4D12020047FF7F /* RequireCheckGeneralTableViewCell.m */; };
+		B0CC6AEB1A4D12020047FF7F /* RequireCheckGeneralTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0CC6AE91A4D12020047FF7F /* RequireCheckGeneralTableViewCell.xib */; };
+		B0CC6AEF1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0CC6AED1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.m */; };
+		B0CC6AF01A4D121A0047FF7F /* RequireCheckDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0CC6AEE1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.xib */; };
 		B0D555C31A1D9FDF00659D6D /* XiangSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */; };
 		B0D555C61A1DA24E00659D6D /* TuoSendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D555C51A1DA24E00659D6D /* TuoSendViewController.m */; };
 		B0DF64351943E1D1002D044B /* PrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0DF64341943E1D1002D044B /* PrintViewController.m */; };
@@ -352,6 +359,18 @@
 		B0BE292F1949921900061E67 /* XiangTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XiangTableViewCell.xib; sourceTree = "<group>"; };
 		B0C75C241A3AC6B800F8A0FF /* UserPreference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserPreference.h; sourceTree = "<group>"; };
 		B0C75C251A3AC6B800F8A0FF /* UserPreference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserPreference.m; sourceTree = "<group>"; };
+		B0CC6ADE1A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckGeneralTableViewController.h; sourceTree = "<group>"; };
+		B0CC6ADF1A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckGeneralTableViewController.m; sourceTree = "<group>"; };
+		B0CC6AE11A4CFBD10047FF7F /* RequireCheckDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckDetailTableViewController.h; sourceTree = "<group>"; };
+		B0CC6AE21A4CFBD10047FF7F /* RequireCheckDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckDetailTableViewController.m; sourceTree = "<group>"; };
+		B0CC6AE41A4D08440047FF7F /* RequireSort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireSort.h; sourceTree = "<group>"; };
+		B0CC6AE51A4D08440047FF7F /* RequireSort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSort.m; sourceTree = "<group>"; };
+		B0CC6AE71A4D12020047FF7F /* RequireCheckGeneralTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckGeneralTableViewCell.h; sourceTree = "<group>"; };
+		B0CC6AE81A4D12020047FF7F /* RequireCheckGeneralTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckGeneralTableViewCell.m; sourceTree = "<group>"; };
+		B0CC6AE91A4D12020047FF7F /* RequireCheckGeneralTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckGeneralTableViewCell.xib; sourceTree = "<group>"; };
+		B0CC6AEC1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequireCheckDetailTableViewCell.h; sourceTree = "<group>"; };
+		B0CC6AED1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireCheckDetailTableViewCell.m; sourceTree = "<group>"; };
+		B0CC6AEE1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequireCheckDetailTableViewCell.xib; sourceTree = "<group>"; };
 		B0D555C11A1D9FDF00659D6D /* XiangSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangSendViewController.h; sourceTree = "<group>"; };
 		B0D555C21A1D9FDF00659D6D /* XiangSendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangSendViewController.m; sourceTree = "<group>"; };
 		B0D555C41A1DA24E00659D6D /* TuoSendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TuoSendViewController.h; sourceTree = "<group>"; };
@@ -563,6 +582,12 @@
 				B07CE56C198B8890000FD578 /* RequireCheckXiangTableViewCell.xib */,
 				B001BF0319A59A90000800AD /* DrawLight.h */,
 				B001BF0419A59A90000800AD /* DrawLight.m */,
+				B0CC6AE71A4D12020047FF7F /* RequireCheckGeneralTableViewCell.h */,
+				B0CC6AE81A4D12020047FF7F /* RequireCheckGeneralTableViewCell.m */,
+				B0CC6AE91A4D12020047FF7F /* RequireCheckGeneralTableViewCell.xib */,
+				B0CC6AEC1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.h */,
+				B0CC6AED1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.m */,
+				B0CC6AEE1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.xib */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -708,6 +733,8 @@
 				B05FDFAD1985E99500608CBA /* NewValidate.m */,
 				B09ECD7319AAD8C500783B6A /* LEDcolor.h */,
 				B09ECD7419AAD8C500783B6A /* LEDcolor.m */,
+				B0CC6AE41A4D08440047FF7F /* RequireSort.h */,
+				B0CC6AE51A4D08440047FF7F /* RequireSort.m */,
 			);
 			name = REQUIRE;
 			sourceTree = "<group>";
@@ -725,6 +752,10 @@
 				B0643D65197DF40D0036AADA /* RequireDetailViewController.m */,
 				B0B468C41980FF3F00D88047 /* RequireXiangDetailViewController.h */,
 				B0B468C51980FF3F00D88047 /* RequireXiangDetailViewController.m */,
+				B0CC6ADE1A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.h */,
+				B0CC6ADF1A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.m */,
+				B0CC6AE11A4CFBD10047FF7F /* RequireCheckDetailTableViewController.h */,
+				B0CC6AE21A4CFBD10047FF7F /* RequireCheckDetailTableViewController.m */,
 			);
 			name = list;
 			sourceTree = "<group>";
@@ -1005,6 +1036,7 @@
 				B0BE29311949921900061E67 /* XiangTableViewCell.xib in Resources */,
 				B085F61A194004CC001F01F3 /* InfoPlist.strings in Resources */,
 				B04EF2171946E89400A95D7A /* URL.plist in Resources */,
+				B0CC6AEB1A4D12020047FF7F /* RequireCheckGeneralTableViewCell.xib in Resources */,
 				B037ECFB194BDC50008C456E /* YunTableViewCell.xib in Resources */,
 				B08B8F0E1953D39E009739DB /* TuoTableViewCell.xib in Resources */,
 				B04EF1E01946A49500A95D7A /* ShopXiangTableViewCell.xib in Resources */,
@@ -1014,6 +1046,7 @@
 				B0BB1D8C1A2DBB5E0036AF61 /* Images.xcassets in Resources */,
 				B07CE56E198B8890000FD578 /* RequireCheckXiangTableViewCell.xib in Resources */,
 				B06E027519403D3D001B7899 /* Storyboard.storyboard in Resources */,
+				B0CC6AF01A4D121A0047FF7F /* RequireCheckDetailTableViewCell.xib in Resources */,
 				B0619E46197CB044000C1C69 /* RequireListTableViewCell.xib in Resources */,
 				B0619E59197CBE17000C1C69 /* RequireXiangTableViewCell.xib in Resources */,
 			);
@@ -1061,6 +1094,7 @@
 				B0619E58197CBE17000C1C69 /* RequireXiangTableViewCell.m in Sources */,
 				B0619E4C197CB35C000C1C69 /* RequireXiang.m in Sources */,
 				B0613987194173B600A0CF62 /* XiangStore.m in Sources */,
+				B0CC6AE61A4D08440047FF7F /* RequireSort.m in Sources */,
 				B0FDC97219458B6F008E4B72 /* YunEditViewController.m in Sources */,
 				B04EF1DF1946A49500A95D7A /* ShopXiangTableViewCell.m in Sources */,
 				B0B468C61980FF3F00D88047 /* RequireXiangDetailViewController.m in Sources */,
@@ -1073,15 +1107,18 @@
 				B0DF643C19440FCA002D044B /* XiangEditViewController.m in Sources */,
 				B05FDFAE1985E99500608CBA /* NewValidate.m in Sources */,
 				B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */,
+				B0CC6AE31A4CFBD10047FF7F /* RequireCheckDetailTableViewController.m in Sources */,
 				B0619E45197CB044000C1C69 /* RequireListTableViewCell.m in Sources */,
 				B04EF1F21946DE2900A95D7A /* HistoryXiangTableViewController.m in Sources */,
 				B00EA13A1A272A1700D95594 /* HistoryXiangItemViewController.m in Sources */,
 				B058550719A2F832000C85E5 /* TuoCheckGeneralViewController.m in Sources */,
 				B03D524C194D412300696E4E /* YunSendedViewController.m in Sources */,
 				B06CD6E41A25663900DF4D16 /* YunSendViewController.m in Sources */,
+				B0CC6AEF1A4D121A0047FF7F /* RequireCheckDetailTableViewCell.m in Sources */,
 				B061398D1941BCF900A0CF62 /* TuoBaseViewController.m in Sources */,
 				B037ECFA194BDC50008C456E /* YunTableViewCell.m in Sources */,
 				B07CE571198B8CAA000FD578 /* RequireCheckBill.m in Sources */,
+				B0CC6AE01A4CFBC00047FF7F /* RequireCheckGeneralTableViewController.m in Sources */,
 				B0DF644519448B67002D044B /* Yun.m in Sources */,
 				B06139811941680C00A0CF62 /* Xiang.m in Sources */,
 				B04244E11A1F289800AAFD24 /* ProductReceiveTuoViewController.m in Sources */,
@@ -1128,6 +1165,7 @@
 				B0DF644219446E5B002D044B /* TuoPrintViewController.m in Sources */,
 				B085F64F194014A8001F01F3 /* KeychainItemWrapper.m in Sources */,
 				B04244D01A1EDEEC00AAFD24 /* RoleViewController.m in Sources */,
+				B0CC6AEA1A4D12020047FF7F /* RequireCheckGeneralTableViewCell.m in Sources */,
 				B04EF20E1946E60D00A95D7A /* AFSecurityPolicy.m in Sources */,
 				B07292181A25AE4C009483D8 /* ReceiveYunViewController.m in Sources */,
 				B04244E61A1F3ABA00AAFD24 /* ProductXiangTableViewCell.m in Sources */,
