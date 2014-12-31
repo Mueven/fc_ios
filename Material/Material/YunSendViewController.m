@@ -55,7 +55,7 @@
     }
     else if([segue.identifier isEqualToString:@"print"]){
         PrintViewController *yunPrint=segue.destinationViewController;
-        yunPrint.container=[sender objectForKey:@"yun"];
+        yunPrint.container=self.yun;
         yunPrint.noBackButton=@1;
         yunPrint.enableSend=NO;
         yunPrint.yunSuccessContent=sender[@"content"];
