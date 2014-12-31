@@ -58,16 +58,20 @@
 
 - (IBAction)confirm:(id)sender {
     if(self.departmentReceive[@"id"]){
-        if(![self.xiang.position isEqualToString:self.departmentReceive[@"name"]]){
+        BOOL isDifferent=YES;
+        for(int i=0;i<self.xiang.possible_department.count;i++){
+            if([[self.xiang.possible_department[i] objectForKey:@"id"] isEqualToString:self.departmentReceive[@"id"]]){
+                 [self sendBox];
+                return ;
+            }
+        }
+        if(isDifferent){
             self.wrongDepartAlert=[[UIAlertView alloc] initWithTitle:@"警告"
                                                              message:@"箱所属部门与发送部门不一致"
                                                             delegate:self
                                                    cancelButtonTitle:@"不发送"
                                                    otherButtonTitles:@"继续发送", nil];
             [self.wrongDepartAlert show];
-        }
-        else{
-            [self sendBox];
         }
     }
     else {

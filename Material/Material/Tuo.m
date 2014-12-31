@@ -63,7 +63,6 @@
         self.user_id=dictionary[@"user_id"]?dictionary[@"user_id"]:@"";
         self.state=dictionary[@"state"]?[dictionary[@"state"] intValue]:0;
         self.state_display=dictionary[@"state_display"]?dictionary[@"state_display"]:@"";
-        self.xiang=[NSMutableArray array];
     }
     return self;
 }

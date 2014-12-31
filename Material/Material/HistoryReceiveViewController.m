@@ -10,7 +10,7 @@
 #import "HistoryChooseViewController.h"
 @interface HistoryReceiveViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property(nonatomic,strong)NSString *postDate;
+@property(nonatomic,strong)NSDate *postDate;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)checkYun:(id)sender;
 @end
@@ -38,7 +38,7 @@
          forControlEvents:UIControlEventValueChanged];
     datePicker.datePickerMode=UIDatePickerModeDate;
     [self.dateTextField setInputView:datePicker];
-    self.postDate=[[NSString alloc] init];
+    self.postDate=[[NSDate alloc] init];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -52,7 +52,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     self.dateTextField.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    self.postDate=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    self.postDate=datePicker.date;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -66,7 +66,7 @@
         [formatter setDateFormat:@"yyyy-MM-dd"];
         textField.text=[formatter stringFromDate:[NSDate date]];
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-        self.postDate=[formatter stringFromDate:[NSDate date]];
+        self.postDate=[NSDate date];
  
     }
     
@@ -94,6 +94,7 @@
 }
 
 - (IBAction)checkYun:(id)sender {
+ 
     if(self.dateTextField.text.length>0){
         [self performSegueWithIdentifier:@"choose" sender:self];
     }

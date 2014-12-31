@@ -10,5 +10,5 @@
 
 @interface HistoryChooseViewController : UIViewController
 @property(nonatomic,strong)NSString *vc_title;
-@property(nonatomic,strong)NSString *date_for_post;
+@property(nonatomic,strong)NSDate *date_for_post;
 @end

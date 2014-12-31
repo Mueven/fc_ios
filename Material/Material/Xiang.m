@@ -51,6 +51,7 @@
         self.checked=[object[@"state"] integerValue]==3?YES:NO;
         self.user_id=object[@"user_id"]?object[@"user_id"]:@"";
         self.state_display=object[@"state_display"]?object[@"state_display"]:@"";
+        self.possible_department=object[@"possible_department"]?[NSArray arrayWithArray:object[@"possible_department"]]:[NSArray array];
         self.state=object[@"state"]?[object[@"state"] intValue]:0 ;
     }
     return self;
@@ -68,6 +69,7 @@
     self.checked=xiang.checked?YES:NO;
     self.state=xiang.state;
     self.state_display=[xiang.state_display copy];
+    self.possible_department=[NSArray arrayWithArray:xiang.possible_department];
     return self;
 }
 @end

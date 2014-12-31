@@ -293,6 +293,7 @@
                         <outlet property="quantity" destination="bhZ-zD-GnL" id="qM9-l5-rrk"/>
                         <outlet property="sendButton" destination="qCZ-sW-duo" id="6Bu-iD-4m8"/>
                         <segue destination="Awj-vQ-PdY" kind="push" identifier="send" id="z8u-Zo-vWe"/>
+                        <segue destination="W31-QG-1bE" kind="push" identifier="print" id="dyT-NG-4n1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zlO-Rz-Ezr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4631,19 +4632,19 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="joq-VG-3De"/>
-        <segue reference="zbp-Dd-2O5"/>
-        <segue reference="Xpt-zp-Oio"/>
-        <segue reference="Hyz-uv-cpc"/>
-        <segue reference="Neh-iJ-Fpe"/>
+        <segue reference="Dng-DQ-LOk"/>
         <segue reference="mEd-et-lyR"/>
+        <segue reference="FcC-pN-TYA"/>
         <segue reference="SkA-08-PWt"/>
         <segue reference="7b0-8i-w2b"/>
-        <segue reference="GAe-Se-hn7"/>
-        <segue reference="Dng-DQ-LOk"/>
+        <segue reference="2c4-Zh-zKC"/>
         <segue reference="yJ1-Ae-Eed"/>
-        <segue reference="Kxl-Rh-nWd"/>
-        <segue reference="UAK-rn-23P"/>
         <segue reference="aya-mQ-TZi"/>
+        <segue reference="UAK-rn-23P"/>
+        <segue reference="Kxl-Rh-nWd"/>
+        <segue reference="Xpt-zp-Oio"/>
+        <segue reference="Hyz-uv-cpc"/>
+        <segue reference="joq-VG-3De"/>
+        <segue reference="zbp-Dd-2O5"/>
     </inferredMetricsTieBreakers>
 </document>

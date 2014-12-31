@@ -79,18 +79,11 @@
     else if([type isEqualToString:@"xiang"]){
         receive_parameters=[AFNet xiang_root];
     }
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:NSWeekdayCalendarUnit | NSYearCalendarUnit | NSMonthCalendarUnit |           NSDayCalendarUnit fromDate:[[NSDate alloc] init]];
-    [components setHour:0];
-    [components setSecond:0];
-    [components setMinute:0];
-    NSDate *begin  = [cal dateFromComponents:components];
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *beginDate=[formatter stringFromDate:begin];
-    [components setHour:24];
-    NSDate *end  = [cal dateFromComponents:components];
-    NSString *endDate=[formatter stringFromDate:end];
+     [formatter setDateFormat:@"yyyy-MM-dd'T'00:00:00ZZZZZ"];
+    NSString *beginDate  =  [formatter stringFromDate:self.date_for_post];
+    NSDate *end= [[NSDate alloc] initWithTimeIntervalSinceReferenceDate:([self.date_for_post timeIntervalSinceReferenceDate] + 24*3600)];
+    NSString *endDate =  [formatter stringFromDate:end];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:receive_parameters
       parameters:@{

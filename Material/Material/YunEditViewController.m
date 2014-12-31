@@ -41,6 +41,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 //    self.name.delegate=self;
+    
     self.remark.delegate=self;
     self.tuoTable.delegate=self;
     self.tuoTable.dataSource=self;
@@ -51,7 +52,6 @@
 {
     [super viewWillAppear:animated];
     self.navigationItem.title=self.yun.name;
-
     self.remark.text=self.yun.remark;
     [self.tuoTable reloadData];
 }

@@ -168,7 +168,6 @@
           parameters:@{@"id":yun.ID}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
-             
                  if([responseObject[@"result"] integerValue]==1){
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
@@ -231,7 +230,6 @@
                      [AFNet.activeView stopAnimating];
                  });
                  if([responseObject[@"result"] integerValue]==1){
-                    
                          NSArray *tuoArray=responseObject[@"content"];
                          [yun.tuoArray removeAllObjects];
                          for(int i=0;i<tuoArray.count;i++){
@@ -239,7 +237,6 @@
                              [yun.tuoArray addObject:tuoItem];
                          }
                          [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
-                      
                  }
                  else{
                      [AFNet alert:responseObject[@"content"]];

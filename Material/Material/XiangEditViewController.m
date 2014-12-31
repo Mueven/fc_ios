@@ -11,6 +11,7 @@
 #import "ScanStandard.h"
 #import "XiangSendViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "PrintViewController.h"
 @interface XiangEditViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
@@ -52,6 +53,12 @@
      self.scanStandard=[ScanStandard sharedScanStandard];
     if(self.enableSend){
         self.sendButton.hidden=NO;
+    }
+    else{
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"打印"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(print)];
     }
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -232,7 +239,6 @@
 
 - (IBAction)sendXiang:(id)sender {
     if(self.dirty==0){
-        NSLog(@"here");
         [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];
     }
     else{
@@ -284,7 +290,10 @@
     }
 
 }
-
+-(void)print
+{
+    [self performSegueWithIdentifier:@"print" sender:self];
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"send"]){
@@ -294,6 +303,12 @@
             sendVC.xiangArray=self.xiangArray;
             sendVC.xiangIndex=self.xiangIndex;
         }
+    }
+    else if([segue.identifier isEqualToString:@"print"]){
+        PrintViewController *vc=segue.destinationViewController;
+        vc.container=self.xiang;
+        vc.noBackButton=[sender objectForKey:@"noBackButton"];
+        vc.enableSend=NO;
     }
 }
 @end
