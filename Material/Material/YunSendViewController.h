@@ -10,5 +10,4 @@
 #import "Yun.h"
 @interface YunSendViewController : UIViewController
 @property(nonatomic,strong)Yun *yun;
-@property(nonatomic,strong)NSString *successContent;
 @end

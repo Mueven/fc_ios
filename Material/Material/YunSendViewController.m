@@ -12,11 +12,13 @@
 #import "DefaultAddressTableViewController.h"
 #import "AFNetOperate.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "PrintViewController.h"
 @interface YunSendViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tuoCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *defaultAddress;
 @property (strong,nonatomic) SendAddressItem *myAddress;
+@property(nonatomic,strong)NSString *successContent;
 - (IBAction)changeAddress:(id)sender;
 - (IBAction)confirm:(id)sender;
 - (IBAction)cancel:(id)sender;
@@ -51,6 +53,13 @@
         DefaultAddressTableViewController *addressVC=segue.destinationViewController;
         addressVC.myAddress=self.myAddress;
     }
+    else if([segue.identifier isEqualToString:@"print"]){
+        PrintViewController *yunPrint=segue.destinationViewController;
+        yunPrint.container=[sender objectForKey:@"yun"];
+        yunPrint.noBackButton=@1;
+        yunPrint.enableSend=NO;
+        yunPrint.yunSuccessContent=sender[@"content"];
+    }
 }
 
 - (IBAction)changeAddress:(id)sender {
@@ -70,8 +79,9 @@
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){
                       AudioServicesPlaySystemSound(1012);
-                      self.successContent=responseObject[@"content"];
-                      [self.navigationController popViewControllerAnimated:YES];
+                      //self.successContent=responseObject[@"content"];
+//                      [self.navigationController popViewControllerAnimated:YES];
+                      [self performSegueWithIdentifier:@"print" sender:@{@"content":responseObject[@"content"]}];
                   }
                   else{
                       [AFNet alert:responseObject[@"content"]];

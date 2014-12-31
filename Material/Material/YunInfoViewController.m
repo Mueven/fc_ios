@@ -10,7 +10,7 @@
 #import "Yun.h"
 #import "PrintViewController.h"
 #import "AFNetOperate.h"
-
+#import "YunSendViewController.h"
 @interface YunInfoViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tuoCountLabel;
 @property (weak, nonatomic) IBOutlet UITextField *remark;
@@ -117,7 +117,7 @@
                   if([(NSDictionary *)responseObject[@"content"] count]>0){
                       self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
                       self.yun.remark=self.remark.text;
-                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+                      [self performSegueWithIdentifier:@"send" sender:self];
                   }
               }
               else{
@@ -175,6 +175,11 @@
         yunPrint.container=[sender objectForKey:@"yun"];
         yunPrint.noBackButton=@1;
         yunPrint.enableSend=YES;
+    }
+    else if([segue.identifier isEqualToString:@"send"]){
+        YunSendViewController *vc=segue.destinationViewController;
+        vc.yun=self.yun;
+    
     }
 }
 @end

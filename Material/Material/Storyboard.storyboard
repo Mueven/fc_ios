@@ -768,7 +768,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ztd-ak-m4B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5076" y="2233"/>
+            <point key="canvasLocation" x="4870" y="2217"/>
         </scene>
         <!--Tuo Check Detail View Controller-->
         <scene sceneID="Lw7-Z8-VgD">
@@ -902,7 +902,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c0z-i1-EhH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="GRt-gM-KUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5061" y="1497"/>
+            <point key="canvasLocation" x="5129" y="1445"/>
         </scene>
         <!--选择收货地址-->
         <scene sceneID="7a8-Kn-R60">
@@ -1404,12 +1404,13 @@
                         <outlet property="tuoCountLabel" destination="UMd-mv-RMi" id="Kcy-ic-bRx"/>
                         <segue destination="W31-QG-1bE" kind="push" identifier="printYun" id="ZfA-pO-UHe"/>
                         <segue destination="HcB-P7-E3x" kind="unwind" identifier="finishYun" unwindAction="unwindToYunTable:" id="I3T-Bs-Jhh"/>
+                        <segue destination="vPP-bH-nEQ" kind="push" identifier="send" id="Do4-uK-Dun"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wnv-Ev-tHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="HcB-P7-E3x" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3883" y="2862"/>
+            <point key="canvasLocation" x="3893" y="2842"/>
         </scene>
         <!--已有托清单-->
         <scene sceneID="bPg-zn-JL4">
@@ -1508,7 +1509,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.97084263390000003" green="0.3670137342" blue="0.39047720740000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="放弃">
+                                <state key="normal" title="不发送">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1538,11 +1539,12 @@
                         <outlet property="remarkLabel" destination="pdW-XE-wRa" id="YF7-jo-UCV"/>
                         <outlet property="tuoCountLabel" destination="AAn-8r-K6u" id="AvR-vL-ape"/>
                         <segue destination="auM-tp-hPM" kind="push" identifier="changeAddress" id="hy6-vM-msP"/>
+                        <segue destination="W31-QG-1bE" kind="push" identifier="print" id="GDE-C3-Tx4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="euL-7c-P1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5076" y="3567"/>
+            <point key="canvasLocation" x="5072" y="3575"/>
         </scene>
         <!--接收运单-->
         <scene sceneID="ufc-71-gmQ">
@@ -4632,19 +4634,20 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Dng-DQ-LOk"/>
-        <segue reference="mEd-et-lyR"/>
-        <segue reference="FcC-pN-TYA"/>
-        <segue reference="SkA-08-PWt"/>
-        <segue reference="7b0-8i-w2b"/>
-        <segue reference="2c4-Zh-zKC"/>
-        <segue reference="yJ1-Ae-Eed"/>
+        <segue reference="Kxl-Rh-nWd"/>
         <segue reference="aya-mQ-TZi"/>
         <segue reference="UAK-rn-23P"/>
-        <segue reference="Kxl-Rh-nWd"/>
-        <segue reference="Xpt-zp-Oio"/>
+        <segue reference="yJ1-Ae-Eed"/>
         <segue reference="Hyz-uv-cpc"/>
+        <segue reference="Xpt-zp-Oio"/>
         <segue reference="joq-VG-3De"/>
         <segue reference="zbp-Dd-2O5"/>
+        <segue reference="mEd-et-lyR"/>
+        <segue reference="SkA-08-PWt"/>
+        <segue reference="2c4-Zh-zKC"/>
+        <segue reference="Do4-uK-Dun"/>
+        <segue reference="hy6-vM-msP"/>
+        <segue reference="GDE-C3-Tx4"/>
+        <segue reference="hQ5-Fe-tiF"/>
     </inferredMetricsTieBreakers>
 </document>

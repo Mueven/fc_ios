@@ -19,7 +19,7 @@
 - (IBAction)print:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *yunSuccessContentLabel;
-@property (strong, nonatomic) NSString *yunSuccessContent;
+
 @property (weak, nonatomic) IBOutlet UILabel *printModelLabel;
 @property (weak, nonatomic) IBOutlet UITextField *pageTextField;
 @property (strong,nonatomic) PrinterSetting *printSetting;
@@ -58,7 +58,7 @@
     if(self.enableSend){
         self.sendButton.hidden=NO;
     }
-    self.yunSuccessContent=[NSString string];
+    //self.yunSuccessContent=[NSString string];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -238,10 +238,10 @@
         TuoSendViewController *sendVC=segue.destinationViewController;
         sendVC.tuo=self.container;
     }
-    else if ([segue.identifier isEqualToString:@"sendYun"]){
-        YunSendViewController *yunVC=segue.destinationViewController;
-        yunVC.yun=self.container;
-        yunVC.successContent=self.yunSuccessContent;
-    }
+//    else if ([segue.identifier isEqualToString:@"sendYun"]){
+//        YunSendViewController *yunVC=segue.destinationViewController;
+//        yunVC.yun=self.container;
+//        yunVC.successContent=self.yunSuccessContent;
+//    }
 }
 @end
