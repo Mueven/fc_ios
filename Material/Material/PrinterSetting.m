@@ -157,7 +157,7 @@
     [self saveToArchive:update_sign object:@1];
 }
 -(void)resetPrinterModel{
-    [self saveToArchive:@"printer_update" object:NULL];
+    [self saveToArchive:@"printer_update" object:@NO];
 }
 #pragma method about get/set copy and printer
 //same function with getPrivatePrinter , just a proper demonstration
