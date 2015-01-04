@@ -22,7 +22,6 @@
 @property (strong,nonatomic)ScanStandard *scanStandard;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (nonatomic) int *dirty;
-- (IBAction)finishEdit:(id)sender;
 - (IBAction)sendXiang:(id)sender;
 @end
 
@@ -53,6 +52,10 @@
      self.scanStandard=[ScanStandard sharedScanStandard];
     if(self.enableSend){
         self.sendButton.hidden=NO;
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"完成"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(finishEdit)];
     }
     else{
         self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"打印"
@@ -182,7 +185,7 @@
     return YES;
 }
 
-- (IBAction)finishEdit:(id)sender {
+- (void)finishEdit{
     if(self.dirty==0){
               [self.navigationController popViewControllerAnimated:YES];
     }
@@ -307,7 +310,7 @@
     else if([segue.identifier isEqualToString:@"print"]){
         PrintViewController *vc=segue.destinationViewController;
         vc.container=self.xiang;
-        vc.noBackButton=[sender objectForKey:@"noBackButton"];
+        vc.noBackButton=@0;
         vc.enableSend=NO;
     }
 }

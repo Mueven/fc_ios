@@ -177,7 +177,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"fromXiang" sender:@{@"xiang":xiang}];
+    BOOL enableSend;
+    if(xiang.state==0){
+        enableSend=YES;
+    }
+    else{
+        enableSend=NO;
+    }
+    [self performSegueWithIdentifier:@"fromXiang" sender:@{@"xiang":xiang,@"enableSend":[NSString stringWithFormat:@"%hhd",enableSend]}];
 }
 
 #pragma mark - Navigation
@@ -191,7 +198,7 @@
     else if([segue.identifier isEqualToString:@"fromXiang"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
-        xiangEdit.enableSend=YES;
+        xiangEdit.enableSend=[[sender objectForKey:@"enableSend"] boolValue];
     }
 }
 
