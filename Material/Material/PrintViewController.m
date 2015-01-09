@@ -238,10 +238,10 @@
         TuoSendViewController *sendVC=segue.destinationViewController;
         sendVC.tuo=self.container;
     }
-//    else if ([segue.identifier isEqualToString:@"sendYun"]){
-//        YunSendViewController *yunVC=segue.destinationViewController;
-//        yunVC.yun=self.container;
+    else if ([segue.identifier isEqualToString:@"sendYun"]){
+        YunSendViewController *yunVC=segue.destinationViewController;
+        yunVC.yun=self.container;
 //        yunVC.successContent=self.yunSuccessContent;
-//    }
+    }
 }
 @end
