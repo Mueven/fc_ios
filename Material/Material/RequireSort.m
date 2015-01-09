@@ -31,7 +31,7 @@
                 [origin removeObjectAtIndex:i];
                 if(i==0){
                     //only one first=last
-                    [newArray addObject:[currentItem copy]];
+                    [newArray addObject:[currentItem mutableCopy]];
                 }
             }
             else{
@@ -48,7 +48,7 @@
                 }
                 if(i==0){
                     //the last
-                    [newArray addObject:[currentItem copy]];
+                    [newArray addObject:[currentItem mutableCopy]];
                     [currentItem setObject:[NSMutableArray array] forKey:@"xiangArray"];
                 }
             }

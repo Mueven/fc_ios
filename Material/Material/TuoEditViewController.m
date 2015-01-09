@@ -103,7 +103,6 @@
                            }
                        }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                     NSLog(@"reselt:%@",responseObject[@"result"]);
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
                         self.tuo.department=department;

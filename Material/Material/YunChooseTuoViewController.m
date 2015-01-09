@@ -212,7 +212,6 @@
         [self performSegueWithIdentifier:@"nextStep" sender:self];
     }
     else if([self.navigationButton.title isEqualToString:self.barTitle]){
-        NSLog(@"i got here");
         //修改未发送的运单时点击完成更改，添加新的拖到箱里
         NSMutableArray *tuoIDArray=[[NSMutableArray alloc] init];
         for(int i=0;i<self.yun.tuoArray.count;i++){
@@ -221,7 +220,6 @@
         }
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        NSLog(@"the address is %@ id is %@",[AFNet yun_add_tuo],self.yunTarget.ID);
         [manager POST:[AFNet yun_add_tuo]
            parameters:@{
                              @"id":self.yunTarget.ID,

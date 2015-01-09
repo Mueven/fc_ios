@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RequireCheckGeneralTableViewController : UITableViewController
+@interface RequireCheckGeneralTableViewController : UIViewController
 @property(nonatomic,strong)NSArray *xiangArray;
 @end

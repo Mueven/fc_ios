@@ -3287,12 +3287,12 @@
                         <outlet property="xiangTable" destination="ewX-lB-w9O" id="Nyw-IX-slN"/>
                         <segue destination="rcc-cJ-RHf" kind="push" identifier="printFormGenerate" id="UAK-rn-23P"/>
                         <segue destination="acj-Aa-nWi" kind="push" identifier="xiangDetail" id="aya-mQ-TZi"/>
-                        <segue destination="zTK-kb-z3q" kind="push" identifier="check" id="VXk-gB-jxH"/>
+                        <segue destination="PfK-jM-7wC" kind="push" identifier="check" id="aiX-OP-DD0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LGS-HO-dwf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3978" y="10323"/>
+            <point key="canvasLocation" x="4072" y="10183"/>
         </scene>
         <!--Require Xiang Detail View Controller-->
         <scene sceneID="6wl-Wh-Hna">
@@ -3443,26 +3443,49 @@
             <point key="canvasLocation" x="4592" y="10183"/>
         </scene>
         <!--核对-->
-        <scene sceneID="gNd-XX-YZa">
+        <scene sceneID="DvX-QZ-pfC">
             <objects>
-                <tableViewController id="zTK-kb-z3q" customClass="RequireCheckGeneralTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="0Cd-zh-dXi">
+                <viewController id="PfK-jM-7wC" customClass="RequireCheckGeneralTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aOJ-82-vZh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Vtd-21-lg1">
+                                <rect key="frame" x="44" y="123" width="233" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="扫描零件号" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qxR-0p-TiO">
+                                <rect key="frame" x="44" y="101" width="89" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" id="t0z-iO-mqh">
+                                <rect key="frame" x="0.0" y="192" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="X2X-OT-Fol">
+                                <rect key="frame" x="0.0" y="193" width="320" height="375"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="zTK-kb-z3q" id="Tw7-Lm-Ofl"/>
-                            <outlet property="delegate" destination="zTK-kb-z3q" id="iRK-Zv-yaS"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="核对" id="uHQ-7l-35z"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="核对" id="4i7-97-Cmn"/>
                     <connections>
-                        <segue destination="jLj-hh-Vd2" kind="push" identifier="detail" id="zpc-f2-7K9"/>
+                        <outlet property="scanTextField" destination="Vtd-21-lg1" id="nk3-Tv-xPK"/>
+                        <outlet property="table" destination="X2X-OT-Fol" id="Ruh-EU-B32"/>
+                        <segue destination="jLj-hh-Vd2" kind="push" identifier="detail" id="ChU-QV-HOt"/>
                     </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Fx1-BC-uXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W2S-X5-znx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5007" y="9708"/>
+            <point key="canvasLocation" x="5091" y="9666"/>
         </scene>
         <!--核对详细-->
         <scene sceneID="ZAg-kj-Qxi">
@@ -3481,7 +3504,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZK6-n1-E5u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5471" y="9706"/>
+            <point key="canvasLocation" x="5599" y="9666"/>
         </scene>
         <!--Require Detail View Controller-->
         <scene sceneID="jZ0-7N-uuU">
