@@ -31,11 +31,13 @@
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
+    [self.scanTextField becomeFirstResponder];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
+    [self.scanTextField resignFirstResponder];
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
