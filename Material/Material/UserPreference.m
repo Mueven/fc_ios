@@ -5,9 +5,6 @@
 //  Created by wayne on 14-12-12.
 //  Copyright (c) 2014年 brilliantech. All rights reserved.
 //
-
-#import "UserPreference.h"
-#import "AFNetOperate.h"
 // role:
 // 100: 管理员
 // 200: 经理
@@ -19,6 +16,11 @@
 // l001 原材料
 // l002 外库
 // l003 工厂仓库
+// operation_mode:
+// 0:自动
+// 1:手动
+#import "UserPreference.h"
+#import "AFNetOperate.h"
 @interface UserPreference()
 @end
 
@@ -29,6 +31,7 @@
     userPref.role_id=object[@"role_id"]?[NSString stringWithFormat:@"%@",object[@"role_id"]]:@"";
     userPref.location_id=object[@"location_id"]?object[@"location_id"]:@"";
     userPref.location_name=object[@"location_name"]?object[@"location_name"]:@"";
+    userPref.operation_mode=object[@"operation_mode"]?[NSString stringWithFormat:@"%@",object[@"operation_mode"]]:@"0";
     return userPref;
 }
 +(instancetype)sharedUserPreference

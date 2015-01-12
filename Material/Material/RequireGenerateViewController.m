@@ -19,6 +19,7 @@
 #import "ScanStandard.h"
 #import "RequireSort.h"
 #import "RequireCheckGeneralTableViewController.h"
+#import "UserPreference.h"
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -35,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *firstView;
 @property (strong,nonatomic)ScanStandard *scanStandard;
 @property (strong,nonatomic)UIAlertView *backAlert;
+@property (strong,nonatomic)UserPreference *userPreference;
 - (IBAction)firstTabClick:(id)sender;
 - (IBAction)secondTabClick:(id)sender;
 - (IBAction)clickBackButton:(id)sender;
@@ -47,8 +49,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *thisXiangTable;
 @property (strong,nonatomic) NSMutableArray *thisXiangArray;
 @property (strong,nonatomic) NSMutableDictionary *isExistDictionary;
-- (IBAction)clickScreen:(id)sender;
 - (IBAction)check:(id)sender;
+- (IBAction)clickScreen:(id)sender;
 @end
 
 @implementation RequireGenerateViewController
@@ -75,12 +77,10 @@
     self.thisXiangTable.delegate=self;
     self.thisXiangTable.dataSource=self;
     self.xiangTable.dataSource=self;
-    
     UINib *nib=[UINib nibWithNibName:@"RequireXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"cell"];
     UINib *secondeNib=[UINib nibWithNibName:@"RequireCheckXiangTableViewCell" bundle:nil];
     [self.thisXiangTable registerNib:secondeNib forCellReuseIdentifier:@"secondCell"];
-    
     self.xiangArray=[[NSMutableArray alloc] init];
     self.xiangCount=0;
     [self updateCountLabel];
@@ -88,6 +88,7 @@
     self.order_source_id=[NSString string];
     self.scanStandard=[ScanStandard sharedScanStandard];
     [self.navigationItem setHidesBackButton:YES];
+    self.userPreference=[UserPreference sharedUserPreference];
     //second view init
     self.thisXiangArray=[NSMutableArray array];
     self.thisXiangCountLabel.adjustsFontSizeToFitWidth=YES;
@@ -197,8 +198,13 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if(textField.tag!=5){
-        UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-        textField.inputView = dummyView;
+        if(textField.tag==3&&[self.userPreference.operation_mode isEqualToString:@"0"]){
+            
+        }
+        else{
+            UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+            textField.inputView = dummyView;
+        }
     }
     self.firstResponder=textField;
 }
@@ -711,6 +717,8 @@
 }
 
 - (IBAction)clickScreen:(id)sender {
+//    NSLog(@"click screen");
+//    NSLog(@"%@",self.firstResponder);
 //    [self.firstResponder resignFirstResponder];
 //    self.firstResponder=nil;
 }

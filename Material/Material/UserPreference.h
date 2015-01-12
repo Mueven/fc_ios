@@ -12,6 +12,7 @@
 @property(nonatomic,strong)NSString *location_id;
 @property(nonatomic,strong)NSString *location_name;
 @property(nonatomic,strong)NSString *role_id;
+@property(nonatomic,strong)NSString *operation_mode;
 +(instancetype)sharedUserPreference;
 +(instancetype)generateUserPreference:(id)object;
 @end
