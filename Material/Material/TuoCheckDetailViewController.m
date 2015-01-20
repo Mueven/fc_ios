@@ -59,6 +59,19 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.stateLabel.text=xiang.state_display;
+    if(xiang.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(xiang.state==1 || xiang.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(xiang.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(xiang.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     return cell;
 }
 /*

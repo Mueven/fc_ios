@@ -10,12 +10,18 @@
 
 @interface Xiang : NSObject
 @property(nonatomic,strong)NSString *ID;
+@property(nonatomic,strong)NSString *container_id;
 @property(nonatomic,strong)NSString *number;
 @property(nonatomic,strong)NSString *key;
 @property(nonatomic,strong)NSString *count;
+@property(nonatomic,strong)NSString *quantity_display;
 @property(nonatomic,strong)NSString *position;
 @property(nonatomic,strong)NSString *remark;
 @property(nonatomic,strong)NSString *date;
+@property(nonatomic,strong)NSString *user_id;
+@property(nonatomic,strong)NSString *state_display;
+@property(nonatomic,strong)NSArray *possible_department;
+@property(nonatomic) int state ;
 @property(nonatomic)BOOL checked;
 -(instancetype)initExample;
 -(instancetype)initWith:(NSString *)ID partNumber:(NSString *)partNumber key:(NSString *)key count:(NSString *)count position:(NSString *)position remark:(NSString *)remark date:(NSString *)date;

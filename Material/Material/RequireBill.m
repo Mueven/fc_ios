@@ -46,6 +46,7 @@
         self.has_out_of_stock_text=self.has_out_of_stock==1?@"缺货":@"正常";
         self.id=[object objectForKey:@"id"]?[object objectForKey:@"id"]:@"";
         self.user_id=[object objectForKey:@"user_id"]?[object objectForKey:@"user_id"]:@"";
+        self.remark=[object objectForKey:@"remark"]?[object objectForKey:@"remark"]:@"";
     }
     return self;
 }

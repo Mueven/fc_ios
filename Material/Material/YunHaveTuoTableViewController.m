@@ -45,10 +45,13 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [manager GET:[AFNet tuo_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
+             NSArray *resultArray=responseObject[@"content"];
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -90,21 +93,30 @@
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
     cell.accessoryType=UITableViewCellAccessoryNone;
     Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
-    int count=[self.privateTuo count];
+    NSInteger count=[self.privateTuo count];
     for(int i=0;i<count;i++){
-//        if(tuo==[self.privateTuo objectAtIndex:i]){
-//            cell.accessoryType=UITableViewCellAccessoryCheckmark;
-//            break ;
-//        }
         if([tuo.ID isEqualToString:[[self.privateTuo objectAtIndex:i] ID]]){
             cell.accessoryType=UITableViewCellAccessoryCheckmark;
             break ;
         }
     }
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
      cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
+    cell.stateLabel.text=tuo.state_display;
+    if(tuo.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(tuo.state==1 || tuo.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(tuo.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(tuo.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,47 +136,8 @@
                 return;
             }
         }
-//        [self.privateTuo removeObjectIdenticalTo:tuo];
     }
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation

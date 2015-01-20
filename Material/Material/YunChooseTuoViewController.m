@@ -82,7 +82,7 @@
                  if([(NSDictionary *)responseObject[@"content"] count]>0){
                      bool judge=1;
                      for(int i=0;i<self.yun.tuoArray.count;i++){
-                         NSString *idItem=[self.yun.tuoArray[i] ID];
+                         NSString *idItem=[self.yun.tuoArray[i] container_id];
                          if([idItem isEqualToString:data]){
                              judge=0;
                              break;
@@ -121,10 +121,23 @@
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
      cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
+    cell.stateLabel.text=tuo.state_display;
+    if(tuo.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(tuo.state==1 || tuo.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(tuo.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(tuo.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,7 +221,10 @@
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager POST:[AFNet yun_add_tuo]
-           parameters:@{@"id":self.yunTarget.ID,@"forklifts":tuoIDArray}
+           parameters:@{
+                             @"id":self.yunTarget.ID,
+                             @"forklifts":tuoIDArray
+                        }
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   [AFNet.activeView stopAnimating];
                   if([responseObject[@"result"] integerValue]==1){

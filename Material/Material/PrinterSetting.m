@@ -49,6 +49,7 @@
                              [self.printerDictionary setObject:item forKey:printerItem[@"Id"]];
                          }
                          self.printerModelArray=responseObject[@"Object"][@"SystemPrinters"];
+ 
                      }
                  }
                  else{
@@ -116,6 +117,7 @@
     NSString *model=[self dissolveArchive:@"printer_model" alternative:@""];
     return model;
 }
+//每一个端口，例如P001都会有一个默认的打印机对应，这样只是为了防止没有设置打印机时去取自己默认的打印机
 -(NSString *)getPrivatePrinter:(NSString *)name
 {
     if([self isSavedKey:@"printer_update"]){
@@ -125,6 +127,7 @@
         return self.printerDictionary[name][@"printer"]?self.printerDictionary[name][@"printer"]:@"";
     }
 }
+//在设置界面设置打印机型号，单独的ITOUCH全局使用这个打印机
 -(void)setPrinterModel:(NSString *)model{
     [self saveToArchive:@"printer_model" object:model];
     [self saveToArchive:@"printer_update" object:@1];
@@ -154,6 +157,38 @@
     [self saveToArchive:update_sign object:@1];
 }
 -(void)resetPrinterModel{
-    [self saveToArchive:@"printer_update" object:NULL];
+    [self saveToArchive:@"printer_update" object:@NO];
+}
+#pragma method about get/set copy and printer
+//same function with getPrivatePrinter , just a proper demonstration
+-(NSString *)getPrinterModelWithAlternative:(NSString *)name
+{
+    if([self isSavedKey:@"printer_update"]){
+        return [self getPrinterModel];
+    }
+    else{
+        return self.printerDictionary[name][@"printer"]?self.printerDictionary[name][@"printer"]:@"";
+    }
+}
+//positionName like stoke or shop,dealType like xiang/tuo/yun
+-(void)setCopy:(NSString *)positionName type:(NSString *)dealType copies:(NSString *)copies
+{
+    NSString *copy_sign=[NSString stringWithFormat:@"%@_%@",positionName,dealType];
+    [self saveToArchive:copy_sign object:copies];
+    NSString *update_sign=[NSString stringWithFormat:@"%@_%@_copy_update",positionName,dealType];
+    [self saveToArchive:update_sign object:@1];
+}
+//alternative use for the situation that u get the copy quantity from default instead setting
+-(NSString *)getCopy:(NSString *)positionName type:(NSString *)dealType alternative:(NSString *)PName
+{
+    NSString *update_sign=[NSString stringWithFormat:@"%@_%@_copy_update",positionName,dealType];
+    NSString *alternative=self.printerDictionary[PName][@"copy"]?self.printerDictionary[PName][@"copy"]:@"1";
+    if([self isSavedKey:update_sign]){
+        NSString *copy_sign=[NSString stringWithFormat:@"%@_%@",positionName,dealType];
+        return [self dissolveArchive:copy_sign alternative:alternative];
+    }
+    else{
+        return alternative;
+    }
 }
 @end

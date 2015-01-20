@@ -1,13 +1,13 @@
 //
-//  ReceiveConfirmViewController.h
+//  ReceiveYunViewController.h
 //  Material
 //
-//  Created by wayne on 14-6-15.
+//  Created by wayne on 14-11-26.
 //  Copyright (c) 2014年 brilliantech. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-@class Yun;
-@interface ReceiveConfirmViewController : UIViewController
+#import "Yun.h"
+@interface ReceiveYunViewController : UIViewController
 @property(nonatomic,strong)Yun *yun;
 @end

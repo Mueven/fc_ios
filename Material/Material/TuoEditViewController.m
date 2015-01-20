@@ -14,6 +14,7 @@
 #import "XiangTableViewCell.h"
 #import "TuoPrintViewController.h"
 #import "AFNetOperate.h"
+#import "TuoSendViewController.h"
 
 @interface TuoEditViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *department;
@@ -22,6 +23,9 @@
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
+@property (nonatomic,strong)NSString *decodeContainer;
+- (IBAction)sendTuo:(id)sender;
+
 @end
 
 @implementation TuoEditViewController
@@ -55,7 +59,6 @@
     self.xiangCountLabel.adjustsFontSizeToFitWidth=YES;
     UINib *nib=[UINib nibWithNibName:@"XiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,8 +70,6 @@
 {
     [super viewWillAppear:animated];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-    
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     self.department.text=self.tuo.department;
     self.agent.text=self.tuo.agent;
     [self.xiangTable reloadData];
@@ -78,7 +79,7 @@
 
 -(void)decoderDataReceived:(NSString *)data
 {
-    self.firstResponder.text=data;
+    self.decodeContainer=data;
     [self textFieldShouldReturn:self.firstResponder];
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
@@ -89,12 +90,18 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+//    self.decodeContainer=textField.text;
     if(textField.tag==21){
-        NSString *department=textField.text;
+        NSString *department=self.decodeContainer;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
-          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"whouse_id":department}}
+          parameters:@{
+                       @"forklift":@{
+                               @"id":self.tuo.ID,
+                               @"whouse_id":department
+                           }
+                       }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];
                     if([responseObject[@"result"] integerValue]==1){
@@ -105,6 +112,7 @@
                             Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
                             [self.tuo.xiang addObject:xiangItem];
                         }
+                        textField.text=self.decodeContainer;
                         [textField resignFirstResponder];
                         self.firstResponder=nil;
                         [self.xiangTable reloadData];
@@ -116,7 +124,9 @@
                     }
                     
                 }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                {
+                    NSLog(@"error:%@",[error localizedDescription]);
                     [AFNet.activeView stopAnimating];
                     [textField resignFirstResponder];
                     self.firstResponder=nil;
@@ -124,15 +134,17 @@
          ];
     }
     else if(textField.tag==22){
-        NSString *agent=self.agent.text;
+        NSString *agent=self.decodeContainer;
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager PUT:[AFNet tuo_index]
-          parameters:@{@"forklift":@{@"id":self.tuo.ID,@"stocker_id":agent}}
+          parameters:@{@"id":self.tuo.ID,@"stocker_id":agent}
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
                  [AFNet.activeView stopAnimating];
                  if([responseObject[@"result"] integerValue]==1){
                      self.tuo.agent=agent;
+                     self.agent.text=agent;
+                     textField.text=self.decodeContainer;
                      [textField resignFirstResponder];
                       self.firstResponder=nil;
                 
@@ -173,6 +185,19 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.stateLabel.text=xiang.state_display;
+    if(xiang.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(xiang.state==1 || xiang.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(xiang.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(xiang.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -193,6 +218,7 @@
             [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationBottom];
             self.sum_packages_count--;
+            self.tuo.sum_packages--;
             [self updateXiangCountLabel];
             dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);
             dispatch_async(deleteRow, ^{
@@ -203,7 +229,6 @@
                 });
                 [manager DELETE:[AFNet tuo_remove_xiang]
                      parameters:@{
-                                  @"forklift_id":self.tuo.ID,
                                   @"package_id":xiangReserve.ID
                                   }
                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -215,6 +240,7 @@
                                 [AFNet alert:responseObject[@"content"]];
                                 [self.tuo.xiang addObject:xiangReserve];
                                 self.sum_packages_count++;
+                                self.tuo.sum_packages++;
                                 [self updateXiangCountLabel];
                                 [self.xiangTable reloadData];
                             }
@@ -223,6 +249,7 @@
                             [AFNet.activeView stopAnimating];
                             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
                             self.sum_packages_count++;
+                            self.tuo.sum_packages++;
                             [self updateXiangCountLabel];
                             [self.tuo.xiang addObject:xiangReserve];
                             [self.xiangTable reloadData];
@@ -248,14 +275,24 @@
         TuoScanViewController *scanView=segue.destinationViewController;
         scanView.type=@"addXiang";
         scanView.tuo=self.tuo;
+        scanView.enablePop=YES;
     }
     else if([segue.identifier isEqualToString:@"tuoPrint"]){
         TuoPrintViewController *tuoPrint=segue.destinationViewController;
         tuoPrint.tuo=self.tuo;
     }
+    else if([segue.identifier isEqualToString:@"send"]){
+        TuoSendViewController  *sendVC=segue.destinationViewController;
+        sendVC.wetherJumpBack=YES;
+        sendVC.tuo=self.tuo;
+    }
 }
 -(void)updateXiangCountLabel
 {
     self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",self.sum_packages_count];
+}
+
+- (IBAction)sendTuo:(id)sender {
+    [self performSegueWithIdentifier:@"send" sender:self];
 }
 @end

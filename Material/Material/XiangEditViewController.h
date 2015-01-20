@@ -11,4 +11,7 @@
 
 @interface XiangEditViewController : UIViewController
 @property(nonatomic,strong)Xiang *xiang;
+@property(nonatomic)BOOL enableSend;
+@property(nonatomic,strong)NSMutableArray *xiangArray;
+@property(nonatomic)int xiangIndex;
 @end

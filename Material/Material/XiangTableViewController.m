@@ -79,11 +79,13 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0,@1,@2,@3,@4],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             
-             NSArray *xiangArrayResult=responseObject;
+             NSArray *xiangArrayResult=responseObject[@"content"];
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
                  [xiangStore.xiangArray addObject:xiangItem];
@@ -110,11 +112,15 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet xiang_root]
-      parameters:@{@"all":@YES}
+      parameters:@{
+                   @"state":@[@0,@1,@2,@3,@4],
+                   @"type":@0,
+                   @"all":@YES
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              
-             NSArray *xiangArrayResult=responseObject;
+             NSArray *xiangArrayResult=responseObject[@"content"];
              for(int i=0;i<xiangArrayResult.count;i++){
                  Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
                  [xiangStore.xiangArray addObject:xiangItem];
@@ -152,13 +158,33 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.stateLabel.text=xiang.state_display;
+    if(xiang.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(xiang.state==1 || xiang.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(xiang.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(xiang.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"fromXiang" sender:@{@"xiang":xiang}];
+    BOOL enableSend;
+    if(xiang.state==0){
+        enableSend=YES;
+    }
+    else{
+        enableSend=NO;
+    }
+    [self performSegueWithIdentifier:@"fromXiang" sender:@{@"xiang":xiang,@"enableSend":[NSString stringWithFormat:@"%hhd",enableSend]}];
 }
 
 #pragma mark - Navigation
@@ -167,22 +193,14 @@
     if([segue.identifier isEqualToString:@"bundleXiang"]){
         TuoScanViewController *scan=segue.destinationViewController;
         scan.type=@"xiang";
+        scan.hideCheckButton=YES;
     }
     else if([segue.identifier isEqualToString:@"fromXiang"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
+        xiangEdit.enableSend=[[sender objectForKey:@"enableSend"] boolValue];
     }
 }
-
-
-// Override to support conditional editing of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-    // Return NO if you do not want the specified item to be editable.
-//    return YES;
-//}
-
-
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -230,24 +248,17 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Xiang *xiang=[self.xiangStore.xiangArray objectAtIndex:indexPath.row];
+    if(xiang.state==0){
+        return YES;
+    }
+    else{
+        return NO;
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+-(IBAction)unwindToXiangTable:(UIStoryboardSegue *)unwind{
+    [self.tableView reloadData];
 }
-*/
-
-
-
 @end

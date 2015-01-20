@@ -53,26 +53,31 @@
     self=[super init];
     if(self){
         self.ID=dictionary[@"id"]?dictionary[@"id"]:@"";
+        self.container_id=dictionary[@"container_id"]?dictionary[@"container_id"]:@"";
         self.department=dictionary[@"whouse_id"]?dictionary[@"whouse_id"]:@"";
         self.agent=dictionary[@"stocker_id"]?dictionary[@"stocker_id"]:@"";
-//        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"yyyy.MM.dd"];
-//        self.date=[formatter stringFromDate:[NSDate date]];
         self.date=dictionary[@"created_at"]?dictionary[@"created_at"]:@"";
         self.xiang=[[NSMutableArray alloc] init];
-        self.accepted_packages=[dictionary[@"accepted_packages"] integerValue]?[dictionary[@"accepted_packages"] integerValue]:0;
-        self.sum_packages=[dictionary[@"sum_packages"] integerValue]?[dictionary[@"sum_packages"] integerValue]:0;
+        self.accepted_packages=dictionary[@"accepted_packages"]?[dictionary[@"accepted_packages"] intValue]:0;
+        self.sum_packages=dictionary[@"sum_packages"]?[dictionary[@"sum_packages"] intValue]:0;
+        self.user_id=dictionary[@"user_id"]?dictionary[@"user_id"]:@"";
+        self.state=dictionary[@"state"]?[dictionary[@"state"] intValue]:0;
+        self.state_display=dictionary[@"state_display"]?dictionary[@"state_display"]:@"";
     }
     return self;
 }
 -(instancetype)copyMe:(Tuo *)tuo
 {
     self.ID=[tuo.ID copy];
+    self.container_id=[tuo.container_id copy];
     self.department=[tuo.department copy];
     self.agent=[tuo.agent copy];
     self.date=[tuo.date copy];
     self.accepted_packages=tuo.accepted_packages;
     self.sum_packages=tuo.sum_packages;
+    self.state=tuo.state;
+    self.state_display=tuo.state_display;
+    self.user_id=tuo.user_id;
     return self;
 }
 -(void)addXiang:(Xiang *)xiang

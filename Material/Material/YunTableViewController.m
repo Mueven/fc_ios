@@ -47,7 +47,6 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -56,18 +55,18 @@
     YunStore *yunStore=[[YunStore alloc] init];
     yunStore.yunArray=[[NSMutableArray alloc] init];
      [self.tableView reloadData];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *questDate=[formatter stringFromDate:[NSDate date]];
+
     
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet yun_root]
-      parameters:@{@"delivery_date":questDate}
+      parameters:@{
+                   @"state":@[@0,@1,@2,@3,@4],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-//             NSLog(@"%@",responseObject);
               if([responseObject[@"result"] integerValue]==1){
                   NSArray *resultArray=responseObject[@"content"];
                   for(int i=0;i<[resultArray count];i++){
@@ -118,23 +117,18 @@
     Yun *yun=[self.yunStore.yunArray objectAtIndex:indexPath.row];
     cell.nameLabel.text=yun.name;
     cell.dateLabel.text=yun.date;
-    if(yun.sended==0){
-        cell.statusLabel.text=@"未发送";
+    cell.statusLabel.text=yun.state_display;
+    if(yun.state==0){
         [cell.statusLabel setTextColor:[UIColor redColor]];
-        
     }
-    else if(yun.sended==1){
-        cell.statusLabel.text=@"在途";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
+    else if(yun.state==1 || yun.state==2){
+        [cell.statusLabel setTextColor:[UIColor  blueColor]];
     }
-    else if(yun.sended==2){
-        cell.statusLabel.text=@"到达";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0]];
-        
+    else if(yun.state==3){
+        [cell.statusLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
     }
-    else if(yun.sended==3){
-        cell.statusLabel.text=@"已接收";
-        [cell.statusLabel setTextColor:[UIColor colorWithRed:75.0/255.0 green:156.0/255.0 blue:75.0/255.0 alpha:1.0]];
+    else if(yun.state==4){
+        [cell.statusLabel setTextColor:[UIColor  yellowColor]];
     }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
@@ -149,19 +143,12 @@
         [manager GET:[AFNet yun_single]
           parameters:@{@"id":yun.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [AFNet.activeView stopAnimating];
-                    });
+                    [AFNet.activeView stopAnimating];
+                    
                     if([responseObject[@"result"] integerValue]==1){
                         if([(NSDictionary *)responseObject[@"content"] count]>0){
                             yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                            NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                            [yun.tuoArray removeAllObjects];
-                            for(int i=0;i<tuoArray.count;i++){
-                                Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                                [yun.tuoArray addObject:tuoItem];
-                            }
-                            [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+                            [self getTuoListThenSegue:@"check" yun:yun];
                         }
                     }
                     else{
@@ -184,14 +171,8 @@
                  if([responseObject[@"result"] integerValue]==1){
                      if([(NSDictionary *)responseObject[@"content"] count]>0){
                          yun.remark=[responseObject[@"content"] objectForKey:@"remark"];
-                         yun.name=[responseObject[@"content"] objectForKey:@"id"];
-                         NSArray *tuoArray=[responseObject[@"content"] objectForKey:@"forklifts"];
-                         [yun.tuoArray removeAllObjects];
-                         for(int i=0;i<tuoArray.count;i++){
-                             Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
-                             [yun.tuoArray addObject:tuoItem];
-                         }
-                         [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
+                         yun.name=[responseObject[@"content"] objectForKey:@"container_id"];
+                         [self getTuoListThenSegue:@"edit" yun:yun];
                      }
                  }
                  else{
@@ -207,21 +188,75 @@
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)getTuoListThenSegue:(NSString *)purpose yun:(Yun *)yun{
+    if([purpose isEqualToString:@"check"]){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet yun_folklifts]
+          parameters:@{@"id":yun.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [AFNet.activeView stopAnimating];
+                 });
+                 if([responseObject[@"result"] integerValue]==1){
+                     if([(NSArray *)responseObject[@"content"] count]>0){
+                         NSArray *tuoArray=responseObject[@"content"];
+                         [yun.tuoArray removeAllObjects];
+                         for(int i=0;i<tuoArray.count;i++){
+                             Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                             [yun.tuoArray addObject:tuoItem];
+                         }
+                         [self performSegueWithIdentifier:@"checkYun" sender:@{@"yun":yun}];
+                     }
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+    }
+    else if([purpose isEqualToString:@"edit"]){
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager GET:[AFNet yun_folklifts]
+          parameters:@{@"id":yun.ID}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [AFNet.activeView stopAnimating];
+                 });
+                 if([responseObject[@"result"] integerValue]==1){
+                         NSArray *tuoArray=responseObject[@"content"];
+                         [yun.tuoArray removeAllObjects];
+                         for(int i=0;i<tuoArray.count;i++){
+                             Tuo *tuoItem=[[Tuo alloc] initWithObject:tuoArray[i]];
+                             [yun.tuoArray addObject:tuoItem];
+                         }
+                         [self performSegueWithIdentifier:@"editYun" sender:@{@"yun":yun}];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+                 
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+    }
 }
-*/
 
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        int row=indexPath.row;
+        NSInteger row=indexPath.row;
         Yun *yunRetain=[[[Yun alloc] init] copyMe:[self.yunStore.yunArray objectAtIndex:row]];
       
             dispatch_queue_t deleteRow=dispatch_queue_create("com.delete.row.pptalent", NULL);

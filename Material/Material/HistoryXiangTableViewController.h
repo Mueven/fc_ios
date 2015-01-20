@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Tuo.h"
-
+@class Tuo;
 @interface HistoryXiangTableViewController : UITableViewController
+@property(nonatomic,strong)NSString *vc_title;
+@property(nonatomic,strong)NSArray *xiangArray;
 @property(nonatomic,strong)Tuo *tuo;
 @end

@@ -11,13 +11,16 @@
 
 @interface Tuo : NSObject
 @property(nonatomic,strong)NSString *ID;
+@property(nonatomic,strong)NSString *container_id;
 @property(nonatomic,strong) NSString *department;
 @property(nonatomic,strong) NSString *agent;
 @property(nonatomic,strong) NSString *date;
 @property(nonatomic,strong) NSMutableArray *xiang;
+@property(nonatomic,strong) NSString *user_id;
 @property(nonatomic)int accepted_packages;
 @property(nonatomic)int sum_packages;
-
+@property(nonatomic)int state;
+@property(nonatomic,strong)NSString *state_display;
 -(instancetype)initExample;
 -(instancetype)initWith:(NSString *)ID department:(NSString *)department agent:(NSString *)agent;
 -(instancetype)initWithObject:(NSDictionary *)dictionary;

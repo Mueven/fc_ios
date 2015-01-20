@@ -48,12 +48,10 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
 }
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -67,7 +65,7 @@
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     ShopTuoTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.nameLabel.text=tuo.ID;
+    cell.nameLabel.text=tuo.container_id;
     cell.dateLabel.text=tuo.date;
     cell.conditionLabel.text=[NSString stringWithFormat:@"%d / %d",tuo.accepted_packages,tuo.sum_packages];
     if(tuo.accepted_packages==tuo.sum_packages){
@@ -84,13 +82,13 @@
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet tuo_single]
+    [manager GET:[AFNet tuo_packages]
       parameters:@{@"id":tuo.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                    if([(NSDictionary *)responseObject[@"content"] count]>0){
-                        NSArray *xiangArray=[responseObject[@"content"] objectForKey:@"packages"];
+                    if([(NSArray *)responseObject[@"content"] count]>0){
+                        NSArray *xiangArray=responseObject[@"content"];
                         [tuo.xiang removeAllObjects];
                         for(int i=0;i<xiangArray.count;i++){
                             Xiang *xiangItem=[[Xiang alloc] initWithObject:xiangArray[i]];
@@ -134,7 +132,7 @@
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
    
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[self.printSetting getPrivatePrinter:@"P002"] copies:[self.printSetting getPrivateCopy:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+     [manager GET:[[AFNet print_stock_yun:self.yun.ID printer_name:[self.printSetting getPrinterModelWithAlternative:@"P002"] copies:[self.printSetting getCopy:@"stock" type:@"yun" alternative:@"P002"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
             

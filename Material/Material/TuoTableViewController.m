@@ -13,7 +13,6 @@
 #import "AFNetOperate.h"
 #import "Xiang.h"
 #import "TuoTableViewCell.h"
-
 @interface TuoTableViewController ()
 @property(nonatomic,strong)TuoStore *tuoStore;
 @end
@@ -32,27 +31,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UINib *nib=[UINib nibWithNibName:@"TuoTableViewCell" bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:@"tuoCell"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] stopDecoderHardware];
-
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
     [super viewWillAppear:animated];
-
     //得到数据
     [self selfState];
 }
@@ -71,15 +60,18 @@
     TuoStore *tuoStore=[[TuoStore alloc] init];
     tuoStore.listArray=[[NSMutableArray alloc] init];
     [self.tableView reloadData];
+    
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
-      parameters:nil
+      parameters:@{
+                   @"state":@[@0,@1,@2,@3,@4],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-          
+             NSArray *resultArray=responseObject[@"content"];
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -107,11 +99,15 @@
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
     [AFNet.activeView stopAnimating];
     [manager GET:[AFNet tuo_root]
-      parameters:@{@"all":@YES}
+      parameters:@{
+                   @"all":@YES,
+                   @"state":@[@0,@1,@2,@3,@4],
+                   @"type":@0
+                   }
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-           
+             NSArray *resultArray=responseObject[@"content"];
+  
              for(int i=0;i<[resultArray count];i++){
                  Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
                  [tuoStore.listArray addObject:tuo];
@@ -141,10 +137,23 @@
 {
     Tuo *tuo=[[self.tuoStore tuoList] objectAtIndex:indexPath.row];
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
     cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
+    cell.stateLabel.text=tuo.state_display;
+    if(tuo.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(tuo.state==1 || tuo.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(tuo.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(tuo.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -217,20 +226,19 @@
     Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[AFNet tuo_single]
+    [manager GET:[AFNet tuo_packages]
       parameters:@{@"id":tuo.ID}
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];
              if([responseObject[@"result"] integerValue]==1){
-                 if([(NSDictionary *)responseObject[@"content"] count]>0){
-                     NSDictionary *result=responseObject[@"content"];
-                     NSArray *xiangList=result[@"packages"];
+                 
+                     NSArray *xiangList=responseObject[@"content"];
                      for(int i=0;i<xiangList.count;i++){
                          Xiang *xiang=[[Xiang alloc] initWithObject:xiangList[i]];
                          [tuo.xiang addObject:xiang];
                      }
                      [self performSegueWithIdentifier:@"tuoEdit" sender:@{@"tuo":tuo}];
-                 }
+                  
              }
              else{
                  [AFNet alert:responseObject[@"content"]];
@@ -243,33 +251,17 @@
          }
      ];
 }
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Tuo *tuo=[self.tuoStore.tuoList objectAtIndex:indexPath.row];
+    if(tuo.state==0){
+        return YES;
+    }
+    else{
+        return NO;
+    }
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"tuoEdit"]){

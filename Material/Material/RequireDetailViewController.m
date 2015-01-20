@@ -47,7 +47,8 @@
     else{
         [self.statusLabel setTextColor:[UIColor redColor]];
     }
-    self.xiangCountLabel.text=[NSString stringWithFormat:@"%d",[self.xiangArray count]];
+    self.remarkLabel.adjustsFontSizeToFitWidth=YES;
+    self.xiangCountLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)[self.xiangArray count]];
 }
 
 - (void)didReceiveMemoryWarning

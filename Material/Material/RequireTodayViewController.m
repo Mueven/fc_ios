@@ -42,18 +42,6 @@
     self.billListArray=[NSArray array];
     [LEDcolor sharedLEDColor];
   
-        //example
-//        NSMutableArray *billList=[[NSMutableArray alloc] init];
-//        for(int i=0;i<5;i++){
-//            NSDictionary *dic=@{@"date":[NSString stringWithFormat:@"2014-08-0%d 18:00",i],
-//                                @"department":@"MB",
-//                                @"status":@"在途"};
-//            RequireBill *bill=[[RequireBill alloc] initWithObject:dic];
-//            [billList addObject:bill];
-//            self.billListArray=[billList copy];
-//            
-//        }
-//       [self.billTable reloadData];
     
 }
 
@@ -144,9 +132,7 @@
                 NSArray *order_items=(NSArray *)[responseObject[@"content"][@"order"] objectForKey:@"order_items"];
                  NSMutableArray *itemArray=[[NSMutableArray alloc] init];
                  for(int i=0;i<[order_items count];i++){
-                     NSLog(@"require xiang is :%@",order_items[i]);
                      RequireXiang *xiang=[[RequireXiang alloc] initWithObject:order_items[i]];
-                     NSLog(@"xiang department :%@ and origin :%@",xiang.department,xiang.department_origin);
                      [itemArray addObject:xiang];
                  }
                  NSNumber *status=bill.status?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];

@@ -9,13 +9,19 @@
 	<key>scan_validate</key>
 	<string>/api/v1/regexes/labels</string>
 	<key>base</key>
-	<string>http://192.168.1.109</string>
+	<string>http://192.168.0.112</string>
 	<key>port</key>
 	<string>:3000</string>
 	<key>log_in</key>
 	<string>/api/v1/users/login/</string>
 	<key>log_out</key>
 	<string>/api/v1/users/logout/</string>
+	<key>send_address</key>
+	<string>/api/v1/locations/get_all</string>
+	<key>movables</key>
+	<string>/api/v1/movables/get_type</string>
+	<key>locations_warehosues</key>
+	<string>/api/v1/locations/warehouses</string>
 	<key>order_led</key>
 	<dict>
 		<key>state_list</key>
@@ -49,13 +55,23 @@
 		<string>/printer/printers</string>
 		<key>transfer_note</key>
 		<string>P007/</string>
-		<key>shop_unreceive</key>
+		<key>shop_yun_unreceive</key>
 		<string>P004/</string>
-		<key>shop_receive</key>
+		<key>shop_yun_receive</key>
 		<string>P003/</string>
+		<key>shop_tuo_unreceive</key>
+		<string>P004/</string>
+		<key>shop_tuo_receive</key>
+		<string>P005</string>
+		<key>shop_xiang_unreceive</key>
+		<string>P004/</string>
+		<key>shop_xiang_receive</key>
+		<string>P005/</string>
 		<key>stock_yun</key>
 		<string>P002/</string>
 		<key>stock_tuo</key>
+		<string>P001/</string>
+		<key>stock_xiang</key>
 		<string>P001/</string>
 		<key>file</key>
 		<string>/printer/print/</string>
@@ -64,62 +80,89 @@
 		<key>base</key>
 		<string>http://192.168.1.109</string>
 	</dict>
+	<key>storages</key>
+	<dict>
+		<key>move_store</key>
+		<string>/move_store</string>
+		<key>index</key>
+		<string>/api/v1/storages</string>
+	</dict>
 	<key>yun</key>
 	<dict>
+		<key>forklifts</key>
+		<string>/forklifts</string>
 		<key>confirm_receive</key>
-		<string>confirm_receive</string>
+		<string>/confirm_receive</string>
 		<key>received</key>
-		<string>received/</string>
+		<string>/received</string>
 		<key>receive</key>
-		<string>receive/</string>
+		<string>/receive</string>
 		<key>send</key>
-		<string>send</string>
+		<string>/send</string>
 		<key>single</key>
-		<string>detail/</string>
+		<string>/detail</string>
 		<key>add_tuo</key>
-		<string>add_forklift/</string>
+		<string>/add_forklift</string>
 		<key>remove_tuo</key>
-		<string>remove_forklift/</string>
+		<string>/remove_forklift</string>
 		<key>add_tuo_by_scan</key>
-		<string>check_forklift/</string>
+		<string>/check_forklift</string>
 		<key>index</key>
-		<string>list/</string>
+		<string>/get_by_time_and_state</string>
 		<key>root</key>
-		<string>/api/v1/deliveries/</string>
+		<string>/api/v1/deliveries</string>
 	</dict>
 	<key>tuo</key>
 	<dict>
+		<key>send</key>
+		<string>/send</string>
+		<key>packages</key>
+		<string>/packages</string>
+		<key>received</key>
+		<string>/received</string>
+		<key>confirm_receive</key>
+		<string>/confirm_receive</string>
 		<key>reject</key>
-		<string>rejected/</string>
+		<string>/rejected</string>
 		<key>receive</key>
-		<string>receive/</string>
+		<string>/receive</string>
 		<key>remove_xiang</key>
-		<string>remove_package/</string>
+		<string>/remove_package</string>
 		<key>key_for_bundle</key>
-		<string>check_package/</string>
+		<string>/check_package</string>
 		<key>bundle_add</key>
-		<string>add_package/</string>
+		<string>/add_package</string>
 		<key>single</key>
-		<string>detail/</string>
+		<string>/detail</string>
 		<key>index</key>
-		<string>binds/</string>
+		<string>/get_by_time_and_state</string>
 		<key>root</key>
-		<string>/api/v1/forklifts/</string>
+		<string>/api/v1/forklifts</string>
 	</dict>
 	<key>xiang</key>
 	<dict>
+		<key>reject</key>
+		<string>/reject</string>
+		<key>receive</key>
+		<string>/receive</string>
+		<key>send</key>
+		<string>/send</string>
+		<key>received</key>
+		<string>/received</string>
+		<key>confirm_receive</key>
+		<string>/confirm_receive</string>
 		<key>validate_quantity</key>
-		<string>validate_quantity/</string>
+		<string>/validate_quantity</string>
 		<key>uncheck</key>
-		<string>uncheck/</string>
+		<string>/uncheck</string>
 		<key>check</key>
-		<string>check/</string>
+		<string>/check</string>
 		<key>validate</key>
-		<string>validate/</string>
+		<string>/validate</string>
 		<key>index</key>
-		<string>binds/</string>
+		<string>/get_by_time_and_state</string>
 		<key>root</key>
-		<string>/api/v1/packages/</string>
+		<string>/api/v1/packages</string>
 	</dict>
 	<key>part</key>
 	<dict>

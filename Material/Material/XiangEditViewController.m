@@ -9,7 +9,9 @@
 #import "XiangEditViewController.h"
 #import "AFNetOperate.h"
 #import "ScanStandard.h"
+#import "XiangSendViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "PrintViewController.h"
 @interface XiangEditViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 
 @property (weak, nonatomic) IBOutlet UILabel *keyLabel;
@@ -18,7 +20,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
 @property (strong, nonatomic) UITextField *firstResponder;
 @property (strong,nonatomic)ScanStandard *scanStandard;
-- (IBAction)finishEdit:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (nonatomic) int *dirty;
+- (IBAction)sendXiang:(id)sender;
 @end
 
 @implementation XiangEditViewController
@@ -35,19 +39,30 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.partNumber.delegate=self;
     self.quantity.delegate=self;
     self.dateTextField.delegate=self;
-    
     self.keyLabel.text=self.xiang.key;
     self.partNumber.text=self.xiang.number;
-    self.quantity.text=self.xiang.count;
+    self.quantity.text=self.xiang.quantity_display;
     self.dateTextField.text=self.xiang.date;
-    
     self.keyLabel.adjustsFontSizeToFitWidth=YES;
+    self.dirty=0;
     // Do any additional setup after loading the view.
      self.scanStandard=[ScanStandard sharedScanStandard];
+    if(self.enableSend){
+        self.sendButton.hidden=NO;
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"完成"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(finishEdit)];
+    }
+    else{
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"打印"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(print)];
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -71,14 +86,12 @@
 }
 #pragma decoder delegate
 -(void)decoderDataReceived:(NSString *)data{
+    self.dirty++;
     UITextField *targetTextField=self.firstResponder;
-    NSString *regex=[NSString string];
     if(self.firstResponder.tag==4){
          //date
-        regex=[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描日期";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkDate:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -103,10 +116,8 @@
     }
     else if(self.firstResponder.tag==2){
         //part number
-        regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -130,10 +141,8 @@
     }
     else{
          //count
-        regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             self.firstResponder.text=data;
             [self textFieldShouldReturn:self.firstResponder];
@@ -170,90 +179,139 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [textField resignFirstResponder];
+    self.firstResponder=nil;
+    self.dirty=1;
     return YES;
 }
 
-- (IBAction)finishEdit:(id)sender {
-    NSString *partNumber=self.partNumber.text;
-    NSString *quantity=self.quantity.text;
-    NSString *date=self.dateTextField.text;
-    
-    //after regex partNumber
-    int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
-    int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-    NSString *partNumberPost=[NSString string];
-    @try {
-        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-            partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-        }
-        else{
-            partNumberPost=@"";
-        }
+- (void)finishEdit{
+    if(self.dirty==0){
+              [self.navigationController popViewControllerAnimated:YES];
     }
-    @catch (NSException *exception) {
-        partNumberPost=@"";
-    }
-    //after regex quantity
-    int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
-    int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-    NSString *quantityPost=[NSString string];
-    @try {
-        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-            quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-        }
-        else{
-            quantityPost=@"";
-        }
-    }
-    @catch (NSException *exception) {
-        quantityPost=@"";
-    }
-    //after regex date
-    int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
-    int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-    NSString *datePost=[NSString string];
-    @try {
-        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
-          datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-        }
-        else{
-           datePost=@"";  
-        }
-    }
-    @catch (NSException *exception) {
-        datePost=@"";
-    }
-    
-    
-    
-    AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-    AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager PUT:[AFNet xiang_index]
-      parameters:@{@"package":@{
-                           @"id":self.xiang.ID,
-                           @"part_id":partNumberPost,
-                           @"quantity_str":quantityPost,
-                           @"check_in_time":datePost
-                           }}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [AFNet.activeView stopAnimating];
-            
-             if([responseObject[@"result"] integerValue]==1){
-                 NSDictionary *dic=responseObject[@"content"];
-                 self.xiang.date=[dic objectForKey:@"check_in_time"];
-                 self.xiang.number=[dic objectForKey:@"part_id"];
-                 self.xiang.count=[dic objectForKey:@"quantity_str"];
-                 self.xiang.position=[dic objectForKey:@"position_nr"];
-                 [self.navigationController popViewControllerAnimated:YES];
+    else {
+        NSString *partNumber=self.partNumber.text;
+        NSString *quantity=self.quantity.text;
+        NSString *date=self.dateTextField.text;
+        
+        //after regex partNumber
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
+        //after regex quantity
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
+        //after regex date
+        NSString *datePost=[self.scanStandard filterDate:date];
+        
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet xiang_index]
+          parameters:@{@"package":@{
+                               @"id":self.xiang.ID,
+                               @"part_id":partNumberPost,
+                               @"quantity":quantityPost,
+                               @"custom_fifo_time":datePost,
+                               @"part_id_display":partNumber,
+                               @"quantity_display":quantity,
+                               @"fifo_time_display":date
+                               }
+                       }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSDictionary *dic=responseObject[@"content"];
+                     self.xiang.date=[dic objectForKey:@"fifo_time_display"];
+                     self.xiang.number=[dic objectForKey:@"part_id_display"];
+                     self.xiang.count=[NSString stringWithFormat:@"%@",[dic objectForKey:@"quantity"]];
+                     self.xiang.quantity_display=[dic objectForKey:@"quantity_display"];
+                     self.xiang.position=[dic objectForKey:@"position_nr"];
+                     [self.navigationController popViewControllerAnimated:YES];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
              }
-             else{
-                 [AFNet alert:responseObject[@"content"]];
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
              }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [AFNet.activeView stopAnimating];
-             [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-         }
-     ];
+         ];
+    }
+  
+}
+
+- (IBAction)sendXiang:(id)sender {
+    if(self.dirty==0){
+        [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];
+    }
+    else{
+        NSString *partNumber=self.partNumber.text;
+        NSString *quantity=self.quantity.text;
+        NSString *date=self.dateTextField.text;
+        
+        //after regex partNumber
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
+        //after regex quantity
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
+        //after regex date
+        NSString *datePost=[self.scanStandard filterDate:date];
+        
+        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+        [manager PUT:[AFNet xiang_index]
+          parameters:@{@"package":@{
+                               @"id":self.xiang.ID,
+                               @"part_id":partNumberPost,
+                               @"quantity":quantityPost,
+                               @"custom_fifo_time":datePost,
+                               @"part_id_display":partNumber,
+                               @"quantity_display":quantity,
+                               @"fifo_time_display":date
+                               }}
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [AFNet.activeView stopAnimating];
+                 
+                 if([responseObject[@"result"] integerValue]==1){
+                     NSDictionary *dic=responseObject[@"content"];
+                     self.xiang.date=[dic objectForKey:@"fifo_time_display"];
+                     self.xiang.number=[dic objectForKey:@"part_id_display"];
+                     self.xiang.count=[NSString stringWithFormat:@"%@",[dic objectForKey:@"quantity"]];
+                     self.xiang.position=[dic objectForKey:@"position_nr"];
+                     self.dirty=0;
+                     [self performSegueWithIdentifier:@"send" sender:@{@"xiang":self.xiang}];
+                 }
+                 else{
+                     [AFNet alert:responseObject[@"content"]];
+                 }
+             }
+             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 [AFNet.activeView stopAnimating];
+                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+             }
+         ];
+        
+    }
+
+}
+-(void)print
+{
+    [self performSegueWithIdentifier:@"print" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"send"]){
+        XiangSendViewController *sendVC=[segue destinationViewController];
+        sendVC.xiang=[sender objectForKey:@"xiang"];
+        if(self.xiangArray){
+            sendVC.xiangArray=self.xiangArray;
+            sendVC.xiangIndex=self.xiangIndex;
+        }
+    }
+    else if([segue.identifier isEqualToString:@"print"]){
+        PrintViewController *vc=segue.destinationViewController;
+        vc.container=self.xiang;
+        vc.noBackButton=@0;
+        vc.enableSend=NO;
+    }
 }
 @end

@@ -7,9 +7,8 @@
 //
 
 #import "TuoScanViewController.h"
-//#import "XiangStore.h"
 #import "TuoStore.h"
-
+#import "UserPreference.h"
 #import "Xiang.h"
 #import "PrintViewController.h"
 #import "Tuo.h"
@@ -21,8 +20,7 @@
 #import "SortArray.h"
 #import "TuoCheckGeneralViewController.h"
 
-
-@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
+@interface TuoScanViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *key;
 @property (weak, nonatomic) IBOutlet UITextField *partNumber;
 @property (weak, nonatomic) IBOutlet UITextField *quatity;
@@ -32,12 +30,13 @@
 @property (weak, nonatomic) IBOutlet UITableView *xiangTable;
 @property (strong,nonatomic)UIAlertView *alert;
 @property (strong,nonatomic)ScanStandard *scanStandard;
-//@property (strong, nonatomic) XiangStore *xiangStore;
-//@property (strong,nonatomic) NSArray *validateAddress;
+@property (strong,nonatomic)UserPreference *userPref;
 @property (weak, nonatomic) IBOutlet UILabel *xiangCountLabel;
 @property (nonatomic)int sum_packages_count;
 - (IBAction)finish:(id)sender;
 - (IBAction)checkXiang:(id)sender;
+- (IBAction)clickScreen:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *checkButton;
 @end
 
 @implementation TuoScanViewController
@@ -77,8 +76,19 @@
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"xiangCell"];
     self.alert=nil;
     self.scanStandard=[ScanStandard sharedScanStandard];
-    self.sum_packages_count=[self.tuo.xiang count];
+    self.sum_packages_count= [self.tuo.xiang count];
     [self updateXiangCountLabel];
+    if(self.enablePop){
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"完成"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(popout)];
+    }
+    self.userPref=[UserPreference sharedUserPreference];
+}
+-(void)popout
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -86,6 +96,9 @@
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
     [self.key becomeFirstResponder];
     [self.xiangTable reloadData];
+    if(self.hideCheckButton){
+        self.checkButton.hidden=YES;
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -104,13 +117,10 @@
 -(void)decoderDataReceived:(NSString *)data{
     self.firstResponder.text=[data copy];
     UITextField *targetTextField=self.firstResponder;
-    NSString *regex=[NSString string];
     if(targetTextField.tag==4 ){
         //date
-        regex=[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描日期";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkDate:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -133,10 +143,8 @@
     }
     else if(targetTextField.tag==2){
         //part number
-        regex=[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -159,10 +167,8 @@
     }
     else if(targetTextField.tag==3){
         //count
-        regex=[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -186,85 +192,89 @@
     }
     else{
         //唯一码
-        regex=[[self.scanStandard.rules objectForKey:@"UNIQ"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描唯一码";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkKey:data];
         if(isMatch){
-            
             [self textFieldShouldReturn:self.firstResponder];
             //验证数据的合法性
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [AFNet.activeView stopAnimating];
             NSString *address=[AFNet xiang_validate];
-            
             dispatch_queue_t validate=dispatch_queue_create("com.validate.pptalent", NULL);
             dispatch_async(validate, ^{
                 NSString *myData=data;
-                if(self.tuo.ID.length>0 && targetTextField.tag==1){
-                    [manager POST:[AFNet tuo_key_for_bundle]
-                       parameters:@{
-                                    @"forklift_id":self.tuo.ID,
-                                    @"package_id":myData
-                                    }
+                if(self.tuo.ID.length>0 ){
+                    [manager POST:address
+                       parameters:@{@"id":myData}
                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               [AFNet.activeView stopAnimating];
                               if([responseObject[@"result"] integerValue]==1){
-                                  //如果已经绑定了就直接添加
-                                  if([(NSDictionary *)responseObject[@"content"] count]>0){
-                                      Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
-                                      [self.tuo addXiang:xiang];
-                                      [self.xiangTable reloadData];
-                                      [self.key becomeFirstResponder];
-                                      self.key.text=@"";
-                                      self.partNumber.text=@"";
-                                      self.quatity.text=@"";
-                                      self.dateTextField.text=@"";
-                                      [self updateAddXiangCount];
-                                      
-                                      NSString *result_code=responseObject[@"result_code"];
-                                      if([result_code isEqualToString:@"100"]){
-                                          AudioServicesPlaySystemSound(1012);
-                                          if(self.alert){
-                                              [self.alert dismissWithClickedButtonIndex:0 animated:YES];
-                                              self.alert=nil;
-                                          }
-                                          self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
-                                                                                message:@"绑定成功！"
-                                                                               delegate:self
-                                                                      cancelButtonTitle:nil
-                                                                      otherButtonTitles:nil];
-                                          [NSTimer scheduledTimerWithTimeInterval:1.0f
-                                                                           target:self
-                                                                         selector:@selector(dissmissAlert:)
-                                                                         userInfo:nil
-                                                                          repeats:NO];
-                                          [self.alert show];
-                                      }
-                                      else if([result_code isEqualToString:@"101"]){
-                                          AudioServicesPlaySystemSound(1051);
-                                          UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
-                                                                                                message:@"请确认部门是否正确"
-                                                                                               delegate:self
-                                                                                      cancelButtonTitle:@"确定"
-                                                                                      otherButtonTitles:nil];
-                                          [positionAlert show];
-                                      }  
-                                  }
                                   
                               }
                               else{
+                                  NSDictionary *dic=[NSDictionary dictionary];
+                                  if([self.userPref.location_id isEqualToString:@"FG"]){
+                                      dic=@{
+                                            @"id":self.tuo.ID,
+                                            @"package_id":myData,
+                                            @"check_whouse":@0
+                                            };
+                                  }
+                                  else{
+                                      dic=@{
+                                            @"id":self.tuo.ID,
+                                            @"package_id":myData
+                                            };
+                                  }
                                   AFNetOperate *AFNet=[[AFNetOperate alloc] init];
                                   AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
                                   [AFNet.activeView stopAnimating];
-                                  [manager POST:address
-                                     parameters:@{@"id":myData}
+                                  [manager POST:[AFNet tuo_key_for_bundle]
+                                     parameters:dic
                                         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                            [AFNet.activeView stopAnimating];
                                             if([responseObject[@"result"] integerValue]==1){
-                                                //self.firstResponder.text=data;
-                                                //[self textFieldShouldReturn:self.firstResponder];
+                                                //如果已经绑定了就直接添加
+                                                if([(NSDictionary *)responseObject[@"content"] count]>0){
+                                                    Xiang *xiang=[[Xiang alloc] initWithObject:responseObject[@"content"]];
+                                                    [self.tuo addXiang:xiang];
+                                                    [self.xiangTable reloadData];
+                                                    [self.key becomeFirstResponder];
+                                                    self.key.text=@"";
+                                                    self.partNumber.text=@"";
+                                                    self.quatity.text=@"";
+                                                    self.dateTextField.text=@"";
+                                                    [self updateAddXiangCount];
+                                                    
+                                                    NSString *result_code=responseObject[@"result_code"];
+                                                    if([result_code isEqualToString:@"100"]){
+                                                        AudioServicesPlaySystemSound(1012);
+                                                        if(self.alert){
+                                                            [self.alert dismissWithClickedButtonIndex:0 animated:YES];
+                                                            self.alert=nil;
+                                                        }
+                                                        self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
+                                                                                              message:@"绑定成功！"
+                                                                                             delegate:self
+                                                                                    cancelButtonTitle:nil
+                                                                                    otherButtonTitles:nil];
+                                                        [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                                                                         target:self
+                                                                                       selector:@selector(dissmissAlert:)
+                                                                                       userInfo:nil
+                                                                                        repeats:NO];
+                                                        [self.alert show];
+                                                    }
+                                                    else if([result_code isEqualToString:@"101"]){
+                                                        AudioServicesPlaySystemSound(1051);
+                                                        UIAlertView *positionAlert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                                                                              message:@"请确认部门是否正确"
+                                                                                                             delegate:self
+                                                                                                    cancelButtonTitle:@"确定"
+                                                                                                    otherButtonTitles:nil];
+                                                        [positionAlert show];
+                                                    }
+                                                }
                                             }
                                             else{
                                                 [AFNet alert:responseObject[@"content"]];
@@ -272,7 +282,6 @@
                                                 targetTextField.text=@"";
                                                 [targetTextField becomeFirstResponder];
                                             }
-                                            
                                         }
                                         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             [AFNet.activeView stopAnimating];
@@ -281,7 +290,9 @@
                                             [targetTextField becomeFirstResponder];
                                         }
                                    ];
+
                               }
+                              
                           }
                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               [AFNet.activeView stopAnimating];
@@ -290,15 +301,15 @@
                               [targetTextField becomeFirstResponder];
                           }
                      ];
+   
                 }
                 else{
+                    
                     [manager POST:address
                        parameters:@{@"id":data}
                           success:^(AFHTTPRequestOperation *operation, id responseObject) {
                               [AFNet.activeView stopAnimating];
                               if([responseObject[@"result"] integerValue]==1){
-                                  //                              self.firstResponder.text=data;
-                                  //                              [self textFieldShouldReturn:self.firstResponder];
                                   
                               }
                               else{
@@ -316,6 +327,7 @@
                               [targetTextField becomeFirstResponder];
                           }
                      ];
+                    
                 }
             });
             
@@ -367,47 +379,45 @@
         NSString *partNumber=self.partNumber.text?self.partNumber.text:@"";
         NSString *quantity=self.quatity.text?self.quatity.text:@"";
         NSString *date=self.dateTextField.text?self.dateTextField.text:@"";
-        
         //after regex partNumber
-        int beginP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"prefix_length"] intValue];
-        int lastP=[[[self.scanStandard.rules objectForKey:@"PART"] objectForKey:@"suffix_length"] intValue];
-        NSString *partNumberPost=[NSString string];
-        if([partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-             partNumberPost=[partNumber substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-        }
-        else{
-            partNumberPost=@"";
-        }
+        NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
         //after regex quantity
-        int beginQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"prefix_length"] intValue];
-        int lastQ=[[[self.scanStandard.rules objectForKey:@"QUANTITY"] objectForKey:@"suffix_length"] intValue];
-        NSString *quantityPost=[NSString string];
-        if([quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-             quantityPost=[quantity substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-        }
-        else{
-            quantityPost=@"";
-        }
+        NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
         //after regex date
-        int beginD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"prefix_length"] intValue];
-        int lastD=[[[self.scanStandard.rules objectForKey:@"DATE"] objectForKey:@"suffix_length"] intValue];
-        NSString *datePost=[NSString string];
-        if([date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)]){
-             datePost=[date substringWithRange:NSMakeRange(beginD, [date length]-beginD-lastD)];
-        }
-        else{
-              datePost=@"";
-        }
+        NSString *datePost=[self.scanStandard filterDate:date];
+
         if(self.tuo.ID.length>0){
             //拖下面的绑定，不仅绑定，而且会为拖加入新的箱
+            NSDictionary *parameters=[NSDictionary dictionary];
+            if([self.userPref.location_id isEqualToString:@"FG"]){
+                parameters=@{
+                             @"id":self.tuo.ID,
+                             @"package_id":key,
+                             @"part_id":partNumberPost,
+                             @"quantity":quantityPost,
+                             @"custom_fifo_time":datePost,
+                             @"part_id_display":partNumber,
+                             @"quantity_display":quantity,
+                             @"fifo_time_display":date,
+                             @"check_whouse":@0,
+                             };
+            }
+            else{
+            parameters=@{
+                         @"id":self.tuo.ID,
+                          @"package_id":key,
+                          @"part_id":partNumberPost,
+                          @"quantity":quantityPost,
+                             @"custom_fifo_time":datePost,
+                             @"part_id_display":partNumber,
+                             @"quantity_display":quantity,
+                             @"fifo_time_display":date,
+
+                         };
+
+            }
             [manager POST:[AFNet tuo_bundle_add]
-               parameters:@{
-                            @"forklift_id":self.tuo.ID,
-                            @"package_id":key,
-                            @"part_id":partNumberPost,
-                            @"quantity_str":quantityPost,
-                            @"check_in_time":datePost
-                            }
+               parameters: parameters
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       //箱绑定成功了
                       [AFNet.activeView stopAnimating];
@@ -470,14 +480,17 @@
         }
         else{
             //箱绑定下的绑定
+ 
             [manager POST:[AFNet xiang_index]
-               parameters:@{
-                            @"package":@{
+               parameters:@{@"package":@{
                                     @"id":key,
                                     @"part_id":partNumberPost,
-                                    @"quantity_str":quantityPost,
-                                    @"check_in_time":datePost
-                                    }
+                                    @"quantity":quantityPost,
+                                    @"custom_fifo_time":datePost,
+                                    @"part_id_display":partNumber,
+                                    @"quantity_display":quantity,
+                                    @"fifo_time_display":date
+                                    }    
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -493,13 +506,12 @@
                               self.partNumber.text=@"";
                               self.quatity.text=@"";
                               self.dateTextField.text=@"";
-                              
                               self.alert= [[UIAlertView alloc]initWithTitle:@"成功"
                                                                     message:@"绑定成功！"
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:nil];
-                              [NSTimer scheduledTimerWithTimeInterval:0.5f
+                              [NSTimer scheduledTimerWithTimeInterval:0.9f
                                                                target:self
                                                              selector:@selector(dissmissAlert:)
                                                              userInfo:nil
@@ -537,7 +549,6 @@
 -(void)dissmissAlert:(NSTimer *)timer
 {
     if(self.alert){
-        
         [self.alert dismissWithClickedButtonIndex:0 animated:YES];
         self.alert=nil;
     }
@@ -560,6 +571,19 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.stateLabel.text=xiang.state_display;
+    if(xiang.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(xiang.state==1 || xiang.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(xiang.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(xiang.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
@@ -572,7 +596,6 @@
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager DELETE:[AFNet tuo_remove_xiang]
              parameters:@{
-                          @"forklift_id":self.tuo.ID,
                           @"package_id":[[self.tuo.xiang objectAtIndex:indexPath.row] ID]
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -599,7 +622,16 @@
 {
     //    Xiang *xiang=[[self.xiangStore xiangList] objectAtIndex:indexPath.row];
     Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"fromTuo" sender:@{@"xiang":xiang}];
+    if([self.type isEqualToString:@"xiang"]){
+       [self performSegueWithIdentifier:@"fromTuo" sender:@{
+                                                            @"xiang":xiang,
+                                                            @"xiangIndex":[NSNumber numberWithInteger:indexPath.row]
+                                                            }
+        ];
+    }
+    else{
+       [self performSegueWithIdentifier:@"fromTuo" sender:@{@"xiang":xiang}];
+    }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -617,10 +649,16 @@
         PrintViewController *printViewController = segue.destinationViewController;
         printViewController.container=[sender objectForKey:@"container"];
         printViewController.noBackButton=@1;
+        printViewController.enableSend=YES;
     }
     else if([segue.identifier isEqualToString:@"fromTuo"]){
         XiangEditViewController *xiangEdit=segue.destinationViewController;
         xiangEdit.xiang=[sender objectForKey:@"xiang"];
+        if([self.type isEqualToString:@"xiang"]){
+            xiangEdit.enableSend=YES;
+            xiangEdit.xiangArray=self.tuo.xiang;
+            xiangEdit.xiangIndex=[[sender objectForKey:@"xiangIndex"] intValue];
+        }
     }
     else if([segue.identifier isEqualToString:@"checkXiang"]){
         TuoCheckGeneralViewController *tuoCheck=segue.destinationViewController;
@@ -628,21 +666,43 @@
     }
 }
 - (IBAction)finish:(id)sender {
-    [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    if(self.tuo.xiang.count==0){
+       UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"警告"
+                                                     message:@"没有绑定任何箱，需要继续吗？"
+                                                    delegate:self
+                                           cancelButtonTitle:@"不继续"
+                                           otherButtonTitles:@"继续操作", nil];
+        [alert show];
+    }
+    else{
+      [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    }
+    
 }
-
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1){
+         [self performSegueWithIdentifier:@"scanToPrint" sender:@{@"container":self.tuo}];
+    }
+}
 - (IBAction)checkXiang:(id)sender {
     NSArray *xiangArray=[SortArray sortByPartNumber:self.tuo.xiang];
     [self performSegueWithIdentifier:@"checkXiang" sender:@{@"xiangArray":xiangArray}];
 }
 
+- (IBAction)clickScreen:(id)sender {
+    [self.dateTextField resignFirstResponder];
+}
+
 -(void)updateAddXiangCount{
     self.sum_packages_count++;
     [self updateXiangCountLabel];
+    self.tuo.sum_packages++;
 }
 -(void)updateMinusXiangCount{
     self.sum_packages_count--;
     [self updateXiangCountLabel];
+    self.tuo.sum_packages--;
 }
 -(void)updateXiangCountLabel
 {

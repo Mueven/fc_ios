@@ -9,7 +9,8 @@
 #import "HistoryXiangTableViewController.h"
 #import "Xiang.h"
 #import "ShopXiangTableViewCell.h"
-
+#import "ReceivePrintViewController.h"
+#import "HistoryXiangItemViewController.h"
 @interface HistoryXiangTableViewController ()
 
 @end
@@ -36,7 +37,14 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UINib *cellNib=[UINib nibWithNibName:@"ShopXiangTableViewCell" bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:@"xiangCell"];
-    self.navigationItem.title=self.tuo.department;
+    self.navigationItem.title=self.vc_title;
+    if(self.tuo){
+        self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"打印"
+                                                                                style:UIBarButtonItemStyleBordered
+                                                                               target:self
+                                                                               action:@selector(print)]
+        ;
+    }
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -60,13 +68,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.tuo.xiang count];
+    return [self.xiangArray count];
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Xiang *xiang=[self.tuo.xiang objectAtIndex:indexPath.row];
+    Xiang *xiang=[self.xiangArray objectAtIndex:indexPath.row];
     ShopXiangTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"xiangCell" forIndexPath:indexPath];
     cell.partNumberLabel.text=xiang.number;
     cell.keyLabel.text=xiang.key;
@@ -79,55 +87,29 @@
     }
     return cell;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    Xiang *xiang=[self.xiangArray objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"xiangItem" sender:@{
+                                                           @"title":xiang.container_id,
+                                                           @"xiang":xiang
+                                                           }];
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)print{
+    [self performSegueWithIdentifier:@"printTuo" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    if([segue.identifier isEqualToString:@"printTuo"]){
+        ReceivePrintViewController *vc=segue.destinationViewController;
+        vc.type=@"history_tuo";
+        vc.container=self.tuo;
+    }
+    else if([segue.identifier isEqualToString:@"xiangItem"]){
+        HistoryXiangItemViewController  *item=segue.destinationViewController;
+        item.title=[sender objectForKey:@"title"];
+        item.xiang=[sender objectForKey:@"xiang"];
+    }
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

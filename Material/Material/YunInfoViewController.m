@@ -10,10 +10,9 @@
 #import "Yun.h"
 #import "PrintViewController.h"
 #import "AFNetOperate.h"
-
+#import "YunSendViewController.h"
 @interface YunInfoViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *tuoCountLabel;
-//@property (weak, nonatomic) IBOutlet UITextField *name;
 @property (weak, nonatomic) IBOutlet UITextField *remark;
 @property (strong,nonatomic) UIAlertView *printAlert;
 - (IBAction)touchScreen:(id)sender;
@@ -69,7 +68,6 @@
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    [self.name resignFirstResponder];
     [self.remark resignFirstResponder];
     if(self.view.frame.origin.y!=0){
         NSTimeInterval animationDuration=0.30f;
@@ -89,7 +87,6 @@
 
 
 - (IBAction)touchScreen:(id)sender {
-//    [self.name resignFirstResponder];
     [self.remark resignFirstResponder];
     if(self.view.frame.origin.y!=0){
         NSTimeInterval animationDuration=0.30f;
@@ -107,8 +104,6 @@
     for(int i=0;i<self.yun.tuoArray.count;i++){
         [tuoArrayID addObject:[self.yun.tuoArray[i] ID]];
     }
-//    NSLog(@"address:%@ params:%@",[AFNet yun_index],tuoArrayID);
-    
     [manager POST:[AFNet yun_index]
        parameters:@{
                     @"delivery":@{
@@ -119,12 +114,11 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){
- 
                   if([(NSDictionary *)responseObject[@"content"] count]>0){
                       self.yun.ID=[responseObject[@"content"] objectForKey:@"id"];
-                      [self generateBelongs];
+                      self.yun.remark=self.remark.text;
+                      [self performSegueWithIdentifier:@"send" sender:self];
                   }
-                 
               }
               else{
                   [AFNet alert:responseObject[@"content"]];
@@ -136,65 +130,56 @@
               [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
           }
      ];
-
-//     [self generateBelongs];
-    
-//    NSString *name=self.name.text;
-//    if(name.length>0){
-//        self.yun.name=name;
-//        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-//        [formatter setDateFormat:@"yyyy-MM-dd"];
-//        self.yun.date=[formatter stringFromDate:[NSDate date]];
-//        self.yun.remark=self.remark.text;
-//        [self performSegueWithIdentifier:@"printYun" sender:self];
+}
+//-(void)generateBelongs
+//{
+//    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"发送运单"
+//                                                  message:@"是否发送运单"
+//                                                 delegate:self
+//                                        cancelButtonTitle:@"不发送"
+//                                        otherButtonTitles:@"发送", nil];
+//    [alert show];
+//}
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    //发送运单
+//    if(buttonIndex==1){
+//        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//        [manager POST:[AFNet yun_send]
+//           parameters:@{@"id":self.yun.ID}
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  [AFNet.activeView stopAnimating];
+//                  if([responseObject[@"result"] integerValue]==1){
+//                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"content":responseObject[@"content"]}];
+//                  }
+//                  else{
+//                      [AFNet alert:responseObject[@"content"]];
+//                  }
+//                  
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  [AFNet.activeView stopAnimating];
+//                  [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
+//              }
+//         ];
 //    }
-}
--(void)generateBelongs
-{
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"发送运单"
-                                                  message:@"是否发送运单"
-                                                 delegate:self
-                                        cancelButtonTitle:@"不发送"
-                                        otherButtonTitles:@"发送", nil];
-    [alert show];
-}
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //发送运单
-    if(buttonIndex==1){
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager POST:[AFNet yun_send]
-           parameters:@{@"id":self.yun.ID}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  [AFNet.activeView stopAnimating];
-                  if([responseObject[@"result"] integerValue]==1){
-                      [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"content":responseObject[@"content"]}];
-                  }
-                  else{
-                      [AFNet alert:responseObject[@"content"]];
-                  }
-                  
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  [AFNet.activeView stopAnimating];
-                  [AFNet alert:[NSString stringWithFormat:@"%@",error.localizedDescription]];
-              }
-         ];
-    }
-    else{
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }
-    
-    
-}
+//    else{
+//        [self.navigationController popToRootViewControllerAnimated:NO];
+//    }
+//}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if([segue.identifier isEqualToString:@"printYun"]){
         PrintViewController *yunPrint=segue.destinationViewController;
         yunPrint.container=[sender objectForKey:@"yun"];
-        yunPrint.successContent=[sender objectForKey:@"content"];
         yunPrint.noBackButton=@1;
+        yunPrint.enableSend=YES;
+    }
+    else if([segue.identifier isEqualToString:@"send"]){
+        YunSendViewController *vc=segue.destinationViewController;
+        vc.yun=self.yun;
+    
     }
 }
 @end

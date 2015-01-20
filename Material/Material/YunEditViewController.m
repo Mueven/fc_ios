@@ -41,6 +41,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 //    self.name.delegate=self;
+    
     self.remark.delegate=self;
     self.tuoTable.delegate=self;
     self.tuoTable.dataSource=self;
@@ -51,7 +52,6 @@
 {
     [super viewWillAppear:animated];
     self.navigationItem.title=self.yun.name;
-//    self.name.text=self.yun.name;
     self.remark.text=self.yun.remark;
     [self.tuoTable reloadData];
 }
@@ -75,10 +75,24 @@
 {
     Tuo *tuo=[self.yun.tuoArray objectAtIndex:indexPath.row];
     TuoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tuoCell" forIndexPath:indexPath];
-    cell.idLabel.text=tuo.ID;
+    cell.idLabel.text=tuo.container_id;
     cell.departmentLabel.text=tuo.department;
     cell.agentLabel.text=tuo.agent;
      cell.sumPackageLabel.text=[NSString stringWithFormat:@"%d",tuo.sum_packages];
+    cell.stateLabel.text=tuo.state_display;
+    if(tuo.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(tuo.state==1 || tuo.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(tuo.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(tuo.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
+    cell.accessoryType=UITableViewCellAccessoryNone;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,7 +101,6 @@
     if(editingStyle==UITableViewCellEditingStyleDelete){
         AFNetOperate *AFNet=[[AFNetOperate alloc] init];
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-//        NSLog(@"address:%@  id:%@",[AFNet yun_remove_tuo],tuoChosen.ID);
         [manager DELETE:[AFNet yun_remove_tuo]
            parameters:@{@"forklift_id":tuoChosen.ID}
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -157,7 +170,6 @@
     // Pass the selected object to the new view controller.
     if([segue.identifier isEqualToString:@"yunEditTuo"]){
         YunChooseTuoViewController *chooseTuo=segue.destinationViewController;
-//        chooseTuo.yun=self.yun;
         chooseTuo.yunTarget=self.yun;
         chooseTuo.type=@"yunEdit";
         chooseTuo.barTitle=@"完成更改";
@@ -165,47 +177,48 @@
     else if([segue.identifier isEqualToString:@"printYun"]){
         PrintViewController *yunPrint=segue.destinationViewController;
         yunPrint.container=[sender objectForKey:@"yun"];
-        yunPrint.successContent=[sender objectForKey:@"content"];
         yunPrint.noBackButton=@1;
+        yunPrint.enableSend=YES;
     }
 }
 
 
 - (IBAction)sendYun:(id)sender {
-    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"发送运单"
-                                                  message:@"是否发送运单"
-                                                 delegate:self
-                                        cancelButtonTitle:@"不发送"
-                                        otherButtonTitles:@"发送", nil];
-    [alert show];
+    [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun}];
+//    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"发送运单"
+//                                                  message:@"是否发送运单"
+//                                                 delegate:self
+//                                        cancelButtonTitle:@"不发送"
+//                                        otherButtonTitles:@"发送", nil];
+//    [alert show];
 }
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-        //发送运单
-        if(buttonIndex==1){
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager POST:[AFNet yun_send]
-               parameters:@{@"id":self.yun.ID}
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [AFNet.activeView stopAnimating];
-                      if([responseObject[@"result"] integerValue]==1){
-                            [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"content":responseObject[@"content"]}];
-                      }
-                      else{
-                          [AFNet alert:responseObject[@"content"]];
-                      }
-                      
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      [AFNet.activeView stopAnimating];
-                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                  }
-             ];
-        }
-        //不发送运单
-        else{
-             
-        }
-}
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//        //发送运单
+//        if(buttonIndex==1){
+//            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//            [manager POST:[AFNet yun_send]
+//               parameters:@{@"id":self.yun.ID}
+//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                      [AFNet.activeView stopAnimating];
+//                      if([responseObject[@"result"] integerValue]==1){
+//                            [self performSegueWithIdentifier:@"printYun" sender:@{@"yun":self.yun,@"content":responseObject[@"content"]}];
+//                      }
+//                      else{
+//                          [AFNet alert:responseObject[@"content"]];
+//                      }
+//                      
+//                  }
+//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                      [AFNet.activeView stopAnimating];
+//                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//                  }
+//             ];
+//        }
+//        //不发送运单
+//        else{
+//             
+//        }
+//}
 @end

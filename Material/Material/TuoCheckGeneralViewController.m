@@ -54,7 +54,7 @@
     TuoCheckTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     NSDictionary *item=self.xiangArray[indexPath.row];
     cell.partNumberLabel.text=[item objectForKey:@"partNumber"];
-    cell.countLabel.text=[NSString stringWithFormat:@"%d",[(NSArray *)[item objectForKey:@"xiangArray"] count]];
+    cell.countLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)[(NSArray *)[item objectForKey:@"xiangArray"] count]];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

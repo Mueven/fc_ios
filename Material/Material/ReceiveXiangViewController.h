@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Tuo.h"
-
+#import "Xiang.h"
 @interface ReceiveXiangViewController : UIViewController
-@property(nonatomic,strong)Tuo *tuo;
-@property(nonatomic,strong)NSArray *tuoArray;
+@property(strong,nonatomic)Xiang *xiang;
 @end

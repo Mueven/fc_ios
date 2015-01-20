@@ -77,6 +77,19 @@
     cell.quantity.text=xiang.count;
     cell.position.text=xiang.position;
     cell.date.text=xiang.date;
+    cell.stateLabel.text=xiang.state_display;
+    if(xiang.state==0){
+        [cell.stateLabel setTextColor:[UIColor redColor]];
+    }
+    else if(xiang.state==1 || xiang.state==2){
+        [cell.stateLabel setTextColor:[UIColor blueColor]];
+    }
+    else if(xiang.state==3){
+        [cell.stateLabel setTextColor:[UIColor colorWithRed:87.0/255.0 green:188.0/255.0 blue:96.0/255.0 alpha:1.0]];
+    }
+    else if(xiang.state==4){
+        [cell.stateLabel setTextColor:[UIColor orangeColor]];
+    }
     return cell;
 }
 /*
@@ -93,7 +106,7 @@
 - (IBAction)confirmPrint:(id)sender {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-    [manager GET:[[AFNet print_stock_tuo:self.tuo.ID printer_name:[self.printerSetting getPrivatePrinter:@"P001"] copies:[self.printerSetting getPrivateCopy:@"P001"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+      [manager GET:[[AFNet print_stock_tuo:self.tuo.ID printer_name:[self.printerSetting getPrinterModelWithAlternative:@"P001"] copies:[self.printerSetting getCopy:@"stock" type:@"tuo" alternative:@"P001"]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              [AFNet.activeView stopAnimating];

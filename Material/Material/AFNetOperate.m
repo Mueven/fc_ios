@@ -34,8 +34,18 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     return manager;
 }
--(void)alert:(NSString *)string
+-(void)alert:(id)content
 {
+    NSString *string=[NSString string];
+    NSString *class=[NSString stringWithFormat:@"%@",[content class]];
+    if([class isEqualToString:@"__NSCFString"]){
+        string=content;
+    }
+    else if([class isEqualToString:@"__NSCFArray"]){
+        for(int i=0;i<[(NSArray *)content count];i++){
+            string=[string stringByAppendingString:[NSString stringWithFormat:@" %@",content[i]]];
+        }
+    }
     self.alert = [[UIAlertView alloc]initWithTitle:@""
                                                   message:string
                                                  delegate:self
@@ -73,6 +83,27 @@
 //{
 //    self.alert=nil;
 //}
+#pragma keyarchive relative method
+-(void)setKeyArchive:(NSString *)path keyArray:(NSArray *)keyArray objectArray:(NSArray *)objectArray
+{
+    NSMutableDictionary *dictionary=[NSMutableDictionary dictionary];
+    for(int i=0;i<keyArray.count;i++){
+        [dictionary setObject:objectArray[i] forKey:keyArray[i]];
+    }
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *archivePath=[document stringByAppendingPathComponent:path];
+    [NSKeyedArchiver archiveRootObject:dictionary toFile:archivePath];
+}
+-(id)getKeyArchive:(NSString *)path key:(NSString *)key
+{
+    NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *document=[documentDictionary firstObject];
+    NSString *pathArchive=[document stringByAppendingPathComponent:path];
+    NSDictionary *dictionary=[NSKeyedUnarchiver unarchiveObjectWithFile:pathArchive];
+    id object=[dictionary objectForKey:key];
+    return object;
+}
 #pragma url method
 -(NSMutableDictionary *)URLDictionary
 {
@@ -154,30 +185,34 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"uncheck"];
     return [[self xiang_index] stringByAppendingString:bind];
 }
+-(NSString *)xiang_send
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"send"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
+-(NSString *)xiang_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"receive"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
+-(NSString *)xiang_reject
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"reject"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
+-(NSString *)xiang_received
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"received"];
+    return [[self xiang_index] stringByAppendingString:bind];
+}
 -(NSString *)xiang_edit:(NSString *)id{
     NSString *xiangRoot=[self xiang_index];
     return [NSString stringWithFormat:@"%@%@",xiangRoot,id];
 }
--(void)getXiangs:(NSMutableArray *)xiangArray view:(UITableView *)view
+-(NSString *)xiang_confirm_receive
 {
-    [self.activeView stopAnimating];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self xiang_root]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *xiangArrayResult=responseObject;
-             for(int i=0;i<xiangArrayResult.count;i++){
-                 Xiang *xiang=[[Xiang alloc] initWithObject:xiangArrayResult[i]];
-                 [xiangArray addObject:xiang];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-             [self alert:@"something wrong"];
-         }
-    ];
+    NSString *bind=[[[self URLDictionary] objectForKey:@"xiang"] objectForKey:@"confirm_receive"];
+    return [[self xiang_index] stringByAppendingString:bind];
 }
 //resource Tuo
 -(NSString *)tuo_index
@@ -196,6 +231,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"single"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
+-(NSString *)tuo_packages{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"packages"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
 -(NSString *)tuo_bundle_add
 {
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"bundle_add"];
@@ -209,29 +248,30 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"remove_xiang"];
     return [[self tuo_index] stringByAppendingString:bind];
 }
+-(NSString *)tuo_received
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"received"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_confirm_receive
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"confirm_receive"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_receive{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"receive"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
+-(NSString *)tuo_send
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"tuo"] objectForKey:@"send"];
+    return [[self tuo_index] stringByAppendingString:bind];
+}
 -(NSString *)tuo_edit:(NSString *)id{
     NSString *tuoRoot=[self tuo_root];
     return [NSString stringWithFormat:@"%@%@",tuoRoot,id];
 }
--(void)getTuos:(NSMutableArray *)tuoArray view:(UITableView *)view{
-    [self.activeView stopAnimating];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self tuo_root]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-             for(int i=0;i<[resultArray count];i++){
-                 Tuo *tuo=[[Tuo alloc] initWithObject:resultArray[i]];
-                 [tuoArray addObject:tuo];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-         }
-     ];
-}
+
 //resource Yun
 -(NSString *)yun_index
 {
@@ -265,6 +305,10 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"send"];
     return [[self yun_index] stringByAppendingString:bind];
 }
+-(NSString *)yun_folklifts{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"forklifts"];
+    return [[self yun_index] stringByAppendingString:bind];
+}
 -(NSString *)yun_edit:(NSString *)id{
     NSString *yunRoot=[self yun_root];
     return [NSString stringWithFormat:@"%@%@",yunRoot,id];
@@ -284,29 +328,18 @@
     NSString *bind=[[[self URLDictionary] objectForKey:@"yun"] objectForKey:@"received"];
     return [[self yun_index] stringByAppendingString:bind];
 }
--(void)getYuns:(NSMutableArray *)yunArray view:(UITableView *)view{
-    [self.activeView stopAnimating];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    NSString *questDate=[formatter stringFromDate:[NSDate date]];
-    AFHTTPRequestOperationManager *manager=[self generateManager:view];
-    [manager GET:[self yun_root]
-      parameters:@{@"delivery_date":questDate}
-         success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             [self.activeView stopAnimating];
-             NSArray *resultArray=responseObject;
-             for(int i=0;i<[resultArray count];i++){
-                 Yun *yun=[[Yun alloc] initWithObject:resultArray[i]];
-                 [yunArray addObject:yun];
-             }
-             [view reloadData];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self.activeView stopAnimating];
-         }
-     ];
+//库
+-(NSString *)storages_index
+{
+    NSString *base=[self baseURL];
+    NSString *storages=[[[self URLDictionary] objectForKey:@"storages"] objectForKey:@"index"];
+    return [base stringByAppendingString:storages];
 }
-
+-(NSString *)storages_move_store
+{
+    NSString *bind=[[[self URLDictionary] objectForKey:@"storages"] objectForKey:@"move_store"];
+    return [[self storages_index] stringByAppendingString:bind];
+}
 //打印
 -(NSString *)baseURL_print
 {
@@ -450,7 +483,18 @@
     NSString *bind=[printDictionary objectForKey:key];
     return [base stringByAppendingString:bind];
 }
-
+-(NSString *)print_stock_xiang:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"stock_xiang"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
 -(NSString *)print_stock_tuo:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
     NSString *joint=[self base_for_print:@"stock_tuo"];
@@ -475,9 +519,10 @@
     }
     return [NSString stringWithFormat:@"%@%@",joint,after];
 }
--(NSString *)print_shop_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+
+-(NSString *)print_shop_yun_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
-    NSString *joint=[self base_for_print:@"shop_receive"];
+    NSString *joint=[self base_for_print:@"shop_yun_receive"];
     NSString *after=[NSString string];
     if(copies.length>0){
         after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
@@ -487,9 +532,57 @@
     }
     return [NSString stringWithFormat:@"%@%@",joint,after];
 }
--(NSString *)print_shop_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+-(NSString *)print_shop_yun_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
 {
-    NSString *joint=[self base_for_print:@"shop_unreceive"];
+    NSString *joint=[self base_for_print:@"shop_yun_unreceive"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
+-(NSString *)print_shop_xiang_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"shop_xiang_receive"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
+-(NSString *)print_shop_xiang_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"shop_xiang_unreceive"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
+-(NSString *)print_shop_tuo_receive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"shop_tuo_receive"];
+    NSString *after=[NSString string];
+    if(copies.length>0){
+        after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
+    }
+    else{
+        after=[ID stringByAppendingPathComponent:printer];
+    }
+    return [NSString stringWithFormat:@"%@%@",joint,after];
+}
+-(NSString *)print_shop_tuo_unreceive:(NSString *)ID printer_name:(NSString *)printer copies:(NSString *)copies
+{
+    NSString *joint=[self base_for_print:@"shop_tuo_unreceive"];
     NSString *after=[NSString string];
     if(copies.length>0){
         after=[[ID stringByAppendingPathComponent:printer] stringByAppendingPathComponent:copies];
@@ -577,5 +670,20 @@
 -(NSString *)order_led_state_list{
     NSString *bind=[[[self URLDictionary] objectForKey:@"order_led"] objectForKey:@"state_list"];
     return [[self order_led_root] stringByAppendingString:bind];
+}
+-(NSString *)send_address{
+    NSString *base=[self baseURL];
+    NSString *send_address=[[self URLDictionary] objectForKey:@"send_address"];
+    return [base stringByAppendingString:send_address];
+}
+-(NSString *)movables{
+    NSString *base=[self baseURL];
+    NSString *send_address=[[self URLDictionary] objectForKey:@"movables"];
+    return [base stringByAppendingString:send_address];
+}
+-(NSString *)locations_warehosues{
+    NSString *base=[self baseURL];
+    NSString *locations_warehosues=[[self URLDictionary] objectForKey:@"locations_warehosues"];
+    return [base stringByAppendingString:locations_warehosues];
 }
 @end

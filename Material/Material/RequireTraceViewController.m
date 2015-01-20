@@ -44,7 +44,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.departmentTextField becomeFirstResponder];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -112,8 +111,8 @@
         AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
         [manager GET:[AFNet order_led_position_state]
              parameters:@{
-                          @"whouse":[self.scanStandard order_item_department_fix:department],
-                          @"part_id":[self.scanStandard order_item_part_fix:part]
+                          @"whouse":[self.scanStandard filterDepartment:department],
+                          @"part_id":[self.scanStandard filterPartNumber:part]
                           }
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
                     [AFNet.activeView stopAnimating];

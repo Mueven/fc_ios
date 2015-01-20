@@ -10,12 +10,14 @@
 #import "TuoScanViewController.h"
 #import "Tuo.h"
 #import "AFNetOperate.h"
-
+#import "UserPreference.h"
 @interface TuoBaseViewController ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 - (IBAction)nextStep:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *department;
 @property (weak, nonatomic) IBOutlet UITextField *agent;
 @property (strong, nonatomic) UITextField *firstResponder;
+@property (weak, nonatomic) IBOutlet UILabel *departmentLabel;
+@property (strong,nonatomic)NSString *location_id;
 @end
 
 @implementation TuoBaseViewController
@@ -35,20 +37,24 @@
     // Do any additional setup after loading the view.//test comment
     self.department.delegate=self;
     self.agent.delegate=self;
-    
+    self.location_id=[[UserPreference sharedUserPreference] location_id];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [[Captuvo sharedCaptuvoDevice] removeCaptuvoDelegate:self];
     [[Captuvo sharedCaptuvoDevice] addCaptuvoDelegate:self];
-//    [[Captuvo sharedCaptuvoDevice] startDecoderHardware];
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *document=[documentDictionary firstObject];
     NSString *path=[document stringByAppendingPathComponent:@"user.info.archive"];
     NSString *number=[NSKeyedUnarchiver unarchiveObjectWithFile:path];
     self.agent.text=number;
-    [self.department becomeFirstResponder];
+    if([self.location_id isEqualToString:@"FG"]){
+        self.department.hidden=YES;
+        self.departmentLabel.hidden=YES;
+    }
+    else{
+        [self.department becomeFirstResponder];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -78,7 +84,12 @@
     if([segue.identifier isEqualToString:@"tuoBaseToScan"]){
         TuoScanViewController *scanViewController=segue.destinationViewController;
         Tuo *tuo=[[Tuo alloc] init];
-        tuo.department=self.department.text;
+        if([self.location_id isEqualToString:@"FG"]){
+            tuo.department=@"";
+        }
+        else{
+           tuo.department=self.department.text;
+        }
         tuo.agent=self.agent.text;
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy.MM.dd"];
@@ -92,9 +103,15 @@
 }
 
 - (IBAction)nextStep:(id)sender {
-    NSString *department=self.department.text;
+    NSString *department=[NSString string];
+    if([self.location_id isEqualToString:@"FG"]){
+        department=@"";
+    }
+    else{
+        department=self.department.text;
+    }
     NSString *agent=self.agent.text;
-    if(department.length>0 && agent.length>0){
+    if(agent.length>0){
         [self baseToScan:department agent:agent];
     }
     else{
@@ -110,11 +127,20 @@
 {
     AFNetOperate *AFNet=[[AFNetOperate alloc] init];
     AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+    NSDictionary *parameters=[NSDictionary dictionary];
+    if([self.location_id isEqualToString:@"FG"]){
+        parameters=@{@"forklift":@{
+                             @"stocker_id":agent
+                             }};
+    }
+    else{
+        parameters=@{@"forklift":@{
+                             @"whouse_id":department,
+                             @"stocker_id":agent
+                             }};
+    }
     [manager POST:[AFNet tuo_index]
-       parameters:@{@"forklift":@{
-                            @"whouse_id":department,
-                            @"stocker_id":agent
-                            }}
+       parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               [AFNet.activeView stopAnimating];
               if([responseObject[@"result"] integerValue]==1){

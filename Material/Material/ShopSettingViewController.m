@@ -9,18 +9,18 @@
 #import "ShopSettingViewController.h"
 #import "AFNetOperate.h"
 #import "PrinterSetting.h"
-
+#import <AudioToolbox/AudioToolbox.h>
 @interface ShopSettingViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 - (IBAction)logout:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *addressTextField;
 @property (weak, nonatomic) IBOutlet UITextField *portTextField;
-- (IBAction)saveChange:(id)sender;
-- (IBAction)touchScreen:(id)sender;
-- (IBAction)resetPrint:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *typeTextField;
 @property (strong , nonatomic) UIPickerView *typePicker;
 @property (strong, nonatomic) NSArray *pickerElements;
 @property (strong,nonatomic)PrinterSetting *printerSetting;
+- (IBAction)saveChange:(id)sender;
+- (IBAction)touchScreen:(id)sender;
+- (IBAction)resetPrint:(id)sender;
 @end
 
 @implementation ShopSettingViewController
@@ -149,9 +149,24 @@
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];
     [self.typeTextField resignFirstResponder];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    AudioServicesPlaySystemSound(1012);
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+                                                  message:@"设置成功"
+                                                 delegate:self
+                                        cancelButtonTitle:@"确定"
+                                        otherButtonTitles:nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(dismissAlert:)
+                                   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:alert,@"alert", nil]
+                                    repeats:NO];
+    [alert show];
 }
-
+-(void)dismissAlert:(NSTimer *)timer
+{
+    UIAlertView *alert=[[timer userInfo] objectForKey:@"alert"];
+    [alert dismissWithClickedButtonIndex:0 animated:YES];
+}
 - (IBAction)touchScreen:(id)sender {
     [self.addressTextField resignFirstResponder];
     [self.portTextField resignFirstResponder];

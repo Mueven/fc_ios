@@ -11,11 +11,13 @@
 #import "AFNetOperate.h"
 #import "ScanStandard.h"
 #import "PrinterSetting.h"
-
+#import "SendAddress.h"
+#import "UserPreference.h"
 @interface Login ()<UITextFieldDelegate,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)login:(id)sender;
 @end
@@ -37,9 +39,7 @@
     self.email.delegate=self;
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-//    [PrinterSetting sharedPrinterSetting];
-    // Do any additional setup after loading the view from its nib.
-    
+    self.versionLabel.text=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
 
@@ -96,6 +96,8 @@
 }
 
 - (IBAction)login:(id)sender {
+//    [self loginSameAction:@"product"];
+    
     NSString *email=self.email.text;
     NSString *password=self.password.text;
     KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
@@ -104,7 +106,6 @@
     
     if(email.length>0){
         if(password.length>0){
-//            [self loginSameAction:@"require"];
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet log_in]
@@ -112,8 +113,9 @@
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
                       if([responseObject[@"result"] integerValue]==1){
-                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"]];
+                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"][@"role_id"]];
                           if([requestCode isEqualToString:@"300"]){
+                              [SendAddress sharedSendAddress];
                               [self loginSameAction:@"stock"];
                           }
                           else if([requestCode isEqualToString:@"400"]){
@@ -122,6 +124,7 @@
                           else if([requestCode isEqualToString:@"500"]){
                               [self loginSameAction:@"require"];
                           }
+                          [UserPreference generateUserPreference:responseObject[@"content"]];
                           [ScanStandard sharedScanStandard];
                       }
                       else{
@@ -158,7 +161,13 @@
 -(void)loginSameAction:(NSString *)identifier
 {
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
-    UITabBarController *tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
+    UIViewController *tabbarStock=[[UIViewController alloc] init];
+    if([identifier isEqualToString:@"product"]){
+        tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"product"];
+    }
+    else{
+        tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
+    }
     //写入用户信息
     NSString *number=self.email.text.length>0?self.email.text:@"default-example";
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);

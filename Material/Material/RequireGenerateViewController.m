@@ -17,7 +17,9 @@
 #import "RequireCheckXiangTableViewCell.h"
 #import "RequireCheckBill.h"
 #import "ScanStandard.h"
-
+#import "RequireSort.h"
+#import "RequireCheckGeneralTableViewController.h"
+#import "UserPreference.h"
 @interface RequireGenerateViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,CaptuvoEventsProtocol>
 @property (weak, nonatomic) IBOutlet UITextField *departmentTextField;
 @property (weak, nonatomic) IBOutlet UITextField *partTextField;
@@ -34,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIView *firstView;
 @property (strong,nonatomic)ScanStandard *scanStandard;
 @property (strong,nonatomic)UIAlertView *backAlert;
+@property (strong,nonatomic)UserPreference *userPreference;
 - (IBAction)firstTabClick:(id)sender;
 - (IBAction)secondTabClick:(id)sender;
 - (IBAction)clickBackButton:(id)sender;
@@ -45,7 +48,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *thisXiangCountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *thisXiangTable;
 @property (strong,nonatomic) NSMutableArray *thisXiangArray;
-//- (IBAction)touchScreen:(id)sender;
+@property (strong,nonatomic) NSMutableDictionary *isExistDictionary;
+- (IBAction)check:(id)sender;
+- (IBAction)clickScreen:(id)sender;
 @end
 
 @implementation RequireGenerateViewController
@@ -72,12 +77,10 @@
     self.thisXiangTable.delegate=self;
     self.thisXiangTable.dataSource=self;
     self.xiangTable.dataSource=self;
-    
     UINib *nib=[UINib nibWithNibName:@"RequireXiangTableViewCell" bundle:nil];
     [self.xiangTable registerNib:nib forCellReuseIdentifier:@"cell"];
     UINib *secondeNib=[UINib nibWithNibName:@"RequireCheckXiangTableViewCell" bundle:nil];
     [self.thisXiangTable registerNib:secondeNib forCellReuseIdentifier:@"secondCell"];
-    
     self.xiangArray=[[NSMutableArray alloc] init];
     self.xiangCount=0;
     [self updateCountLabel];
@@ -85,9 +88,11 @@
     self.order_source_id=[NSString string];
     self.scanStandard=[ScanStandard sharedScanStandard];
     [self.navigationItem setHidesBackButton:YES];
+    self.userPreference=[UserPreference sharedUserPreference];
     //second view init
     self.thisXiangArray=[NSMutableArray array];
     self.thisXiangCountLabel.adjustsFontSizeToFitWidth=YES;
+    self.isExistDictionary=[NSMutableDictionary dictionary];
 }
 
 - (void)didReceiveMemoryWarning
@@ -118,10 +123,8 @@
     NSString *regex=[NSString string];
     if(targetTextField.tag==2 || targetTextField.tag==5){
         //零件号
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描零件号";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkPartNumber:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -144,10 +147,8 @@
     }
     else if(targetTextField.tag==3){
         //数量
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描数量";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  = [self.scanStandard checkQuantity:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -170,10 +171,8 @@
     }
     else if(targetTextField.tag==1 || targetTextField.tag==4){
         //部门
-        regex=[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"regex_string"];
         NSString *alertString=@"请扫描部门";
-        NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-        BOOL isMatch  = [pred evaluateWithObject:data];
+        BOOL isMatch  =  [self.scanStandard checkDepartment:data];
         if(isMatch){
             [self textFieldShouldReturn:self.firstResponder];
         }
@@ -198,8 +197,15 @@
 #pragma textField delegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
-    textField.inputView = dummyView;
+    if(textField.tag!=5){
+        if(textField.tag==3 && [self.userPreference.operation_mode isEqualToString:@"1"]){
+            
+        }
+        else{
+            UIView* dummyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+            textField.inputView = dummyView;
+        }
+    }
     self.firstResponder=textField;
 }
 
@@ -214,35 +220,11 @@
         
         if(partNumber.length>0&&department.length>0&&quantity.length>0){
             //after regex quantity
-            int beginQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"prefix_length"] intValue];
-            int lastQ=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_QTY"] objectForKey:@"suffix_length"] intValue];
-            NSString *quantityPost=[NSString string];
-            if([[quantity copy] substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)]){
-                quantityPost=[[quantity copy] substringWithRange:NSMakeRange(beginQ, [quantity length]-beginQ-lastQ)];
-            }
-            else{
-                quantityPost=@"";
-            }
+            NSString *quantityPost=[self.scanStandard filterQuantity:quantity];
             //after regex part
-            int beginP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
-            int lastP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-            NSString *partNumberPost=[NSString string];
-            if([[partNumber copy] substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)]){
-                 partNumberPost=[[partNumber copy] substringWithRange:NSMakeRange(beginP, [partNumber length]-beginP-lastP)];
-            }
-            else{
-                partNumberPost=@"";
-            }
+            NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
             //after regex part
-            int beginD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
-            int lastD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
-            NSString *departmentPost=[NSString string];
-            if([[department copy] substringWithRange:NSMakeRange(beginD, [department length]-beginD-lastD)]){
-                departmentPost=[[department copy] substringWithRange:NSMakeRange(beginD, [department length]-beginD-lastD)];
-            }
-            else{
-                departmentPost=@"";
-            }
+            NSString *departmentPost=[self.scanStandard filterDepartment:department];
             //发送请求
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
@@ -264,6 +246,13 @@
                           [content removeObjectForKey:@"box_quantity"];
                           
                           RequireXiang *xiang=[[RequireXiang alloc] initWithObject:content];
+                          //to check whether the part is existed
+                          if([responseObject[@"error_code"] intValue]==10000){
+                              [xiang setIsExisted:NO];
+                          }
+                          else{
+                              [xiang setIsExisted:YES];
+                          }
                           if(self.xiangArray.count>0){
                               BOOL result=[self.validate sourceValidate:source];
                               if(result){
@@ -312,25 +301,9 @@
         
         if(partNumber.length>0&&department.length>0){
             //after regex part
-            int beginSP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"prefix_length"] intValue];
-            int lastSP=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_PART"] objectForKey:@"suffix_length"] intValue];
-            NSString *partNumberPost=[NSString string];
-            if([[partNumber copy] substringWithRange:NSMakeRange(beginSP, [partNumber length]-beginSP-lastSP)]){
-                partNumberPost=[[partNumber copy] substringWithRange:NSMakeRange(beginSP, [partNumber length]-beginSP-lastSP)];
-            }
-            else{
-                 partNumberPost=@"";
-            }
+            NSString *partNumberPost=[self.scanStandard filterPartNumber:partNumber];
             //after regex part
-            int beginSD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"prefix_length"] intValue];
-            int lastSD=[[[self.scanStandard.rules objectForKey:@"ORDERITEM_DEPARTMENT"] objectForKey:@"suffix_length"] intValue];
-            NSString *departmentPost=[NSString string];
-            if([[department copy] substringWithRange:NSMakeRange(beginSD, [department length]-beginSD-lastSD)]){
-                departmentPost=[[department copy] substringWithRange:NSMakeRange(beginSD, [department length]-beginSD-lastSD)];
-            }
-            else{
-                departmentPost=@"";
-            }
+            NSString *departmentPost=[self.scanStandard filterDepartment:department];
             //发送请求
          
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
@@ -403,6 +376,10 @@
     [self.partTextField becomeFirstResponder];
     //合并处理
     [self xiangMerge:xiang];
+    //检查 isExist
+    if(!xiang.isExisted){
+        [self.isExistDictionary setObject:xiang forKey:xiang.id];
+    }
 }
 //无法添加箱
 -(void)xiangAddFail
@@ -582,6 +559,9 @@
             [self updateMinusCount];
         }
         [self.xiangArray removeObjectAtIndex:indexPath.row];
+        if(!xiang.isExisted){
+            [self.isExistDictionary removeObjectForKey:xiang.id];
+        }
         [tableView cellForRowAtIndexPath:indexPath].alpha = 0.0;
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
@@ -597,23 +577,6 @@
     }
 }
 #pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if([segue.identifier isEqualToString:@"printFormGenerate"]){
-        RequirePrintViewController *print=segue.destinationViewController;
-        print.type=[sender objectForKey:@"type"];
-        print.success=[[sender objectForKey:@"success"] integerValue];
-    }
-    else if([segue.identifier isEqualToString:@"xiangDetail"]){
-        RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
-        xiangDetail.xiang=[sender objectForKey:@"xiang"];
-    }
-}
-
 
 - (IBAction)finish:(id)sender {
 //    [self performSegueWithIdentifier:@"printFormGenerate" sender:@{@"type":@"list"}];
@@ -651,13 +614,22 @@
                 NSMutableDictionary *dic=[NSMutableDictionary dictionaryWithObjectsAndKeys:xiang.department_origin,@"department",xiang.partNumber_origin,@"part_id",xiang.quantity_int,@"quantity",emergency,@"is_emergency",[NSString stringWithFormat:@"%d",xiang.xiangCount],@"box_quantity",nil];
                 [postItems addObject:dic];
             }
- 
+            NSMutableArray *isExistedArray=[[NSMutableArray alloc] init];
+                id keys=[self.isExistDictionary allKeys];
+                for(int i;i<self.isExistDictionary.count;i++){
+                    id key=[keys objectAtIndex:i];
+                    RequireXiang *xiangItem=[self.isExistDictionary objectForKey:key];
+                    NSNumber *emergency=xiangItem.urgent?[NSNumber numberWithInt:1]:[NSNumber numberWithInt:0];
+                    NSMutableDictionary *dic=[[NSMutableDictionary alloc] initWithObjectsAndKeys:xiangItem.department_origin,@"department",xiangItem.partNumber_origin,@"part_id",xiangItem.quantity_int,@"quantity",emergency,@"is_emergency",nil];
+                    [isExistedArray addObject:dic];
+            }
             AFNetOperate *AFNet=[[AFNetOperate alloc] init];
             AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
             [manager POST:[AFNet order_root]
                parameters:@{
                             @"order":@{@"source_id":self.order_source_id},
-                            @"order_items":postItems
+                            @"order_items":postItems,
+                            @"no_part_items":isExistedArray
                             }
                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
                       [AFNet.activeView stopAnimating];
@@ -743,7 +715,34 @@
         [self.secondDepartmentTextField becomeFirstResponder];
     }
 }
-//- (IBAction)touchScreen:(id)sender {
+
+- (IBAction)clickScreen:(id)sender {
+//    NSLog(@"click screen");
+//    NSLog(@"%@",self.firstResponder);
 //    [self.firstResponder resignFirstResponder];
-//}
+//    self.firstResponder=nil;
+}
+
+- (IBAction)check:(id)sender {
+    NSArray *xiangArray=[RequireSort sortByPartNumber:[self.xiangArray copy]];
+    [self performSegueWithIdentifier:@"check" sender:@{@"xiangArray":xiangArray}];
+}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"printFormGenerate"]){
+        RequirePrintViewController *print=segue.destinationViewController;
+        print.type=[sender objectForKey:@"type"];
+        print.success=[[sender objectForKey:@"success"] integerValue];
+    }
+    else if([segue.identifier isEqualToString:@"xiangDetail"]){
+        RequireXiangDetailViewController *xiangDetail=segue.destinationViewController;
+        xiangDetail.xiang=[sender objectForKey:@"xiang"];
+    }
+    else if([segue.identifier isEqualToString:@"check"]){
+        RequireCheckGeneralTableViewController *vc=segue.destinationViewController;
+        vc.xiangArray=[sender objectForKey:@"xiangArray"];
+    }
+}
 @end

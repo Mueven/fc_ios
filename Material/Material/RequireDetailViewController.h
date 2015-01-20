@@ -13,4 +13,5 @@
 @property(nonatomic,strong)NSString *billDate;
 @property(nonatomic,strong)NSArray *xiangArray;
 @property(nonatomic)BOOL status;
+@property (weak, nonatomic) IBOutlet UILabel *remarkLabel;
 @end

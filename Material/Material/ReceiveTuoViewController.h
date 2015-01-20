@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Yun.h"
+#import "Tuo.h"
 
 @interface ReceiveTuoViewController : UIViewController
-@property(nonatomic,strong)Yun *yun;
+@property(nonatomic,strong)Tuo *tuo;
+@property(nonatomic,strong)NSArray *tuoArray;
+@property(nonatomic)BOOL enableConfirm;
+@property(nonatomic)BOOL enableCancel;
+@property(nonatomic)BOOL enableBack;
 @end

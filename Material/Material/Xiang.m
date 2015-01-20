@@ -40,19 +40,26 @@
     self=[super init];
     if(self){
         self.ID=object[@"id"]?object[@"id"]:@"";
-        self.number=object[@"part_id"]?object[@"part_id"]:@"";
-        self.count=object[@"quantity_str"]?object[@"quantity_str"]:@"";
-        self.key=object[@"id"]?object[@"id"]:@"";
+        self.container_id=object[@"container_id"]?object[@"container_id"]:@"";
+        self.number=object[@"part_id_display"]?object[@"part_id_display"]:@"";
+        self.count=object[@"quantity"]?[NSString stringWithFormat:@"%@",object[@"quantity"]]:@"";
+        self.quantity_display=object[@"quantity_display"]?object[@"quantity_display"]:@"";
+        self.key=object[@"container_id"]?object[@"container_id"]:@"";
         self.position=object[@"position_nr"]?object[@"position_nr"]:@"";
         self.remark=object[@"remark"]?object[@"remark"]:@"";
-        self.date=object[@"check_in_time"]?object[@"check_in_time"]:@"";
+        self.date=object[@"fifo_time_display"]?object[@"fifo_time_display"]:@"";
         self.checked=[object[@"state"] integerValue]==3?YES:NO;
+        self.user_id=object[@"user_id"]?object[@"user_id"]:@"";
+        self.state_display=object[@"state_display"]?object[@"state_display"]:@"";
+        self.possible_department=object[@"possible_department"]?[NSArray arrayWithArray:object[@"possible_department"]]:[NSArray array];
+        self.state=object[@"state"]?[object[@"state"] intValue]:0 ;
     }
     return self;
 }
 -(instancetype)copyMe:(Xiang *)xiang
 {
     self.ID=[xiang.ID copy];
+    self.container_id=[xiang.container_id copy];
     self.number=[xiang.number copy];
     self.count=[xiang.count copy];
     self.key=[xiang.key copy];
@@ -60,6 +67,9 @@
     self.remark=[xiang.remark copy];
     self.date=[xiang.date copy];
     self.checked=xiang.checked?YES:NO;
+    self.state=xiang.state;
+    self.state_display=[xiang.state_display copy];
+    self.possible_department=[NSArray arrayWithArray:xiang.possible_department];
     return self;
 }
 @end

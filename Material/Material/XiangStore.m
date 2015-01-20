@@ -28,7 +28,7 @@
     self=[super init];
     if(self){
         self.xiangArray=[[NSMutableArray alloc] init];
-        [[[AFNetOperate alloc] init] getXiangs:self.xiangArray view:view];
+//        [[[AFNetOperate alloc] init] getXiangs:self.xiangArray view:view];
     }
     return self;
 }

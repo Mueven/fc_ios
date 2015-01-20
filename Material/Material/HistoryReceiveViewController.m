@@ -7,16 +7,12 @@
 //
 
 #import "HistoryReceiveViewController.h"
-#import "AFNetOperate.h"
-#import "Yun.h"
-#import "HistoryYunTableViewController.h"
-
+#import "HistoryChooseViewController.h"
 @interface HistoryReceiveViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *dateTextField;
-@property(nonatomic,strong)NSString *postDate;
+@property(nonatomic,strong)NSDate *postDate;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)checkYun:(id)sender;
-
 @end
 
 @implementation HistoryReceiveViewController
@@ -42,7 +38,7 @@
          forControlEvents:UIControlEventValueChanged];
     datePicker.datePickerMode=UIDatePickerModeDate;
     [self.dateTextField setInputView:datePicker];
-    self.postDate=[[NSString alloc] init];
+    self.postDate=[[NSDate alloc] init];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -56,7 +52,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     self.dateTextField.text=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
     [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-    self.postDate=[NSString stringWithFormat:@"%@",[formatter stringFromDate:datePicker.date]];
+    self.postDate=datePicker.date;
 }
 - (void)didReceiveMemoryWarning
 {
@@ -70,7 +66,8 @@
         [formatter setDateFormat:@"yyyy-MM-dd"];
         textField.text=[formatter stringFromDate:[NSDate date]];
         [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-        self.postDate=[formatter stringFromDate:[NSDate date]];
+        self.postDate=[NSDate date];
+ 
     }
     
 }
@@ -80,14 +77,12 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if([segue.identifier isEqualToString:@"checkYun"]){
-//        NSLog(@"%@ and %@",[sender objectForKey:@"yunArray"],[sender objectForKey:@"date"]);
-        HistoryYunTableViewController *historyYun=segue.destinationViewController;
-        historyYun.yunArray=[sender objectForKey:@"yunArray"];
-        historyYun.chooseDate=[sender objectForKey:@"date"];
+    if([segue.identifier isEqualToString:@"choose"]){
+        HistoryChooseViewController *vc=segue.destinationViewController;
+        vc.vc_title=self.dateTextField.text;
+        vc.date_for_post=self.postDate;
     }
+
 }
 
 
@@ -99,45 +94,18 @@
 }
 
 - (IBAction)checkYun:(id)sender {
+ 
     if(self.dateTextField.text.length>0){
-        AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-        AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-        [manager GET:[AFNet yun_received]
-          parameters:@{@"receive_date":self.postDate}
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 [AFNet.activeView stopAnimating];
-                 if([responseObject[@"result"] integerValue]==1){
-                     NSMutableArray *yunArray=[[NSMutableArray alloc] init];
-                     NSArray *result=responseObject[@"content"];
-                     for(int i=0;i<result.count;i++){
-                         Yun *yunItem=[[Yun alloc] initWithObject:result[i]];
-                         [yunArray addObject:yunItem];
-                     }
-                     [self performSegueWithIdentifier:@"checkYun" sender:@{
-                                                                           @"yunArray":yunArray,
-                                                                           @"date":self.dateTextField.text
-                                                                           }
-                      ];
-                 }
-                 else{
-                     [AFNet alert:responseObject[@"content"]];
-                 }
-             }
-             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 [AFNet.activeView stopAnimating];
-                 [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-             }
-         ];
+        [self performSegueWithIdentifier:@"choose" sender:self];
     }
     else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                      message:@"请选择日期"
+                                                      message:@"请选择时间"
                                                      delegate:self
                                             cancelButtonTitle:@"确定"
-                                            otherButtonTitles:nil];
+                                            otherButtonTitles: nil];
         [alert show];
-    }
-    
-    
+    }    
 }
+
 @end
