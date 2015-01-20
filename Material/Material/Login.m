@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *email;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 - (IBAction)touchScreen:(id)sender;
 - (IBAction)login:(id)sender;
 @end
@@ -38,8 +39,7 @@
     self.email.delegate=self;
     self.password.delegate=self;
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
-//    [PrinterSetting sharedPrinterSetting];
-    // Do any additional setup after loading the view from its nib.
+    self.versionLabel.text=[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
 }
 
 

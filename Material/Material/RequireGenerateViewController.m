@@ -198,7 +198,7 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if(textField.tag!=5){
-        if(textField.tag==3&&[self.userPreference.operation_mode isEqualToString:@"0"]){
+        if(textField.tag==3 && [self.userPreference.operation_mode isEqualToString:@"1"]){
             
         }
         else{

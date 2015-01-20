@@ -67,6 +67,20 @@
                                     <segue destination="E1U-g6-xhq" kind="push" id="RsU-Ad-ilI"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aog-bs-Neq">
+                                <rect key="frame" x="139" y="534" width="25" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="slh-oT-qTr">
+                                <rect key="frame" x="153" y="534" width="73" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <connections>
@@ -78,6 +92,7 @@
                         <outlet property="email" destination="XgB-3h-hMO" id="XwO-Id-UcG"/>
                         <outlet property="loginButton" destination="0Q8-ZK-RKS" id="SUd-VT-0Zo"/>
                         <outlet property="password" destination="ocO-9l-iEw" id="uxi-rA-IjB"/>
+                        <outlet property="versionLabel" destination="slh-oT-qTr" id="OW6-ic-fpQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K74-dA-2kc" userLabel="First Responder" sceneMemberID="firstResponder"/>
