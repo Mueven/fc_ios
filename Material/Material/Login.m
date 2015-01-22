@@ -96,64 +96,64 @@
 }
 
 - (IBAction)login:(id)sender {
-//    [self loginSameAction:@"product"];
+    [self loginSameAction:@"stockManage"];
     
-    NSString *email=self.email.text;
-    NSString *password=self.password.text;
-    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
-                                                                      accessGroup:nil];
-    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
-    
-    if(email.length>0){
-        if(password.length>0){
-            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
-            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
-            [manager POST:[AFNet log_in]
-               parameters:@{@"user":@{@"id":email,@"password":password}}
-                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                      [AFNet.activeView stopAnimating];
-                      if([responseObject[@"result"] integerValue]==1){
-                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"][@"role_id"]];
-                          if([requestCode isEqualToString:@"300"]){
-                              [SendAddress sharedSendAddress];
-                              [self loginSameAction:@"stock"];
-                          }
-                          else if([requestCode isEqualToString:@"400"]){
-                              [self loginSameAction:@"shop"];
-                          }
-                          else if([requestCode isEqualToString:@"500"]){
-                              [self loginSameAction:@"require"];
-                          }
-                          [UserPreference generateUserPreference:responseObject[@"content"]];
-                          [ScanStandard sharedScanStandard];
-                      }
-                      else{
-                          [AFNet alert:responseObject[@"content"]];
-                      }
-                  }
-                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      [AFNet.activeView stopAnimating];
-                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
-                  }
-             ];
-        }
-        else{
-            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                          message:@"请填写密码"
-                                                         delegate:self
-                                                cancelButtonTitle:@"确定"
-                                                otherButtonTitles:nil];
-            [alert show];
-        }
-    }
-    else{
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
-                                                      message:@"请填写用户名"
-                                                     delegate:self
-                                            cancelButtonTitle:@"确定"
-                                            otherButtonTitles:nil];
-        [alert show];
-    }
+//    NSString *email=self.email.text;
+//    NSString *password=self.password.text;
+//    KeychainItemWrapper *keychain=[[KeychainItemWrapper alloc] initWithIdentifier:@"material"
+//                                                                      accessGroup:nil];
+//    [keychain setObject:self.email.text forKey:(__bridge id)kSecAttrAccount];
+//    
+//    if(email.length>0){
+//        if(password.length>0){
+//            AFNetOperate *AFNet=[[AFNetOperate alloc] init];
+//            AFHTTPRequestOperationManager *manager=[AFNet generateManager:self.view];
+//            [manager POST:[AFNet log_in]
+//               parameters:@{@"user":@{@"id":email,@"password":password}}
+//                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                      [AFNet.activeView stopAnimating];
+//                      if([responseObject[@"result"] integerValue]==1){
+//                          NSString *requestCode=[NSString stringWithFormat:@"%@",responseObject[@"content"][@"role_id"]];
+//                          if([requestCode isEqualToString:@"300"]){
+//                              [SendAddress sharedSendAddress];
+//                              [self loginSameAction:@"stock"];
+//                          }
+//                          else if([requestCode isEqualToString:@"400"]){
+//                              [self loginSameAction:@"shop"];
+//                          }
+//                          else if([requestCode isEqualToString:@"500"]){
+//                              [self loginSameAction:@"require"];
+//                          }
+//                          [UserPreference generateUserPreference:responseObject[@"content"]];
+//                          [ScanStandard sharedScanStandard];
+//                      }
+//                      else{
+//                          [AFNet alert:responseObject[@"content"]];
+//                      }
+//                  }
+//                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                      [AFNet.activeView stopAnimating];
+//                      [AFNet alert:[NSString stringWithFormat:@"%@",[error localizedDescription]]];
+//                  }
+//             ];
+//        }
+//        else{
+//            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+//                                                          message:@"请填写密码"
+//                                                         delegate:self
+//                                                cancelButtonTitle:@"确定"
+//                                                otherButtonTitles:nil];
+//            [alert show];
+//        }
+//    }
+//    else{
+//        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@""
+//                                                      message:@"请填写用户名"
+//                                                     delegate:self
+//                                            cancelButtonTitle:@"确定"
+//                                            otherButtonTitles:nil];
+//        [alert show];
+//    }
     
     
 
@@ -162,12 +162,7 @@
 {
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
     UIViewController *tabbarStock=[[UIViewController alloc] init];
-    if([identifier isEqualToString:@"product"]){
-        tabbarStock=[storyboard instantiateViewControllerWithIdentifier:@"product"];
-    }
-    else{
-        tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
-    }
+    tabbarStock=[storyboard instantiateViewControllerWithIdentifier:identifier];
     //写入用户信息
     NSString *number=self.email.text.length>0?self.email.text:@"default-example";
     NSArray *documentDictionary=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
