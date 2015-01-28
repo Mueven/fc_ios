@@ -4504,13 +4504,16 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+
         <segue reference="SkA-08-PWt"/>
         <segue reference="mEd-et-lyR"/>
         <segue reference="2c4-Zh-zKC"/>
+
         <segue reference="FcC-pN-TYA"/>
         <segue reference="WHI-RS-rUG"/>
         <segue reference="hQ5-Fe-tiF"/>
         <segue reference="hy6-vM-msP"/>
+
         <segue reference="joq-VG-3De"/>
         <segue reference="zbp-Dd-2O5"/>
         <segue reference="Xpt-zp-Oio"/>
@@ -4518,5 +4521,6 @@
         <segue reference="aya-mQ-TZi"/>
         <segue reference="Kxl-Rh-nWd"/>
         <segue reference="UAK-rn-23P"/>
+
     </inferredMetricsTieBreakers>
 </document>
