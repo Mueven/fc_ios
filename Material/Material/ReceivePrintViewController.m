@@ -149,8 +149,9 @@
      ];
 }
 - (IBAction)finishOver:(id)sender {
-    NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"history"];
+    NSPredicate * pred= [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"history.*"];
     BOOL isMatch  = [pred evaluateWithObject:self.type];
+   
     if(isMatch){
         [self.navigationController popViewControllerAnimated:YES];
     }
