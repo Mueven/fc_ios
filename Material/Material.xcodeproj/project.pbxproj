@@ -106,7 +106,6 @@
 		B099FD1A199C90C30049586E /* SimplePingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B099FD19199C90C30049586E /* SimplePingHelper.m */; };
 		B09BF6BD1959508E00FCF00A /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = B09BF6BC1959508E00FCF00A /* Reachability.m */; };
 		B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */; };
-		B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */; };
 		B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */; };
 		B09E4CD01A303C7C0041083D /* XiangChooseDepartmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B09E4CCF1A303C7C0041083D /* XiangChooseDepartmentViewController.m */; };
 		B09ECD7219AAD36500783B6A /* LED.m in Sources */ = {isa = PBXBuildFile; fileRef = B09ECD7119AAD36500783B6A /* LED.m */; };
@@ -138,6 +137,7 @@
 		B0E1D4F21952CD3500105D4D /* ReceivePrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E1D4F11952CD3500105D4D /* ReceivePrintViewController.m */; };
 		B0E8C6A4197F603500F0A030 /* RequireSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */; };
 		B0EDB1DC19A2ECA400917D54 /* SortArray.m in Sources */ = {isa = PBXBuildFile; fileRef = B0EDB1DB19A2ECA400917D54 /* SortArray.m */; };
+		B0F9AB101A78AEDE0084F998 /* libCaptuvoSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F9AB0F1A78AEDE0084F998 /* libCaptuvoSDK.a */; };
 		B0FA0A191A2464F400E9E536 /* SendAddressItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FA0A181A2464F400E9E536 /* SendAddressItem.m */; };
 		B0FDC96919453D63008E4B72 /* YunChooseTuoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96819453D63008E4B72 /* YunChooseTuoViewController.m */; };
 		B0FDC96C19453EF7008E4B72 /* YunHaveTuoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FDC96B19453EF7008E4B72 /* YunHaveTuoTableViewController.m */; };
@@ -338,7 +338,6 @@
 		B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B09CC8DD1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		B09CC8DE1958123600BD3DE8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
 		B09E4CCE1A303C7C0041083D /* XiangChooseDepartmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XiangChooseDepartmentViewController.h; sourceTree = "<group>"; };
 		B09E4CCF1A303C7C0041083D /* XiangChooseDepartmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XiangChooseDepartmentViewController.m; sourceTree = "<group>"; };
 		B09ECD7019AAD36500783B6A /* LED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LED.h; sourceTree = "<group>"; };
@@ -395,6 +394,7 @@
 		B0E8C6A3197F603500F0A030 /* RequireSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequireSettingViewController.m; sourceTree = "<group>"; };
 		B0EDB1DA19A2ECA400917D54 /* SortArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortArray.h; sourceTree = "<group>"; };
 		B0EDB1DB19A2ECA400917D54 /* SortArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SortArray.m; sourceTree = "<group>"; };
+		B0F9AB0F1A78AEDE0084F998 /* libCaptuvoSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCaptuvoSDK.a; sourceTree = "<group>"; };
 		B0FA0A171A2464F400E9E536 /* SendAddressItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAddressItem.h; sourceTree = "<group>"; };
 		B0FA0A181A2464F400E9E536 /* SendAddressItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendAddressItem.m; sourceTree = "<group>"; };
 		B0FDC96719453D63008E4B72 /* YunChooseTuoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YunChooseTuoViewController.h; sourceTree = "<group>"; };
@@ -412,12 +412,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0F9AB101A78AEDE0084F998 /* libCaptuvoSDK.a in Frameworks */,
 				B09BF6BF195950A900FCF00A /* SystemConfiguration.framework in Frameworks */,
 				B066FE30194E714F00C0019D /* AudioToolbox.framework in Frameworks */,
 				B09E30D9194934F700894A4A /* ExternalAccessory.framework in Frameworks */,
 				B085F64919401091001F01F3 /* Security.framework in Frameworks */,
 				B085F612194004CC001F01F3 /* CoreGraphics.framework in Frameworks */,
-				B09E30D7194932EA00894A4A /* libCaptuvoSDK.a in Frameworks */,
 				B085F614194004CC001F01F3 /* UIKit.framework in Frameworks */,
 				B085F610194004CC001F01F3 /* Foundation.framework in Frameworks */,
 			);
@@ -802,9 +802,9 @@
 		B085F60E194004CC001F01F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0F9AB0F1A78AEDE0084F998 /* libCaptuvoSDK.a */,
 				B09BF6BE195950A900FCF00A /* SystemConfiguration.framework */,
 				B066FE2F194E714F00C0019D /* AudioToolbox.framework */,
-				B09E30D6194932EA00894A4A /* libCaptuvoSDK.a */,
 				B05EEDD81947FAEA009DDAE9 /* ExternalAccessory.framework */,
 				B085F64819401091001F01F3 /* Security.framework */,
 				B085F60F194004CC001F01F3 /* Foundation.framework */,
@@ -1319,7 +1319,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Cai Zhuo Information Technology Co., Ltd";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Material/Material-Prefix.pch";
 				INFOPLIST_FILE = "Material/Material-Info.plist";
